@@ -1,21 +1,68 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
+
+import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { MusicListComponent } from './music/music-list/music-list.component';
+
+import { UIService } from './shared/ui.service';
+import { AuthService } from './auth/auth.service';
+
 import { environment } from '../environments/environment';
+import { MusicDetailComponent } from './music/music-detail/music-detail.component';
+import { SettingsComponent } from './auth/settings/settings.component';
+import { AdminComponent } from './admin/admin.component';
+import { UploadComponent } from './admin/upload/upload.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WelcomeComponent,
+    LoginComponent,
+    SignupComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    MusicListComponent,
+    MusicDetailComponent,
+    SettingsComponent,
+    AdminComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService,
+    UIService
+   ],
+
+  bootstrap: [AppComponent],
+  entryComponents:[]
 })
 export class AppModule { }
