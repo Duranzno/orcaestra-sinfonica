@@ -1,4 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,18 +11,24 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() sidenavToggle = new EventEmitter<void>();
   isAuth=false;
-  constructor() { }
+  $auth:Subscription;
+  constructor(private authService:AuthService) { }
 
   ngOnInit() {
+    this.$auth=this.authService.authChange
+      .subscribe(authStatus=>{
+        this.isAuth=authStatus;
+      });
   }
   
   onToggleSidenav(){
     this.sidenavToggle.emit();
   }
   onLogout(){
-  	console.log('toggle');
+    this.authService.logout();
   }
   ngOnDestroy() {
+    this.$auth.unsubscribe();
   }
 
 

@@ -36,5 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
   	this.$loading.unsubscribe();
   }
-
+  tryGoogleLogin(){
+    console.log("Google Login");
+    this.authService.doGoogleLogin(); 
+  }
 }

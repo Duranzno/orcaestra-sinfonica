@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.$loading.unsubscribe();
   }
   tryGoogleLogin(){
-    console.log("clciked");
+    console.log("Google Login");
     this.authService.doGoogleLogin();
     
   }
