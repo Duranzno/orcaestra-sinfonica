@@ -19,16 +19,17 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { MusicListComponent } from './music/music-list/music-list.component';
+import { MusicListComponent } from './music/list/music-list.component';
+import { MusicDetailComponent } from './music/list/music-detail.component';
+import { SettingsComponent } from './auth/settings/settings.component';
+import { AdminComponent } from './admin/admin.component';
+import { UploadComponent } from './admin/upload/upload.component';
 
 import { UIService } from './shared/ui.service';
 import { AuthService } from './auth/auth.service';
 
 import { environment } from '../environments/environment';
-import { MusicDetailComponent } from './music/music-detail/music-detail.component';
-import { SettingsComponent } from './auth/settings/settings.component';
-import { AdminComponent } from './admin/admin.component';
-import { UploadComponent } from './admin/upload/upload.component';
+import { SheetComponent } from './sheet/sheet.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { UploadComponent } from './admin/upload/upload.component';
     MusicDetailComponent,
     SettingsComponent,
     AdminComponent,
-    UploadComponent
+    UploadComponent,
+    SheetComponent
   ],
   imports: [
     BrowserModule,

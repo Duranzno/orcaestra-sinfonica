@@ -27,8 +27,8 @@ export class AuthService {
       if(user){
         this.isAuthenticated=true;
         this.authChange.next(true);
-        this.router.navigate(['/welcome']);
-        console.log('authenticated')
+        this.router.navigate(['/music-list']);
+        console.log('user is authenticated')
       } else {
         this.isAuthenticated=false;
         this.authChange.next(false);
