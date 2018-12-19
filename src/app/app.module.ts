@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HttpClient } from '@angular/common/http';
 
 
 import { MaterialModule } from './material.module';
@@ -19,17 +21,17 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { MusicListComponent } from './music/list/music-list.component';
-import { MusicDetailComponent } from './music/list/music-detail.component';
+import { MusicListComponent } from './list/music-list.component';
+import { MusicDetailComponent } from './list/music-detail.component';
 import { SettingsComponent } from './auth/settings/settings.component';
 import { AdminComponent } from './admin/admin.component';
 import { UploadComponent } from './admin/upload/upload.component';
+import { SheetComponent } from './sheet/sheet.component';
 
 import { UIService } from './shared/ui.service';
 import { AuthService } from './auth/auth.service';
 
 import { environment } from '../environments/environment';
-import { SheetComponent } from './sheet/sheet.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,7 @@ import { SheetComponent } from './sheet/sheet.component';
     SettingsComponent,
     AdminComponent,
     UploadComponent,
-    SheetComponent
+    SheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,11 +59,13 @@ import { SheetComponent } from './sheet/sheet.component';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AppRoutingModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     AuthService,
-    UIService
+    UIService,
+
    ],
 
   bootstrap: [AppComponent],
