@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() sidenavToggle = new EventEmitter<void>();
   isAuth=false;
+  isAdmin=true;
   $auth:Subscription;
   constructor(private authService:AuthService) { }
 

@@ -21,7 +21,7 @@ export class SheetComponent implements OnInit {
 	this.loadMusicXML("https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/develop/test/data/ActorPreludeSample.xml");
 	}
  	loadMusicXML(url) {
- 		let ethis=this;  
+ 		let ethis=this;    
 		let xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			switch (xhttp.readyState) {

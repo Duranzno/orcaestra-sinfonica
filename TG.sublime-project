@@ -3,7 +3,7 @@
 	"folders":
 	[
 		{
-			"path": "/home/ale/Development/orcaestra"
+			"path": "/home/ale/Development/orcaestra-sinfonica"
 		}
 	],
 	"settings":
@@ -15,7 +15,7 @@
 			[
 				".git*",
 				"_build",
-				"blib",
+	"blib",
 				"Build",
 				"node_modules/"
 			],
@@ -25,7 +25,7 @@
 			],
 			"remotes":
 			{
-				"/home/ale/Development/orcaestra":
+				"/home/ale/Development/orcaestra-sinfonica":
 				[
 					{
 						"enabled": 1,
@@ -36,7 +36,7 @@
 						[
 						],
 						"remote_host": "192.168.1.141",
-						"remote_path": "/home/pi/development/orcaestra/",
+						"remote_path": "/home/pi/Dev/TG/",
 						"remote_port": 22,
 						"remote_post_command": "",
 						"remote_pre_command": "",

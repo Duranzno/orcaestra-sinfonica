@@ -1,0 +1,12 @@
+export enum IGenre {
+    BARROCO,
+    CLASICO,
+    ROMANTICA,
+    CONTEMPORANEA,
+    SIGLOXXI,
+    NAVIDENA_VZLA,
+    NAVIDENA_OTRAS,
+    POPULAR_VZLA,
+    POPULAR_OTROS,
+    HIMNOS,
+}
