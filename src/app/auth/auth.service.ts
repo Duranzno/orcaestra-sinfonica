@@ -26,7 +26,7 @@ export class AuthService {
       if(user){
         this.isAuthenticated=true;
         this.authChange.next(true);
-        this.router.navigate(['/sheet']);
+        this.router.navigate(['/upload']);
       } else {
         this.isAuthenticated=false;
         this.authChange.next(false);

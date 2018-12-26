@@ -1,4 +1,4 @@
-export enum IPersonaTipo{
+export enum PersonaTipo{
 	AUTOR,
 	ARREGLISTA,
 	ADAPTADOR,
@@ -7,9 +7,9 @@ export enum IPersonaTipo{
 	TRANSCRIPTOR,
 	UPLOADER,
 }
-export interface IPersona {
-    first_name:string,
-    last_name?:string,
-    tipo:IPersonaTipo,
-    _id?:any,
+export interface Persona {
+		nombre:string;
+    apellido?:string;
+    tipo:PersonaTipo;
+    _id?:any;
 }

@@ -1,3 +1,18 @@
-<p>
-  upload works!
-</p>
+<section class="upload-form">
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+		<mat-form-field>
+			<input ngModel required type="text" name="obra" placeholder="Obra">
+		</mat-form-field>
+		<mat-form-field>
+			<input ngModel required type="number" name="its" placeholder="ITS">
+		</mat-form-field>
+		
+	<!-- <mat-form-field>
+		 <mat-select  required placeholder="Autor" ngModel name="autor">
+          <mat-option *ngFor="let autor of autores" [value]="autor.nombre">
+            {{ autor.nombre}}
+          </mat-option>
+        </mat-select>
+	</mat-form-field> -->
+	</form>
+</section>	
