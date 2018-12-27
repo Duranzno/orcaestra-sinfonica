@@ -1,28 +1,27 @@
-import {Persona} from "./autor.interface"
-import {IGenre}  from "./genero.interface";
-import {IStored} from "./almacenamiento.interface";
+import { Persona } from "./autor.interface"
+import { IStored } from "./almacenamiento.interface";
 
 
-export interface IScore{
+export interface IScore {
     ///Obligatorios
-    involucrados:Persona[];
+    involucrados: Persona[];
 
     //Numero  legado del sistema Anterior
-    its:number;
+    its: number;
     //Nombre de la Obra
-    obra:string;
+    obra: string;
     //Interfaz para reconocer el tipo de canción
 
-    genero?:IGenre[];
+    generos?: string[];
     //Tipo Almacenamiento Fisico 
-    almacenamiento?:IStored[];
+    almacenamiento: IStored[];
     //Instrumentos Usados
-    instrumentos:string[];
+    instrumentos?: string[];
     ///OPTIONALES
 
-    _id?:any;
+    _id?: any;
     //TODO OP/K/V/HOB  =>¿Que significan?
     //Información Extra
-    extraInfo?:string;
+    extraInfo?: string;
 
 }

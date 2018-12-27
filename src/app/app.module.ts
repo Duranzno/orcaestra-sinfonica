@@ -9,8 +9,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { HttpClient } from '@angular/common/http';
-
 
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';

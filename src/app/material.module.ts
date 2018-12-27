@@ -3,6 +3,7 @@ import {
   MatChipsModule,
   MatButtonModule,
   MatIconModule,
+  MatAutocompleteModule,
   MatFormFieldModule,
   MatInputModule,
   MatDatepickerModule,
@@ -20,15 +21,18 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatSnackBarModule,
+  MatSliderModule,
   MatGridListModule,
 } from '@angular/material';
 
 let material=[
   MatChipsModule,
+  MatAutocompleteModule,
   MatButtonModule,
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
+  MatSliderModule,
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,

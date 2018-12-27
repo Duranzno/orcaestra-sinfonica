@@ -1,7 +1,8 @@
 export enum IStoredType {
-    SCORE,
-    COPIA,
-    PO,
+    SCORE="Score",
+    COPIA="Copia",
+    PO="PO",
+    NINGUNO="Ninguno",
 }
 export interface IStored{
 	cantidad:number;
