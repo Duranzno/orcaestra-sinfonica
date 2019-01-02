@@ -8,59 +8,59 @@ import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 import * as firebase from 'firebase/app';
 
-import {UIService} from '../shared/ui.service'
+import { UIService } from '../shared/ui.service'
 @Injectable()
 export class AuthService {
-	authChange = new Subject<boolean>();
-	private isAuthenticated=false;
+  authChange = new Subject<boolean>();
+  private isAuthenticated = false;
 
   constructor(
-  	private router:Router,
-  	private afAuth:AngularFireAuth,
-  	private snackbar:MatSnackBar,
-  	private uiService:UIService,
-  ) {}
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private snackbar: MatSnackBar,
+    private uiService: UIService,
+  ) { }
 
-  initAuthListener(){
-    this.afAuth.authState.subscribe(user=>{
-      if(user){
-        this.isAuthenticated=true;
+  initAuthListener() {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.isAuthenticated = true;
         this.authChange.next(true);
-        this.router.navigate(['/upload']);
+        // this.router.navigate(['/upload']);
       } else {
-        this.isAuthenticated=false;
+        this.isAuthenticated = false;
         this.authChange.next(false);
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }
     })
   }
-  registerUser(authData:AuthData){
+  registerUser(authData: AuthData) {
     this.uiService.loadingStateChanged.next(true);
     // this.afAuth.auth.setPersistence()
     this.afAuth.auth
-      .createUserWithEmailAndPassword(authData.email,authData.password)
-      .then(result=>
+      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .then(result =>
         this.uiService.loadingStateChanged.next(false))
-      .catch(error=>{
+      .catch(error => {
         this.uiService.loadingStateChanged.next(false);
-        this.snackbar.open(error.message,null,{
-          duration:3000
+        this.snackbar.open(error.message, null, {
+          duration: 3000
         })
       });
   }
-  doGoogleLogin(){
+  doGoogleLogin() {
     // this.uiService.loadingStateChanged.next(true);
-    let provider= new firebase.auth.GoogleAuthProvider();
+    let provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile')
     provider.addScope('email');
 
     this.afAuth.auth
       .signInWithPopup(provider)
-      .then(function(r) {
+      .then(function (r) {
         console.log(r.user)
         // this.uiService.loadingStateChanged.next(false);
       })
-      .catch(error=>{
+      .catch(error => {
         console.error(error);
         // this.uiService.loadingStateChanged.next(false);
         // this.snackbar.open(error.message,null,{
@@ -68,7 +68,7 @@ export class AuthService {
         // })
       });
   }
-  login(authData:AuthData){
+  login(authData: AuthData) {
     this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
@@ -82,10 +82,10 @@ export class AuthService {
         });
       });
   }
-  logout(){
+  logout() {
     this.afAuth.auth.signOut();
   }
-  isAuth(){
+  isAuth() {
     return this.isAuthenticated;
   }
 }

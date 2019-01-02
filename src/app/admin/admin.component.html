@@ -1,3 +1,26 @@
-<p>
-  admin works!
-</p>
+<form [formGroup]='form'>
+  <mat-form-field>
+    <input matInput placeholder="Nombre" id="nombre" type="text" class="form-control" formControlName="nombre">
+    <div *ngIf="nombre.touched && nombre.invalid" class="alert alert-danger">
+      <div *ngIf="nombre.errors.required">Se necesita el nombre.</div>
+      <div *ngIf="nombre.errors.minLength">
+        Nombre debe ser mayor a {{nombre.errors.minLength.requiredLength}} letras
+      </div>
+    </div>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Apellido" id="apellido" type="text" class="form-control" formControlName="apellido">
+    <div *ngIf="apellido.touched && apellido.invalid" class="alert alert-danger">
+      <div *ngIf="apellido.errors.required">Se necesita el apellido.</div>
+      <div *ngIf="apellido.errors.minLength">
+        Apellido debe ser mayor a {{apellido.errors.minLength.requiredLength}}
+        letras</div>
+    </div>
+  </mat-form-field>
+  <mat-select placeholder="Tipo de Persona Involucrada" name="item">
+    <mat-option *ngFor="let p of Personas" [value]="a">
+      {{p.nombre}}
+    </mat-option>
+  </mat-select>
+  <button mat-raised-button color="primary" type="submit" [disabled]="false">Guardar </button>
+</form>

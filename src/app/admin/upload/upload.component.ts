@@ -45,6 +45,7 @@ export class UploadComponent implements OnInit {
       map((gen: string | null) => gen ? this._filter(gen) : this.generosTodos.slice()));
   }
   ngOnInit() {
+    console.log(Object.values(IStoredType))
   }
   remove(genero: string): void {
     const index = this.partituraNueva.generos.indexOf(genero);

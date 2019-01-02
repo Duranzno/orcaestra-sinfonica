@@ -14,21 +14,21 @@ import { SheetComponent } from './sheet/sheet.component';
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-	{ path:''							,component:WelcomeComponent},
-	{ path:'signup'				,component:SignupComponent},
-	{ path:'login'				,component:LoginComponent},
-	{ path:'sheet'				,component:SheetComponent},
-	{ path:'settings' 		,component:SettingsComponent,	canActivate: [AuthGuard]},	
-	{ path:'music-detail'	,component:MusicDetailComponent,	canActivate: [AuthGuard]},
-	{ path:'music-list'		,component:MusicListComponent,	canActivate: [AuthGuard]},	
-	{ path:'upload'				,component:UploadComponent,	canActivate: [AuthGuard]},
-	{ path:'admin'				,component:AdminComponent,	canActivate: [AuthGuard]},
+	{ path: '', component: WelcomeComponent },
+	{ path: 'signup', component: SignupComponent },
+	{ path: 'login', component: LoginComponent },
+	{ path: 'sheet', component: SheetComponent },
+	{ path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+	{ path: 'music-detail', component: MusicDetailComponent, canActivate: [AuthGuard] },
+	{ path: 'music-list', component: MusicListComponent, canActivate: [AuthGuard] },
+	{ path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
+	{ path: 'admin', component: AdminComponent },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [AuthGuard]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AuthGuard]
 })
 export class AppRoutingModule { }
