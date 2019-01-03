@@ -30,6 +30,9 @@ import { UIService } from './shared/ui.service';
 import { AuthService } from './auth/auth.service';
 
 import { environment } from '../environments/environment';
+import { InvolucradosComponent } from './shared/involucrados.component';
+import { AlmacenamientoComponent } from './shared/almacenamiento.component';
+import { GenerosComponent } from './shared/generos.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { environment } from '../environments/environment';
     AdminComponent,
     UploadComponent,
     SheetComponent,
+    InvolucradosComponent,
+    AlmacenamientoComponent,
+    GenerosComponent,
   ],
   imports: [
     BrowserModule,

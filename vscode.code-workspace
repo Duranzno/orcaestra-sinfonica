@@ -16,8 +16,9 @@
       ".vscode",
       "node_modules"
     ],
-    "sync-rsync.notification":true,
+    "sync-rsync.notification":false,
     "sync-rsync.autoHideOutput": true,
-    "sync-rsync.onSave": true
+    "sync-rsync.onSave": true,
+    "tsimporter.noStatusBar": true,
   }
 }

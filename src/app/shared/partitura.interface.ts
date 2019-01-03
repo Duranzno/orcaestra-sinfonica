@@ -4,7 +4,7 @@ import { IStored } from "./almacenamiento.interface";
 
 export interface IScore {
     ///Obligatorios
-    involucrados: Persona[];
+    involucrados?: Persona[];
 
     //Numero  legado del sistema Anterior
     its: number;

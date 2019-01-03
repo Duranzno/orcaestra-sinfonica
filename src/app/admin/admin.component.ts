@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,FormArray, Validators } from '@angular/forms';
 import { Persona, PersonaTipo } from '../shared/autor.interface';
+import { IScore } from '../shared/partitura.interface';
 
 @Component({
   selector: 'app-admin',
@@ -8,22 +9,39 @@ import { Persona, PersonaTipo } from '../shared/autor.interface';
   styles: []
 })
 export class AdminComponent implements OnInit {
-  form = new FormGroup({
-    'nombre': new FormControl('', [Validators.required,
-    Validators.minLength(3)]),
-    'apellido': new FormControl('', [Validators.required,
-    Validators.minLength(3)])
-  });
-  autores: Persona[] = [
-    { nombre: 'Ludwing', apellido: 'Beethoven', tipo: PersonaTipo.AUTOR },
-    { nombre: 'Eduardo', apellido: 'Brito', tipo: PersonaTipo.AUTOR },
-    { nombre: 'Pepe', apellido: 'LePierre', tipo: PersonaTipo.AUTOR },
-  ];
-  get nombre() { return this.form.get('nombre'); }
-  get apellido() { return this.form.get('apellido'); }
+  public form:FormGroup;
+  personas:string[]= Object.values(PersonaTipo) ;
+  constructor(private _fb: FormBuilder){ }
 
   ngOnInit() {
-    console.log(Object.values(PersonaTipo));
-    console.log(Object.keys(PersonaTipo));
+    this.form=this._fb.group({
+      obra:[''],
+      its:[''],
+      gente:this._fb.array([
+        this.initPersona(),
+      ]),  
+      extrainfo:[''],
+    })
+    console.log(this.form.controls);
+    console.log(this.personas)
+  }
+  initPersona(){
+    return this._fb.group({
+      nombre: ['', [Validators.required,Validators.minLength(3)]],
+      apellido:[''],
+      tipo:['']
+    });
+  }
+  addPersona(){
+    const control = <FormArray>this.form.controls['gente'];
+
+    control.push(this.initPersona());
+  }
+  removePersona(i:number){
+    const control = <FormArray>this.form.controls['gente'];
+    control.removeAt(i);
+  }
+  save(model:IScore){
+    console.log(model);
   }
 }
