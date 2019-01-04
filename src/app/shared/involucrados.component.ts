@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { PersonaTipo} from '../shared/autor.interface';
 @Component({
-  selector: 'app-involucrados',
+  selector: 'involucrados',
   templateUrl: './involucrados.component.html',
-  styles: []
+  styles: [],
 })
-export class InvolucradosComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class InvolucradosComponent{
+  @Input('involucrados')
+  public involucradosForm: FormGroup;
+  personas:string[]= Object.values(PersonaTipo) ;
 }

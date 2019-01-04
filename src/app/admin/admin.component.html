@@ -1,4 +1,4 @@
-<form [formGroup]='form' fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="save(form)" novalidate> 
+<form [formGroup]='form' fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="onSubmit()" novalidate> 
   <!-- Obra -->
   <mat-form-field>
     <input matInput placeholder="Obra" type="text" formControlName="obra">
@@ -9,9 +9,7 @@
     <input matInput placeholder="Its" formControlName="its">
   </mat-form-field>
 
-  <!-- TODO Agregar Template de CHIPS -->
-
-  <!-- TODO Agregar formArray de Almancemaiento -->
+  <generos [form]="form.controls['generos']" [generos]="generosTodos"></generos>
 
   <mat-form-field>
 			<textarea matInput placeholder="Informacion Extra" formControlName="extrainfo"></textarea>
@@ -24,28 +22,26 @@
         <span *ngIf="form.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
       </div>
       <!-- Cada Involucrado -->
-      <div [formGroupName]="i">
-        <!-- Nombre de la Persona Involucrada -->
-        <mat-form-field>
-          <input matInput placeholder="Nombre" id="nombre" type="text" formControlName="nombre">      
-          <mat-error *ngIf="form.controls['gente'].controls[i].controls.nombre.valid">Se necesita el nombre.</mat-error>
-        </mat-form-field>
-         <!-- Apellido de la Persona Involucrada  -->
-        <mat-form-field>
-          <input matInput placeholder="Apellido" id="apellido" type="text" formControlName="apellido">
-        </mat-form-field>   
-        <!-- Tipo de Persona -->
-          
-        <mat-form-field>
-          <mat-select placeholder="Tipo de Persona Involucrada" formControlName="tipo">
-            <mat-option *ngFor="let p of personas" [value]="personas[0]">
-              {{p}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div [formGroupName]="i">
+            <involucrados [involucrados]="form.controls['gente'].controls[i]">
+            </involucrados>
+        </div>
       </div> 
-    </div>
   </div>
+
+  <div formArrayName="almacenamiento">
+      <div *ngFor="let a of  form.controls['almacenamiento'].controls;let i=index">
+        <div>
+          <span>Registro {{i+1}}</span>
+          <span *ngIf="form.controls['almacenamiento'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
+        </div>
+        <!-- Cada Involucrado -->
+          <div [formGroupName]="i">
+              <almacenamiento [almacenamiento]="form.controls['almacenamiento'].controls[i]">
+              </almacenamiento>
+          </div>
+        </div> 
+    </div>
 
   <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
   <button mat-raised-button color="primary" type="submit" [disabled]="false">Guardar </button>

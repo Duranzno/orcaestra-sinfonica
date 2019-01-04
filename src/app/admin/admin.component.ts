@@ -10,7 +10,9 @@ import { IScore } from '../shared/partitura.interface';
 })
 export class AdminComponent implements OnInit {
   public form:FormGroup;
-  personas:string[]= Object.values(PersonaTipo) ;
+  personas:string[]= Object.values(PersonaTipo);
+  generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
+
   constructor(private _fb: FormBuilder){ }
 
   ngOnInit() {
@@ -20,10 +22,15 @@ export class AdminComponent implements OnInit {
       gente:this._fb.array([
         this.initPersona(),
       ]),  
+      generos:this._fb.array([
+        this.initGenero(),
+      ]),       
+      almacenamiento:this._fb.array([
+        this.initAlmacenamiento(),
+      ]),
       extrainfo:[''],
     })
-    console.log(this.form.controls);
-    console.log(this.personas)
+    console.log('admin',this.form);
   }
   initPersona(){
     return this._fb.group({
@@ -32,16 +39,46 @@ export class AdminComponent implements OnInit {
       tipo:['']
     });
   }
+  initGenero(){
+    return this._fb.group({
+      nombre:['']
+    });
+  }
+  addGenero(){
+    const control = <FormArray>this.form.controls['generos'];
+    control.push(this.initGenero());
+  }
+  removeGenero(i:number){
+    const control = <FormArray>this.form.controls['generos'];
+    control.removeAt(i);
+  }
+
   addPersona(){
     const control = <FormArray>this.form.controls['gente'];
-
     control.push(this.initPersona());
   }
   removePersona(i:number){
     const control = <FormArray>this.form.controls['gente'];
     control.removeAt(i);
   }
+  initAlmacenamiento(){
+    return this._fb.group({
+      cantidad:[''],
+      tipo:[''],
+    });
+  }
+  addAlmacenamiento(){
+    const control = <FormArray>this.form.controls['almacenamiento'];
+    control.push(this.initAlmacenamiento());
+  }
+  removeAlmacenamiento(i:number){
+    const control = <FormArray>this.form.controls['almacenamiento'];
+    control.removeAt(i);
+  }
   save(model:IScore){
     console.log(model);
+  }
+  onSubmit(){
+    console.log(this.form.value)
   }
 }

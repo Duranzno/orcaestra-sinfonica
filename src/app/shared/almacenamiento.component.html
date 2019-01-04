@@ -1,3 +1,14 @@
-<p>
-  almacenamiento works!
-</p>
+<div [formGroup]="almacenamientoForm">    
+    <mat-form-field>
+      <mat-select placeholder="Tipo de Almacenamiento" formControlName="tipo">
+        <mat-option *ngFor="let t of tipos " [value]="tipos[0]">
+          {{t}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Cantidad" type="text" formControlName="cantidad">      
+        <mat-error *ngIf="almacenamientoForm.controls['tipo'].valid">Se necesita el nombre.</mat-error>
+      </mat-form-field>
+       
+  </div>
