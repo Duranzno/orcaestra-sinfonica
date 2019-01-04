@@ -12,7 +12,7 @@
     
   <mat-form-field>
     <mat-select placeholder="Tipo de Persona Involucrada" formControlName="tipo">
-      <mat-option *ngFor="let p of personas" [value]="personas[0]">
+      <mat-option *ngFor="let p of personas" [value]="p">
         {{p}}
       </mat-option>
     </mat-select>

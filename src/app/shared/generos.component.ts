@@ -1,6 +1,6 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Component, Input, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { NgForm, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -12,10 +12,11 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
   styles: []
 })
 export class GenerosComponent implements OnInit{
-  @Input('form')
-  public generosForm: FormControl;
-  @Input('generos')
-  generos:string[] ;
+  @Input('form')public generosForm: FormGroup;
+  @Input('generos')generosTodos:string[];
+  @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
   generosFiltrados: Observable<string[]>;
   genCtrl = new FormControl();
@@ -24,24 +25,25 @@ export class GenerosComponent implements OnInit{
     generos:string[]
   }={generos:[]}
   
-  @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor() {
     this.generosFiltrados = this.genCtrl.valueChanges.pipe(
       startWith(null),
-      map((gen: string | null) => gen ? this._filter(gen) : this.generos.slice()));
+      map((gen: string | null) => gen ? this._filter(gen) : this.generosTodos.slice()));
   }
-  ngOnInit(){console.log('generos',this.generosForm)}
+  ngOnInit(){
+    // (this.generosForm).push("Navidad")
+    console.log(this.generosForm)
+
+  }
   remove(genero: string): void {
     const index = this.partituraNueva.generos.indexOf(genero);
     if (index >= 0) {
       this.partituraNueva.generos.splice(index, 1);
     }
   }
-  private addGenero(value: string) {
-    console.log('form' , this.generosForm);
-   
+  private addGenero(value: string) {  
+    console.log(this.generosForm.value)
     const index = this.partituraNueva.generos.findIndex((e: string) => e.trim() === value.trim());
     
     if (index === -1) {
@@ -71,7 +73,7 @@ export class GenerosComponent implements OnInit{
     //             .map(val=>val.toLowerCase())
     //             .filter(val=>this.partituraNueva.generos.map(g=>g.toLowerCase()).indexOf(val)===-1)
     //             .map(string=> string.charAt(0).toUpperCase() + string.slice(1));
-    return this.generos.filter(g => g.toLowerCase().indexOf(filterValue) === 0);
+    return this.generosTodos.filter(g => g.toLowerCase().indexOf(filterValue) === 0);
 
   }
 }

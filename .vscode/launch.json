@@ -8,16 +8,16 @@
             "runtimeExecutable": "/usr/bin/flashpeak-slimjet",
             "type": "chrome",
             "request": "launch",
-            "name": "Flashpeak Test",
-            "url": "http://localhost:4200",
+            "name": "RPI",
+            "url": "http://192.168.1.141:4200",
             "webRoot": "${workspaceFolder}"
-        }, 
+        },
         {
             "runtimeExecutable": "/usr/bin/flashpeak-slimjet",
             "type": "chrome",
             "request": "launch",
-            "name": "RPI",
-            "url": "http://192.168.1.141:4200",
+            "name": "Flashpeak Test",
+            "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}"
         },        
     ]

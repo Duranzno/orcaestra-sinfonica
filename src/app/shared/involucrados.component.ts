@@ -7,7 +7,7 @@ import { PersonaTipo} from '../shared/autor.interface';
   styles: [],
 })
 export class InvolucradosComponent{
-  @Input('involucrados')
+  @Input('form')
   public involucradosForm: FormGroup;
   personas:string[]= Object.values(PersonaTipo) ;
 }

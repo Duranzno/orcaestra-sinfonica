@@ -1,17 +1,21 @@
 <div [formGroup]="generosForm">
+  <!-- Agregador de Generos -->
   <mat-form-field >
     <mat-chip-list #chipList>
       <mat-chip *ngFor="let g of partituraNueva.generos" [selectable]="true" [removable]="true" (removed)="remove(g)">{{g}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-
-      <input   placeholder="Generos" (matChipInputTokenEnd)="add($event)" [matAutocomplete]="auto"
-        [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="genCtrl"       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"  (matChipInputTokenEnd)="add($event)">
-    </mat-chip-list>
-
+      
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
       <mat-option *ngFor="let g of generosFiltrados | async" [value]="g">{{g}}</mat-option>
-        <!-- TODO generosFiltrados mostrar solo los filtrados en vez de todos -->
     </mat-autocomplete>
+
+    <input #generoInput placeholder="Generos" 
+    (matChipInputTokenEnd)="add($event)" [matAutocomplete]="auto"
+    [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="genCtrl"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"  (matChipInputTokenEnd)="add($event)"> 
+  </mat-chip-list>
+
   </mat-form-field>
+
 </div>
