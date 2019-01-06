@@ -8,14 +8,18 @@
   <mat-form-field>
     <input matInput placeholder="Its" formControlName="its">
   </mat-form-field>
+  <!-- Extra Info -->
   <mat-form-field>
     <textarea matInput placeholder="Informacion Extra" formControlName="extrainfo"></textarea>
   </mat-form-field>
-    <!-- <generos [form]="form.controls['generos']" [generos]="generosTodos"></generos>  -->
-
+  <!-- Pagina Youtube -->
+  <mat-form-field>
+    <input matInput placeholder="Enlace a Youtube" formControlName="youtube">
+  </mat-form-field>
+  <!-- Generos -->
   <mat-form-field>
     <mat-chip-list #chipList>
-        <mat-chip *ngFor="let g of form.controls['generos'].value;let i=index" [selectable]="true" [removable]="true" (removed)="removeChip(g)">{{g}}
+        <mat-chip *ngFor="let g of almacenamiento.value;let i=index" [selectable]="true" [removable]="true" (removed)="removeChip(g)">{{g}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
       <input matInput placeholder="Generos" [matAutocomplete]="auto" #generoInput (matChipInputTokenEnd)="addChip($event)"[matAutocomplete]="auto" [matChipInputFor]="chipList"[matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
@@ -27,11 +31,11 @@
         </mat-autocomplete>
    </mat-chip-list> 
   </mat-form-field>    
-
-  
-  
+  <!-- Upload -->
+  <app-dialog></app-dialog>
+  <!-- Involucrados -->
   <div formArrayName="gente">
-    <div *ngFor="let p of  form.controls['gente'].controls;let i=index">
+    <div *ngFor="let p of  gente.controls;let i=index">
       <div>
         <span>Involucrado {{i+1}}</span>
         <span *ngIf="form.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
@@ -43,20 +47,21 @@
         </div>
       </div> 
   </div>
-
+  <!-- Almacenamiento -->
   <div formArrayName="almacenamiento">
-    <div *ngFor="let a of  form.controls['almacenamiento'].controls;let i=index">
+    <div *ngFor="let a of  almacenamiento.controls;let i=index">
       <div>
         <span>Registro {{i+1}}</span>
         <span *ngIf="form.controls['almacenamiento'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
       </div>
-      <!-- Cada Involucrado -->
         <div [formGroupName]="i">
             <almacenamiento [almacenamiento]="form.controls['almacenamiento'].controls[i]">
             </almacenamiento>
         </div>
       </div> 
   </div>
+
   <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
+  <button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>
   <button mat-raised-button color="primary" type="submit" [disabled]="false">Guardar </button>
 </form>

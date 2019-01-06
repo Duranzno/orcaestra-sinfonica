@@ -23,10 +23,12 @@ import {
   MatSnackBarModule,
   MatSliderModule,
   MatGridListModule,
+  MatProgressBarModule,
 } from '@angular/material';
 
 let material=[
   MatChipsModule,
+  MatProgressBarModule,
   MatAutocompleteModule,
   MatButtonModule,
   MatIconModule,

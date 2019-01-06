@@ -6,9 +6,5 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Cantidad" type="text" formControlName="cantidad">      
-        <mat-error *ngIf="almacenamientoForm.controls['tipo'].valid">Se necesita el nombre.</mat-error>
-      </mat-form-field>
-       
+    <mat-slider thumbLabel tickInterval="auto" min="1" max="25" value="1" formControlName="cantidad"></mat-slider>
   </div>

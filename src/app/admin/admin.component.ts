@@ -1,10 +1,12 @@
 import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder,FormArray, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDialog } from '@angular/material';
 import { Persona, PersonaTipo } from '../shared/autor.interface';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import { IScore } from '../shared/partitura.interface';
+import { UploadService } from './upload.service';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-admin',
@@ -20,9 +22,8 @@ export class AdminComponent implements OnInit {
   chipInputCtrl = new FormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-
-  constructor(private _fb: FormBuilder){ }
-
+  constructor(private _fb: FormBuilder,public uploadService: UploadService) {}
+  
   ngOnInit() {
     this.form=this._fb.group({
       obra:[''],
@@ -36,10 +37,9 @@ export class AdminComponent implements OnInit {
         this.initAlmacenamiento(),
       ]),
       extrainfo:[''],
+      youtube:[''],
     })
-    console.log(this.form.controls['generos'].value[0])
   }
-
   initPersona(){
     return this._fb.group({
       nombre: ['', [Validators.required,Validators.minLength(3)]],

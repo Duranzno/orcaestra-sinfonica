@@ -33,6 +33,8 @@ import { environment } from '../environments/environment';
 import { InvolucradosComponent } from './shared/involucrados.component';
 import { AlmacenamientoComponent } from './shared/almacenamiento.component';
 import { GenerosComponent } from './shared/generos.component';
+import { DialogComponent } from './admin/dialog.component';
+import { UploadService } from './admin/upload.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { GenerosComponent } from './shared/generos.component';
     InvolucradosComponent,
     AlmacenamientoComponent,
     GenerosComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,10 +72,8 @@ import { GenerosComponent } from './shared/generos.component';
   providers: [
     AuthService,
     UIService,
-
+    UploadService
    ],
-
   bootstrap: [AppComponent],
-  entryComponents:[]
-})
+  entryComponents: []})
 export class AppModule { }
