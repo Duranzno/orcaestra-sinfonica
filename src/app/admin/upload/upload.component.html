@@ -1,49 +1,81 @@
-<!-- <section class="upload-form">
-	<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-		<mat-form-field>
-			<input [(ngModel)]="partituraNueva.obra" matInput required type="text" name="obra" placeholder="Obra">
-		</mat-form-field>
+<form [formGroup]='form' fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="onSubmit()"
+ novalidate>
+	<!-- Obra -->
+	<mat-form-field>
+		<input matInput placeholder="Obra" type="text" formControlName="obra">
+	</mat-form-field>
 
-		<mat-form-field>
-			<input [(ngModel)]="partituraNueva.its" matInput required type="number" name="its" placeholder="Its">
-		</mat-form-field>
+	<!-- ITS -->
+	<mat-form-field>
+		<input matInput placeholder="Its" formControlName="its">
+	</mat-form-field>
+	<!-- Extra Info -->
+	<mat-form-field>
+		<textarea matInput placeholder="Informacion Extra" formControlName="extrainfo"></textarea>
+	</mat-form-field>
+	<!-- Pagina Youtube -->
+	<mat-form-field>
+		<input matInput placeholder="Enlace a Youtube" formControlName="youtube">
+	</mat-form-field>
+	<!-- Generos -->
+	<mat-form-field>
+		<mat-chip-list #chipList>
+			<mat-chip *ngFor="let g of generos.value;let i=index" [selectable]="true" [removable]="true" (removed)="removeChip(g)">{{g}}
+				<mat-icon matChipRemove>cancel</mat-icon>
+			</mat-chip>
+			<input matInput placeholder="Generos" [matAutocomplete]="auto" #generoInput (matChipInputTokenEnd)="addChip($event)"
+			 [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
+			 [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
 
-		<mat-form-field>
-			<input matInput placeholder="Autor" type="text" [(ngModel)]="partituraNueva.involucrados[0].nombre"
-			 [matAutocomplete]="autoAutor" name="autor">
-		</mat-form-field>
-		<mat-autocomplete #autoAutor="matAutocomplete">
-			<mat-option *ngFor="let a of autores " [value]="a.nombre">
-				{{ a.nombre + " " + a.apellido}}
-			</mat-option>
-		</mat-autocomplete>
-
-		<mat-form-field>
-			<mat-chip-list #chipList>
-				<mat-chip *ngFor="let g of partituraNueva.generos" [selectable]="true" [removable]="true" (removed)="remove(g)">
-					{{g}}
-					<mat-icon matChipRemove>cancel</mat-icon>
-				</mat-chip>
-				<input #generoInput placeholder="Generos" (matChipInputTokenEnd)="add($event)" [matAutocomplete]="auto"
-				 [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" name="generos">
-			</mat-chip-list>
-			<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-				<mat-option *ngFor="let g of generosFiltrados | async" [value]="g">{{g }}
-				</mat-option>
+			<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenero($event)">
+				<mat-option *ngFor="let g of generosTodos" [value]="g">{{g}}</mat-option>
 			</mat-autocomplete>
-		</mat-form-field>
+		</mat-chip-list>
+	</mat-form-field>
 
-		<mat-form-field>
-			<input [(ngModel)]="partituraNueva.almacenamiento[0].tipo" matInput placeholder="tipoAlmacenamiento" value="Ninguno"
-			 name="almacenamiento">
-		</mat-form-field>
-		<mat-slider thumbLabel tickInterval="auto" min="1" max="25" value="1" [(ngModel)]="partituraNueva.almacenamiento[0].cantidad"
-		 name="nAlmacenamiento">
-		</mat-slider>
+	<!-- Upload -->
+	<app-file></app-file>
+	<!-- Involucrados -->
+	<div formArrayName="gente">
+		<div *ngFor="let p of  gente.controls;let i=index">
+			<div>
+				<span>Involucrado {{i+1}}</span>
+				<span *ngIf="form.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
+			</div>
+			<!-- Cada Involucrado -->
+			<div [formGroupName]="i">
+				<involucrados [form]="form.controls['gente'].controls[i]">
+				</involucrados>
+			</div>
+		</div>
+	</div>
+	<!-- Almacenamiento -->
+	<div formArrayName="almacenamiento">
+		<div *ngFor="let a of  almacenamiento.controls;let i=index">
+			<div>
+				<span>Registro {{i+1}}</span>
+				<span *ngIf="form.controls['almacenamiento'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
+			</div>
+			<div [formGroupName]="i">
+				<almacenamiento [almacenamiento]="form.controls['almacenamiento'].controls[i]">
+				</almacenamiento>
+			</div>
+		</div>
+	</div>
+	<!-- <div formArrayName="instrumentos">
+		<div *ngFor="let a of  instrumentos.controls;let i=index">
+		  <div>
+			<span>Instrumento {{i+1}}</span>
+			<span *ngIf="form.controls['instrumentos'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
+		  </div>
+			<div [formGroupName]="i">
+				<instrumento [form]="form.controls['instrumento'].controls[i]">
+				</instrumento>
+			</div>
+		  </div> 
+	  </div> -->
 
-		<button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">
-			Submit
-		</button>
-
-	</form>
-</section> -->
+	<button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
+	<button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>
+	<button mat-raised-button color="primary" type="submit" [disabled]="false">Guardar </button>
+</form>

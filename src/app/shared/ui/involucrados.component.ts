@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PersonaTipo} from '../shared/autor.interface';
+import { PersonaTipo} from '../models/autor.interface';
 @Component({
   selector: 'involucrados',
   templateUrl: './involucrados.component.html',

@@ -1,91 +1,102 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgForm, FormControl } from '@angular/forms';
-import { Persona, PersonaTipo } from '../../shared/autor.interface';
-import { IStoredType } from '../../shared/almacenamiento.interface';
-import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { IScore } from '../../shared/partitura.interface';
+import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { PersonaTipo } from '../../shared/models/autor.interface';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styles: []
 })
+
 export class UploadComponent implements OnInit {
-  // autoresSubscription: Subscription;
-
-  autores: Persona[] = [
-    { nombre: 'Ludwing', apellido: 'Beethoven', tipo: PersonaTipo.AUTOR },
-    { nombre: 'Eduardo', apellido: 'Brito', tipo: PersonaTipo.AUTOR },
-    { nombre: 'Pepe', apellido: 'LePierre', tipo: PersonaTipo.AUTOR },
-  ];
+  public form: FormGroup;
+  personas: string[] = Object.values(PersonaTipo);
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
-  generosFiltrados: Observable<string[]>;
-  genCtrl = new FormControl();
-  partituraNueva = {
-    obra: '',
-    its: 0,
-    involucrados: [{
-      nombre: '',
-      apellido: '',
-      tipo: PersonaTipo.AUTOR,
-    }],
-    generos: [],
-    almacenamiento: [{
-      tipo: IStoredType.NINGUNO,
-      cantidad: 0,
-    }],
-  };
-
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  constructor() {
-    this.generosFiltrados = this.genCtrl.valueChanges.pipe(
-      startWith(null),
-      map((gen: string | null) => gen ? this._filter(gen) : this.generosTodos.slice()));
-  }
+  chipInputCtrl = new FormControl();
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  constructor(private _fb: FormBuilder) {}
+
   ngOnInit() {
-    console.log(Object.values(IStoredType))
+    this.form = this._fb.group({
+      obra: [''],
+      its: [''],
+      gente: this._fb.array([
+        this.initPersona(),
+      ]),
+      generos: this._fb.array([
+      ]),
+      almacenamiento: this._fb.array([
+        this.initAlmacenamiento(),
+      ]),
+      extrainfo: [''],
+      youtube: [''],
+    });
   }
-  remove(genero: string): void {
-    const index = this.partituraNueva.generos.indexOf(genero);
-    if (index >= 0) {
-      this.partituraNueva.generos.splice(index, 1);
-    }
+  initPersona() {
+    return this._fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      apellido: [''],
+      tipo: ['']
+    });
   }
-  add(event: MatChipInputEvent): void {
-    if (!this.matAutocomplete.isOpen) {
-      const input = event.input;
-      const value = event.value;
-      if ((value || '').trim()) { this.addGenero(value); }
-      if (input) { input.value = ''; }
-      this.genCtrl.setValue(null);
-    }
-  }
-  private addGenero(value: string) {
-    console.log(this.partituraNueva.generos);
-    console.log(value);
-    const index = this.partituraNueva.generos.findIndex((e: string) => e.trim() === value.trim());
-    console.log(index);
-    if (index === -1) {
-      this.partituraNueva.generos.push(value.trim());
-    }
-  }
+  get gente() { return this.form.get('gente') as FormArray; }
+  addPersona() { this.gente.push(this.initPersona()); }
+  removePersona(i: number) { this.gente.removeAt(i); }
 
-  onSubmit(form: NgForm) {
-    console.log(form);
-    console.log(this.partituraNueva);
+  initGenero() {
+    return this._fb.group({
+      nombre: [''],
+    });
   }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.addGenero(event.option.viewValue);
+  get generos() { return this.form.get('generos') as FormArray; }
+  addGenero() { this.generos.push(this.initGenero()); }
+  removeGenero(i: number) { this.generos.removeAt(i); }
+  selectedGenero(event: MatAutocompleteSelectedEvent): void {
+    this.addGeneroEvent(event.option.viewValue);
     this.generoInput.nativeElement.value = '';
-    this.genCtrl.setValue(null);
+    // this.genCtrl.setValue(null);
+  }
+  private addGeneroEvent(value: string) {
+    const index = this.generos.value.findIndex((e: string) => e.trim() === value.trim());
+
+    if (index === -1) {
+      this.generos.value.push(value.trim());
+    }
+  }
+  addChip(event: MatChipInputEvent): void {
+    // if (!this.matAutocomplete.isOpen) {
+    console.log(this.generos);
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) { this.addGeneroEvent(value); }
+    if (input) { input.value = ''; }
+    // this.genCtrl.setValue(null);
+    // }
+  }
+  removeChip(genero: string): void {
+    const index = this.generos.value.indexOf(genero);
+    if (index >= 0) {
+      this.generos.value.splice(index, 1);
+    }
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  initAlmacenamiento() {
+    return this._fb.group({
+      cantidad: [''],
+      tipo: [''],
+    });
+  }
+  get almacenamiento() { return this.form.get('almacenamiento') as FormArray; }
+  addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
+  removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
 
-    return this.generosTodos.filter(g => g.toLowerCase().indexOf(filterValue) === 0);
+  onSubmit() {
+    console.log(this.form.value);
+    // this.uploadService.uploadScore(this.form.value);
   }
 }

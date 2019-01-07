@@ -1,4 +1,10 @@
 import { NgModule } from '@angular/core';
+
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
+
 import {
   MatChipsModule,
   MatButtonModule,
@@ -26,7 +32,13 @@ import {
   MatProgressBarModule,
 } from '@angular/material';
 
-let material=[
+const material = [
+  // Angular
+  AngularFireAuthModule,
+  AngularFirestoreModule,
+  AngularFireFunctionsModule,
+  AngularFireMessagingModule,
+  // Material
   MatChipsModule,
   MatProgressBarModule,
   MatAutocompleteModule,
@@ -56,4 +68,4 @@ let material=[
   imports: material,
   exports: material,
 })
-export class MaterialModule {}
+export class MaterialFireModule {}

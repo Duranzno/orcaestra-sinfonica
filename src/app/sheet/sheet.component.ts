@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-sheet',
   templateUrl: './sheet.component.html',
-  styleUrls: ['./sheet.component.less']
+  styleUrls: []
 })
 export class SheetComponent implements OnInit {
 
