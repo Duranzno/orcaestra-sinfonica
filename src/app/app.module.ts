@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 
-import { SharedModule } from './shared/shared.module';
 import { MaterialFireModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,11 +22,20 @@ import { AdminComponent } from './admin/admin.component';
 import { UploadComponent } from './admin/upload/upload.component';
 import { SheetComponent } from './sheet/sheet.component';
 
+import { InvolucradosComponent } from './shared/ui/involucrados.component';
+import { InstrumentosComponent } from './shared/ui/instrumentos.component';
+import { AlmacenamientoComponent } from './shared/ui/almacenamiento.component';
+import { GenerosComponent } from './shared/ui/generos.component';
+import { FileComponent } from './shared/ui/file.component';
+
 import { UIService } from './shared/ui.service';
 import { AuthService } from './auth/auth.service';
 // import { UploadService } from './admin/upload.service';
 
 import { environment } from '../environments/environment';
+import { reducers } from './app.reducer';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -43,24 +51,31 @@ import { environment } from '../environments/environment';
     AdminComponent,
     UploadComponent,
     SheetComponent,
+    InstrumentosComponent,
+    InvolucradosComponent,
+    AlmacenamientoComponent,
+    GenerosComponent,
+    FileComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialFireModule,
-    SharedModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
+    StoreModule.forRoot(reducers),
+    //  StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
   ],
   providers: [
     AuthService,
     UIService,
     // UploadService
-   ],
+  ],
   bootstrap: [AppComponent],
-  entryComponents: []})
+  entryComponents: []
+})
 export class AppModule { }

@@ -20,5 +20,6 @@
     "sync-rsync.autoHideOutput": true,
     "sync-rsync.onSave": true,
     "tsimporter.noStatusBar": true,
+    "sync-rsync.delete": true
   }
 }

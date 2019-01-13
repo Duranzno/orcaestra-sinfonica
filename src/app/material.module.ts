@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
-
 import {
   MatChipsModule,
   MatButtonModule,
