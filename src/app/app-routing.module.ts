@@ -6,9 +6,6 @@ import { SheetComponent } from './sheet/sheet.component';
 import { SettingsComponent } from './auth/settings/settings.component';
 import { MusicDetailComponent } from './list/music-detail.component';
 import { MusicListComponent } from './list/music-list.component';
-import { UploadComponent } from './admin/upload/upload.component';
-import { AdminComponent } from './admin/admin.component';
-
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
@@ -16,10 +13,7 @@ const routes: Routes = [
   { path: 'sheet', component: SheetComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'music-detail', component: MusicDetailComponent, canActivate: [AuthGuard] },
-  { path: 'music-list', component: MusicListComponent, canActivate: [AuthGuard] },
-  { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent },
-
+  { path: 'music-list', component: MusicListComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

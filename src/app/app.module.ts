@@ -15,16 +15,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { MusicListComponent } from './list/music-list.component';
 import { MusicDetailComponent } from './list/music-detail.component';
-import { SettingsComponent } from './auth/settings/settings.component';
-import { AdminComponent } from './admin/admin.component';
-import { UploadComponent } from './admin/upload/upload.component';
 import { SheetComponent } from './sheet/sheet.component';
-
-import { InvolucradosComponent } from './shared/ui/involucrados.component';
-import { InstrumentosComponent } from './shared/ui/instrumentos.component';
-import { AlmacenamientoComponent } from './shared/ui/almacenamiento.component';
-import { GenerosComponent } from './shared/ui/generos.component';
-import { FileComponent } from './shared/ui/file.component';
 
 import { UIService } from './shared/ui.service';
 import { AuthService } from './auth/auth.service';
@@ -35,6 +26,7 @@ import { reducers } from './app.reducer';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthModule } from './auth/auth.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -44,18 +36,11 @@ import { AuthModule } from './auth/auth.module';
     SidenavListComponent,
     MusicListComponent,
     MusicDetailComponent,
-    SettingsComponent,
-    AdminComponent,
-    UploadComponent,
     SheetComponent,
-    InstrumentosComponent,
-    InvolucradosComponent,
-    AlmacenamientoComponent,
-    GenerosComponent,
-    FileComponent
   ],
   imports: [
     AuthModule,
+    AdminModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialFireModule,

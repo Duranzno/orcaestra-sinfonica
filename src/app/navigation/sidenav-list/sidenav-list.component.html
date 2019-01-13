@@ -7,16 +7,16 @@
     <mat-icon>input</mat-icon>
     <span class="nav-caption">Login</span>
   </a>
-  <a mat-list-item routerLink="/upload" (click)="onClose()" *ngIf="!(isAuth$ | async)">
+  <a mat-list-item routerLink="/upload" (click)="onClose()" *ngIf="(isAuth$ | async)">
     <!--&&isAdmin-->
     <mat-icon>input</mat-icon>
     <span class="nav-caption">Subir Partituras</span>
   </a>
-  <a mat-list-item routerLink="/sheet" (click)="onClose()" *ngIf="!(isAuth$ | async)">
+  <a mat-list-item routerLink="/sheet" (click)="onClose()" *ngIf="(isAuth$ | async)">
     <mat-icon>input</mat-icon>
     <span class="nav-caption">Partitura</span>
   </a>
-  <a mat-list-item routerLink="/music-list" (click)="onClose()" *ngIf="!(isAuth$ | async)">
+  <a mat-list-item routerLink="/music-list" (click)="onClose()" *ngIf="(isAuth$ | async)">
     <mat-icon>input</mat-icon>
     <span class="nav-caption">Lista Partituras</span>
   </a>

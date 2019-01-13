@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth.service';
-import {UIService} from '../../shared/ui.service'
+import { UIService } from '../../shared/ui.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,14 +11,14 @@ import {UIService} from '../../shared/ui.service'
   styleUrls: ['./signup.component.less']
 })
 export class SignupComponent implements OnInit, OnDestroy {
- 	maxDate;
+  maxDate;
   isLoading = false;
   private $loading: Subscription;
 
   constructor(
-  	private authService: AuthService,
-   	private uiService: UIService
-   ) { }
+    private authService: AuthService,
+    private uiService: UIService
+  ) { }
 
 
   ngOnInit() {
@@ -37,9 +37,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.$loading.unsubscribe();
   }
-  tryGoogleLogin(){
-    console.log("Google Login");
+  tryGoogleLogin() {
+    console.log('Google Login');
     this.authService.doGoogleLogin();
-    
+
   }
 }

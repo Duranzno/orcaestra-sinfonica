@@ -6,9 +6,10 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-    declarations: [SignupComponent, LoginComponent],
+    declarations: [SignupComponent, LoginComponent, SettingsComponent],
     imports: [
         ReactiveFormsModule,
         AngularFireAuthModule,
