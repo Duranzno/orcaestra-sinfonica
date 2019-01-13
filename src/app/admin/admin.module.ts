@@ -10,7 +10,7 @@ import { GenerosComponent } from '../shared/ui/generos.component';
 import { InvolucradosComponent } from '../shared/ui/involucrados.component';
 import { FileComponent } from '../shared/ui/file.component';
 import { InstrumentosComponent } from '../shared/ui/instrumentos.component';
-
+import { UploadService } from './upload.service';
 @NgModule({
     declarations: [
         AdminComponent,
@@ -25,6 +25,9 @@ import { InstrumentosComponent } from '../shared/ui/instrumentos.component';
         ReactiveFormsModule,
         SharedModule,
         AdminRoutingModule
+    ],
+    providers: [
+        UploadService,
     ]
 })
 export class AdminModule { }

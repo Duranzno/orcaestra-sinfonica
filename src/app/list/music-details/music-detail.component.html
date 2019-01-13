@@ -5,9 +5,10 @@
     <!-- <mat-card-subtitle>{{mockData.involucrados[0].nombre}}</mat-card-subtitle> -->
   </mat-card-header>
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+  <p> {{mockData|json}}</p>
   <mat-card-content>
     <p>
-      {{mockData$ |async}}
+      {{mockData|json}}
     </p>
   </mat-card-content>
   <mat-card-actions>

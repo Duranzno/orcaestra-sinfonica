@@ -46,6 +46,8 @@
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+			  "serviceWorker":true,
+			  "ngswConfigPath":"src/ngsw-config.json",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

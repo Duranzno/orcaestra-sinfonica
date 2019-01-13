@@ -7,11 +7,13 @@ import * as fromAuth from './auth/auth.reducer';
 export interface State {
     ui: fromUi.State;
     auth: fromAuth.State;
+    music: fromMusic.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
     ui: fromUi.uiReducer,
-    auth: fromAuth.authReducer
+    auth: fromAuth.authReducer,
+    music: fromMusic.musicReducer,
 };
 
 export const getUiState = createFeatureSelector<fromUi.State>('ui');
@@ -19,4 +21,7 @@ export const getIsLoading = createSelector(getUiState, fromUi.getIsLoading);
 
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
 export const getIsAuth = createSelector(getAuthState, fromAuth.getIsAuth);
+
+export const getMusicState = createFeatureSelector<fromMusic.State>('music');
+export const getPartitura = createSelector(getMusicState, fromMusic.getPartitura);
 
