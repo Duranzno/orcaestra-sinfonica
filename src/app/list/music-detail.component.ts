@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IScore } from '../shared/models/partitura.interface'
+import { IScore } from '../shared/models/partitura.interface';
 import { IStoredType } from '../shared/models/almacenamiento.interface';
 import { PersonaTipo } from '../shared/models/autor.interface';
 import { MusicService } from './music.service';
@@ -18,8 +18,8 @@ export class MusicDetailComponent implements OnInit {
   constructor(private musicService: MusicService, private store: Store<fromMusic.State>) { }
 
   ngOnInit() {
-    this.mockData$ = this.store.select(fromMusic.getPartitura);
-    this.mockData$.subscribe(res => console.log(res))
+    // this.mockData$ = this.store.select(fromMusic.getPartitura);
+    // this.mockData$.subscribe(res => console.log(res));
   }
 
 }

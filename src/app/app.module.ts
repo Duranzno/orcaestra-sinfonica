@@ -7,12 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialFireModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AngularFireModule } from '@angular/fire';
+
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { MusicListComponent } from './list/music-list.component';
@@ -36,13 +34,12 @@ import { environment } from '../environments/environment';
 import { reducers } from './app.reducer';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    LoginComponent,
-    SignupComponent,
     HeaderComponent,
     SidenavListComponent,
     MusicListComponent,
@@ -58,6 +55,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     FileComponent
   ],
   imports: [
+    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialFireModule,
@@ -68,7 +66,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     StoreModule.forRoot(reducers),
-    //  StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     AuthService,

@@ -11,6 +11,6 @@ export class MusicService {
 
   constructor(private store: Store<fromMusic.State>) { }
   setPartitura(mock: IScore) {
-    this.store.dispatch(new Music.SetPartitura(mock))
+    this.store.dispatch(new Music.SetPartitura(mock));
   }
 }

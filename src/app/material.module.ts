@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import {
@@ -32,7 +31,6 @@ import {
 
 const material = [
   // Angular
-  AngularFireAuthModule,
   AngularFirestoreModule,
   AngularFireFunctionsModule,
   AngularFireMessagingModule,
@@ -66,4 +64,4 @@ const material = [
   imports: material,
   exports: material,
 })
-export class MaterialFireModule {}
+export class MaterialFireModule { }
