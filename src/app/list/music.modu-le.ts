@@ -11,18 +11,18 @@ import { MusicDetailComponent } from './music-details/music-detail.component';
 import { MusicRoutingModule } from './music-routing.module';
 import { musicReducer } from './music.reducer';
 
-@NgModule({
-  declarations: [
-    MusicListComponent,
-    MusicDetailComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FlexLayoutModule,
-    MaterialFireModule,
-    MusicRoutingModule,
-  ],
-  entryComponents: []
-})
+// @NgModule({
+//   declarations: [
+//     MusicListComponent,
+//     MusicDetailComponent,
+//   ],
+//   imports: [
+//     CommonModule,
+//     SharedModule,
+//     FlexLayoutModule,
+//     MaterialFireModule,
+//     MusicRoutingModule,
+//   ],
+//   entryComponents: []
+// })
 export class MusicModule { }

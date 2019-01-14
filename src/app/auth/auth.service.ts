@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material';
 
-import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 import * as firebase from 'firebase/app';
 import { UIService } from '../shared/ui.service';
@@ -12,35 +11,56 @@ import { UIService } from '../shared/ui.service';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as Auth from './auth.actions';
+import * as music from '../list/music.actions';
 import { Store } from '@ngrx/store';
-
+import { AngularFirestore } from '@angular/fire/firestore';
+const grupos = [
+  'Sin Determinar',
+  'Coro de Padres',
+  'Inicial',
+  'Preparatorio "B"',
+  '"Alma Llanera"',
+  'IMA',
+  'IMB',
+  'PMA',
+  'PMB',
+  'Pre-Infantil',
+  'Infantil',
+  'Pre Juvenil',
+  'Juvenil',
+  'Kinder Musical',
+];
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-  private isAuthenticated = false;
 
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
+    private afStore: AngularFirestore,
     private snackbar: MatSnackBar,
     private uiService: UIService,
     private store: Store<fromRoot.State>
   ) { }
-
+  public fetchGrupos() {
+    this.afStore.collection('categories').valueChanges().subscribe(json => console.log(json));
+    this.store.dispatch(new music.SetGrupos(grupos));
+  }
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new Auth.SetAuthenticated());
-        this.router.navigate(['/music-list']);
+        this.router.navigate(['/welcome']);
       } else {
         // this.trainingService.cancelSubscriptions();//KILL SUBSCRIPTIONS
 
         this.store.dispatch(new Auth.SetUnauthenticated());
-        this.router.navigate(['/login']);
+        this.router.navigate(['/signup']);
       }
     });
   }
   registerUser(authData: AuthData) {
+    console.log(authData);
     this.store.dispatch(new UI.StartLoading());
     // this.afAuth.auth.setPersistence()
     this.afAuth.auth
@@ -51,26 +71,6 @@ export class AuthService {
       })
       .catch(error => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch(new UI.StopLoading());
-        this.snackbar.open(error.message, null, {
-          duration: 3000
-        });
-      });
-  }
-  doGoogleLogin() {
-    this.store.dispatch(new UI.StartLoading());
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
-
-    this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(function (r) {
-        console.log(r.user);
-        this.store.dispatch(new UI.StopLoading());
-      })
-      .catch(error => {
-        console.error(error);
         this.store.dispatch(new UI.StopLoading());
         this.snackbar.open(error.message, null, {
           duration: 3000

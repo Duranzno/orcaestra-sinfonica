@@ -2,7 +2,22 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
+const grupos = [
+  'Sin Determinar',
+  'Coro de Padres',
+  'Inicial',
+  'Preparatorio "B"',
+  '"Alma Llanera"',
+  'IMA',
+  'IMB',
+  'PMA',
+  'PMB',
+  'Pre-Infantil',
+  'Infantil',
+  'Pre Juvenil',
+  'Juvenil',
+  'Kinder Musical',
+];
 const url = '';
 
 @Injectable({ providedIn: 'root' })
@@ -11,8 +26,10 @@ export class UploadService {
   constructor(
     private http: HttpClient,
     private db: AngularFirestore) { }
-
-  public uploadScore(score) {
+  getGroups() {
+    // this.store.dispatch(new music.SetGrupos(grupos));
+  }
+  uploadScore(score) {
     this.db
       .collection('partituras')
       .add({ score })

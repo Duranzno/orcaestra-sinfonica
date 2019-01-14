@@ -11,14 +11,20 @@
       <mat-error>Debe tener al menos 6 caracteres.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Fecha de Nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate" required>
+      <input matInput placeholder="Fecha de Nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate"
+        required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <!-- <mat-checkbox ngModel name="agree" required color="primary">Agree to Terms and Conditions.</mat-checkbox> -->
-    <button *ngIf="!isLoading" type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Enviar</button>
-    <button *ngIf="!isLoading" mat-raised-button color="primary" (click)="tryGoogleLogin()">Inicio de Sesion por Google </button>
-    
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-checkbox ngModel name="isAdmin" color="primary">Es administrador?</mat-checkbox>
+    <mat-select placeholder="Placeholder" ngModel name="grupo">
+      <mat-option *ngFor="let g of grupos$ | async" [value]="g">
+        {{g}}
+      </mat-option>
+    </mat-select>
+
+    <button *ngIf="!(isLoading$|async)" type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Enviar</button>
+    <mat-spinner *ngIf="isLoading$|async"></mat-spinner>
   </form>
 </section>

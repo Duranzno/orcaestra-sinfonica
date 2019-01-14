@@ -6,7 +6,7 @@ import { MusicService } from '../music.service';
 import { Store } from '@ngrx/store';
 import * as fromMusic from '../music.reducer';
 import * as Music from '../music.actions';
-
+import * as fromAll from '../../app.reducer';
 @Component({
   selector: 'app-music-list',
   templateUrl: './music-list.component.html',
@@ -22,10 +22,13 @@ export class MusicListComponent implements OnInit {
     instrumentos: ['Piano', 'Violin'],
     extraInfo: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore.',
   };
+  state: { ui?: any, auth?: any, music?: any } = {};
+
   constructor(private musicService: MusicService, private store: Store<fromMusic.State>) { }
 
   ngOnInit() {
     this.musicService.setPartitura(this.mockData);
+    this.store.select(fromAll.getPartitura).subscribe(x => this.state.music = x);
   }
 
 }

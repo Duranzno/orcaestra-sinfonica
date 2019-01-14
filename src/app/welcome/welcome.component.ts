@@ -4,6 +4,7 @@ import * as fromMusic from '../list/music.reducer';
 import * as fromAuth from '../auth/auth.reducer';
 import * as fromAll from '../app.reducer';
 import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
