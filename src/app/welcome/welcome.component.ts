@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as fromUi from '../shared/ui.reducer';
-import * as fromMusic from '../list/music.reducer';
-import * as fromAuth from '../auth/auth.reducer';
+import * as fromUi from '../shared/redux/ui.reducer';
+import * as fromMusic from '../list/redux/music.reducer';
+import * as fromAuth from '../auth/redux/auth.reducer';
 import * as fromAll from '../app.reducer';
 import { Store } from '@ngrx/store';
 

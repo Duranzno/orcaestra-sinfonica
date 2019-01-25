@@ -1,18 +1,45 @@
 <mat-card class="example-card">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <!-- <mat-card-title>a</mat-card-title> -->
-    <!-- <mat-card-subtitle>{{mockData.involucrados[0].nombre}}</mat-card-subtitle> -->
+    <img mat-card-avatar [src]='mockData.photoURL'>
+    <mat-card-title>{{mockData.obra}}</mat-card-title>
+    <mat-card-subtitle>{{mockData.gente[1].nombre}} {{mockData.gente[1].apellido}}</mat-card-subtitle>
   </mat-card-header>
-  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-  <p> {{mockData|json}}</p>
+  <img mat-card-image src='/assets/9th/file.png' alt="Foto de{mockData.obra]}}">
   <mat-card-content>
-    <p>
-      {{mockData|json}}
-    </p>
+
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header align="end">
+        <mat-chip-list *ngFor="let i of mockData.instrumentos" ariaOrientation="horizontal">
+          <mat-chip color="accent" selected>
+            <mat-icon>music_note</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <div fxFlex></div>
+        Expandir
+      </mat-expansion-panel-header>
+      <p>
+        {{mockData.extrainfo}}
+      </p>
+      <mat-divider [inset]="
+      true">
+      </mat-divider>
+      <div style="padding-top:5px">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let g of mockData.generos" color="primary" [selectable]="true" (click)="log(g)">{{g}}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-expansion-panel>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
+  <mat-card-actions align="end">
+    <button mat-button>LEFT</button>
+    <button mat-button>RIGHT</button>
+    <div fxFlex></div>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>favorite</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

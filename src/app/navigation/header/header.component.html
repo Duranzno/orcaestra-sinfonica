@@ -9,24 +9,24 @@
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li *ngIf="!(isAuth$ | async)">
+      <li *ngIf="!((user$ | async).nombre!='')">
         <a routerLink="/signup">Registrarse</a>
       </li>
-      <li *ngIf="!(isAuth$ | async)">
+      <li *ngIf="!((user$ | async).nombre!='')">
         <a routerLink="/login">Iniciar Sesion</a>
       </li>
-      <li *ngIf="(isAuth$ |async)&&(isAdmin$)">
+      <li *ngIf="((user$ | async).nombre!='')">
         <!--&&isAdmin-->
         <a routerLink="/upload">Subir Partituras</a>
       </li>
-      <li *ngIf="(isAuth$ | async)">
+      <li *ngIf="((user$ | async).nombre!='')">
         <!--&&isAdmin-->
         <a routerLink="/sheet">Partitura</a>
       </li>
-      <li *ngIf="isAuth$ | async">
+      <li *ngIf="((user$ | async).nombre!='')">
         <a routerLink="/music-list">Lista Partituras</a>
       </li>
-      <li *ngIf="isAuth$ | async">
+      <li *ngIf="((user$ | async).nombre!='')">
         <a style="cursor: pointer" (click)="onLogout()">Logout</a>
       </li>
     </ul>

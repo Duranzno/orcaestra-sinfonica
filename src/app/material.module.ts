@@ -27,6 +27,7 @@ import {
   MatSliderModule,
   MatGridListModule,
   MatProgressBarModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 const material = [
@@ -59,6 +60,7 @@ const material = [
   MatPaginatorModule,
   MatSnackBarModule,
   MatGridListModule,
+  MatExpansionModule,
 ];
 @NgModule({
   imports: material,

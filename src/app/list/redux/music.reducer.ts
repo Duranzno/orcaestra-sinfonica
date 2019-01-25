@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MusicActions, SET_PARTITURA, SET_GRUPOS } from './music.actions';
-import { IScore } from '../shared/models/partitura.interface';
-import * as fromRoot from '../app.reducer';
+import { IScore } from '../../shared/models/partitura.interface';
+import * as fromRoot from '../../app.reducer';
 
 export interface State {
     partitura: IScore;

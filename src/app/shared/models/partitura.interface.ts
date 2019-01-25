@@ -1,28 +1,29 @@
-import { Persona } from "./autor.interface"
-import { IStored } from "./almacenamiento.interface";
+import { Persona } from './autor.interface';
+import { IStored } from './almacenamiento.interface';
 
 
 export interface IScore {
-    ///Obligatorios
+  /// Obligatorios
 
+  // Numero  legado del sistema Anterior
+  its: number;
+  // Nombre de la Obra
+  obra: string;
+  // Interfaz para reconocer el tipo de canción
+  almacenamiento: IStored[];
 
-    //Numero  legado del sistema Anterior
-    its: number;
-    //Nombre de la Obra
-    obra: string;
-    //Interfaz para reconocer el tipo de canción
-    almacenamiento: IStored[];
+  generos?: string[];
+  // Tipo Almacenamiento Fisico
+  // Instrumentos Usados
+  instrumentos?: string[];
+  /// OPTIONALES
+  gente?: Persona[];
 
-    generos?: string[];
-    //Tipo Almacenamiento Fisico 
-    //Instrumentos Usados
-    instrumentos?: string[];
-    ///OPTIONALES
-    involucrados?: Persona[];
-
-    _id?: any;
-    //TODO OP/K/V/HOB  =>¿Que significan?
-    //Información Extra
-    extraInfo?: string;
+  _id?: any;
+  // TODO OP/K/V/HOB  =>¿Que significan?
+  // Información Extra
+  extrainfo?: string;
+  youtube?: string;
+  photoURL?: string;
 
 }

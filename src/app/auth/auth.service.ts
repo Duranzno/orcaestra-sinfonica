@@ -1,39 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material';
 
-import { AuthData } from './auth-data.model';
+import { User } from '../shared/models/user.model';
 import * as firebase from 'firebase/app';
 import { UIService } from '../shared/ui.service';
 
 import * as fromRoot from '../app.reducer';
-import * as UI from '../shared/ui.actions';
-import * as Auth from './auth.actions';
-import * as music from '../list/music.actions';
+import * as UI from '../shared/redux/ui.actions';
+import * as Auth from './redux/auth.actions';
+import * as Music from '../list/redux/music.actions';
 import { Store } from '@ngrx/store';
-import { AngularFirestore } from '@angular/fire/firestore';
-const grupos = [
-  'Sin Determinar',
-  'Coro de Padres',
-  'Inicial',
-  'Preparatorio "B"',
-  '"Alma Llanera"',
-  'IMA',
-  'IMB',
-  'PMA',
-  'PMB',
-  'Pre-Infantil',
-  'Infantil',
-  'Pre Juvenil',
-  'Juvenil',
-  'Kinder Musical',
-];
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-
+  user: any;
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
@@ -41,57 +26,71 @@ export class AuthService {
     private snackbar: MatSnackBar,
     private uiService: UIService,
     private store: Store<fromRoot.State>
-  ) { }
+  ) {
+  }
+
   public fetchGrupos() {
-    this.afStore.collection('categories').valueChanges().subscribe(json => console.log(json));
-    this.store.dispatch(new music.SetGrupos(grupos));
+    this.afStore.collection('categories').valueChanges()
+      .subscribe(json => {
+        this.store.dispatch(new Music.SetGrupos(json[0]['grupos']));
+      });
   }
   initAuthListener() {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.store.dispatch(new Auth.SetAuthenticated());
-        this.router.navigate(['/welcome']);
-      } else {
-        // this.trainingService.cancelSubscriptions();//KILL SUBSCRIPTIONS
+    // this.afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     this.store.dispatch(new Auth.SetAuthenticated(user));
+    //     // this.user = this.afStore.doc<AuthData>(`users/${user.uid}`).valueChanges();
+    //     this.router.navigate(['/welcome']);
+    //   } else {
+    //     // this.trainingService.cancelSubscriptions();//KILL SUBSCRIPTIONS
 
-        this.store.dispatch(new Auth.SetUnauthenticated());
-        this.router.navigate(['/signup']);
-      }
-    });
+    //     this.store.dispatch(new Auth.SetUnauthenticated());
+    //     this.router.navigate(['/signup']);
+    //   }
+    // });
   }
-  registerUser(authData: AuthData) {
-    console.log(authData);
+  private updateUserData(uid: string, data: User) {
+    // Sets user data to firestore on login
+    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
+    return userRef.set(data, { merge: true });
+  }
+  private fetchUserData(uid: string) {
+    return this.afStore.doc(`usuarios/${uid}`).valueChanges();
+  }
+  async registerUser(user: User) {
     this.store.dispatch(new UI.StartLoading());
     // this.afAuth.auth.setPersistence()
-    this.afAuth.auth
-      .createUserWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
-        // this.uiService.loadingStateChanged.next(false))
-        this.store.dispatch(new UI.StopLoading());
-      })
-      .catch(error => {
-        // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch(new UI.StopLoading());
-        this.snackbar.open(error.message, null, {
-          duration: 3000
-        });
-      });
+    try {
+      const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      await this.updateUserData(loggedUser.user.uid, user);
+      this.store.dispatch(new Auth.SetAuthenticated(user));
+    } catch (error) {
+      this.snackbar.open(error.message, null, { duration: 3000 });
+    }
+    this.store.dispatch(new UI.StopLoading());
+
   }
-  login(authData: AuthData) {
+
+  async login(user: User) {
+    let loggedUser;
     this.store.dispatch(new UI.StartLoading());
-    this.afAuth.auth
-      .signInWithEmailAndPassword(authData.email, authData.password)
-      .then(result => {
-        this.store.dispatch(new UI.StopLoading());
-      })
-      .catch(error => {
-        this.store.dispatch(new UI.StopLoading());
-        this.snackbar.open(error.message, null, {
-          duration: 3000
-        });
+    try {
+      const { user: { uid: uid } } = await this.afAuth.auth
+        .signInWithEmailAndPassword(user.email, user.password);
+      console.log(uid);
+      this.fetchUserData(uid).subscribe(u => {
+        loggedUser = u;
+        console.log(u);
       });
+      this.store.dispatch(new Auth.SetAuthenticated(user));
+    } catch (error) {
+      this.snackbar.open(error.message, null, { duration: 3000 });
+    }
+    this.store.dispatch(new UI.StopLoading());
   }
+
   logout() {
+    this.store.dispatch(new Auth.SetUnauthenticated);
     this.afAuth.auth.signOut();
   }
 }

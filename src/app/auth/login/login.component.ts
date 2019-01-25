@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth.service';
 import { UIService } from '../../shared/ui.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { UIService } from '../../shared/ui.service';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
+  form: FormGroup;
   isLoading = false;
   private $loading: Subscription;
   constructor(private authService: AuthService, private uiService: UIService) { }
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.$loading = this.uiService.loadingStateChanged.subscribe(isLoading => {
       this.isLoading = isLoading;
     });
-    this.loginForm = new FormGroup({
+    this.form = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]
       }),
@@ -28,10 +29,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    this.authService.login({
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    });
+    const user: User = {
+      email: this.form.value.email,
+      password: this.form.value.password,
+    };
+    this.authService.login(user);
+    console.log(user);
   }
   ngOnDestroy() {
     this.$loading.unsubscribe();

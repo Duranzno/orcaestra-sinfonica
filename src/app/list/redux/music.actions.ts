@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IScore } from '../shared/models/partitura.interface';
+import { IScore } from '../../shared/models/partitura.interface';
 
 export const SET_PARTITURA = '[Music] Partitura Seleccionada';
 export const SET_GRUPOS = '[Music] Grupos seleccionados';

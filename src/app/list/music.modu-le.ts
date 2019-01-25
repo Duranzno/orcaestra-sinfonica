@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MusicListComponent } from './music-list/music-list.component';
 import { MusicDetailComponent } from './music-details/music-detail.component';
 import { MusicRoutingModule } from './music-routing.module';
-import { musicReducer } from './music.reducer';
+import { musicReducer } from './redux/music.reducer';
 
 // @NgModule({
 //   declarations: [

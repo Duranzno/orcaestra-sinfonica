@@ -5,9 +5,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { IScore } from '../shared/models/partitura.interface';
 import { UIService } from '../shared/ui.service';
-import * as UI from '../shared/ui.actions';
-import * as Music from './music.actions';
-import * as fromMusic from './music.reducer';
+import * as UI from '../shared/redux/ui.actions';
+import * as Music from './redux/music.actions';
+import * as fromMusic from './redux/music.reducer';
 
 @Injectable({
   providedIn: 'root'

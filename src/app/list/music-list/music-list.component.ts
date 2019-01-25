@@ -4,8 +4,8 @@ import { IStoredType } from '../../shared/models/almacenamiento.interface';
 import { IScore } from '../../shared/models/partitura.interface';
 import { MusicService } from '../music.service';
 import { Store } from '@ngrx/store';
-import * as fromMusic from '../music.reducer';
-import * as Music from '../music.actions';
+import * as fromMusic from '../redux/music.reducer';
+import * as Music from '../redux/music.actions';
 import * as fromAll from '../../app.reducer';
 @Component({
   selector: 'app-music-list',
@@ -17,10 +17,10 @@ export class MusicListComponent implements OnInit {
     its: 1,
     obra: 'Quinta Sinfonia',
     almacenamiento: [{ cantidad: 2, 'tipo': IStoredType.COPIA }],
-    involucrados: [{ nombre: 'Ludwing van', 'apellido': 'Beethoven', 'tipo': PersonaTipo.AUTOR }],
+    gente: [{ nombre: 'Ludwing van', 'apellido': 'Beethoven', 'tipo': PersonaTipo.AUTOR }],
     generos: ['Clasica', 'Musica Vieja'],
     instrumentos: ['Piano', 'Violin'],
-    extraInfo: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore.',
+    extrainfo: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore.',
   };
   state: { ui?: any, auth?: any, music?: any } = {};
 

@@ -1,27 +1,26 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 
-import * as fromUi from './shared/ui.reducer';
-import * as fromMusic from './list/music.reducer';
-import * as fromAuth from './auth/auth.reducer';
+import * as fromUi from './shared/redux/ui.reducer';
+import * as fromMusic from './list/redux/music.reducer';
+import * as fromAuth from './auth/redux/auth.reducer';
 
 export interface State {
     ui: fromUi.State;
-    auth: fromAuth.State;
+    user: fromAuth.State;
     music: fromMusic.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
     ui: fromUi.uiReducer,
-    auth: fromAuth.authReducer,
+    user: fromAuth.authReducer,
     music: fromMusic.musicReducer,
 };
 
 export const getUiState = createFeatureSelector<fromUi.State>('ui');
 export const getIsLoading = createSelector(getUiState, fromUi.getIsLoading);
 
-export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
-export const getIsAuth = createSelector(getAuthState, fromAuth.getIsAuth);
-export const getIsAdmin = createSelector(getAuthState, fromAuth.getIsAdmin);
+export const getAuthState = createFeatureSelector<fromAuth.State>('user');
+export const getUser = createSelector(getAuthState, fromAuth.getUser);
 
 export const getMusicState = createFeatureSelector<fromMusic.State>('music');
 export const getPartitura = createSelector(getMusicState, fromMusic.getPartitura);

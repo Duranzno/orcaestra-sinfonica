@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { YoutubePlayerModule } from 'ngx-youtube-player';
+
 
 import { MaterialFireModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +28,7 @@ import { UploadService } from './admin/upload.service';
 import { environment } from '../environments/environment';
 import { reducers } from './app.reducer';
 import { AuthModule } from './auth/auth.module';
-import { AdminModule } from './admin/admin.module';
+import { AdminModule } from './admin/admin/admin.module';
 import { MusicService } from './list/music.service';
 
 @NgModule({
@@ -50,10 +52,11 @@ import { MusicService } from './list/music.service';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production}),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    YoutubePlayerModule
   ],
   providers: [
     AuthService,
