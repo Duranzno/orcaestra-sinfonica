@@ -9,7 +9,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 @Component({
   selector: 'generos',
   templateUrl: './generos.component.html',
-  styles: []
+  styleUrls: []
 })
 export class GenerosComponent implements OnInit{
   @Input('form')public generosForm: FormGroup;

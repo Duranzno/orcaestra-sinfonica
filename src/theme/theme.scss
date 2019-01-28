@@ -1,0 +1,71 @@
+@import '~@angular/material/theming';
+@import '../app/app.component.scss';
+@import '../app/navigation/sidenav/sidenav-list.component.scss';
+@import '../app/navigation/sidenav/sidenav-item.component.scss';
+
+$mat-light-theme-background: (
+  status-bar: map_get($mat-grey, 300),
+  app-bar:    map_get($mat-grey, 100),
+  background: map_get($mat-indigo, 50),
+  hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+  card:       white,
+  dialog:     white,
+  disabled-button: $black-12-opacity,
+  raised-button: white,
+  focused-button: $black-6-opacity,
+  selected-button: map_get($mat-grey, 300),
+  selected-disabled-button: map_get($mat-grey, 400),
+  disabled-button-toggle: map_get($mat-grey, 200),
+  unselected-chip: map_get($mat-grey, 300),
+  disabled-list-option: map_get($mat-grey, 200),
+);
+
+@include mat-core();
+
+$primary : $mat-indigo;
+$accent  : $mat-orange;
+$warn    : $mat-red;
+
+
+
+$primary-app-primary: mat-palette($primary , 400);
+$primary-app-accent:  mat-palette($accent , 900);
+$primary-app-warn:    mat-palette($warn );
+$theme:   mat-light-theme($primary-app-primary, $primary-app-accent,$primary-app-warn);
+
+app-sidenav-list{
+    $sidenav-app-primary: mat-palette($primary , 400);
+    $sidenav-app-accent:  mat-palette($accent , 900);
+    $sidenav-app-warn:    mat-palette($warn );
+    $app-sidenav-theme:   mat-dark-theme($sidenav-app-primary, $sidenav-app-accent,$sidenav-app-warn);
+    @include mat-list-theme($app-sidenav-theme);
+}
+
+
+app-sidenav-item{
+    @include sidenav-item($theme,20px)
+}
+
+@include angular-material-theme($theme);
+@include main($theme);
+
+html {
+  height:100%;
+}
+body{
+  padding: 0px !important;
+  margin: 0px !important;
+  height:100%;
+}
+.components-container-gt-xs {
+    padding: 20px;
+    // background-color: #fdfdfd;
+}
+.components-container-xs {
+    padding: 5px !important;
+    // background-color: #fdfdfd;
+}
+.component-preview {
+    padding: 20px;
+}
+

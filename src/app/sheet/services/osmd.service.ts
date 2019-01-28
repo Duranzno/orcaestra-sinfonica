@@ -9,10 +9,12 @@ export class OsmdService {
   private osmd: OpenSheetMusicDisplay;
 
   constructor(private http: HttpClient) { }
-  setup(container) {
-    this.osmd = new OpenSheetMusicDisplay(container, { autoResize: false });
+  setup(url) {
+    const container = document.getElementById('osmd');
+    console.log(container);
+    this.osmd = new OpenSheetMusicDisplay(container, { autoResize: true });
     // tslint:disable-next-line:max-line-length
-    this.loadMusicXML('https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/develop/test/data/ActorPreludeSample.xml');
+    this.loadMusicXML(url);
   }
   loadMusicXML(url) {
     const ethis = this;
@@ -33,6 +35,7 @@ export class OsmdService {
           break;
         case 4: // COMPLETED
           ethis.osmd.load(xhttp.response);
+
           ethis.osmd.render();
           console.log('completed');
           console.log(xhttp.responseXML);

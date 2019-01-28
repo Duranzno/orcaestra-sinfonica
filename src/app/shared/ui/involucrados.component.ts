@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { PersonaTipo } from '../models/autor.interface';
 @Component({
   selector: 'app-involucrados',
-  styles: [],
+  styleUrls: [],
   template: `
   <div [formGroup]="form">  <!-- Nombre de la Persona Involucrada -->
   <mat-form-field>

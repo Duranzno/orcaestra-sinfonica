@@ -8,16 +8,16 @@ export class WavesurferService {
   public wavesurfer;
   constructor() { }
 
-  setup() {
+  setup(url) {
     this.wavesurfer = WaveSurfer.create({
       container: '#waveform',
       waveColor: 'violet',
       progressColor: 'purple'
     });
+    this.wavesurfer.load(url);
   }
 
   play() {
-    this.wavesurfer.load('/assets/9th/beethoven.mp3');
     this.wavesurfer.on('ready', () => {
       this.wavesurfer.play();
     });

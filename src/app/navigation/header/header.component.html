@@ -1,9 +1,10 @@
 <mat-toolbar color="primary">
-  <div>
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
+  <button mat-icon-button (click)="onToggleSidenav();onToggleDrawer();" *ngIf="matDrawerShow">
+    <i class="material-icons app-toolbar-menu">menu </i>
+  </button>
+  <button mat-icon-button (click)="onToggleSidenav();" *ngIf="!matDrawerShow">
+    <i class="material-icons app-toolbar-menu">menu </i>
+  </button>
   <div>
     <a routerLink="/">Orcaestra Sinfonica</a>
   </div>

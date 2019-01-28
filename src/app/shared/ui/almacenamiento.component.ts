@@ -5,7 +5,7 @@ import { IStoredType} from '../models/almacenamiento.interface';
 @Component({
   selector: 'almacenamiento',
   templateUrl: './almacenamiento.component.html',
-  styles: []
+  styleUrls: []
 })
 export class AlmacenamientoComponent{
   @Input('almacenamiento')

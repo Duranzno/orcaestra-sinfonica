@@ -59,9 +59,9 @@ export class AuthService {
   }
   async registerUser(user: User) {
     this.store.dispatch(new UI.StartLoading());
-    // this.afAuth.auth.setPersistence()
     try {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      this.afAuth.auth.setPersistence('local');
       await this.updateUserData(loggedUser.user.uid, user);
       this.store.dispatch(new Auth.SetAuthenticated(user));
     } catch (error) {
@@ -77,6 +77,8 @@ export class AuthService {
     try {
       const { user: { uid: uid } } = await this.afAuth.auth
         .signInWithEmailAndPassword(user.email, user.password);
+      this.afAuth.auth.setPersistence('local');
+
       console.log(uid);
       this.fetchUserData(uid).subscribe(u => {
         loggedUser = u;

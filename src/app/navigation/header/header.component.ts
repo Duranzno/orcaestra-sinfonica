@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
@@ -9,10 +9,13 @@ import { User } from '../../shared/models/user.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
+  @Output() drawerToggle = new EventEmitter<void>();
+  @Input() matDrawerShow;
+
   user$: Observable<User>;
   constructor(private authService: AuthService, private store: Store<fromRoot.State>) { }
 
@@ -22,10 +25,11 @@ export class HeaderComponent implements OnInit {
   onToggleSidenav() {
     this.sidenavToggle.emit();
   }
+  onToggleDrawer() {
+    this.drawerToggle.emit();
+  }
   onLogout() {
     this.authService.logout();
   }
-
-
 
 }

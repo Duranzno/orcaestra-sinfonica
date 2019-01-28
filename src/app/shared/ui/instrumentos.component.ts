@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-instrumentos',
   templateUrl: './instrumentos.component.html',
-  styles: []
+  styleUrls: []
 })
 export class InstrumentosComponent {
   @Input('form') form: FormGroup;

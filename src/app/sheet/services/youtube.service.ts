@@ -5,11 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class YoutubeService {
   player: YT.Player;
-  id = 't3217H8JppI';
-  constructor() {
-
+  id: string;
+  setup(url: string) {
+    this.id = this.urlParser(url);
+    console.log(this.id);
   }
-
+  urlParser(url: string) {
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      console.log(match);
+      return match[2];
+    } else {
+      // error
+    }
+  }
   savePlayer(player) {
     this.player = player;
     console.log('player instance', player);
