@@ -40,7 +40,7 @@ export class Score implements IScore {
     return this.media.getByTypeAndOrigin(type, MediaOriginType.ASSETS);
   }
   firestore(type: MediaType) {
-    return this.media.getByTypeAndOrigin(type, MediaOriginType.FIRESTORE);
+    return this.media.getByTypeAndOrigin(type, MediaOriginType.FIREBASE);
   }
   otherUrl(type: MediaType) {
     return this.media.getByTypeAndOrigin(type, MediaOriginType.OTHER);

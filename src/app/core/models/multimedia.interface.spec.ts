@@ -9,7 +9,7 @@ const arr: IMedia[] = [
   {
     'originArray': [
       { 'url': '/assets/9th/sheey.jpg', 'type': MediaOriginType.ASSETS },
-      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'type': MediaOriginType.FIRESTORE },
+      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'type': MediaOriginType.FIREBASE },
       { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'type': MediaOriginType.DROPBOX },
     ],
     'type': MediaType.IMG

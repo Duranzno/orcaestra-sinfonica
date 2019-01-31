@@ -31,21 +31,21 @@ export class AuthService {
 
 
   initAuthListener() {
-    // this.afAuth.authState
-    //   .pipe(tag('auth'))
-    //   .subscribe(fUser => {
-    //   if (fUser) {
-    //     this.fetchUserData(fUser.uid)
-    //       .pipe(tag('user'))
-    //       .subscribe(user =>
-    //         this.store.dispatch(new fromAuth.SetAuthenticated(<User> user)));
-    //         this.router.navigate(['/welcome']);
-    //   } else {
-    //     // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
-    //     this.store.dispatch(new fromAuth.SetUnauthenticated());
-    //     this.router.navigate(['/signup']);
-    //   }
-    // });
+    this.afAuth.authState
+      .pipe(tag('auth'))
+      .subscribe(fUser => {
+        if (fUser) {
+          this.fetchUserData(fUser.uid)
+            .pipe(tag('user'))
+            .subscribe(user =>
+              this.store.dispatch(new fromAuth.SetAuthenticated(<User> user)));
+          this.router.navigate(['/welcome']);
+        } else {
+          // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
+          this.store.dispatch(new fromAuth.SetUnauthenticated());
+          this.router.navigate(['/signup']);
+        }
+      });
   }
   fetchGrupos() {
     this.afStore.collection('categories').valueChanges()

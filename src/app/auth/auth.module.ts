@@ -9,12 +9,14 @@ import { SettingsComponent } from './settings/settings.component';
 import { MaterialFireModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CoreModule } from '../core';
 
 @NgModule({
   declarations: [SignupComponent, LoginComponent, SettingsComponent],
   imports: [
     CommonModule,
     FormsModule,
+    CoreModule,
     MaterialFireModule,
     ReactiveFormsModule,
     AngularFireAuthModule,

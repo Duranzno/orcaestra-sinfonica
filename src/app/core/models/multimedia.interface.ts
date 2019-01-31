@@ -8,7 +8,7 @@ export enum MediaType {
   AVATAR = 'avatar',
 }
 export enum MediaOriginType {
-  FIRESTORE = 'firestore',
+  FIREBASE = 'firestore',
   DROPBOX = 'dropbox',
   ASSETS = 'assets',
   OTHER = 'other',

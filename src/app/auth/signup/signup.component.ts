@@ -13,6 +13,8 @@ import * as fromMusic from '@core/store/music';
 
 import { create } from 'rxjs-spy';
 import { tag } from 'rxjs-spy/operators/tag';
+import { MediaType, MediaOriginType } from '../../core/models';
+import { UploadService } from '../../core/services/upload.service';
 
 @Component({
   selector: 'app-signup',
@@ -23,9 +25,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   maxDate;
   isLoading$: Observable<boolean>;
   grupos$: Observable<string[]>;
+
   state: { isAdmin?: any, auth?: any, music?: any } = {};
   constructor(
     private authService: AuthService,
+    private uploadService: UploadService,
     private store: Store<OrcaState>,
   ) { }
 
@@ -49,6 +53,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       isAdmin: form.value.isAdmin,
     };
     this.authService.registerUser(user);
+    this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
     // this.store.dispatch(new fromAuth.SetAuthenticated(user));
   }
   ngOnDestroy() {

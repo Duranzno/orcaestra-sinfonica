@@ -6,6 +6,7 @@ import { UploadService } from './upload.service';
 import { OsmdService } from './osmd.service';
 import { MusicService } from './music.service';
 import { YoutubeService } from './youtube.service';
+import { FbStorageService } from './upload/firebase.service';
 
 export const APP_SERVICES = [
   AuthService,
@@ -16,4 +17,5 @@ export const APP_SERVICES = [
   UploadService,
   WavesurferService,
   YoutubeService,
+  FbStorageService,
 ];
