@@ -2,7 +2,7 @@
 @import '../app/app.component.scss';
 @import '../app/navigation/sidenav/sidenav-list.component.scss';
 @import '../app/navigation/sidenav/sidenav-item.component.scss';
-
+@import '../app/core/components/file-upload/file-upload.component.scss';
 $mat-light-theme-background: (
   status-bar: map_get($mat-grey, 300),
   app-bar:    map_get($mat-grey, 100),
@@ -48,7 +48,7 @@ app-sidenav-item{
 
 @include angular-material-theme($theme);
 @include main($theme);
-
+@include dropzone($theme);
 html {
   height:100%;
 }

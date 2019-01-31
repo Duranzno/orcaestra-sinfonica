@@ -1,10 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app.reducer';
-import { User } from '../../shared/models/user.model';
+import { User } from '@core/models/user.model';
+import { OrcaState } from '@core/store';
+import * as fromAuth from '@core/store/auth';
 
 @Component({
   selector: 'app-header',
@@ -17,10 +18,10 @@ export class HeaderComponent implements OnInit {
   @Input() matDrawerShow;
 
   user$: Observable<User>;
-  constructor(private authService: AuthService, private store: Store<fromRoot.State>) { }
+  constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(fromRoot.getUser);
+    this.user$ = this.store.select(fromAuth.getUser);
   }
   onToggleSidenav() {
     this.sidenavToggle.emit();

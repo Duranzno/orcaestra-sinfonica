@@ -39,5 +39,5 @@ export class MediaArray {
       .getByType(type)
       .originArray.find(o => o.type === originType);
   }
-  
+
 }

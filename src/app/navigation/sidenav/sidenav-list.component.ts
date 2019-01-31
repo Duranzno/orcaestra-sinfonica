@@ -1,12 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { User } from '../../shared/models/user.model';
 import { menus } from './menu-element';
+import * as fromAuth from '@core/store/auth';
+import { AuthService } from '@core/services/auth.service';
+import { IUser } from '@core/models/user.model';
+import { OrcaState } from '@core/store';
 
-
-import * as fromRoot from '../../app.reducer';
-import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
@@ -15,13 +15,13 @@ import { AuthService } from '../../auth/auth.service';
 export class SidenavListComponent implements OnInit {
   @Input() iconOnly = false;
   @Output() closeSidenav = new EventEmitter<void>();
-  user$: Observable<User>;
+  user$: Observable<IUser>;
   public menus = menus;
 
-  constructor(private authService: AuthService, private store: Store<fromRoot.State>) { }
+  constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(fromRoot.getUser);
+    this.user$ = this.store.select(fromAuth.getUser);
   }
   onClose() {
     this.closeSidenav.emit();
@@ -29,6 +29,6 @@ export class SidenavListComponent implements OnInit {
 
   onLogout() {
     this.onClose();
-    this.authService.logout();
+    this.store.dispatch(new fromAuth.SetUnauthenticated());
   }
 }

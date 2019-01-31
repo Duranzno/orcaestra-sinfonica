@@ -1,20 +1,19 @@
-import { UIActions, START_LOADING, STOP_LOADING } from './ui.actions';
+import { ActionTypes, Actions } from './ui.actions';
 
 export interface State {
   isLoading: boolean;
 }
-
 const initialState: State = {
   isLoading: false
 };
 
-export function uiReducer(state = initialState, action: UIActions) {
+export function uiReducer(state = initialState, action: Actions) {
   switch (action.type) {
-    case START_LOADING:
+    case ActionTypes.START_LOADING:
       return {
         isLoading: true
       };
-    case STOP_LOADING:
+    case ActionTypes.STOP_LOADING:
       return {
         isLoading: false
       };
@@ -24,4 +23,3 @@ export function uiReducer(state = initialState, action: UIActions) {
   }
 }
 
-export const getIsLoading = (state: State) => state.isLoading;

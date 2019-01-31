@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AuthService } from '../auth.service';
-import { UIService } from '../../shared/ui.service';
-import { User } from 'src/app/shared/models/user.model';
+import { AuthService } from '@core/services/auth.service';
+import { UIService } from '@core/services/ui.service';
+import { IUser, User } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -29,10 +29,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    const user: User = {
-      email: this.form.value.email,
-      password: this.form.value.password,
-    };
+    const user: User = new User();
+    user.email = this.form.value.email;
+    user.password = this.form.value.password;
     this.authService.login(user);
     console.log(user);
   }

@@ -11,7 +11,7 @@ export class UploadService {
   constructor(
     private http: HttpClient,
     private db: AngularFirestore) { }
- 
+
   uploadScore(score) {
     this.db
       .collection('partituras')

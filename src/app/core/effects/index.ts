@@ -1,3 +1,5 @@
 import { EffectsModule } from '@ngrx/effects';
-
-export const AppEffectsModules = EffectsModule.forRoot([]);
+import { UIEffects } from './ui.effects';
+export const AppEffectsModules = EffectsModule.forRoot([
+  UIEffects
+]);

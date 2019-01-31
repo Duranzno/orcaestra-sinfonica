@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '@env/environment';
 import {
   MatChipsModule,
   MatButtonModule,
@@ -35,6 +39,7 @@ const material = [
   AngularFirestoreModule,
   AngularFireFunctionsModule,
   AngularFireMessagingModule,
+  AngularFireStorageModule,
   // Material
   MatChipsModule,
   MatProgressBarModule,
@@ -63,7 +68,9 @@ const material = [
   MatExpansionModule,
 ];
 @NgModule({
-  imports: material,
+  imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    ...material],
   exports: material,
 })
 export class MaterialFireModule { }

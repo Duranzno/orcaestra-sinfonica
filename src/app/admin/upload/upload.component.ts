@@ -1,9 +1,9 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { PersonaTipo } from '../../shared/models/autor.interface';
+import { PersonaTipo } from '@core/models/autor.interface';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { UploadService} from '../upload.service';
+import { UploadService} from '@core/services/upload.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
   chipInputCtrl = new FormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private _fb: FormBuilder,private uploadService:UploadService) {}
+  constructor(private _fb: FormBuilder, private uploadService: UploadService) {}
 
   ngOnInit() {
     this.form = this._fb.group({

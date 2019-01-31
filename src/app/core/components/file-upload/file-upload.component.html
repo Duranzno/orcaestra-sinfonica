@@ -1,0 +1,39 @@
+<mat-card class="upload-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>person</mat-icon> {{type|uppercase}}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div *ngIf="!(snapshot | async)">
+      <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)" [class.hovering]="isHovering">
+        <h3>Imagen de Perfil</h3>
+        <input color="accent" id="file-input" class="file-input" type="file" (change)="startUpload($event.target.files)">
+
+      </div>
+    </div>
+    <div *ngIf="(snapshot | async)?.state == 'success'">sucess</div>
+    <div *ngIf="snapshot | async as snap">
+      <div *ngIf="downloadURL | async as url">
+        <img class="upload-preview" [src]="url"><br>
+
+      </div>
+    </div>
+    <div *ngIf="(snapshot | async)?.state == 'running'">
+      <mat-progress-spinner mode="determinate" color="accent" [value]="percentage | async">
+      </mat-progress-spinner>
+    </div>
+
+
+
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)=" task.pause()" [disabled]="!isActive(snapshot | async)">Pausar</button>
+    <button mat-raised-button color="warn" (click)=" task.cancel()" [disabled]="!isActive(snapshot | async)">Cancelar</button>
+    <button mat-raised-button color="accent" (click)=" task.resume()" [disabled]="!((snapshot | async)?.state === 'paused')">Continuar</button>
+    <button mat-raised-button (click)="openInput()">Subir {{type|uppercase}}</button>
+  </mat-card-actions>
+</mat-card>

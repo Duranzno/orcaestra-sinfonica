@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IScore, Score } from '../../shared/models/partitura.interface';
-import { IStoredType } from '../../shared/models/almacenamiento.interface';
-import { PersonaTipo } from '../../shared/models/autor.interface';
-import { MusicService } from '../music.service';
 import { Store } from '@ngrx/store';
-
-import * as fromMusic from '../redux/music.reducer';
 import { Observable } from 'rxjs';
+
+import { MediaType, MediaOriginType, IScore, Score } from '@core/models';
+import { MusicService } from '@core/services/music.service';
+
+import * as fromMusic from '@core/store/music';
 import { mockSheet } from '../../shared/mock';
-import { MediaType, MediaOriginType } from '../../shared/models/multimedia.interface';
+import { OrcaState } from '../../core/store';
 
 @Component({
   selector: 'app-music-detail',
@@ -19,7 +18,10 @@ export class MusicDetailComponent implements OnInit {
   mockData$: Observable<IScore>;
   mockData: Score = mockSheet;
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
-  constructor(private musicService: MusicService, private store: Store<fromMusic.State>) { }
+
+  constructor(
+    private musicService: MusicService,
+    private store: Store<OrcaState>) { }
 
   ngOnInit() {
     this.mockData$ = this.store.select(fromMusic.getPartitura);

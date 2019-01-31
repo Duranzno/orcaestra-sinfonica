@@ -27,6 +27,22 @@ export const menus = [
     'chip': false,
     'open': false,
   },
+
+  {
+    'name': 'Detalles Musica',
+    'link': '/music-detail',
+    'icon': 'face',
+    'chip': false,
+    'open': false,
+  },
+
+  {
+    'name': 'Partitura',
+    'link': '/sheet',
+    'icon': 'face',
+    'chip': false,
+    'open': false,
+  },
   {
     'name': 'Cerrar Sesion',
     'link': '/logout',

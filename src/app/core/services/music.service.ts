@@ -3,11 +3,9 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { IScore } from '../shared/models/partitura.interface';
-import { UIService } from '../shared/ui.service';
-import * as UI from '../shared/redux/ui.actions';
-import * as Music from './redux/music.actions';
-import * as fromMusic from './redux/music.reducer';
+import { IScore } from '@core/models/partitura.interface';
+import { UIService } from './ui.service';
+import * as fromMusic from '@core/store/music';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +19,7 @@ export class MusicService {
     private store: Store<fromMusic.State>) { }
 
   setPartitura(mock: IScore) {
-    this.store.dispatch(new Music.SetPartitura(mock));
+    this.store.dispatch(new fromMusic.SetPartitura(mock));
   }
 
   // fetchPartituras() {
