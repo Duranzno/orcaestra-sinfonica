@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       isAdmin: form.value.isAdmin,
     };
     this.authService.registerUser(user);
-    this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
+    // this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
     // this.store.dispatch(new fromAuth.SetAuthenticated(user));
   }
   ngOnDestroy() {
