@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
 import { UIService } from '@core/services/ui.service';
 import { IUser, User } from '../../core/models/user.model';
-import { OrcaState } from '~/app/core/store';
+import { OrcaState } from '../../core/store';
 import { Store } from '@ngrx/store';
 import * as fromAuth from '@core/store/auth';
 @Component({

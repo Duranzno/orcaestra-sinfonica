@@ -27,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { FileUploadComponent } from './core/components';
 import { DropZoneDirective } from './core/directives/drop-zone.directive';
+import { RouterModule } from '@angular/router';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -59,6 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     YoutubePlayerModule,
     PerfectScrollbarModule,
+    RouterModule,
   ],
   providers: [
     {

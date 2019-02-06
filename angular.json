@@ -132,6 +132,20 @@
               }
             }
           }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "browserTarget": "Orcaestra-Sinfonica:build",
+            "serverTarget": "Orcaestra-Sinfonica:server",
+            "route": "app-shell-path"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "Orcaestra-Sinfonica:build:production",
+              "serverTarget": "Orcaestra-Sinfonica:server:production"
+            }
+          }
         }
       }
     },
