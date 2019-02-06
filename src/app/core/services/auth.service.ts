@@ -38,7 +38,7 @@ export class AuthService {
           this.fetchUserData(fUser.uid)
             .pipe(tag('user'))
             .subscribe(user =>
-              this.store.dispatch(new fromAuth.SetAuthenticated(<User> user)));
+              this.store.dispatch(new fromAuth.SetAuthenticated(<User>user)));
           this.router.navigate(['/welcome']);
         } else {
           // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS

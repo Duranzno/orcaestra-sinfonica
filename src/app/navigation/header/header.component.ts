@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     this.drawerToggle.emit();
   }
   onLogout() {
-    this.authService.logout();
+    this.store.dispatch(new fromAuth.SetUnauthenticated());
   }
 
 }

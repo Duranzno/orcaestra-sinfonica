@@ -1,6 +1,6 @@
 <section class="signup-form">
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <app-file-upload [type]="MediaType.AVATAR" [data]="usuario"></app-file-upload>
+    <!-- <app-file-upload [type]="MediaType.AVATAR" [data]="usuario"></app-file-upload> -->
     <mat-form-field>
       <input type="text" matInput placeholder="Nombre" ngModel name="nombre" required #nombreInput="ngModel">
       <mat-error *ngIf="nombreInput.hasError('required')">Campo no deberia estar vacio.</mat-error>

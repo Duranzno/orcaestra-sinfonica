@@ -5,5 +5,7 @@
   <div *ngIf="iconOnly" style="height: 100px;" fxLayoutAlign="space-around center">
     <img width="50" [style.borderRadius]="'50%'" src="./assets/user-image.jpg">
   </div>
-  <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>
+  <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly" [isAdmin]="(user$|async).isAdmin">
+  </app-sidenav-item>
+  <p>{{user$|async|json}}</p>
 </div>

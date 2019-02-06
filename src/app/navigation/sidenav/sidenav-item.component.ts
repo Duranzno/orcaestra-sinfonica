@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Menu } from './menu-element';
 
 @Component({
   selector: 'app-sidenav-item',
@@ -10,6 +11,9 @@ export class SidenavItemComponent implements OnInit {
   @Input() menu;
   @Input() iconOnly: boolean;
   @Input() secondaryMenu = false;
+  @Input() isAdmin: boolean;
+  @Input() isUser: boolean;
+
 
   constructor() { }
 

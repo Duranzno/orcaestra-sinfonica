@@ -16,7 +16,7 @@
       <li *ngIf="!((user$ | async).nombre!='')">
         <a routerLink="/login">Iniciar Sesion</a>
       </li>
-      <li *ngIf="((user$ | async).nombre!='')">
+      <li *ngIf="((user$ | async).nombre!='')&&(user$|async).isAdmin">
         <!--&&isAdmin-->
         <a routerLink="/upload">Subir Partituras</a>
       </li>

@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.authService.fetchGrupos();
+    // this.authService.fetchGrupos();
     this.isLoading$ = this.store.select(fromUi.getIsLoading);
     this.grupos$ = this.store.select(fromMusic.getGrupos).pipe(tag('grupos'));
     this.maxDate = new Date();
@@ -52,9 +52,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       group: form.value.grupo,
       isAdmin: form.value.isAdmin,
     };
-    this.authService.registerUser(user);
+    // this.authService.registerUser(user);
     // this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
-    // this.store.dispatch(new fromAuth.SetAuthenticated(user));
+    this.store.dispatch(new fromAuth.SetAuthenticated(user));
   }
   ngOnDestroy() {
   }

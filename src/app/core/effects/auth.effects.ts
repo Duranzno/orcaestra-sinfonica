@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { OrcaState } from '../store';
 import * as fromAuth from '@core/store/auth';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 type Action = fromAuth.Actions;
 
 @Injectable()
@@ -15,8 +15,16 @@ export class AuthEffects {
 
   ) { }
 
-  @Effect() name$ = this.actions$.pipe(
-    ofType(fromAuth.ActionTypes.SET_AUTHENTICATED))
-    .subscribe(x => console.log(x));
+  // @Effect()
+  // setAuth$ = this.actions$.pipe(
+  //   ofType(fromAuth.ActionTypes.SET_AUTHENTICATED),
+  //   // tap(x => console.log(x))
+  // );
+
+  // @Effect()
+  // setUnAuth$ = this.actions$.pipe(
+  //   ofType(fromAuth.ActionTypes.SET_UNAUTHENTICATED),
+  //   // tap(x => console.log(x))
+  // );
 
 }
