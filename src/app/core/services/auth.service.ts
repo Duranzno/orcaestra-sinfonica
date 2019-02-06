@@ -18,8 +18,7 @@ import { tag } from 'rxjs-spy/operators/tag';
 
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>();
-  user: any;
+  user: User;
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
@@ -62,7 +61,7 @@ export class AuthService {
     return this.afStore.doc(`usuarios/${uid}`).valueChanges();
   }
   public async registerUser(user: User) {
-    // this.store.dispatch(new fromUI.StartLoading());
+    this.store.dispatch(new fromUI.StartLoading());
     try {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
       this.afAuth.auth.setPersistence('local');

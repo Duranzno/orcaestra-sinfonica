@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "runtimeExecutable": "/usr/bin/flashpeak-slimjet",
+      "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
       "type": "chrome",
       "request": "launch",
       "name": "RPI",
@@ -13,7 +13,7 @@
       "webRoot": "${workspaceFolder}"
     },
     {
-      "runtimeExecutable": "/usr/bin/flashpeak-slimjet",
+      "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
       "type": "chrome",
       "request": "launch",
       "name": "Local",

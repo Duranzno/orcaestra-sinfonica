@@ -1,8 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { menus, Menu } from './menu-element';
 import * as fromAuth from '@core/store/auth';
+// import * as fromMedia from '@core/store/media';
+
 import { AuthService } from '@core/services/auth.service';
 import { IUser } from '@core/models/user.model';
 import { OrcaState } from '@core/store';
@@ -10,7 +12,7 @@ import { OrcaState } from '@core/store';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
-  styleUrls: ['./sidenav-list.component.scss']
+  styleUrls: []
 })
 export class SidenavListComponent implements OnInit {
   @Input() iconOnly = false;
@@ -35,12 +37,17 @@ export class SidenavListComponent implements OnInit {
   ];
 
   user$: Observable<IUser>;
+  avatarSrc$: Observable<string>;
+
   public menus = menus.concat(this.subscriptions);
 
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
     this.user$ = this.store.select(fromAuth.getUser);
+    this.avatarSrc$ = this.store.select(fromAuth.getAvatar);
+    // this.store.dispatch(new fromAuth.SetAvatar('./assets/user.jpg'));
+    // this.avatarSrc$% = this.store.select(fromMedia.getAvatar);
   }
   onClose() {
     this.closeSidenav.emit();

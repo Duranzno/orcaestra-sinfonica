@@ -3,23 +3,30 @@ import { User } from '@core/models';
 
 export interface State {
   user: User;
+  avatarSrc: string;
 }
 
 const initialState: State = {
-  user: new User()
+  user: new User(),
+  avatarSrc: '/assets/file.png',
 };
 
-export function authReducer(state = initialState, action: Actions) {
+export function authReducer(state = initialState, action: Actions): State {
   switch (action.type) {
     case ActionTypes.SET_AUTHENTICATED:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload as User,
       };
     case ActionTypes.SET_UNAUTHENTICATED:
       return {
         ...state,
         user: initialState.user,
+      };
+    case ActionTypes.SET_AVATAR:
+      return {
+        ...state,
+        avatarSrc: action.payload as string,
       };
     default: {
       return state;

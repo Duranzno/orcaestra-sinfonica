@@ -51,22 +51,6 @@ export const menus: Menu[] = [
     'admin': false,
   },
   {
-    'name': 'Detalles Musica',
-    'link': '/music-detail',
-    'icon': 'face',
-    'chip': false,
-    'open': false,
-    'admin': false,
-  },
-  {
-    'name': 'Partitura',
-    'link': '/sheet',
-    'icon': 'face',
-    'chip': false,
-    'open': false,
-    'admin': false,
-  },
-  {
     'name': 'Cerrar Sesion',
     'link': '/logout',
     'icon': 'eject',

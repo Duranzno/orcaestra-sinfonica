@@ -3,6 +3,7 @@ import { IScore } from '@core/models/partitura.interface';
 export class ActionTypes {
   static SET_PARTITURA = '[Music] Partitura Seleccionada';
   static SET_GRUPOS = '[Music] Grupos seleccionados';
+  static ADD_FAV = '[Music] Favorito Agregado';
 }
 export class SetPartitura implements Action {
   readonly type = ActionTypes.SET_PARTITURA;
