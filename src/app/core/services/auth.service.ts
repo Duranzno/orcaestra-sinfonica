@@ -13,9 +13,6 @@ import * as fromUI from '@core/store/ui';
 import * as fromAuth from '@core/store/auth';
 import * as fromMusic from '@core/store/music';
 
-import { create } from 'rxjs-spy';
-import { tag } from 'rxjs-spy/operators/tag';
-
 @Injectable()
 export class AuthService {
   user: User;
@@ -31,11 +28,9 @@ export class AuthService {
 
   initAuthListener() {
     this.afAuth.authState
-      .pipe(tag('auth'))
       .subscribe(fUser => {
         if (fUser) {
           this.fetchUserData(fUser.uid)
-            .pipe(tag('user'))
             .subscribe(user =>
               this.store.dispatch(new fromAuth.SetAuthenticated(<User>user)));
           this.router.navigate(['/welcome']);
@@ -48,7 +43,6 @@ export class AuthService {
   }
   fetchGrupos() {
     this.afStore.collection('categories').valueChanges()
-      .pipe(tag('grupos'))
       .subscribe(json => {
         this.store.dispatch(new fromMusic.SetGrupos(json[0]['grupos']));
       });

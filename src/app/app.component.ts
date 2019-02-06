@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
-import { create } from 'rxjs-spy';
+// import { create } from 'rxjs-spy';
 
 import { Subscription } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
-const spy = create();
+// const spy = create();
 
 @Component({
   selector: 'app-root',

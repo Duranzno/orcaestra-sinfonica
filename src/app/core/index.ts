@@ -11,7 +11,11 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [CommonModule, CoreStoreModule, AppEffectsModules],
+  imports: [
+    CommonModule,
+    CoreStoreModule,
+    // AppEffectsModules
+  ],
   // declarations: [],
   exports: [CoreStoreModule],
   providers: [...APP_SERVICES, ...APP_RESOLVERS],

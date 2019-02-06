@@ -11,8 +11,6 @@ import * as fromUi from '@core/store/ui';
 import * as fromAuth from '@core/store/auth';
 import * as fromMusic from '@core/store/music';
 
-import { create } from 'rxjs-spy';
-import { tag } from 'rxjs-spy/operators/tag';
 import { MediaType, MediaOriginType } from '../../core/models';
 import { UploadService } from '../../core/services/upload.service';
 
@@ -36,10 +34,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.authService.fetchGrupos();
     this.isLoading$ = this.store.select(fromUi.getIsLoading);
-    this.grupos$ = this.store.select(fromMusic.getGrupos).pipe(tag('grupos'));
+    this.grupos$ = this.store.select(fromMusic.getGrupos);
     this.maxDate = new Date();
     this.store.select(fromAuth.getAuthState)
-      .pipe(tag('authState'))
       .subscribe(x => this.state.auth = x);
     // this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
