@@ -11,7 +11,7 @@ import * as fromUi from '@core/store/ui';
 import * as fromAuth from '@core/store/auth';
 import * as fromMusic from '@core/store/music';
 
-import { MediaType, MediaOriginType } from '../../core/models';
+import { MediaType, MediaOriginType, UploadFile } from '../../core/models';
 import { UploadService } from '../../core/services/upload.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   grupos$: Observable<string[]>;
   type = MediaType.AVATAR;
   data: User = new User();
+  files: UploadFile[];
   state: { isAdmin?: any, auth?: any, music?: any } = {};
   constructor(
     private authService: AuthService,
@@ -41,6 +42,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       .subscribe(x => this.state.auth = x);
     // this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
+  getAvatarFile(files: UploadFile[]) {
+    this.files = files;
+  }
   onSubmit(form: NgForm) {
     const user: User = {
       email: form.value.email,
@@ -50,8 +54,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       group: form.value.grupo,
       isAdmin: form.value.isAdmin,
     };
-    this.authService.registerUser(user);
-    this.data = user;
+    this.authService.registerUser(user, this.files);
+
     // this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
   }
   ngOnDestroy() {

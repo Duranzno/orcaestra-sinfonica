@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { PersonaTipo } from '@core/models/autor.interface';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { UploadService} from '@core/services/upload.service';
+import { UploadService } from '@core/services/upload.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
   chipInputCtrl = new FormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private _fb: FormBuilder, private uploadService: UploadService) {}
+  constructor(private _fb: FormBuilder, private uploadService: UploadService) { }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -44,6 +44,7 @@ export class UploadComponent implements OnInit {
       tipo: ['']
     });
   }
+  show(files) { console.log('admin/upload', files); }
   get gente() { return this.form.get('gente') as FormArray; }
   addPersona() { this.gente.push(this.initPersona()); }
   removePersona(i: number) { this.gente.removeAt(i); }

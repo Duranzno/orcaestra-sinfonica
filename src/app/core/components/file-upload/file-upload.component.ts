@@ -1,9 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { MediaOriginType, Score, User, MediaType } from '../../models';
-import { FbStorageService } from '../../services/upload/firebase.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MediaType, UploadFile, MediaTypeGuesser } from '../../models';
 
 @Component({
   selector: 'app-file-upload',
@@ -11,27 +7,40 @@ import { FbStorageService } from '../../services/upload/firebase.service';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  @Input()
+  @Input('type')
   type: MediaType;
-  @Input()
-  data: Score | User;
+  @Output()
+  filesEvent = new EventEmitter<UploadFile[]>();
   snapshot;
-  isHovering: boolean;
+  private isHovering: boolean;
 
-  constructor(private fbStorage: FbStorageService) { this.snapshot = this.fbStorage.snapshot; }
+  constructor() { }
+  accept(): string {
+    return (this.isAvatar())
+      ? '.jpg,.jpeg,.png,.gif'
+      : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
+  }
 
-  toggleHover(event: boolean) {
-    this.isHovering = event;
+  toggleHover(event: boolean) { this.isHovering = event; }
+
+  openInput() { document.getElementById('file-input').click(); }
+
+  filesReady(event: FileList) {
+    let files: UploadFile[] = [];
+    if (!this.isAvatar()) {
+      for (let i = 0; i < event.length; i++) {
+        files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
+      }
+    }
+    else {
+      files = [{ 'file': event[0], 'type': this.type }];
+    }
+    this.filesEvent.emit(files);
   }
-  startUpload(event: FileList) {
-    const file = event.item(0);
-    this.fbStorage.upload(this.type, this.data, file);
-  }
-  openInput() {
-    document.getElementById('file-input').click();
+  isAvatar() {
+    return this.type && this.type === MediaType.AVATAR;
   }
   isActive() {
-
     if (typeof this.snapshot === 'undefined' || this.snapshot == null) { return false; }
     return this.snapshot.state === 'running'
       && this.snapshot.bytesTransferred < this.snapshot.totalBytes;

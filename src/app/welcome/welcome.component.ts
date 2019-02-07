@@ -17,6 +17,9 @@ export class WelcomeComponent implements OnInit {
   public type: MediaType = MediaType.MXML;
   public data: Score = mockSheet;
   constructor(private store: Store<OrcaState>) { }
+  show(files: File[]) {
+    console.log(files);
+  }
   ngOnInit() {
     this.store.select(fromUi.getIsLoading).subscribe(x => this.state.ui = x);
     this.store.select(fromAuth.getAuthState).subscribe(x => this.state.auth = x);

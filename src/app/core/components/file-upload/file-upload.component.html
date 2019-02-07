@@ -8,9 +8,12 @@
   <mat-card-content>
 
     <div *ngIf="!(snapshot | async)">
-      <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)" [class.hovering]="isHovering">
-        <h3>Imagen de Perfil</h3>
-        <input color="accent" id="file-input" class="file-input" type="file" (change)="startUpload($event.target.files)">
+      <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="filesReady($event)"
+        [class.hovering]="isHovering">
+        <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
+        <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
+        <input color="accent" id="file-input" class="file-input" type="file" [accept]="accept()"
+          [multiple]="!isAvatar() " (change)="filesReady($event.target.files)">
 
       </div>
     </div>
@@ -32,8 +35,10 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)=" task.pause()" [disabled]="!isActive(snapshot | async)">Pausar</button>
-    <button mat-raised-button color="warn" (click)=" task.cancel()" [disabled]="!isActive(snapshot | async)">Cancelar</button>
-    <button mat-raised-button color="accent" (click)=" task.resume()" [disabled]="!((snapshot | async)?.state === 'paused')">Continuar</button>
+    <button mat-raised-button color="warn" (click)=" task.cancel()"
+      [disabled]="!isActive(snapshot | async)">Cancelar</button>
+    <button mat-raised-button color="accent" (click)=" task.resume()"
+      [disabled]="!((snapshot | async)?.state === 'paused')">Continuar</button>
     <button mat-raised-button (click)="openInput()">Subir {{type|uppercase}}</button>
   </mat-card-actions>
 </mat-card>

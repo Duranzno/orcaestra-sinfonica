@@ -6,12 +6,14 @@ import { MatSnackBar } from '@angular/material';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
-import { User } from '@core/models';
+import { User, UploadFile } from '@core/models';
 
 import { OrcaState } from '@core/store';
 import * as fromUI from '@core/store/ui';
 import * as fromAuth from '@core/store/auth';
 import * as fromMusic from '@core/store/music';
+import * as fromMedia from '@core/store/media';
+
 
 @Injectable()
 export class AuthService {
@@ -45,11 +47,14 @@ export class AuthService {
         this.store.dispatch(new fromMusic.SetGrupos(json[0]['grupos']));
       });
   }
-  async registerUser(user: User) {
+  async registerUser(user: User, files?: UploadFile[]) {
     this.store.dispatch(new fromUI.StartLoading());
     try {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
       this.afAuth.auth.setPersistence('local');
+      if (files) {
+        await this.store.dispatch(new fromMedia.PostMediaF(files));
+      }
       await this.updateUserData(loggedUser.user.uid, user);
       this.store.dispatch(new fromAuth.SetAuthenticated(user));
     } catch (error) {

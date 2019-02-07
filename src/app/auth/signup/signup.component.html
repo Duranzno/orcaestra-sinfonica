@@ -1,5 +1,5 @@
 <section class="signup-form">
-  <app-file-upload [type]="type" [data]='data'></app-file-upload>
+  <app-file-upload [type]='type' (filesEvent)='getAvatarFile($event)'></app-file-upload>
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
     <!-- <app-file-upload [type]="MediaType.AVATAR" [data]="usuario"></app-file-upload> -->
     <mat-form-field>
@@ -11,12 +11,14 @@
       <mat-error *ngIf="apellidoInput.hasError('required')">Campo no deberia estar vacio.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input type="email" matInput placeholder="Correo Electronico" ngModel name="email" email required #emailInput="ngModel">
+      <input type="email" matInput placeholder="Correo Electronico" ngModel name="email" email required
+        #emailInput="ngModel">
       <mat-error *ngIf="emailInput.hasError('required')">Campo no deberia estar vacio.</mat-error>
       <mat-error *ngIf="!emailInput.hasError('required')">Correo invalido.</mat-error>
     </mat-form-field>
     <mat-form-field hintLabel="Deberia tener al menos 6 caracteres.">
-      <input type="password" matInput placeholder="Contrasena" ngModel name="password" required minlength="6" #pwInput="ngModel">
+      <input type="password" matInput placeholder="Contrasena" ngModel name="password" required minlength="6"
+        #pwInput="ngModel">
       <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
       <mat-error>Debe tener al menos 6 caracteres.</mat-error>
     </mat-form-field>
@@ -26,15 +28,16 @@
       </mat-option>
     </mat-select>
     <mat-form-field>
-      <input matInput placeholder="Fecha de Nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate"
-        required>
+      <input matInput placeholder="Fecha de Nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel
+        name="birthdate" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-checkbox ngModel name="isAdmin" color="primary">Es administrador?</mat-checkbox>
 
 
-    <button *ngIf="!(isLoading$|async)" type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Enviar</button>
+    <button *ngIf="!(isLoading$|async)" type="submit" mat-raised-button color="primary"
+      [disabled]="f.invalid">Enviar</button>
     <mat-spinner *ngIf="isLoading$|async"></mat-spinner>
   </form>
 </section>

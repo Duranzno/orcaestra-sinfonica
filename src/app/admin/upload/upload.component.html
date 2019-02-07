@@ -4,6 +4,7 @@
   <mat-form-field>
     <input matInput placeholder="Obra" type="text" formControlName="obra">
   </mat-form-field>
+  <app-file-upload (filesEvent)="show($event )"></app-file-upload>
 
   <!-- ITS -->
   <mat-form-field>
@@ -20,11 +21,13 @@
   <!-- Generos -->
   <mat-form-field>
     <mat-chip-list #chipList>
-      <mat-chip *ngFor="let g of generos.value;let i=index" [selectable]="true" [removable]="true" (removed)="removeChip(g)">{{g}}
+      <mat-chip *ngFor="let g of generos.value;let i=index" [selectable]="true" [removable]="true"
+        (removed)="removeChip(g)">{{g}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <input matInput placeholder="Generos" [matAutocomplete]="auto" #generoInput (matChipInputTokenEnd)="addChip($event)"
-        [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
+      <input matInput placeholder="Generos" [matAutocomplete]="auto" #generoInput
+        (matChipInputTokenEnd)="addChip($event)" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+        [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
 
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenero($event)">
