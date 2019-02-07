@@ -25,8 +25,6 @@ import { SheetComponent } from './sheet/sheet.component';
 import { environment } from '../environments/environment';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
-import { FileUploadComponent } from './core/components';
-import { DropZoneDirective } from './core/directives/drop-zone.directive';
 import { RouterModule } from '@angular/router';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -34,8 +32,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 @NgModule({
   declarations: [
-    DropZoneDirective,
-    FileUploadComponent,
     AppComponent,
     WelcomeComponent,
     HeaderComponent,

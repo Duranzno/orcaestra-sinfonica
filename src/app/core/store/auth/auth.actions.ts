@@ -15,7 +15,7 @@ export class SetUnauthenticated implements Action {
   public payload = new User();
 }
 export class SetAvatar implements Action {
-  readonly type = ActionTypes.SET_UNAUTHENTICATED;
+  readonly type = ActionTypes.SET_AVATAR;
   constructor(public payload: string) { }
 }
 

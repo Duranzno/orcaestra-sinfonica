@@ -5,10 +5,10 @@ import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class FbStorageService {
-  task: AngularFireUploadTask;
-  percentage: Observable<number>;
-  snapshot: Observable<firebase.storage.UploadTaskSnapshot>;
-  downloadURL: Observable<string>;
+  private task: AngularFireUploadTask;
+  public percentage: Observable<number>;
+  public snapshot: Observable<firebase.storage.UploadTaskSnapshot>;
+  public downloadURL: Observable<string>;
 
   constructor(private storage: AngularFireStorage) { }
   upload(type: MediaType, data: User | Score, file: File) {
@@ -16,10 +16,10 @@ export class FbStorageService {
       const path = this.setPath(type, data);
       console.log(path);
       const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
-      this.task = this.storage.upload(<string> path, file, { customMetadata });
+      this.task = this.storage.upload(<string>path, file, { customMetadata });
       this.percentage = this.task.percentageChanges();
       this.snapshot = this.task.snapshotChanges();
-      const fileRef = this.storage.ref(<string> path);
+      const fileRef = this.storage.ref(<string>path);
       this.downloadURL = (type === MediaType.AVATAR || type === MediaType.IMG)
         ? fileRef.getDownloadURL()
         : of('assets/file.png');

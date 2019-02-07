@@ -5,7 +5,7 @@ import { InstrumentosComponent } from './instrumentos.component';
 import { InvolucradosComponent } from './involucrados.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
-export const APP_CORE_MODULES = [
+export const APP_CORE_COMPONENTS = [
   AlmacenamientoComponent, FileComponent, GenerosComponent, InstrumentosComponent, InvolucradosComponent,
   FileUploadComponent,
 ];

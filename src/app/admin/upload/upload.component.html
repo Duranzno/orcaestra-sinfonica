@@ -57,7 +57,7 @@
         <span *ngIf="form.controls['almacenamiento'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
       </div>
       <div [formGroupName]="i">
-        <app-almacenamiento [form]="form.controls['almacenamiento'].controls[i]">
+        <app-almacenamiento [almacenamientoForm]="form.controls['almacenamiento'].controls[i]">
         </app-almacenamiento>
       </div>
     </div>

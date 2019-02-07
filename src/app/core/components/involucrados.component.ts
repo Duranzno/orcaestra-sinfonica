@@ -26,6 +26,6 @@ import { PersonaTipo } from '@core/models/autor.interface';
   `
 })
 export class InvolucradosComponent {
-  @Input('form') public form: FormGroup;
+  @Input() public form: FormGroup;
   personas: string[] = Object.values(PersonaTipo);
 }

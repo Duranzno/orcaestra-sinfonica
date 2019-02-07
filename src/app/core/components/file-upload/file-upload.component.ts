@@ -3,6 +3,7 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage
 import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MediaOriginType, Score, User, MediaType } from '../../models';
+import { FbStorageService } from '../../services/upload/firebase.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -10,41 +11,35 @@ import { MediaOriginType, Score, User, MediaType } from '../../models';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  @Input('type')
+  @Input()
   type: MediaType;
-  @Input('data')
+  @Input()
   data: Score | User;
-
+  snapshot;
   isHovering: boolean;
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private fbStorage: FbStorageService) { this.snapshot = this.fbStorage.snapshot; }
 
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
   startUpload(event: FileList) {
     const file = event.item(0);
-    // if (file.type.split('/')[0] !== 'image') {
-    //   console.error(`unsupported file type`);
-    //   return;
-    // }
-
-
+    this.fbStorage.upload(this.type, this.data, file);
   }
   openInput() {
-    // your can use ElementRef for this later
     document.getElementById('file-input').click();
   }
-  // Determines if the upload task is active
-  isActive(snapshot: firebase.storage.UploadTaskSnapshot) {
-    if (typeof snapshot === 'undefined' || snapshot == null) { return false; }
-    return snapshot.state === 'running'
-      && snapshot.bytesTransferred < snapshot.totalBytes;
+  isActive() {
+
+    if (typeof this.snapshot === 'undefined' || this.snapshot == null) { return false; }
+    return this.snapshot.state === 'running'
+      && this.snapshot.bytesTransferred < this.snapshot.totalBytes;
   }
-  snapshotState(snapshot: firebase.storage.UploadTaskSnapshot) {
-    if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
-    else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
-    else if (snapshot.state === 'success') { return 'success'; }
+  snapshotState() {
+    if (typeof this.snapshot === 'undefined' || this.snapshot == null) { return 'notrunning'; }
+    else if (this.snapshot.state === 'running' && this.snapshot.bytesTransferred < this.snapshot.totalBytes) { return 'running'; }
+    else if (this.snapshot.state === 'success') { return 'success'; }
     else { return 'notrunning'; }
   }
 

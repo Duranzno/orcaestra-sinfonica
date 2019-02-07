@@ -2,9 +2,11 @@ import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 // import { create } from 'rxjs-spy';
-
+import * as fromAuth from '@core/store/auth';
 import { Subscription } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
+import { OrcaState } from './core/store';
+import { Store } from '@ngrx/store';
 // const spy = create();
 
 @Component({
@@ -29,7 +31,6 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   ) { }
   ngOnInit() {
     this.authService.initAuthListener();
-
     this.watcher$ = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.toggleView();

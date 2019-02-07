@@ -1,4 +1,5 @@
 <section class="signup-form">
+  <app-file-upload [type]="type" [data]='data'></app-file-upload>
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
     <!-- <app-file-upload [type]="MediaType.AVATAR" [data]="usuario"></app-file-upload> -->
     <mat-form-field>

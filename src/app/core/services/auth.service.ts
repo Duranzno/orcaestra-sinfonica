@@ -22,9 +22,7 @@ export class AuthService {
     private snackbar: MatSnackBar,
     private store: Store<OrcaState>,
     private router: Router,
-  ) {
-  }
-
+  ) { }
 
   initAuthListener() {
     this.afAuth.authState
@@ -47,14 +45,7 @@ export class AuthService {
         this.store.dispatch(new fromMusic.SetGrupos(json[0]['grupos']));
       });
   }
-  private updateUserData(uid: string, data: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
-    return userRef.set(data, { merge: true });
-  }
-  private fetchUserData(uid: string) {
-    return this.afStore.doc(`usuarios/${uid}`).valueChanges();
-  }
-  public async registerUser(user: User) {
+  async registerUser(user: User) {
     this.store.dispatch(new fromUI.StartLoading());
     try {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
@@ -68,7 +59,7 @@ export class AuthService {
     this.store.dispatch(new fromUI.StopLoading());
   }
 
-  public async login(user: User) {
+  async login(user: User) {
     let loggedUser;
     this.store.dispatch(new fromUI.StartLoading());
     try {
@@ -93,5 +84,12 @@ export class AuthService {
   logout() {
     this.store.dispatch(new fromAuth.SetUnauthenticated);
     this.afAuth.auth.signOut();
+  }
+  private updateUserData(uid: string, data: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
+    return userRef.set(data, { merge: true });
+  }
+  private fetchUserData(uid: string) {
+    return this.afStore.doc(`usuarios/${uid}`).valueChanges();
   }
 }

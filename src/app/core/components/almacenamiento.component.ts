@@ -8,7 +8,7 @@ import { IStoredType } from '@core/models/almacenamiento.interface';
   styleUrls: []
 })
 export class AlmacenamientoComponent {
-  @Input('form')
+  @Input()
   public almacenamientoForm: FormGroup;
   tipos: string[] = Object.values(IStoredType);
 }

@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     const user: User = new User();
     user.email = this.form.value.email;
     user.password = this.form.value.password;
-    // this.authService.login(user);
-    this.store.dispatch(new fromAuth.SetAuthenticated(user));
+    this.authService.login(user);
+    // this.store.dispatch(new fromAuth.SetAuthenticated(user));
     console.log(user);
   }
   ngOnDestroy() {

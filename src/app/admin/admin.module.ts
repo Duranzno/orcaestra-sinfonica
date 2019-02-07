@@ -15,14 +15,10 @@ import { AlmacenamientoComponent, FileComponent, GenerosComponent, InstrumentosC
   declarations: [
     AdminComponent,
     UploadComponent,
-    AlmacenamientoComponent,
-    FileComponent,
-    GenerosComponent,
-    InstrumentosComponent,
-    InvolucradosComponent,
   ],
   imports: [
     CommonModule,
+    CoreModule,
     AdminRoutingModule,
     ReactiveFormsModule,
     FormsModule,
