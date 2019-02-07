@@ -1,7 +1,7 @@
 #.travis.yml
 language: node_js
 node_js:
-  - "10.15"
+  - "node"
 
 branches:
   only:
@@ -15,7 +15,7 @@ script:
   - ng build --prod
 
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+  - firebase deploy --token "1/Wbfpgmmo0dvzWr7T7Hl2wvSwvQe-fyG7sbD0Xe5yUJI"
 
 notifications:
   email:
