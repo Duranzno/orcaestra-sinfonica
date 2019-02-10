@@ -1,16 +1,21 @@
 import { Action } from '@ngrx/store';
-import { User, MediaType, UploadFile } from '../../models';
+import { User, MediaType, UploadFile, Score } from '../../models';
 export class ActionTypes {
-  static POST_MEDIA_FIREBASE = '[MEDIA] Uploaded Media';
-  static SET_MEDIA_AVATAR = '[MEDIA] Uploaded Media is Avatar ';
+  static POST_SCORE_MEDIA_FB = '[MEDIA] Uploaded Score Media to Firebase';
+  static POST_AVATAR_FB = '[MEDIA] Uploaded Avatar to Firebase';
+  static UPDATE_MEDIA_SNAPSHOT = '[MEDIA] Something new is';
 }
-export class PostMediaF implements Action {
-  readonly type = ActionTypes.POST_MEDIA_FIREBASE;
-  constructor(public payload: UploadFile[]) { }
+export class PostScoreMediaF implements Action {
+  readonly type = ActionTypes.POST_SCORE_MEDIA_FB;
+  constructor(public payload: { files: UploadFile[], score: Score }) { }
 }
 
-export class SetMediaAvatar implements Action {
-  readonly type = ActionTypes.SET_MEDIA_AVATAR;
-  constructor(public payload: { url: string, user: User }) { }
+export class PostAvatarF implements Action {
+  readonly type = ActionTypes.POST_AVATAR_FB;
+  constructor(public payload: { file: UploadFile, user: User }) { }
 }
-export type Actions = PostMediaF | SetMediaAvatar;
+export class UpdateMediaSnapshot implements Action {
+  readonly type = ActionTypes.UPDATE_MEDIA_SNAPSHOT;
+  constructor(public payload: firebase.storage.UploadTaskSnapshot) { }
+}
+export type Actions = PostScoreMediaF | PostAvatarF | UpdateMediaSnapshot;

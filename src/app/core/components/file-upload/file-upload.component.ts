@@ -1,26 +1,36 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { MediaType, UploadFile, MediaTypeGuesser } from '../../models';
+import { of, Observable } from 'rxjs';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
+import * as fromMedia from '@core/store/media';
+import { Store } from '@ngrx/store';
+import { OrcaState } from '../../store';
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit {
   @Input('type')
   type: MediaType;
   @Output()
   filesEvent = new EventEmitter<UploadFile[]>();
-  snapshot;
+  snapshot: Observable<firebase.storage.UploadTaskSnapshot>; // TODO Must take snapshot out of the service through redux;
+
   private isHovering: boolean;
 
-  constructor() { }
+  constructor(
+    private store: Store<OrcaState>
+  ) { }
   accept(): string {
     return (this.isAvatar())
       ? '.jpg,.jpeg,.png,.gif'
       : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
   }
-
+  ngOnInit() {
+    this.snapshot = this.store.select(fromMedia.getSnapshot);
+  }
   toggleHover(event: boolean) { this.isHovering = event; }
 
   openInput() { document.getElementById('file-input').click(); }
@@ -40,16 +50,15 @@ export class FileUploadComponent {
   isAvatar() {
     return this.type && this.type === MediaType.AVATAR;
   }
-  isActive() {
-    if (typeof this.snapshot === 'undefined' || this.snapshot == null) { return false; }
-    return this.snapshot.state === 'running'
-      && this.snapshot.bytesTransferred < this.snapshot.totalBytes;
+  isActive(snapshot: firebase.storage.UploadTaskSnapshot) {
+    if (typeof snapshot === 'undefined' || snapshot == null) { return false; }
+    return snapshot.state === 'running'
+      && snapshot.bytesTransferred < snapshot.totalBytes;
   }
-  snapshotState() {
-    if (typeof this.snapshot === 'undefined' || this.snapshot == null) { return 'notrunning'; }
-    else if (this.snapshot.state === 'running' && this.snapshot.bytesTransferred < this.snapshot.totalBytes) { return 'running'; }
-    else if (this.snapshot.state === 'success') { return 'success'; }
+  snapshotState(snapshot: firebase.storage.UploadTaskSnapshot) {
+    if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
+    else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
+    else if (snapshot.state === 'success') { return 'success'; }
     else { return 'notrunning'; }
   }
-
 }

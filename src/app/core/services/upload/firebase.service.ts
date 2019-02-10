@@ -14,15 +14,15 @@ export class FbStorageService {
   upload(type: MediaType, data: User | Score, file: File) {
     try {
       const path = this.setPath(type, data);
-      console.log(path);
       const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
       this.task = this.storage.upload(<string>path, file, { customMetadata });
       this.percentage = this.task.percentageChanges();
       this.snapshot = this.task.snapshotChanges();
       const fileRef = this.storage.ref(<string>path);
-      this.downloadURL = (type === MediaType.AVATAR || type === MediaType.IMG)
-        ? fileRef.getDownloadURL()
-        : of('assets/file.png');
+      return fileRef.getDownloadURL();
+      // this.downloadURL = (type === MediaType.AVATAR || type === MediaType.IMG)
+      //   ? fileRef.getDownloadURL()
+      //   : of('assets/file.png');
     }
     catch (e) { console.error(e); }
   }

@@ -53,7 +53,7 @@ export class AuthService {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
       this.afAuth.auth.setPersistence('local');
       if (files) {
-        await this.store.dispatch(new fromMedia.PostMediaF(files));
+        await this.store.dispatch(new fromMedia.PostAvatarF({ file: files[0], user: user }));
       }
       await this.updateUserData(loggedUser.user.uid, user);
       this.store.dispatch(new fromAuth.SetAuthenticated(user));

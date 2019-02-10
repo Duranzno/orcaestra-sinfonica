@@ -7,21 +7,18 @@
 
   <mat-card-content>
 
-    <div *ngIf="!(snapshot | async)">
-      <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="filesReady($event)"
-        [class.hovering]="isHovering">
-        <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
-        <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
-        <input color="accent" id="file-input" class="file-input" type="file" [accept]="accept()"
-          [multiple]="!isAvatar() " (change)="filesReady($event.target.files)">
-
-      </div>
+    <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="filesReady($event)"
+      [class.hovering]="isHovering" [style.display]="hideElement?'none':'inherit'">
+      <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
+      <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
+      <input color="accent" id="file-input" class="file-input" type="file" [accept]="accept()" [multiple]="!isAvatar() "
+        (change)="filesReady($event.target.files)">
     </div>
+
     <div *ngIf="(snapshot | async)?.state == 'success'">sucess</div>
     <div *ngIf="snapshot | async as snap">
       <div *ngIf="downloadURL | async as url">
         <img class="upload-preview" [src]="url"><br>
-
       </div>
     </div>
     <div *ngIf="(snapshot | async)?.state == 'running'">
