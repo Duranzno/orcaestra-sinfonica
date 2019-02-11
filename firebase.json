@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/orcaestra-sinfonica",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -30,6 +30,13 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private mediaObserver: MediaObserver
   ) { }
   ngOnInit() {
+    if(this.swUpdate.isEnabled){
+      this.swUpdate.available.subscribe(()=>{
+        if(confirm(´Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?´)){
+          window.location.reload();
+        }
+      })  
+    }
     this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
