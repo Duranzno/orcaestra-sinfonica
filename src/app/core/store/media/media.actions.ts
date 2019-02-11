@@ -16,6 +16,6 @@ export class PostAvatarF implements Action {
 }
 export class UpdateMediaSnapshot implements Action {
   readonly type = ActionTypes.UPDATE_MEDIA_SNAPSHOT;
-  constructor(public payload: firebase.storage.UploadTaskSnapshot) { }
+  constructor(public payload: any) { }
 }
 export type Actions = PostScoreMediaF | PostAvatarF | UpdateMediaSnapshot;

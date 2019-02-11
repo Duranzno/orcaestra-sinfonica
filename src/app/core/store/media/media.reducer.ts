@@ -4,12 +4,12 @@ import { createUploadTask } from '@angular/fire/storage';
 
 export interface State {
   files: UploadFile[];
-  snapshot: any;
+  snapshot: {};
 }
 
 const initialState: State = {
   files: [],
-  snapshot: {},
+  snapshot: { downloadURL: '', state: 'ERROR' },
 };
 
 export function mediaReducer(state = initialState, action: Actions): State {

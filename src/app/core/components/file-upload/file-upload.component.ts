@@ -16,9 +16,9 @@ export class FileUploadComponent implements OnInit {
   type: MediaType;
   @Output()
   filesEvent = new EventEmitter<UploadFile[]>();
-  snapshot: Observable<firebase.storage.UploadTaskSnapshot>; // TODO Must take snapshot out of the service through redux;
-
-  private isHovering: boolean;
+  snapshot: Observable<any>; // TODO Must take snapshot out of the service through redux;
+  sn: { state: string } = { state: 'DEFAULT' };
+  isHovering: boolean;
 
   constructor(
     private store: Store<OrcaState>
@@ -30,10 +30,15 @@ export class FileUploadComponent implements OnInit {
   }
   ngOnInit() {
     this.snapshot = this.store.select(fromMedia.getSnapshot);
+    this.sn.state = 'ERROR';
   }
   toggleHover(event: boolean) { this.isHovering = event; }
 
-  openInput() { document.getElementById('file-input').click(); }
+  openInput() {
+    //  document.getElementById('file-input').click();
+    this.sn.state = 'PAUSED';
+    // this.store.dispatch(new fromMedia.UpdateMediaSnapshot({ downloadURL: '', state: 'PAUSED' }));
+  }
 
   filesReady(event: FileList) {
     let files: UploadFile[] = [];

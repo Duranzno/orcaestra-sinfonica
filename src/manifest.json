@@ -4,12 +4,12 @@
   "name": "Orcaestra Sinfonica",
   "scope": "/",
   "display": "fullscreen",
-  "start_url": "http://192.168.1.141:4200/",
+  "start_url": "https://orcaestra-sinfonica.firebaseapp.com/welcome",
   "short_name": "Orcaestra",
   "description": "Gestion de Partituras para la Orquesta Sinfonica Juvenil e Infantil de Ciudad Guayana",
   "orientation": "portrait",
   "related_applications": [],
-  "prefer_related_applications": "false",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.ico",
