@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pwa": "http-server -c-1 -P http://localhost:9000 dist/Orcaestra-Sinfonica"
+    "pwa": "ng build --prod && firebase deploy"
   },
   "private": true,
   "dependencies": {
@@ -39,11 +39,12 @@
     "rxjs": "^6.4.0",
     "tslib": "^1.9.0",
     "wavesurfer.js": "^2.1.3",
+    "webpack-bundler": "0.1.0-alpha.1",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.0",
-    "@angular/cli": "^7.3.0",
+    "@angular/cli": "^7.3.1",
     "@angular/compiler-cli": "^7.2.4",
     "@angular/language-service": "^7.2.4",
     "@types/jasmine": "^3.3.8",

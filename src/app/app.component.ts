@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
 import { OrcaState } from './core/store';
 import { Store } from '@ngrx/store';
+import {SwUpdate} from '@angular/service-worker'
 // const spy = create();
 
 @Component({
@@ -27,12 +28,13 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private mediaObserver: MediaObserver
+    private mediaObserver: MediaObserver,
+    private swUpdate:SwUpdate,
   ) { }
   ngOnInit() {
     if(this.swUpdate.isEnabled){
       this.swUpdate.available.subscribe(()=>{
-        if(confirm(´Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?´)){
+        if(confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')){
           window.location.reload();
         }
       })  

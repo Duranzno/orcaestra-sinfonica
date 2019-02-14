@@ -1,6 +1,7 @@
 {
 	"index":"/index.html",
-	"assetGroups":[{
+	"assetGroups":[
+		{
 		"name":"app",
 		"installMode":"prefetch",
 		"resources":{
@@ -11,13 +12,22 @@
 				"/*.bundle.js",
 				"/*.chunk.js"
 			]
+			}
+		},
+		{
+			"name":"assets",
+			"installMode":"lazy",
+			"updateMode":"prefetch",
+			"resources":[
+				"/assets/**"
+			]
+		},
+		{
+			"name":"whatever-name",
+			"urls":[],
+			"cacheConfig":{
+				"strategy":"performance","maxAge":"1d","maxSize":100,				
+			}
 		}
-	},{
-		"name":"assets",
-		"installMode":"lazy",
-		"updateMode":"prefetch",
-		"resources":[
-			"/assets/**"
-		]
-	}]
+]
 }

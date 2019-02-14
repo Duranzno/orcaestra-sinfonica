@@ -1,3 +1,7 @@
+export interface UploadFile { file: File; type: MediaType; }
+
+/////////////////////////////////////////////////////////////
+
 export enum MediaType {
   YOUTUBE = 'youtube',
   MP3 = 'mp3',
@@ -36,7 +40,6 @@ export function MediaTypeGuesser(file: File): MediaType {
       return MediaType.YOUTUBE;
   }
 }
-export interface UploadFile { file: File; type: MediaType; }
 
 export enum MediaOriginType {
   FIREBASE = 'firestore',
@@ -55,6 +58,7 @@ export class Media implements IMedia {
   constructor(i: IMedia) { this.originArray = i.originArray; this.type = i.type; }
 
 }
+
 export class MediaArray {
   array: Media[] = [];
   constructor(arg: Array<Media>) {
