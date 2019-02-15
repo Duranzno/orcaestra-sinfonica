@@ -17,8 +17,6 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav/sidenav-list.component';
 import { SidenavItemComponent } from './navigation/sidenav/sidenav-item.component';
 
-import { MusicListComponent } from './list/music-list/music-list.component';
-import { MusicDetailComponent } from './list/music-details/music-detail.component';
 import { SheetComponent } from './sheet/sheet.component';
 
 import { environment } from '../environments/environment';
@@ -37,8 +35,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HeaderComponent,
     SidenavListComponent,
     SidenavItemComponent,
-    MusicListComponent,
-    MusicDetailComponent,
     SheetComponent,
   ],
   imports: [
