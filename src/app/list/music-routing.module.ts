@@ -4,7 +4,8 @@ import { MusicListComponent } from './music-list/music-list.component';
 import { MusicDetailComponent } from './music-details/music-detail.component';
 
 const routes: Routes = [
-  { path: '', component: MusicListComponent }
+  { path: '', component: MusicListComponent },
+  { path: 'detail', component: MusicDetailComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActionTypes, Actions } from './music.actions';
-import { IScore } from '@core/models/partitura.interface';
+import { IScore } from '../../models/';
 
 export interface State {
   partitura: IScore;

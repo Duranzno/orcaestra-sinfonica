@@ -19,3 +19,12 @@ export const APP_SERVICES = [
   YoutubeService,
   FbStorageService,
 ];
+export { AuthService } from './auth.service';
+export { MidiService } from './midi.service';
+export { UIService } from './ui.service';
+export { WavesurferService } from './wavesurfer.service';
+export { UploadService } from './upload.service';
+export { OsmdService } from './osmd.service';
+export { MusicService } from './music.service';
+export { YoutubeService } from './youtube.service';
+export { FbStorageService } from './upload/firebase.service';

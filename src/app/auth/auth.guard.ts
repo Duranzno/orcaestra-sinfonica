@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot,
   Router
 } from '@angular/router';
-import * as fromAuth from '@core/store/auth';
-import { AuthService } from '@core/services/auth.service';
+import * as fromAuth from '../core/store/auth';
+import { AuthService } from '../core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { OrcaState } from '../core/store';
 import { map } from 'rxjs/operators';

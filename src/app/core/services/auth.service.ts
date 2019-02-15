@@ -6,13 +6,9 @@ import { MatSnackBar } from '@angular/material';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
-import { User, UploadFile } from '@core/models';
+import { User, UploadFile } from '../models';
 
-import { OrcaState } from '@core/store';
-import * as fromUI from '@core/store/ui';
-import * as fromAuth from '@core/store/auth';
-import * as fromMusic from '@core/store/music';
-import * as fromMedia from '@core/store/media';
+import { OrcaState, from } from '../store';
 
 
 @Injectable()
@@ -32,11 +28,11 @@ export class AuthService {
         if (fUser) {
           this.fetchUserData(fUser.uid)
             .subscribe(user =>
-              this.store.dispatch(new fromAuth.SetAuthenticated(<User>user)));
+              this.store.dispatch(new from.auth.SetAuthenticated(<User>user)));
           this.router.navigate(['/welcome']);
         } else {
           // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
-          this.store.dispatch(new fromAuth.SetUnauthenticated());
+          this.store.dispatch(new from.auth.SetUnauthenticated());
           this.router.navigate(['/signup']);
         }
       });
@@ -44,29 +40,29 @@ export class AuthService {
   fetchGrupos() {
     this.afStore.collection('categories').valueChanges()
       .subscribe(json => {
-        this.store.dispatch(new fromMusic.SetGrupos(json[0]['grupos']));
+        this.store.dispatch(new from.music.SetGrupos(json[0]['grupos']));
       });
   }
   async registerUser(user: User, files?: UploadFile[]) {
-    this.store.dispatch(new fromUI.StartLoading());
+    this.store.dispatch(new from.ui.StartLoading());
     try {
       const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
       this.afAuth.auth.setPersistence('local');
       if (files) {
-        await this.store.dispatch(new fromMedia.PostAvatarF({ file: files[0], user: user }));
+        await this.store.dispatch(new from.media.PostAvatarF({ file: files[0], user: user }));
       }
       await this.updateUserData(loggedUser.user.uid, user);
-      this.store.dispatch(new fromAuth.SetAuthenticated(user));
+      this.store.dispatch(new from.auth.SetAuthenticated(user));
     } catch (error) {
       this.snackbar.open(error.message, null, { duration: 3000 });
       console.log(error.message);
     }
-    this.store.dispatch(new fromUI.StopLoading());
+    this.store.dispatch(new from.ui.StopLoading());
   }
 
   async login(user: User) {
     let loggedUser;
-    this.store.dispatch(new fromUI.StartLoading());
+    this.store.dispatch(new from.ui.StartLoading());
     try {
       const { user: { uid: uid } } = await this.afAuth.auth
         .signInWithEmailAndPassword(user.email, user.password);
@@ -77,17 +73,17 @@ export class AuthService {
         loggedUser = u;
         console.log(u);
       });
-      this.store.dispatch(new fromAuth.SetAuthenticated(user));
+      this.store.dispatch(new from.auth.SetAuthenticated(user));
     } catch (error) {
       this.snackbar.open(error.message, null, { duration: 3000 });
       console.log(error.message);
 
     }
-    this.store.dispatch(new fromUI.StopLoading());
+    this.store.dispatch(new from.ui.StopLoading());
   }
 
   logout() {
-    this.store.dispatch(new fromAuth.SetUnauthenticated);
+    this.store.dispatch(new from.auth.SetUnauthenticated);
     this.afAuth.auth.signOut();
   }
   private updateUserData(uid: string, data: User) {

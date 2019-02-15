@@ -14,21 +14,19 @@
         <a routerLink="/signup">Registrarse</a>
       </li>
       <li *ngIf="!((user$|async)?.nombre!='')">
-        <a routerLink="/login">Iniciar Sesion</a>
+        <a routerLink="/login">Iniciar Sesión</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')&&(user$|async)?.isAdmin">
-        <!--&&isAdmin-->
-        <a routerLink="/upload">Subir Partituras</a>
+        <a routerLink="/admin">Administrador</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
-        <!--&&isAdmin-->
-        <a routerLink="/sheet">Partitura</a>
+        <a routerLink="/sheet">Partitura ELIMINAR</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
-        <a routerLink="/music-list">Lista Partituras</a>
+        <a routerLink="/music-list">Musica</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
-        <a style="cursor: pointer" (click)="onLogout()">Logout</a>
+        <a style="cursor: pointer" (click)="onLogout()">Cerrar Sesión</a>
       </li>
     </ul>
   </div>

@@ -1,30 +1,21 @@
-export interface IMenu {
+export interface Menu {
   name: string;
   link: string;
   icon: string;
+  isUser?: boolean;
   chip?: boolean;
   open?: boolean;
-  admin?: boolean;
+  sub?: Menu[];
+  isAdmin?: boolean;
 }
-export class Menu implements IMenu {
-  constructor(
-    public name: string,
-    public link: string,
-    public icon: string,
-    public chip: boolean = false,
-    public open: boolean = false,
-    public admin: boolean = false
-  ) { }
-
-}
-export const menus: Menu[] = [
+export const loggedOutMenu: Menu[] = [
   {
     'name': 'Inicio de Sesion',
     'link': '/login',
     'icon': 'input',
     'chip': false,
     'open': false,
-    'admin': false,
+    'isAdmin': false,
   },
   {
     'name': 'Registrarse',
@@ -32,30 +23,37 @@ export const menus: Menu[] = [
     'icon': 'face',
     'chip': false,
     'open': false,
-    'admin': false,
-  },
+    'isAdmin': false,
+  }
+];
+export const menus: Menu[] = [
   {
-    'name': 'Subir Partitura',
+    'name': 'Admin',
     'link': '/upload',
     'icon': 'input',
+    'isUser': true,
     'chip': false,
     'open': false,
-    'admin': true,
+    'isAdmin': true,
   },
   {
-    'name': 'Lista de Musica',
+    'name': 'Musica',
     'link': '/music-list',
     'icon': 'face',
+    'isAdmin': false,
+
+    'isUser': true,
     'chip': false,
     'open': false,
-    'admin': false,
+    'sub': [],
   },
   {
     'name': 'Cerrar Sesion',
     'link': '/logout',
     'icon': 'eject',
+    'isUser': true,
     'chip': false,
-    'admin': false,
+    'isAdmin': false,
     'open': false,
   },
 ];

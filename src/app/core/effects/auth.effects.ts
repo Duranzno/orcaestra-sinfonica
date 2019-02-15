@@ -3,11 +3,9 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { OrcaState } from '../store';
-import * as fromAuth from '@core/store/auth';
-import * as fromMusic from '@core/store/music';
+import * as fromAuth from '../store/auth';
 
 import { map, tap, switchMap, catchError } from 'rxjs/operators';
-type Action = fromAuth.Actions;
 
 @Injectable()
 export class AuthEffects {

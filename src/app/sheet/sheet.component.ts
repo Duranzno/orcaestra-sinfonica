@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WavesurferService } from '@core/services/wavesurfer.service';
-import { OsmdService } from '@core/services/osmd.service';
-import { YoutubeService } from '@core/services/youtube.service';
-import { mockSheet } from '../shared/mock';
-import { Score } from '@core/models/partitura.interface';
-import { MediaType } from '@core/models/multimedia.interface';
+import { WavesurferService, YoutubeService, OsmdService } from '../core/services/';
+import { mockSheet } from '../core/mock';
+import { Score, MediaType } from '../core/models';
 
 class MediaBuffer {
   constructor(

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IScore } from '@core/models/partitura.interface';
+import { IScore } from '../../models';
 export class ActionTypes {
   static SET_PARTITURA = '[Music] Partitura Seleccionada';
   static SET_GRUPOS = '[Music] Grupos seleccionados';

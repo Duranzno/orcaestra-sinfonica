@@ -4,7 +4,7 @@
   "name": "Orcaestra Sinfonica",
   "scope": "/",
   "theme_color": "#808080",
-  "background_color": "#808080",  
+  "background_color": "#808080",
   "display": "fullscreen",
   "start_url": "https://orcaestra-sinfonica.firebaseapp.com/welcome",
   "short_name": "Orcaestra",

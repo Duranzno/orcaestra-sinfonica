@@ -17,35 +17,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "~/*": [
-        "src/*"
-      ],
-      "@utils/*": [
-        "src/app/shared/utils/*"
-      ],
-      "@shared/*": [
-        "./src/app/shared/*"
-      ],
-      "@animations/*": [
-        "./src/app/shared/animations/*"
-      ],
-      "@core/*": [
-        "./src/app/core/*"
-      ],
-      "@resolvers/*": [
-        "./src/app/core/resolvers/*"
-      ],
-      "@store/*": [
-        "./src/app/core/store/*"
-      ],
-      "@mocks/*": [
-        "./tests/mocks/*"
-      ],
-      "@env/*": [
-        "./src/environments/*"
-      ],
-    }
+    ]
   }
 }

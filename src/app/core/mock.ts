@@ -1,4 +1,4 @@
-import { IMedia, MediaOriginType, MediaType, IStoredType, MediaArray, Score, PersonaTipo, User } from '@core/models';
+import { IMedia, MediaOriginType, MediaType, IStoredType, MediaArray, Score, PersonaTipo, User } from './models';
 
 const arr: IMedia[] = [
   {

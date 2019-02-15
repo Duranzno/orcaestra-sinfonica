@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import * as fromUI from '@core/store/ui';
-import * as fromAuth from '@core/store/auth';
-
-import { tap, map } from 'rxjs/operators';
 
 @Injectable()
 export class UIEffects {

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from './menu-element';
+import { Store } from '@ngrx/store';
+import { OrcaState, from } from 'src/app/core/store';
 
 @Component({
   selector: 'app-sidenav-item',
@@ -11,13 +13,14 @@ export class SidenavItemComponent implements OnInit {
   @Input() menu;
   @Input() iconOnly: boolean;
   @Input() secondaryMenu = false;
-  @Input() isAdmin: boolean;
-  @Input() isUser: boolean;
+  @Input() isAdmin: boolean = false;
+  @Input() isUser: boolean = false;
 
 
-  constructor() { }
+  constructor(private store: Store<OrcaState>) { }
 
   ngOnInit() {
+    // this.store.select(from.auth.isAuth).subscribe(x => alert(x))
   }
 
   openLink() {

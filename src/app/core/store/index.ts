@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Store, StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { OrcaActions, OrcaState, OrcaReducers } from './reducers';
-import { environment } from '@env/environment.prod';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppEffectsModules } from '../effects';
 const optionalImports = [];
@@ -27,4 +26,9 @@ const optionalImports = [];
 })
 export class CoreStoreModule { }
 export { OrcaState, OrcaActions, OrcaReducers } from './reducers';
+import * as media from './media';
+import * as auth from './auth';
+import * as music from './music';
+import * as ui from './ui';
+export const from = { media, auth, music, ui };
 

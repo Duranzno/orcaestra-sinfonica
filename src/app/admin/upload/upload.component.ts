@@ -1,9 +1,10 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { PersonaTipo } from '@core/models/autor.interface';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { UploadService } from '@core/services/upload.service';
+import { UploadService } from '../../core/services';
+import { PersonaTipo } from '../../core/models';
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',

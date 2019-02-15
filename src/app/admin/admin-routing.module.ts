@@ -5,14 +5,12 @@ import { UploadComponent } from './upload/upload.component';
 
 
 const routes: Routes = [
-    { path: 'upload', component: UploadComponent},
-    { path: 'admin', component: AdminComponent},
+  { path: 'upload', component: UploadComponent },
+  { path: '', component: AdminComponent },
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes)
-    ],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AdminRoutingModule { }

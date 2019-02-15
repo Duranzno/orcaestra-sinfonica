@@ -1,24 +1,41 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SheetComponent } from './sheet/sheet.component';
-import { SettingsComponent } from './auth/settings/settings.component';
-import { MusicDetailComponent } from './list/music-details/music-detail.component';
-import { MusicListComponent } from './list/music-list/music-list.component';
 import { AuthGuard } from './auth/auth.guard';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent },
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'sheet', component: SheetComponent },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
-  { path: 'music-detail', component: MusicDetailComponent, canActivate: [AuthGuard] },
-  { path: 'music-list', component: MusicListComponent, canActivate: [AuthGuard] }
+  {
+    path: '',
+    component: WelcomeComponent
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent
+  },
+  {
+    path: 'sheet',
+    component: SheetComponent
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'music-list',
+    loadChildren: './list/music.module#MusicModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    // enableTracing: !environment.production, // <-- debugging purposes only
+    preloadingStrategy: PreloadAllModules
+  })],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

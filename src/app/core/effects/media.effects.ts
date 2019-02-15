@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
-import * as fromMedia from '@core/store/media';
-import * as fromAuth from '@core/store/auth';
+import * as fromMedia from '../store/media';
+import * as fromAuth from '../store/auth';
 
 import { UploadFile, Score, User } from '../models';
 import { FbStorageService } from '../services/upload/firebase.service';

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { MediaType, UploadFile, MediaTypeGuesser } from '../../models';
 import { of, Observable } from 'rxjs';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import * as fromMedia from '@core/store/media';
+import * as fromMedia from '../../store/media';
 import { Store } from '@ngrx/store';
 import { OrcaState } from '../../store';
 

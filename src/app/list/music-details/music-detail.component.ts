@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { MediaType, MediaOriginType, IScore, Score } from '@core/models';
-import { MusicService } from '@core/services/music.service';
+import { MediaType, MediaOriginType, IScore, Score } from '../../core/models';
+import { MusicService } from '../../core/services/music.service';
 
-import * as fromMusic from '@core/store/music';
-import { mockSheet } from '../../shared/mock';
-import { OrcaState } from '../../core/store';
+import { from as From, OrcaState } from '../../core/store';
+import { mockSheet } from '../../core/mock';
 
 @Component({
   selector: 'app-music-detail',
@@ -24,7 +23,7 @@ export class MusicDetailComponent implements OnInit {
     private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    this.mockData$ = this.store.select(fromMusic.getPartitura);
+    this.mockData$ = this.store.select(From.music.getPartitura);
     // this.store.select(fromMusic.getPartitura).subscribe(
     //   (sheet: IScore) => { console.log(sheet); });
     // this.media.photoUrl = this.mockData.media.getByTypeAndOrigin(MediaType.AVATAR, MediaOriginType.ASSETS).url;

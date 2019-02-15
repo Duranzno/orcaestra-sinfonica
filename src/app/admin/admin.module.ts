@@ -7,10 +7,9 @@ import { MaterialFireModule } from '../material.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { UploadComponent } from './upload/upload.component';
 import { AdminComponent } from './admin.component';
-import { UploadService } from '@core/services/upload.service';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core';
-import { AlmacenamientoComponent, FileComponent, GenerosComponent, InstrumentosComponent, InvolucradosComponent } from '../core/components';
+import { UploadService } from '../core/services/upload.service';
 @NgModule({
   declarations: [
     AdminComponent,

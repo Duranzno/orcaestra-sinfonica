@@ -1,5 +1,5 @@
 import { ActionTypes, Actions } from './media.actions';
-import { User, MediaType, UploadFile } from '@core/models';
+import { User, MediaType, UploadFile } from '../../models';
 import { createUploadTask } from '@angular/fire/storage';
 
 export interface State {

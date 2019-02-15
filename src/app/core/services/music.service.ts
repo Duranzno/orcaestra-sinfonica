@@ -3,9 +3,8 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { IScore } from '@core/models/partitura.interface';
-import { UIService } from './ui.service';
-import * as fromMusic from '@core/store/music';
+import { IScore } from '../models/partitura.interface';
+import { from as From, OrcaState } from '../store';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,11 @@ export class MusicService {
 
   constructor(
     private db: AngularFirestore,
-    private uiService: UIService,
-    private store: Store<fromMusic.State>) { }
+    private store: Store<OrcaState>) { }
 
   setPartitura(mock: IScore) {
-    this.store.dispatch(new fromMusic.SetPartitura(mock));
+    this.store.dispatch(new From.music.SetPartitura(mock));
+
   }
 
   // fetchPartituras() {
