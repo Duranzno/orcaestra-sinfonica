@@ -38,8 +38,9 @@ export class SidenavListComponent implements OnInit {
 
   user$: Observable<IUser>;
   avatarSrc$: Observable<string>;
-
+  public menus = menus;
   public $menus: Observable<Menu[]>;
+  public loggedOutMenu = loggedOutMenu;
 
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
@@ -62,8 +63,6 @@ export class SidenavListComponent implements OnInit {
       }
     ));
     this.avatarSrc$ = this.store.select(from.auth.getAvatar);
-    // this.store.dispatch(new fromAuth.SetAvatar('./assets/user.jpg'));
-    // this.avatarSrc$% = this.store.select(fromMedia.getAvatar);
   }
   onClose() {
     this.closeSidenav.emit();

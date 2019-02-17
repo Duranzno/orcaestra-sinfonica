@@ -14,13 +14,10 @@ export class SidenavItemComponent implements OnInit {
   @Input() iconOnly: boolean;
   @Input() secondaryMenu = false;
   @Input() isAdmin: boolean = false;
-  @Input() isUser: boolean = false;
-
 
   constructor(private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    // this.store.select(from.auth.isAuth).subscribe(x => alert(x))
   }
 
   openLink() {

@@ -18,9 +18,22 @@
     </p>
   </div>
 
-  <app-sidenav-item *ngFor="let menu of $menus |async as menus" [menu]="menu" [iconOnly]="iconOnly"
-    [isAdmin]="(user$|async)?.isAdmin">
-  </app-sidenav-item>
+  <!-- <app-sidenav-item [menu]="subscriptions[0]" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
+  </app-sidenav-item> -->
+  <!-- <p>after sidenavite m</p> -->
+  <ng-container *ngIf="!((user$|async)?.nombre!=''); else loggedUser">
+    <app-sidenav-item *ngFor="let menu of loggedOutMenu" [menu]="menu" [iconOnly]="iconOnly"
+      [isAdmin]="(user$|async)?.isAdmin">
+    </app-sidenav-item>
+  </ng-container>
+  <ng-template #loggedUser>
+    <p *ngIf="((user$|async)?.isAdmin)">admin</p>
+    <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
+    </app-sidenav-item>
+  </ng-template>
+
+  <!-- <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
+  </app-sidenav-item> -->
   <pre>{{ $menus | async | json }}</pre>
 
 </div>
