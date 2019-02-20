@@ -13,7 +13,6 @@ export class SidenavItemComponent implements OnInit {
   @Input() menu;
   @Input() iconOnly: boolean;
   @Input() secondaryMenu = false;
-  @Input() isAdmin: boolean = false;
 
   constructor(private store: Store<OrcaState>) { }
 

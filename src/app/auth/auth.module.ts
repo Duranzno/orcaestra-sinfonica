@@ -10,9 +10,10 @@ import { MaterialFireModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '../core';
+import { LogoutComponent } from './logout.component';
 
 @NgModule({
-  declarations: [SignupComponent, LoginComponent, SettingsComponent],
+  declarations: [SignupComponent, LoginComponent, SettingsComponent, LogoutComponent],
   imports: [
     CommonModule,
     FormsModule,

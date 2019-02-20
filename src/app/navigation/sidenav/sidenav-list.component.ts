@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { menus, loggedOutMenu, Menu } from './menu-element';
+import { UserMenu, AnonMenu, Menu, mapMenuAdmin, mapMenuGenres } from './menu-element';
 import { AuthService } from '../../core/services/auth.service';
-import { IUser } from '../../core/models/user.model';
+import { IUser, User } from '../../core/models/user.model';
 import { OrcaState, from } from '../../core/store';
 import { map } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class SidenavListComponent implements OnInit {
   @Input() iconOnly = false;
   @Output() closeSidenav = new EventEmitter<void>();
-  @Input() subscriptions: Menu[] = [
+  @Input() public subscriptions: Menu[] = [
     {
       'name': 'Navidad',
       'link': '#',
@@ -36,32 +36,24 @@ export class SidenavListComponent implements OnInit {
     },
   ];
 
-  user$: Observable<IUser>;
+  user$: Observable<User>;
   avatarSrc$: Observable<string>;
-  public menus = menus;
+  public menus: Menu[];
   public $menus: Observable<Menu[]>;
-  public loggedOutMenu = loggedOutMenu;
+  public loggedOutMenu = AnonMenu;
 
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
     this.user$ = this.store.select(from.auth.getUser);
-    this.$menus = this.user$.pipe(map(
-      (user) => {
-        const findSub = (m: Menu) => m.name === 'Musica';
-        if (user.nombre !== '') {
-          return menus.reduce((arr: Menu[], m: Menu): Menu[] => {
-            if (findSub(m)) {
-              m.sub = this.subscriptions;
-            }
-            return arr.concat(m);
-          }, []);
-        }
-        else {
-          return loggedOutMenu;
-        }
-      }
-    ));
+    this.$menus = this.user$.pipe(
+      map(user => {
+        const a = mapMenuGenres(user, this.subscriptions, mapMenuAdmin(user));
+        console.log(a);
+        return a;
+      })
+    );
+    this.$menus.subscribe(m => this.menus = m);
     this.avatarSrc$ = this.store.select(from.auth.getAvatar);
   }
   onClose() {

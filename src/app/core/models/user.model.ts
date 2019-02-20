@@ -13,7 +13,9 @@ export class User implements IUser {
     public apellido: string = '',
     public password: string = '',
     public group: string = '',
-    public isAdmin: boolean = false) {
+    public isAdmin: boolean = false,
+    public avatar: string = '/assets/user.jpg') {
+    this.group = (this.group === '') ? 'Desconocido' : this.group;
   }
 }
 

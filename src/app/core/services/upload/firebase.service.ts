@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MediaType, User, Score } from '../../models';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of } from 'rxjs';
+import { OrcaState, from } from '../../store';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class FbStorageService {
@@ -10,7 +12,7 @@ export class FbStorageService {
   public snapshot: Observable<firebase.storage.UploadTaskSnapshot>;
   public downloadURL: Observable<string>;
 
-  constructor(private storage: AngularFireStorage) { }
+  constructor(private storage: AngularFireStorage, private store: Store<OrcaState>) { }
   upload(type: MediaType, data: User | Score, file: File) {
     try {
       const path = this.setPath(type, data);
@@ -18,8 +20,14 @@ export class FbStorageService {
       this.task = this.storage.upload(<string>path, file, { customMetadata });
       this.percentage = this.task.percentageChanges();
       this.snapshot = this.task.snapshotChanges();
-      const fileRef = this.storage.ref(<string>path);
-      return fileRef.getDownloadURL();
+      const downloadUrl: Observable<string> = this.storage.ref(<string>path).getDownloadURL();
+      downloadUrl.subscribe(
+        url => console.log(`dowload url ${url}`),
+        e => console.error(e),
+        () => {
+          console.log(`completed`);
+        });
+      return downloadUrl;
       // this.downloadURL = (type === MediaType.AVATAR || type === MediaType.IMG)
       //   ? fileRef.getDownloadURL()
       //   : of('assets/file.png');
@@ -29,17 +37,14 @@ export class FbStorageService {
   private setPath(type: MediaType, data: User | Score): string | Error {
     switch (type) {
       case MediaType.AVATAR:
-        if (data instanceof User) {
-          return `test/${type}/${data.nombre}-${data.apellido}`;
-        }
-        break;
+        return `OSJIG/avatar/${(<User>data).email}`;
       case MediaType.MP3:
       case MediaType.IMG:
       case MediaType.MIDI:
       case MediaType.MXML:
       case MediaType.PDF:
         if (data instanceof Score) {
-          return `test/${type}/${data.generos[0]}/${data.obra}/`;
+          return `OSJIG/musica/${data.generos[0]}/${data.obra}/`;
         }
         break;
       case MediaType.YOUTUBE:

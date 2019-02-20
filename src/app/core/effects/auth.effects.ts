@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
 
-import { map, tap, switchMap, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
+import { User } from '../models';
 
 @Injectable()
 export class AuthEffects {
@@ -17,20 +18,16 @@ export class AuthEffects {
   @Effect()
   setAuth$ = this.actions$.pipe(
     ofType(fromAuth.ActionTypes.SET_AUTHENTICATED),
-    map((error) => new fromAuth.SetAvatar('/assets/user.jpg')),
-    tap(x => { console.log(x); })
-    // switchMap((payload) => {
-    //   return of('error')
-    //     .pipe(
-    //       map((error) => of(new fromAuth.SetAvatar('/assets/user.jpg')))
-    //     )
-    // })
+    map((action: any) => new fromAuth.SetAvatar(action.payload.avatar))
   );
-
   // @Effect()
-  // setUnAuth$ = this.actions$.pipe(
-  //   ofType(fromAuth.ActionTypes.SET_UNAUTHENTICATED),
-  //   // tap(x => console.log(x))
+  // logAvatar$ = this.actions$.pipe(
+  //   ofType(fromAuth.ActionTypes.SET_AVATAR)
   // );
+  @Effect()
+  setUnAuth$ = this.actions$.pipe(
+    ofType(fromAuth.ActionTypes.SET_UNAUTHENTICATED),
+    map(_ => new fromAuth.SetAvatar('/assets/user.jpg'))
+  );
 
 }

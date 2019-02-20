@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, from, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -8,7 +8,8 @@ import { Store } from '@ngrx/store';
 
 import { User, UploadFile } from '../models';
 
-import { OrcaState, from } from '../store';
+import { OrcaState, from as From } from '../store';
+import { switchMap, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -21,18 +22,17 @@ export class AuthService {
     private store: Store<OrcaState>,
     private router: Router,
   ) { }
-
   initAuthListener() {
     this.afAuth.authState
       .subscribe(fUser => {
         if (fUser) {
           this.fetchUserData(fUser.uid)
             .subscribe(user =>
-              this.store.dispatch(new from.auth.SetAuthenticated(<User>user)));
+              this.store.dispatch(new From.auth.SetAuthenticated(<User>user)));
           this.router.navigate(['/welcome']);
         } else {
           // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
-          this.store.dispatch(new from.auth.SetUnauthenticated());
+          this.store.dispatch(new From.auth.SetUnauthenticated());
           this.router.navigate(['/signup']);
         }
       });
@@ -40,57 +40,56 @@ export class AuthService {
   fetchGrupos() {
     this.afStore.collection('categories').valueChanges()
       .subscribe(json => {
-        this.store.dispatch(new from.music.SetGrupos(json[0]['grupos']));
+        this.store.dispatch(new From.music.SetGrupos(json[0]['grupos']));
       });
   }
   async registerUser(user: User, files?: UploadFile[]) {
-    this.store.dispatch(new from.ui.StartLoading());
+    this.store.dispatch(new From.ui.StartLoading());
     try {
-      const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      this.afAuth.auth.setPersistence('local');
+      // const loggedUser = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      // this.afAuth.auth.setPersistence('local');
       if (files) {
-        await this.store.dispatch(new from.media.PostAvatarF({ file: files[0], user: user }));
+        this.store.dispatch(new From.media.PostAvatarF({ file: files[0], user: user }));
       }
-      await this.updateUserData(loggedUser.user.uid, user);
-      this.store.dispatch(new from.auth.SetAuthenticated(user));
+      // await this.updateUserData(loggedUser.user.uid, user);
+      this.store.dispatch(new From.auth.SetAuthenticated(user));
     } catch (error) {
       this.snackbar.open(error.message, null, { duration: 3000 });
       console.log(error.message);
     }
-    this.store.dispatch(new from.ui.StopLoading());
+    this.store.dispatch(new From.ui.StopLoading());
   }
 
-  async login(user: User) {
-    let loggedUser;
-    this.store.dispatch(new from.ui.StartLoading());
-    try {
-      const { user: { uid: uid } } = await this.afAuth.auth
-        .signInWithEmailAndPassword(user.email, user.password);
-      this.afAuth.auth.setPersistence('local');
-
-      console.log(uid);
-      this.fetchUserData(uid).subscribe(u => {
-        loggedUser = u;
-        console.log(u);
-      });
-      this.store.dispatch(new from.auth.SetAuthenticated(user));
-    } catch (error) {
-      this.snackbar.open(error.message, null, { duration: 3000 });
-      console.log(error.message);
-
-    }
-    this.store.dispatch(new from.ui.StopLoading());
+  login(user: User) {
+    this.afAuth.auth.setPersistence('local');
+    this.store.dispatch(new From.ui.StartLoading());
+    from(this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password))
+      .pipe(
+        switchMap(f => { console.log(f); return this.fetchUserData(f.user.uid); }),
+        catchError(this.errorHandlerRx)
+      )
+      .subscribe(finalUser => this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User)));
   }
-
   logout() {
-    this.store.dispatch(new from.auth.SetUnauthenticated);
     this.afAuth.auth.signOut();
+    this.store.dispatch(new From.auth.SetUnauthenticated);
   }
-  private updateUserData(uid: string, data: User) {
+  private updateUserData(uid: string, data: User): Observable<void> {
     const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
-    return userRef.set(data, { merge: true });
+    return from(userRef.set(data, { merge: true }));
   }
   private fetchUserData(uid: string) {
-    return this.afStore.doc(`usuarios/${uid}`).valueChanges();
+    return from(this.afStore.doc(`usuarios/${uid}`).valueChanges());
   }
+  private errorHandler(error) {
+    this.snackbar.open(error.message, null, { duration: 3000 });
+    console.error(error.message);
+  }
+  private errorHandlerRx() {
+    return of(error => {
+      this.snackbar.open(error.message, null, { duration: 3000 });
+      console.error(error.message);
+    });
+  }
+
 }

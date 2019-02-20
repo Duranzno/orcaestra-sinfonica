@@ -7,33 +7,24 @@
   </div>
 
   <div *ngIf="(user$|async)?.nombre!=''">
-
     <p>
       <ng-container *ngIf="(user$|async)?.isAdmin; else user">
         <mat-icon>verified_user</mat-icon>
       </ng-container>
       <ng-template #user>
         <mat-icon>person</mat-icon>
-      </ng-template>{{(user$|async).nombre}} {{(user$|async).apellido}}
+      </ng-template>{{(user$|async)?.nombre}} {{(user$|async)?.apellido}}
     </p>
   </div>
 
-  <!-- <app-sidenav-item [menu]="subscriptions[0]" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
-  </app-sidenav-item> -->
-  <!-- <p>after sidenavite m</p> -->
   <ng-container *ngIf="!((user$|async)?.nombre!=''); else loggedUser">
-    <app-sidenav-item *ngFor="let menu of loggedOutMenu" [menu]="menu" [iconOnly]="iconOnly"
-      [isAdmin]="(user$|async)?.isAdmin">
+    <app-sidenav-item *ngFor="let menu of loggedOutMenu" [menu]="menu" [iconOnly]="iconOnly">
     </app-sidenav-item>
   </ng-container>
   <ng-template #loggedUser>
     <p *ngIf="((user$|async)?.isAdmin)">admin</p>
-    <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
-    </app-sidenav-item>
+    <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>
   </ng-template>
-
-  <!-- <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly" [isAdmin]="(user$|async)?.isAdmin">
-  </app-sidenav-item> -->
   <pre>{{ $menus | async | json }}</pre>
 
 </div>

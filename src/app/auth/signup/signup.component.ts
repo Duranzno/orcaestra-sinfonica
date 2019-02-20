@@ -15,7 +15,7 @@ import { UploadService } from '../../core/services/upload.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: []
 })
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
@@ -43,7 +43,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       apellido: form.value.apellido,
       password: form.value.password,
       group: form.value.grupo,
-      isAdmin: form.value.isAdmin,
+      avatar: '/assets/user.jpg',
+      isAdmin: (form.value.isAdmin === '') ? false : true,
     };
     this.authService.registerUser(user, this.files);
 

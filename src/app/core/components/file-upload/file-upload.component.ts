@@ -35,35 +35,35 @@ export class FileUploadComponent implements OnInit {
   toggleHover(event: boolean) { this.isHovering = event; }
 
   openInput() {
-    //  document.getElementById('file-input').click();
+    document.getElementById('file-input').click();
     this.sn.state = 'PAUSED';
     // this.store.dispatch(new fromMedia.UpdateMediaSnapshot({ downloadURL: '', state: 'PAUSED' }));
   }
 
   filesReady(event: FileList) {
     let files: UploadFile[] = [];
-    if (!this.isAvatar()) {
+    if (this.isAvatar()) {
+      files = [{ 'file': event[0], 'type': this.type }];
+    }
+    else {
       for (let i = 0; i < event.length; i++) {
         files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
       }
-    }
-    else {
-      files = [{ 'file': event[0], 'type': this.type }];
     }
     this.filesEvent.emit(files);
   }
   isAvatar() {
     return this.type && this.type === MediaType.AVATAR;
   }
-  isActive(snapshot: firebase.storage.UploadTaskSnapshot) {
-    if (typeof snapshot === 'undefined' || snapshot == null) { return false; }
-    return snapshot.state === 'running'
-      && snapshot.bytesTransferred < snapshot.totalBytes;
-  }
-  snapshotState(snapshot: firebase.storage.UploadTaskSnapshot) {
-    if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
-    else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
-    else if (snapshot.state === 'success') { return 'success'; }
-    else { return 'notrunning'; }
-  }
+  // isActive(snapshot: firebase.storage.UploadTaskSnapshot) {
+  //   if (typeof snapshot === 'undefined' || snapshot == null) { return false; }
+  //   return snapshot.state === 'running'
+  //     && snapshot.bytesTransferred < snapshot.totalBytes;
+  // }
+  // snapshotState(snapshot: firebase.storage.UploadTaskSnapshot) {
+  //   if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
+  //   else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
+  //   else if (snapshot.state === 'success') { return 'success'; }
+  //   else { return 'notrunning'; }
+  // }
 }
