@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { IScore } from '../models/partitura.interface';
-import { from as From, OrcaState } from '../store';
+import { From, OrcaState } from '../store';
 
 @Injectable({
   providedIn: 'root'

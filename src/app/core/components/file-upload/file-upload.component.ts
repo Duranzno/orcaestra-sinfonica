@@ -60,7 +60,7 @@ export class FileUploadComponent implements OnInit {
   //   return snapshot.state === 'running'
   //     && snapshot.bytesTransferred < snapshot.totalBytes;
   // }
-  // snapshotState(snapshot: firebase.storage.UploadTaskSnapshot) {
+  // Gtate(snapshot: firebase.storage.UploadTaskSnapshot) {
   //   if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
   //   else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
   //   else if (snapshot.state === 'success') { return 'success'; }

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { UserMenu, AnonMenu, Menu, mapMenuAdmin, mapMenuGenres } from './menu-element';
 import { AuthService } from '../../core/services/auth.service';
 import { IUser, User } from '../../core/models/user.model';
-import { OrcaState, from } from '../../core/store';
+import { OrcaState, From } from '../../core/store';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -45,12 +45,12 @@ export class SidenavListComponent implements OnInit {
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(from.auth.getUser);
+    this.user$ = this.store.select(From.auth.getUser);
     this.$menus = this.user$.pipe(
       map(user => mapMenuGenres(user, this.subscriptions, mapMenuAdmin(user)))
     );
     this.$menus.subscribe(m => this.menus = m);
-    this.avatarSrc$ = this.store.select(from.auth.getAvatar);
+    this.avatarSrc$ = this.store.select(From.auth.getAvatar);
   }
   onClose() {
     this.closeSidenav.emit();
@@ -58,6 +58,6 @@ export class SidenavListComponent implements OnInit {
 
   onLogout() {
     this.onClose();
-    this.store.dispatch(new from.auth.SetUnauthenticated());
+    this.store.dispatch(new From.auth.SetUnauthenticated());
   }
 }

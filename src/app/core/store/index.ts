@@ -5,10 +5,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppEffectsModules } from '../effects';
 const optionalImports = [];
 
-// if (!environment.production) {
-//   // Note that you must instrument after importing StoreModule
-//   optionalImports.push(StoreDevtoolsModule.instrument({ maxAge: 25 }));
-// }
+if (!environment.production) {
+  // Note that you must instrument after importing StoreModule
+  optionalImports.push(StoreDevtoolsModule.instrument({ maxAge: 25 }));
+}
 
 @NgModule({
   declarations: [],
@@ -24,11 +24,12 @@ const optionalImports = [];
   ],
   providers: [...OrcaActions],
 })
-export class CoreStoreModule { }
+export class CoreStoreModule { constructor() { console.log('store created'); } }
 export { OrcaState, OrcaActions, OrcaReducers } from './reducers';
 import * as media from './media';
 import * as auth from './auth';
 import * as music from './music';
 import * as ui from './ui';
-export const from = { media, auth, music, ui };
+import { environment } from 'src/environments/environment';
+export const From = { media, auth, music, ui };
 

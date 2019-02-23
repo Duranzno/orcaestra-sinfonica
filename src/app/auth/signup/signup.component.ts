@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { User } from '../../core/models/user.model';
 import { OrcaState } from '../../core/store';
 
-import { from } from '../../core/store';
+import { From } from '../../core/store';
 
 import { MediaType, MediaOriginType, UploadFile } from '../../core/models';
 import { UploadService } from '../../core/services/upload.service';
@@ -30,8 +30,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authService.fetchGrupos();
-    this.isLoading$ = this.store.select(from.ui.getIsLoading);
-    this.grupos$ = this.store.select(from.music.getGrupos);
+    this.isLoading$ = this.store.select(From.ui.getIsLoading);
+    this.grupos$ = this.store.select(From.music.getGrupos);
   }
   getAvatarFile(files: UploadFile[]) {
     this.files = files;

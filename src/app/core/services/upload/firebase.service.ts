@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MediaType, User, Score } from '../../models';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of } from 'rxjs';
-import { OrcaState, from } from '../../store';
+import { OrcaState, From } from '../../store';
 import { Store } from '@ngrx/store';
 import { last, map, mergeMap, switchMap } from 'rxjs/operators';
 

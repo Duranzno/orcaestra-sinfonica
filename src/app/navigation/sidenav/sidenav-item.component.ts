@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from './menu-element';
 import { Store } from '@ngrx/store';
-import { OrcaState, from } from 'src/app/core/store';
+import { OrcaState, From } from 'src/app/core/store';
 
 @Component({
   selector: 'app-sidenav-item',

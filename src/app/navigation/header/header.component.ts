@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../core/services';
 import { Store } from '@ngrx/store';
 import { User } from '../../core/models';
-import { OrcaState, from } from '../../core/store';
+import { OrcaState, From } from '../../core/store';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(from.auth.getUser);
+    this.user$ = this.store.select(From.auth.getUser);
   }
   onToggleSidenav() {
     this.sidenavToggle.emit();
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     this.drawerToggle.emit();
   }
   onLogout() {
-    this.store.dispatch(new from.auth.SetUnauthenticated());
+    this.store.dispatch(new From.auth.SetUnauthenticated());
   }
 
 }

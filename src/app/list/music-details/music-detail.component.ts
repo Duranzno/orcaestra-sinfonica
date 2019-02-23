@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { MediaType, MediaOriginType, IScore, Score } from '../../core/models';
 import { MusicService } from '../../core/services/music.service';
 
-import { from as From, OrcaState } from '../../core/store';
+import { From as From, OrcaState } from '../../core/store';
 import { mockSheet } from '../../core/mock';
 
 @Component({

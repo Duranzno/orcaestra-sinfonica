@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 
 import { User, UploadFile } from '../models';
 
-import { OrcaState, from as From } from '../store';
+import { OrcaState, From } from '../store';
 import { switchMap, catchError, map, last } from 'rxjs/operators';
 
 
