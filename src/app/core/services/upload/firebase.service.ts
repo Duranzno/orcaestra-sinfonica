@@ -4,6 +4,7 @@ import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage
 import { Observable, of } from 'rxjs';
 import { OrcaState, from } from '../../store';
 import { Store } from '@ngrx/store';
+import { last, map, mergeMap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class FbStorageService {
@@ -14,25 +15,19 @@ export class FbStorageService {
 
   constructor(private storage: AngularFireStorage, private store: Store<OrcaState>) { }
   upload(type: MediaType, data: User | Score, file: File) {
-    try {
-      const path = this.setPath(type, data);
-      const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
-      this.task = this.storage.upload(<string>path, file, { customMetadata });
-      this.percentage = this.task.percentageChanges();
-      this.snapshot = this.task.snapshotChanges();
-      const downloadUrl: Observable<string> = this.storage.ref(<string>path).getDownloadURL();
-      downloadUrl.subscribe(
-        url => console.log(`dowload url ${url}`),
-        e => console.error(e),
-        () => {
-          console.log(`completed`);
-        });
-      return downloadUrl;
-      // this.downloadURL = (type === MediaType.AVATAR || type === MediaType.IMG)
-      //   ? fileRef.getDownloadURL()
-      //   : of('assets/file.png');
-    }
-    catch (e) { console.error(e); }
+    const path = this.setPath(type, data);
+    const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
+    this.task = this.storage.upload(<string>path, file, { customMetadata });
+    this.percentage = this.task.percentageChanges();
+    this.snapshot = this.task.snapshotChanges();
+    const fileRef2 = this.storage.ref(<string>path);
+    return <Observable<string>>this.task.snapshotChanges().pipe(
+      last(),
+      switchMap(_ => {
+        const url = fileRef2.getDownloadURL();
+        return url;
+      })
+    );
   }
   private setPath(type: MediaType, data: User | Score): string | Error {
     switch (type) {

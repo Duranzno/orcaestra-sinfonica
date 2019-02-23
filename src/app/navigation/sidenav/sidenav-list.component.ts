@@ -47,11 +47,7 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.store.select(from.auth.getUser);
     this.$menus = this.user$.pipe(
-      map(user => {
-        const a = mapMenuGenres(user, this.subscriptions, mapMenuAdmin(user));
-        console.log(a);
-        return a;
-      })
+      map(user => mapMenuGenres(user, this.subscriptions, mapMenuAdmin(user)))
     );
     this.$menus.subscribe(m => this.menus = m);
     this.avatarSrc$ = this.store.select(from.auth.getAvatar);

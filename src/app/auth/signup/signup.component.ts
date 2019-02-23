@@ -46,7 +46,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       avatar: '/assets/user.jpg',
       isAdmin: (form.value.isAdmin === '') ? false : true,
     };
-    this.authService.registerUser(user, this.files);
+    this.authService.registerUser(user, this.files[0]);
 
     // this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
   }
