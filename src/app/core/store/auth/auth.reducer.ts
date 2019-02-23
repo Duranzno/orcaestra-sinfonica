@@ -8,7 +8,7 @@ export interface State {
 
 const initialState: State = {
   user: new User(),
-  avatarSrc: '/assets/file.png',
+  avatarSrc: '/assets/user.png',
 };
 
 export function authReducer(state = initialState, action: Actions): State {
