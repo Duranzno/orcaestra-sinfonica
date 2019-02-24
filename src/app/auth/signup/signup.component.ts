@@ -10,7 +10,6 @@ import { OrcaState } from '../../core/store';
 import { From } from '../../core/store';
 
 import { MediaType, MediaOriginType, UploadFile } from '../../core/models';
-import { UploadService } from '../../core/services/upload.service';
 
 @Component({
   selector: 'app-signup',
@@ -48,7 +47,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     };
     this.authService.registerUser(user, this.files[0]);
 
-    // this.uploadService.upload(MediaType.AVATAR, user, MediaOriginType.FIREBASE);
   }
   ngOnDestroy() {
   }

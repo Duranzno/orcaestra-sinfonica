@@ -47,7 +47,10 @@ export enum MediaOriginType {
   ASSETS = 'assets',
   OTHER = 'other',
 }
-interface Origin { url: string; type: MediaOriginType; }
+interface Origin {
+  url: string;
+  type: MediaOriginType;
+}
 export interface IMedia {
   originArray: Origin[];
   type: MediaType;
@@ -61,11 +64,14 @@ export class Media implements IMedia {
 
 export class MediaArray {
   array: Media[] = [];
-  constructor(arg: Array<Media>) {
-    arg.forEach(el => {
-      this.array.push(el);
-    });
+  constructor(arg?: Array<Media>) {
+    if (this.array.length > 0) {
+      arg.forEach(el => {
+        this.array.push(el);
+      });
+    }
   }
+  push(m: Media) { this.array.push(m); }
   getByType(type: MediaType) {
     return this.array.find(m => m.type === type);
   }

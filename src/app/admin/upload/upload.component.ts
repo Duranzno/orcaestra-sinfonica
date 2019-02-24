@@ -2,8 +2,9 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { UploadService } from '../../core/services';
-import { PersonaTipo } from '../../core/models';
+import { PersonaTipo, UploadFile, Score } from '../../core/models';
+import { OrcaState, From } from 'src/app/core/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-upload',
@@ -18,9 +19,10 @@ export class UploadComponent implements OnInit {
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   chipInputCtrl = new FormControl();
+  files: UploadFile[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private _fb: FormBuilder, private uploadService: UploadService) { }
+  constructor(private _fb: FormBuilder, private store: Store<OrcaState>) { }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -45,7 +47,7 @@ export class UploadComponent implements OnInit {
       tipo: ['']
     });
   }
-  show(files) { console.log('admin/upload', files); }
+  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
   get gente() { return this.form.get('gente') as FormArray; }
   addPersona() { this.gente.push(this.initPersona()); }
   removePersona(i: number) { this.gente.removeAt(i); }
@@ -97,8 +99,12 @@ export class UploadComponent implements OnInit {
   addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
   removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
 
-  onSubmit() {
+  onSave() {
     console.log(this.form.value);
-    this.uploadService.uploadScore(this.form.value);
+    const score = this.form.value as Score;
+    this.store.dispatch(new From.media.PostScoreMediaFb({ files: this.files, score }));
+  }
+  onSubmit() {
+    alert('Hey listen');
   }
 }

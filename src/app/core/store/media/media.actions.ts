@@ -5,7 +5,7 @@ export class ActionTypes {
   static POST_AVATAR_FB = '[MEDIA] Uploaded Avatar to Firebase';
   static UPDATE_MEDIA_SNAPSHOT = '[MEDIA] Something new is';
 }
-export class PostScoreMediaF implements Action {
+export class PostScoreMediaFb implements Action {
   readonly type = ActionTypes.POST_SCORE_MEDIA_FB;
   constructor(public payload: { files: UploadFile[], score: Score }) { }
 }
@@ -18,4 +18,4 @@ export class UpdateMediaSnapshot implements Action {
   readonly type = ActionTypes.UPDATE_MEDIA_SNAPSHOT;
   constructor(public payload: any) { }
 }
-export type Actions = PostScoreMediaF | PostAvatarF | UpdateMediaSnapshot;
+export type Actions = PostScoreMediaFb | PostAvatarF | UpdateMediaSnapshot;

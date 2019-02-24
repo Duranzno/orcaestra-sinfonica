@@ -1,47 +1,91 @@
 import { Injectable } from '@angular/core';
-import { MediaType, User, Score } from '../../models';
+import { MediaType, User, Score, UploadFile, MediaOriginType, Media, MediaArray } from '../../models';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { OrcaState, From } from '../../store';
 import { Store } from '@ngrx/store';
-import { last, map, mergeMap, switchMap } from 'rxjs/operators';
+import { last, map, mergeMap, switchMap, finalize } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
-export class FbStorageService {
+export class FirebaseService {
   private task: AngularFireUploadTask;
   public percentage: Observable<number>;
   public snapshot: Observable<firebase.storage.UploadTaskSnapshot>;
   public downloadURL: Observable<string>;
 
-  constructor(private storage: AngularFireStorage, private store: Store<OrcaState>) { }
-  upload(type: MediaType, data: User | Score, file: File) {
-    const path = this.setPath(type, data);
+  constructor(
+    private storage: AngularFireStorage,
+    private db: AngularFirestore) { }
+
+  saveScore(score: Score): Observable<Score> {
+    return of(score);
+    // from(this
+    //   .db.collection('partituras')
+    //   .add({ score })
+    //   .then(docRef => { console.log('Document written with ID: ', docRef.id); })
+    //   .catch(error => { console.error('Error adding document: ', error); })
+    // )
+    //   .pipe(map(_ => score));
+
+  }
+  upload(file: UploadFile, data: User | Score): Observable<string> {
+    const path = this.setPath(file.type, data);
     const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
-    this.task = this.storage.upload(<string>path, file, { customMetadata });
+    this.task = this.storage.upload(<string>path, file.file, { customMetadata });
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges();
-    const fileRef2 = this.storage.ref(<string>path);
+    const ref = this.storage.ref(<string>path);
     return <Observable<string>>this.task.snapshotChanges().pipe(
       last(),
-      switchMap(_ => {
-        const url = fileRef2.getDownloadURL();
-        return url;
-      })
+      switchMap(_ => ref.getDownloadURL())
     );
+  }
+  addFilesToScore(score: Score, files: UploadFile[]): Observable<Score> {
+    score.media = files.reduce((mediaArr: MediaArray, file) => {
+      const url: string = <string>this.setPath(file.type, score); // <string>this.upload(file, score);
+      mediaArr.push(this.fileParser(file, url));
+      return mediaArr;
+    }, new MediaArray());
+    return of(score);
+  }
+
+  updateScore(id: string) {
+
+  }
+  private fileParser(file: UploadFile, url: string): Media {
+    return new Media({
+      originArray: [{
+        url: url,
+        type: MediaOriginType.FIREBASE,
+      }],
+      type: file.type
+    });
   }
   private setPath(type: MediaType, data: User | Score): string | Error {
     switch (type) {
       case MediaType.AVATAR:
-        return `OSJIG/avatar/${(<User>data).email}`;
+        if (data instanceof User) {
+          return `OSJIG/avatar/${(<User>data).email}`;
+        } else {
+          return new Error('MediaType is Avatar but data is not user');
+        }
       case MediaType.MP3:
       case MediaType.IMG:
       case MediaType.MIDI:
       case MediaType.MXML:
       case MediaType.PDF:
-        if (data instanceof Score) {
-          return `OSJIG/musica/${data.generos[0]}/${data.obra}/`;
-        }
-        break;
+        // const autor = (data as Score).getAutor();
+        // if (autor) {
+        //   if (autor.apellido.length > 0) {
+        //     return `OSJIG/musica/${autor.apellido}/${autor.nombre}/`;
+        //   } else {
+        //     return `OSJIG/musica/${autor.nombre}/`;
+        //   }
+        // } else {
+        return `OSJIG/musica/${(data as Score).obra}/`;
+      // }
+      // break;
       case MediaType.YOUTUBE:
         return new Error('A youtube no se suben archivos');
       default:

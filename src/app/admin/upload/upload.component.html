@@ -1,10 +1,11 @@
+<app-file-upload (filesEvent)="show($event )"></app-file-upload>
+
 <form [formGroup]='form' fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="onSubmit()"
   novalidate>
   <!-- Obra -->
   <mat-form-field>
     <input matInput placeholder="Obra" type="text" formControlName="obra">
   </mat-form-field>
-  <app-file-upload (filesEvent)="show($event )"></app-file-upload>
 
   <!-- ITS -->
   <mat-form-field>
@@ -80,5 +81,5 @@
 
   <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
   <button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>
-  <button mat-raised-button color="primary" type="submit" [disabled]="false">Guardar </button>
+  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
 </form>

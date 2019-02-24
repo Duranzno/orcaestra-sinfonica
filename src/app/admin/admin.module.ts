@@ -9,7 +9,6 @@ import { UploadComponent } from './upload/upload.component';
 import { AdminComponent } from './admin.component';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core';
-import { UploadService } from '../core/services/upload.service';
 @NgModule({
   declarations: [
     AdminComponent,
@@ -25,7 +24,6 @@ import { UploadService } from '../core/services/upload.service';
     FlexLayoutModule
   ],
   providers: [
-    UploadService,
   ]
 })
 export class AdminModule { }

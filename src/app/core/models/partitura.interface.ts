@@ -1,4 +1,4 @@
-import { Persona } from './autor.interface';
+import { Persona, PersonaTipo } from './autor.interface';
 import { IStored } from './almacenamiento.interface';
 import { MediaArray, MediaType, MediaOriginType } from './multimedia.interface';
 
@@ -35,6 +35,10 @@ export class Score implements IScore {
     this.instrumentos = score.instrumentos;
     this.gente = score.gente;
     this.extrainfo = score.extrainfo;
+  }
+
+  getAutor() {
+    return this.gente.find(persona => persona.tipo === PersonaTipo.AUTOR);
   }
   assets(type: MediaType) {
     return this.media.getByTypeAndOrigin(type, MediaOriginType.ASSETS);

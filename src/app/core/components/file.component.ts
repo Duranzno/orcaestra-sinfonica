@@ -31,7 +31,6 @@ export class FileComponent implements OnInit {
   //   this.uploading = true;    // set the component state to "uploading"
 
   //   // start the upload and save the progress map
-  //   this.progress = this.uploadService.upload(this.files);
   //   console.log(this.progress);
 
   //   for (const key in this.progress) {

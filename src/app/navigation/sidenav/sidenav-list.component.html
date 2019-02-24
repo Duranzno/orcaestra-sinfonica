@@ -25,6 +25,6 @@
     <p *ngIf="((user$|async)?.isAdmin)">admin</p>
     <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>
   </ng-template>
-  <pre>{{ $menus | async | json }}</pre>
+  <!-- <pre>{{ $menus | async | json }}</pre> -->
 
 </div>

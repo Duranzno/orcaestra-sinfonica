@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
 export class WelcomeComponent {
   constructor() { }
 
+  show(files) { console.log('admin/upload', files); }
 
 }
