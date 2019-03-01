@@ -1,6 +1,6 @@
 import { Persona, PersonaTipo } from './autor.interface';
 import { IStored } from './almacenamiento.interface';
-import { MediaArray, MediaType, MediaOriginType } from './multimedia.interface';
+import { MediaType, Media, Origin, OriginType } from './media.interface';
 
 export interface IScore {
   // TODO OP/K/V/HOB  =>¿Que significan?
@@ -9,7 +9,7 @@ export interface IScore {
   its: number;  // Numero  legado del sistema Anterior
   obra: string;  // Nombre de la Obra
   almacenamiento: IStored[];  // Tipo Almacenamiento Fisico
-  media?: MediaArray;
+  media?: Media[];
   /// OPTIONALES
   generos?: string[];
   instrumentos?: string[];  // Instrumentos Usados
@@ -21,7 +21,7 @@ export class Score implements IScore {
   its: number;
   obra: string;
   almacenamiento: IStored[];
-  media: MediaArray;
+  media: Media[];
   generos?: string[];
   instrumentos?: string[];
   gente?: Persona[];
@@ -40,13 +40,31 @@ export class Score implements IScore {
   getAutor() {
     return this.gente.find(persona => persona.tipo === PersonaTipo.AUTOR);
   }
-  assets(type: MediaType) {
-    return this.media.getByTypeAndOrigin(type, MediaOriginType.ASSETS);
+  // getByOrigin(oType: OriginType): Media[] {
+  //   return this.media.filter(p =>
+  //     p.originArray.some(o => o.type === oType)
+  //   );
+  // }
+  getByMediaOrigin(mType: MediaType, oType: OriginType): Origin[] {
+    return this
+      .media.find(m => m.type === mType)
+      .originArray.filter(o => o.type === oType);
   }
-  firestore(type: MediaType) {
-    return this.media.getByTypeAndOrigin(type, MediaOriginType.FIREBASE);
+  getByMedia(mType: MediaType): Media[] {
+    return this.media.filter(m => m.type === mType);
   }
-  otherUrl(type: MediaType) {
-    return this.media.getByTypeAndOrigin(type, MediaOriginType.OTHER);
+  addMediaOrigin(type: MediaType, origin: Origin) {
+    const arr = this.media.filter(m => m.type === type);
+    if (arr.length === 1) {
+      // Ya existe ese tipo en la base de datos
+      this.media
+        .find(m => m.type === type)
+        .addOrigin(origin);
+    } else if (arr.length === 0) {
+      // No hay ninguno de ese tipo de media, se agrega uno nuevo
+      this.media.push(new Media({ originArray: [origin], type }));
+    } else {// Error, no deberia haber mas de un tipo
+      console.log('More than one with the same type');
+    }
   }
 }

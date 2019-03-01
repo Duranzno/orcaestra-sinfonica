@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { MediaType, User, Score, UploadFile, MediaOriginType, Media, MediaArray } from '../../models';
+import { MediaType, User, Score, UploadFile, OriginType, Media, Origin } from '../../models';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of, from } from 'rxjs';
 import { OrcaState, From } from '../../store';
 import { Store } from '@ngrx/store';
 import { last, map, mergeMap, switchMap, finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UploadService } from './upload.interface';
 
 @Injectable()
-export class FirebaseService {
+export class FirebaseService implements UploadService {
   private task: AngularFireUploadTask;
   public percentage: Observable<number>;
   public snapshot: Observable<firebase.storage.UploadTaskSnapshot>;
@@ -29,24 +30,29 @@ export class FirebaseService {
     //   .pipe(map(_ => score));
 
   }
-  upload(file: UploadFile, data: User | Score): Observable<string> {
-    const path = this.setPath(file.type, data);
+  upload(file: UploadFile, path: string): Observable<Origin> {
     const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
     this.task = this.storage.upload(<string>path, file.file, { customMetadata });
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges();
     const ref = this.storage.ref(<string>path);
-    return <Observable<string>>this.task.snapshotChanges().pipe(
+    return this.task.snapshotChanges().pipe(
       last(),
-      switchMap(_ => ref.getDownloadURL())
+      switchMap(() => <Observable<string>>(ref.getDownloadURL())),
+      map(url => {
+        return {
+          url,
+          type: OriginType.FIREBASE
+        };
+      })
     );
   }
   addFilesToScore(score: Score, files: UploadFile[]): Observable<Score> {
-    score.media = files.reduce((mediaArr: MediaArray, file) => {
+    score.media = files.reduce((mediaArr: Media[], file) => {
       const url: string = <string>this.setPath(file.type, score); // <string>this.upload(file, score);
       mediaArr.push(this.fileParser(file, url));
       return mediaArr;
-    }, new MediaArray());
+    }, []);
     return of(score);
   }
 
@@ -57,12 +63,12 @@ export class FirebaseService {
     return new Media({
       originArray: [{
         url: url,
-        type: MediaOriginType.FIREBASE,
+        type: OriginType.FIREBASE,
       }],
       type: file.type
     });
   }
-  private setPath(type: MediaType, data: User | Score): string | Error {
+  setPath(type: MediaType, data: User | Score): string | Error {
     switch (type) {
       case MediaType.AVATAR:
         if (data instanceof User) {

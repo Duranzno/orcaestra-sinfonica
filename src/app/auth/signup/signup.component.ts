@@ -9,7 +9,7 @@ import { OrcaState } from '../../core/store';
 
 import { From } from '../../core/store';
 
-import { MediaType, MediaOriginType, UploadFile } from '../../core/models';
+import { MediaType, OriginType, UploadFile } from '../../core/models';
 
 @Component({
   selector: 'app-signup',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WavesurferService, YoutubeService, OsmdService } from '../core/services/';
-import { mockSheet } from '../core/mock';
 import { Score, MediaType } from '../core/models';
+import { iScore } from '../core/mock';
 
 class MediaBuffer {
   constructor(
@@ -20,7 +20,7 @@ class MediaBuffer {
   styleUrls: []
 })
 export class SheetComponent implements OnInit {
-  mockData: Score = mockSheet;
+  mockData: Score = new Score(iScore);
   media: MediaBuffer = new MediaBuffer();
   constructor(
     private http: HttpClient,
@@ -32,12 +32,12 @@ export class SheetComponent implements OnInit {
   ngOnInit() {
     console.log(this.media);
 
-    this.media.avatar = this.mockData.assets(MediaType.AVATAR).url;
-    this.media.pdf = this.mockData.assets(MediaType.PDF).url;
-    this.media.img = this.mockData.assets(MediaType.IMG).url;
-    this.media.mxml = this.mockData.otherUrl(MediaType.MXML).url;
-    this.media.mp3 = this.mockData.assets(MediaType.MP3).url;
-    this.media.youtube = this.mockData.otherUrl(MediaType.YOUTUBE).url;
+    // this.media.avatar = this.mockData.assets(MediaType.AVATAR).url;
+    // this.media.pdf = this.mockData.assets(MediaType.PDF).url;
+    // this.media.img = this.mockData.assets(MediaType.IMG).url;
+    // this.media.mxml = this.mockData.otherUrl(MediaType.MXML).url;
+    // this.media.mp3 = this.mockData.assets(MediaType.MP3).url;
+    // this.media.youtube = this.mockData.otherUrl(MediaType.YOUTUBE).url;
     console.log(this.media);
 
     this.osmd.setup(this.media.mxml);

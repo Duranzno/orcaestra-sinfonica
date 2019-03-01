@@ -1,6 +1,4 @@
-export interface UploadFile { file: File; type: MediaType; }
-
-/////////////////////////////////////////////////////////////
+import { IUploadFile, UploadFile } from './upload.media.interface';
 
 export enum MediaType {
   YOUTUBE = 'youtube',
@@ -12,12 +10,10 @@ export enum MediaType {
   AVATAR = 'avatar',
 }
 export function MediaTypeGuesser(file: File): MediaType {
-
   console.log(file.name.toLowerCase().split('.').pop());
   switch (file.name.toLowerCase().split('.').pop()) {
     case 'mp3':
       return MediaType.MP3;
-
     case 'jpg':
     case 'jpeg':
     case 'png':
@@ -35,21 +31,21 @@ export function MediaTypeGuesser(file: File): MediaType {
     case 'mid':
     case 'midi':
       return MediaType.MIDI;
-    default:
 
+    default:
       return MediaType.YOUTUBE;
   }
 }
 
-export enum MediaOriginType {
+export enum OriginType {
   FIREBASE = 'firestore',
   DROPBOX = 'dropbox',
   ASSETS = 'assets',
   OTHER = 'other',
 }
-interface Origin {
+export interface Origin {
   url: string;
-  type: MediaOriginType;
+  type: OriginType;
 }
 export interface IMedia {
   originArray: Origin[];
@@ -58,27 +54,12 @@ export interface IMedia {
 export class Media implements IMedia {
   originArray: Origin[];
   type: MediaType;
-  constructor(i: IMedia) { this.originArray = i.originArray; this.type = i.type; }
-
-}
-
-export class MediaArray {
-  array: Media[] = [];
-  constructor(arg?: Array<Media>) {
-    if (this.array.length > 0) {
-      arg.forEach(el => {
-        this.array.push(el);
-      });
-    }
+  constructor(i: IMedia) {
+    this.originArray = i.originArray;
+    this.type = i.type;
   }
-  push(m: Media) { this.array.push(m); }
-  getByType(type: MediaType) {
-    return this.array.find(m => m.type === type);
+  isMedia(arg: any): arg is IMedia {
+    return (arg.type !== undefined) && (arg.originArray !== undefined);
   }
-  getByTypeAndOrigin(type: MediaType, originType: MediaOriginType) {
-    return this
-      .getByType(type)
-      .originArray.find(o => o.type === originType);
-  }
-
+  addOrigin(o: Origin) { this.originArray.push(o); }
 }
