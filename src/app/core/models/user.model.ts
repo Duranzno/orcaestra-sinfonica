@@ -1,4 +1,4 @@
-import { MediaType, Media } from './media.interface';
+import { MediaType, Media } from './media.model';
 import { UploadFile } from './upload.media.interface';
 
 export interface IUser {
@@ -10,6 +10,13 @@ export interface IUser {
   isAdmin?: boolean;
 }
 export class User implements IUser {
+  public email: string;
+  public nombre: string = '';
+  public apellido: string = '';
+  public password: string;
+  public isAdmin: boolean = false;
+  public group: string = 'Desconocido';
+  public avatar: string = '/assets/user.jpg';
   constructor(i: IUser) {
     this.email = this.email;
     this.nombre = this.nombre;
@@ -19,13 +26,6 @@ export class User implements IUser {
     this.group = (i.group === '') ? 'Desconocido' : this.group;
   }
 
-  public email: string;
-  public nombre: string = '';
-  public apellido: string = '';
-  public password: string;
-  public isAdmin: boolean = false;
-  public group: string = 'Desconocido';
-  public avatar: string = '/assets/user.jpg';
 
   static isUser(arg: any): arg is User {
     return (arg.email !== undefined) && (arg.password !== undefined);

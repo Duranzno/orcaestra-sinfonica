@@ -42,7 +42,7 @@ describe('upload Interface', () => {
       score.media = [];
     });
     it('from file to score', (done) => {
-      const path = score.setPath(MediaType.AVATAR);
+      const path = score.setPath(MediaType.AVATAR, uFile);
       uService.upload(uFile, path as string).subscribe(
         origin => {
           score.addMediaOrigin(uFile.type, origin);
@@ -57,7 +57,7 @@ describe('upload Interface', () => {
     });
     it('from file array to score', (done) => {
       const arr = from([uFile, uFile, uFile]);
-      const path = score.setPath(MediaType.AVATAR);
+      const path = score.setPath(MediaType.AVATAR, uFile);
       score.media = [];
       const oriArr$ = arr.pipe(
         mergeMap((u, index) => {

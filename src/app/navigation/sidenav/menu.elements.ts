@@ -1,4 +1,3 @@
-import { User } from 'src/app/core/models';
 
 export interface Menu {
   name: string;
@@ -12,7 +11,7 @@ export interface Menu {
 }
 export const AnonMenu: Menu[] = [
   {
-    'name': 'Inicio de Sesion',
+    'name': 'Iniciar Sesión',
     'link': '/login',
     'icon': 'input',
     'chip': false,
@@ -39,22 +38,6 @@ export const AdminMenu: Menu[] = [
     'isAdmin': true,
   }
 ];
-const findSub = (m: Menu) => m.name === 'Musica';
-export function mapMenuAdmin(user: User): Menu[] {
-  return (user.isAdmin) ? AdminMenu.concat(UserMenu) : UserMenu;
-
-}
-export function mapMenuGenres(user: User, subs: Menu[], menu: Menu[]) {
-  if (user.nombre !== '') {
-    return menu.reduce((arr: Menu[], m: Menu): Menu[] => {
-      m.sub = (findSub(m)) ? subs : [];
-      return arr.concat(m);
-    }, []);
-  }
-  else {
-    return menu;
-  }
-}
 
 export const UserMenu: Menu[] = [
   {
@@ -67,6 +50,14 @@ export const UserMenu: Menu[] = [
     'chip': false,
     'open': false,
     'sub': [],
+  },
+  {
+    'name': 'Partitura Generica',
+    'link': '/sheet',
+    'icon': 'input',
+    'chip': false,
+    'open': false,
+    'isAdmin': false,
   },
   {
     'name': 'Cerrar Sesion',

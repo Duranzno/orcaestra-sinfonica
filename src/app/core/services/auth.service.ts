@@ -43,7 +43,7 @@ export class AuthService {
         this.store.dispatch(new From.music.SetGrupos(json[0]['grupos']));
       });
   }
-  async registerUser(user: User, file?: UploadFile) {
+  registerUser(user: User, file?: UploadFile) {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password))
       .pipe(

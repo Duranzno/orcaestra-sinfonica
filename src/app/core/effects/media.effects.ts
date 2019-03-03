@@ -26,6 +26,7 @@ export class MediaEffects {
       map(score => {
         console.log('gonna save score');
         this.fb.saveScore(score);
+        this.store$.dispatch(new fromUi.StopLoading());
         return new fromMusic.SetPartitura(score);
       })
     );
@@ -54,6 +55,7 @@ export class MediaEffects {
       ofType(fromMedia.ActionTypes.MANAGE_MEDIA_ARRAY),
       withLatestFrom(this.store$),
       map(([action, state]: stuff) => {
+        this.store$.dispatch(new fromUi.StartLoading());
         return {
           files: action.payload.files,
           iscore: state.music.partitura,
@@ -64,7 +66,7 @@ export class MediaEffects {
         return from(files).pipe(
           mergeMap((u, index) => {
             console.log(JSON.stringify(u), index);
-            return this.fb.upload(u, score.setPath(u.type))
+            return this.fb.upload(u, score.setPath(u.type, u))
               .pipe(map(o => ({ origin: o, type: u.type })));
           }),
           tap(({ origin, type }) => {
@@ -89,7 +91,7 @@ export class MediaEffects {
         const score = new Score(payload.score);
         return this.fb.upload(
           payload.file,
-          score.setPath(type)
+          score.setPath(type, payload.file)
         )
           .pipe(
             map(origin => {

@@ -14,8 +14,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './navigation/header/header.component';
-import { SidenavListComponent } from './navigation/sidenav/sidenav-list.component';
-import { SidenavItemComponent } from './navigation/sidenav/sidenav-item.component';
+import { SidenavListComponent } from './navigation/sidenav/sidenav.component';
+import { SidenavItemComponent } from './navigation/sidenav/sidenav.item.component';
 
 import { SheetComponent } from './sheet/sheet.component';
 

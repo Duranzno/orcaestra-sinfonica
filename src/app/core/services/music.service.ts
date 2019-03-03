@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { IScore } from '../models/score.interface';
+import { IScore } from '../models/score.model';
 import { From, OrcaState } from '../store';
 
 @Injectable({

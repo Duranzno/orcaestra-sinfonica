@@ -1,6 +1,6 @@
-import { Persona, PersonaTipo } from './autor.interface';
+import { Persona, PersonaTipo } from './persona.interface';
 import { IStored } from './almacenamiento.interface';
-import { MediaType, Media, Origin, OriginType } from './media.interface';
+import { MediaType, Media, Origin, OriginType } from './media.model';
 import { UploadFile } from './upload.media.interface';
 
 export interface IScore {
@@ -57,8 +57,14 @@ export class Score implements IScore {
   getByMedia(mType: MediaType): Media[] {
     return this.media.filter(m => m.type === mType);
   }
-
-  setPath(type: MediaType): string {
+  private authorPath(): string {
+    const autor = this.getAutor();
+    return ((autor.apellido)
+      ? `${autor.apellido.toLowerCase().trim()}_${autor.nombre.toLowerCase().trim()}`
+      : `${autor.nombre.toLowerCase().trim()}`
+    );
+  }
+  setPath(type: MediaType, uFile: UploadFile): string {
     switch (type) {
       case MediaType.MP3:
       case MediaType.IMG:
@@ -73,7 +79,7 @@ export class Score implements IScore {
         //     return `OSJIG/musica/${autor.nombre}/`;
         //   }
         // } else {
-        return `OSJIG/musica/${this.getAutor.name}/${this.obra}_${type}`;
+        return `OSJIG/musica/${this.authorPath()}/${this.obra}/${uFile.file.name}`;
       // }
       // break;
       case MediaType.YOUTUBE:

@@ -17,7 +17,7 @@
         <a routerLink="/login">Iniciar Sesión</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')&&(user$|async)?.isAdmin">
-        <a routerLink="/admin">Administrador</a>
+        <a routerLink="/upload">Administrador</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
         <a routerLink="/sheet">Partitura ELIMINAR</a>

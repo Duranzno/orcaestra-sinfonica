@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Menu } from './menu-element';
+import { Menu } from './menu.elements';
 import { Store } from '@ngrx/store';
 import { OrcaState, From } from 'src/app/core/store';
 
 @Component({
   selector: 'app-sidenav-item',
-  templateUrl: './sidenav-item.component.html',
-  styleUrls: ['./sidenav-item.component.scss']
+  templateUrl: './sidenav.item.component.html',
+  styleUrls: ['./sidenav.item.component.scss']
 })
 export class SidenavItemComponent implements OnInit {
 

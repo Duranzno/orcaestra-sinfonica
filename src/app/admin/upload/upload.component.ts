@@ -1,10 +1,11 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { PersonaTipo, UploadFile, Score, IScore } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
@@ -12,7 +13,7 @@ import { Store } from '@ngrx/store';
   styleUrls: []
 })
 
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   personas: string[] = Object.values(PersonaTipo);
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
@@ -21,10 +22,15 @@ export class UploadComponent implements OnInit {
   chipInputCtrl = new FormControl();
   files: UploadFile[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  isLoading = false;
 
+  private $loading: Subscription;
   constructor(private _fb: FormBuilder, private store: Store<OrcaState>) { }
 
   ngOnInit() {
+    this.$loading = this.store
+      .select(From.ui.getIsLoading)
+      .subscribe(loading => this.isLoading = loading);
     this.form = this._fb.group({
       obra: [''],
       its: [''],
@@ -109,6 +115,9 @@ export class UploadComponent implements OnInit {
     // });
   }
   onSubmit() {
-    alert('Hey listen');
+    console.log('Hey listen');
+  }
+  ngOnDestroy() {
+    this.$loading.unsubscribe();
   }
 }

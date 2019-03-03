@@ -1,6 +1,6 @@
-import { Score } from './partitura.interface';
+import { Score } from './score.model';
 import { iScore } from '../mock';
-import { MediaType, OriginType } from './media.interface';
+import { MediaType, OriginType } from './media.model';
 
 describe('Score', () => {
   let originalTimeout;

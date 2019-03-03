@@ -1,4 +1,4 @@
-import { MediaType } from './media.interface';
+import { MediaType } from './media.model';
 
 export interface IUploadFile { file: File; type: MediaType; }
 export class UploadFile implements IUploadFile {
