@@ -12,7 +12,8 @@ export class SetAuthenticated implements Action {
 
 export class SetUnauthenticated implements Action {
   readonly type = ActionTypes.SET_UNAUTHENTICATED;
-  public payload = new User();
+  public payload = new User({ 'email': '', 'password': '' });
+
 }
 export class SetAvatar implements Action {
   readonly type = ActionTypes.SET_AVATAR;

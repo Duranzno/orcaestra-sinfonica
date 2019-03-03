@@ -16,11 +16,11 @@ import { MediaType, OriginType, UploadFile } from '../../core/models';
   templateUrl: './signup.component.html',
   styleUrls: []
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit {
   isLoading$: Observable<boolean>;
   grupos$: Observable<string[]>;
   type = MediaType.AVATAR;
-  data: User = new User();
+  data: User;
   files: UploadFile[];
   constructor(
     private authService: AuthService,
@@ -36,18 +36,16 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.files = files;
   }
   onSubmit(form: NgForm) {
-    const user: User = {
+    const user = new User({
       email: form.value.email,
       nombre: form.value.nombre,
       apellido: form.value.apellido,
       password: form.value.password,
       group: form.value.grupo,
-      avatar: '/assets/user.jpg',
       isAdmin: (form.value.isAdmin === '') ? false : true,
-    };
+    });
     this.authService.registerUser(user, this.files[0]);
 
   }
-  ngOnDestroy() {
-  }
+
 }

@@ -2,7 +2,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { PersonaTipo, UploadFile, Score } from '../../core/models';
+import { PersonaTipo, UploadFile, Score, IScore } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
 
@@ -74,7 +74,7 @@ export class UploadComponent implements OnInit {
   }
   addChip(event: MatChipInputEvent): void {
     // if (!this.matAutocomplete.isOpen) {
-    console.log(this.generos);
+    // console.log(this.generos);
     const input = event.input;
     const value = event.value;
     if ((value || '').trim()) { this.addGeneroEvent(value); }
@@ -100,9 +100,13 @@ export class UploadComponent implements OnInit {
   removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
 
   onSave() {
-    console.log(this.form.value);
-    const score = this.form.value as Score;
-    this.store.dispatch(new From.media.PostScoreMediaFb({ files: this.files, score }));
+    const score: IScore = this.form.value as IScore;
+    console.log(this.files);
+    this.store.dispatch(new From.music.SetPartitura(score));
+    this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
+    // this.files.forEach(file => {
+    //   this.store.dispatch(new From.media.PostMedia({ file, score }));
+    // });
   }
   onSubmit() {
     alert('Hey listen');

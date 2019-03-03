@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from '../../core/services';
 import { Store } from '@ngrx/store';
-import { User } from '../../core/models';
+import { User, IUser } from '../../core/models';
 import { OrcaState, From } from '../../core/store';
 
 @Component({
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   @Output() drawerToggle = new EventEmitter<void>();
   @Input() matDrawerShow;
 
-  user$: Observable<User>;
+  user$: Observable<IUser>;
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
   ngOnInit() {

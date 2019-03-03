@@ -36,7 +36,7 @@ export class SidenavListComponent implements OnInit {
     },
   ];
 
-  user$: Observable<User>;
+  user$: Observable<IUser>;
   avatarSrc$: Observable<string>;
   public menus: Menu[];
   public $menus: Observable<Menu[]>;
@@ -47,7 +47,7 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.store.select(From.auth.getUser);
     this.$menus = this.user$.pipe(
-      map(user => mapMenuGenres(user, this.subscriptions, mapMenuAdmin(user)))
+      map(user => mapMenuGenres(new User(user), this.subscriptions, mapMenuAdmin(new User(user))))
     );
     this.$menus.subscribe(m => this.menus = m);
     this.avatarSrc$ = this.store.select(From.auth.getAvatar);

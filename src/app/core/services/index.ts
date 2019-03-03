@@ -24,4 +24,4 @@ export { WavesurferService } from './wavesurfer.service';
 export { OsmdService } from './osmd.service';
 export { MusicService } from './music.service';
 export { YoutubeService } from './youtube.service';
-export { FirebaseService as FbStorageService } from './upload/firebase.service';
+export { FirebaseService } from './upload/firebase.service';

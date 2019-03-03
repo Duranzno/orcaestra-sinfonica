@@ -3,6 +3,15 @@ import { iScore } from '../mock';
 import { MediaType, OriginType } from './media.interface';
 
 describe('Score', () => {
+  let originalTimeout;
+  beforeEach(function () {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
+
+  afterEach(function () {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+  });
   describe('addMediaOrigin', () => {
     const score = new Score(iScore);
 
@@ -23,38 +32,46 @@ describe('Score', () => {
     });
   });
   describe('getByMedia', () => {
-    let score = new Score(iScore);
+    beforeEach(function () {
+      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    });
+
+    afterEach(function () {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    });
+    let score2 = new Score(iScore);
     beforeAll(function () {
-      score = new Score(iScore);
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx1' });
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx2' });
-      score.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx3' });
-      score.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx4' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx5' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx6' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx7' });
+      score2 = new Score(iScore);
+      score2.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx1' });
+      score2.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx2' });
+      score2.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx3' });
+      score2.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx4' });
+      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx5' });
+      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx6' });
+      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx7' });
     });
     it('deberia tener dos pdf', () => {
-      const arrMedia = score.getByMedia(MediaType.PDF);
+      const arrMedia = score2.getByMedia(MediaType.PDF);
       expect(arrMedia.length).toBe(1);
       expect(arrMedia.pop().originArray.length).toBe(2);
     });
     it('deberia tener 3 avatar', () => {
-      const arrMedia = score.getByMedia(MediaType.AVATAR);
+      const arrMedia = score2.getByMedia(MediaType.AVATAR);
       expect(arrMedia.length).toBe(1);
       expect(arrMedia.pop().originArray.length).toBe(3);
     });
     it('deber no tener mxml', () => {
-      const arrMedia = score.getByMedia(MediaType.MXML);
+      const arrMedia = score2.getByMedia(MediaType.MXML);
       expect(arrMedia.length).toBe(0);
     });
     it('deberia tener 2 MP3', () => {
-      const arrMedia = score.getByMedia(MediaType.MP3);
+      const arrMedia = score2.getByMedia(MediaType.MP3);
       expect(arrMedia.length).toBe(1);
       expect(arrMedia.pop().originArray.length).toBe(2);
     });
     afterAll(_ => {
-      score.media = [];
+      score2.media = [];
     });
   });
   describe('getByMediaOrigin', () => {

@@ -1,13 +1,13 @@
 import { ActionTypes, Actions } from './auth.actions';
-import { User } from '../../models';
+import { User, IUser } from '../../models';
 
 export interface State {
-  user: User;
+  user: IUser;
   avatarSrc: string;
 }
 
 const initialState: State = {
-  user: new User(),
+  user: new User({ 'email': '', 'password': '' }),
   avatarSrc: '/assets/user.jpg',
 };
 
@@ -16,7 +16,7 @@ export function authReducer(state = initialState, action: Actions): State {
     case ActionTypes.SET_AUTHENTICATED:
       return {
         ...state,
-        user: action.payload as User,
+        user: { ...action.payload as IUser, password: 'secret' },
       };
     case ActionTypes.SET_UNAUTHENTICATED:
       return {

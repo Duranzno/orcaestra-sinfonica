@@ -71,10 +71,12 @@ export const iScore: IScore = {
 };
 
 export const score = new Score(iScore);
-export const mockUser: User = new User(
-  'aledurax@gmail.com',
-  'alejandro',
-  'duran',
-  '123',
-  'Coro', true
+export const mockUser: User = new User({
+  email: 'aledurax@gmail.com',
+  nombre: 'alejandro',
+  apellido: 'duran',
+  password: '123',
+  group: 'Coro',
+  isAdmin: true
+}
 );

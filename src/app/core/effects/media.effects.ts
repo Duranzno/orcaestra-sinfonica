@@ -1,43 +1,107 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Observable, from, of } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { map, switchMap, filter, mergeMap, catchError } from 'rxjs/operators';
-import * as fromMedia from '../store/media';
-import * as fromAuth from '../store/auth';
-import * as fromMusic from '../store/music';
+import { map, switchMap, filter, mergeMap, catchError, withLatestFrom, tap, finalize } from 'rxjs/operators';
 
-import { UploadFile, Score, User } from '../models';
+
+import { UploadFile, Score, User, MediaType } from '../models';
 import { FirebaseService } from '../services/upload/firebase.service';
-
+import { OrcaState } from '../store';
+import * as fromMedia from '../store/media';
+import * as fromMusic from '../store/music';
+import * as fromAuth from '../store/auth';
+import * as fromUi from '../store/ui';
+import { last } from '@angular/router/src/utils/collection';
+type stuff = [fromMedia.ManageMediaArray, OrcaState];
 @Injectable()
 export class MediaEffects {
-  @Effect()
-  firebaseUpload$: Observable<Action> = this.actions$
-    .pipe(
-      ofType(fromMedia.ActionTypes.POST_SCORE_MEDIA_FB),
-      map((action: fromMedia.PostScoreMediaFb) => action.payload),
-      // Here I have to upload the files to storage, update the local score data and the upload this score
-      switchMap(payload => this.fb.addFilesToScore(payload.score, payload.files)),
-      mergeMap(updatedScore => this.fb.saveScore(updatedScore)),
-      map(score => new fromMusic.SetPartitura(score))
-    );
 
 
   @Effect()
-  postAvatarFb$: Observable<Action> = this.actions$
+  saveScore$: Observable<Action> = this.actions$
     .pipe(
-      ofType(fromMedia.ActionTypes.POST_AVATAR_FB),
-      map((action: fromMedia.PostAvatarF) => action.payload),
-      switchMap(payload => (this.MediaTypeResolver(payload.file, payload.user))),
-      map(downloadUrl => { console.log(downloadUrl); return new fromAuth.SetAvatar(downloadUrl); })
+      ofType(fromMedia.ActionTypes.SAVE_SCORE),
+      map((action: fromMedia.SaveScore) => action.payload),
+      map(score => {
+        console.log('gonna save score');
+        this.fb.saveScore(score);
+        return new fromMusic.SetPartitura(score);
+      })
+    );
+  @Effect()
+  postAvatar$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.POST_AVATAR),
+      map((action: fromMedia.PostAvatar) => action.payload),
+      mergeMap(payload => {
+        return this.fb.upload(
+          payload.file,
+          payload.user.setPath(payload.file.type)
+        )
+          .pipe(
+            map(origin => {
+              console.log(origin);
+              return new fromAuth.SetAvatar(origin.url);
+            })
+          );
+      })
     );
 
-  private MediaTypeResolver(ufile: UploadFile, data: User | Score): Observable<string> {
-    return this.fb.upload(ufile, data);
-  }
+  @Effect()
+  manageMediaArray: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.MANAGE_MEDIA_ARRAY),
+      withLatestFrom(this.store$),
+      map(([action, state]: stuff) => {
+        return {
+          files: action.payload.files,
+          iscore: state.music.partitura,
+        };
+      }),
+      mergeMap(({ files, iscore }) => {
+        const score = new Score(iscore);
+        return from(files).pipe(
+          mergeMap((u, index) => {
+            console.log(JSON.stringify(u), index);
+            return this.fb.upload(u, score.setPath(u.type))
+              .pipe(map(o => ({ origin: o, type: u.type })));
+          }),
+          tap(({ origin, type }) => {
+            console.log('tap');
+            score.addMediaOrigin(type, origin);
+          }),
+          finalize(() => {
+            console.log('finalize');
+            return this.store$.dispatch(new fromMedia.SaveScore(score));
+          })
+        );
+      }),
+    );
+
+  @Effect()
+  postMedia$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.POST_MEDIA),
+      map((action: fromMedia.PostMedia) => action.payload),
+      mergeMap(payload => {
+        const type: MediaType = payload.file.type;
+        const score = new Score(payload.score);
+        return this.fb.upload(
+          payload.file,
+          score.setPath(type)
+        )
+          .pipe(
+            map(origin => {
+              return new fromMusic.AddOrigin({ origin: origin, type: payload.file.type });
+            })
+          );
+      })
+    );
+
   constructor(
     private actions$: Actions,
+    private store$: Store<OrcaState>,
     private fb: FirebaseService,
   ) { }
 }

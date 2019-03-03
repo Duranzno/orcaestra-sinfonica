@@ -10,7 +10,6 @@ export enum MediaType {
   AVATAR = 'avatar',
 }
 export function MediaTypeGuesser(file: File): MediaType {
-  console.log(file.name.toLowerCase().split('.').pop());
   switch (file.name.toLowerCase().split('.').pop()) {
     case 'mp3':
       return MediaType.MP3;

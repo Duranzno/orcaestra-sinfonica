@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActionTypes, Actions } from './music.actions';
-import { IScore } from '../../models/';
+import { IScore, Origin, MediaType, Score } from '../../models/';
 
 export interface State {
   partitura: IScore;
@@ -25,6 +25,9 @@ export function musicReducer(state = initialState, action: Actions) {
         grupos: action.payload as string[],
       };
     }
+    case ActionTypes.ADD_ORIGIN: {
+      return addOrigin(state, action.payload as { origin: Origin, type: MediaType });
+    }
     case ActionTypes.SET_PARTITURA:
       return {
         ...state,
@@ -34,5 +37,10 @@ export function musicReducer(state = initialState, action: Actions) {
       return state;
     }
   }
+}
+function addOrigin(state: State, payload: { origin: Origin, type: MediaType }): State {
+  const partitura = new Score(state.partitura);
+  partitura.addMediaOrigin(payload.type, payload.origin);
+  return { ...state, partitura };
 }
 

@@ -30,12 +30,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    const user: User = new User();
-    user.email = this.form.value.email;
-    user.password = this.form.value.password;
-    this.authService.login(user);
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+    this.authService.login({ email, password });
     // this.store.dispatch(new fromAuth.SetAuthenticated(user));
-    console.log(user);
   }
   ngOnDestroy() {
     this.$loading.unsubscribe();
