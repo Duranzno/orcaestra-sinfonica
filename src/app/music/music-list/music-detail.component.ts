@@ -19,8 +19,9 @@ export class MusicDetailComponent implements OnInit {
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
 
   constructor(
-    private musicService: MusicService,
-    private store: Store<OrcaState>) { }
+    // private musicService: MusicService,
+    private store: Store<OrcaState>
+  ) { }
 
   ngOnInit() {
     this.mockData$ = this.store.select(From.music.getPartitura);

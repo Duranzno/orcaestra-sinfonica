@@ -83,6 +83,7 @@ export class Score implements IScore {
       // }
       // break;
       case MediaType.YOUTUBE:
+        return MediaType.YOUTUBE;
       default:
         const err = `Media ${type} no se suben archivos`;
         console.log(err);

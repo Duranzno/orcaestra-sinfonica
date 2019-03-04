@@ -29,9 +29,15 @@ export class FirebaseService implements UploadInterface {
     ).pipe(map(_ => score));
   }
 
-  upload(file: UploadFile, path: string): Observable<Origin> {
+  upload(uFile: UploadFile, path: string): Observable<Origin> {
+    if (uFile.type === MediaType.YOUTUBE) {
+      return of({
+        url: uFile.file.name,
+        type: OriginType.FIREBASE,
+      });
+    }
     const customMetadata = { app: 'CUSTOM METADATA BIAATCH!' };
-    this.task = this.storage.upload(<string>path, file.file, { customMetadata });
+    this.task = this.storage.upload(<string>path, uFile.file, { customMetadata });
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges();
     const ref = this.storage.ref(<string>path);
@@ -39,7 +45,7 @@ export class FirebaseService implements UploadInterface {
       last(),
       switchMap(() => <Observable<string>>(ref.getDownloadURL())),
       map(url => {
-        console.log(`Uploaded ${file.file.name} to ${url}`);
+        console.log(`Uploaded ${uFile.file.name} to ${url}`);
         return {
           url,
           type: OriginType.FIREBASE

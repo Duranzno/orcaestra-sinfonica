@@ -2,7 +2,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { PersonaTipo, UploadFile, Score, IScore } from '../../core/models';
+import { PersonaTipo, UploadFile, Score, IScore, MediaType } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -107,6 +107,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   onSave() {
     const score: IScore = this.form.value as IScore;
+    this.files = this.files.concat({
+      type: MediaType.YOUTUBE,
+      file: new File(['foo', 'bar'], this.form.get('youtube').value),
+    });
     console.log(this.files);
     this.store.dispatch(new From.music.SetPartitura(score));
     this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));

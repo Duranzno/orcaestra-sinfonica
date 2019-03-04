@@ -22,12 +22,12 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'music-list',
-    loadChildren: './list/music.module#MusicModule',
-    canActivate: [AuthGuard]
+    loadChildren: './music/music.module#MusicModule',
+    // canActivate: [AuthGuard]
   },
 ];
 

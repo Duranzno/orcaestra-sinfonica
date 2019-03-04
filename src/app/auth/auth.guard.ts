@@ -13,19 +13,19 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  isAuth: boolean;
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private store: Store<OrcaState>) { }
+    private store: Store<OrcaState>) {
+    this.store.select(fromAuth.isAuth)
+      .subscribe(admin => this.isAuth = admin);
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.store.select(fromAuth.isAdmin).subscribe(x => console.log(x));
-    let isAuth: boolean;
-    this.store
-      .select(fromAuth.isAuth)
-      .pipe(map(x => isAuth = x));
 
-    if (isAuth) {
+    if (this.isAuth) {
       return true;
     } else {
       this.router.navigate(['/login']);

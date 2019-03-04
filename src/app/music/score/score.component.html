@@ -2,7 +2,7 @@
       below">
   <mat-tab label="INFORMACION" class="tab">
     <ng-template matTabContent>
-      <img [src]='media.avatar'>
+      <!-- <img [src]=  
 
       <h1>{{mockData.obra}}</h1>
       <h2>{{mockData.gente[1].nombre}} {{mockData.gente[1].apellido}}</h2>
@@ -11,20 +11,21 @@
         <mat-chip color="accent" selected>
           <mat-icon>music_note</mat-icon>
         </mat-chip>
-      </mat-chip-list>
+      </mat-chip-list> -->
       <div fxFlex></div>
       Expandir
       <p>
-        {{mockData.extrainfo}}
+        <!-- {{mockData.extrainfo}} -->
+        ExtraInfo
       </p>
       <mat-divider [inset]="
       true">
       </mat-divider>
       <div style="padding-top:5px">
-        <mat-chip-list #chipList>
+        <!-- <mat-chip-list #chipList>
           <mat-chip *ngFor="let g of mockData.generos" color="primary" [selectable]="true">{{g}}
           </mat-chip>
-        </mat-chip-list>
+        </mat-chip-list> -->
       </div>
     </ng-template>
   </mat-tab>

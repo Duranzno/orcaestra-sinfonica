@@ -78,7 +78,7 @@
 			</div>
 		  </div> 
 	  </div> -->
-  <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 
   <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
   <button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>

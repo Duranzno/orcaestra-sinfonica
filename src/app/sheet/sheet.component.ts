@@ -23,10 +23,10 @@ export class SheetComponent implements OnInit {
   mockData: Score = new Score(iScore);
   media: MediaBuffer = new MediaBuffer();
   constructor(
-    private http: HttpClient,
-    private ws: WavesurferService,
-    public youtube: YoutubeService,
-    private osmd: OsmdService) {
+    // private ws: WavesurferService,
+    // public youtube: YoutubeService,
+    // private osmd: OsmdService
+  ) {
   }
 
   ngOnInit() {
@@ -38,11 +38,11 @@ export class SheetComponent implements OnInit {
     // this.media.mxml = this.mockData.otherUrl(MediaType.MXML).url;
     // this.media.mp3 = this.mockData.assets(MediaType.MP3).url;
     // this.media.youtube = this.mockData.otherUrl(MediaType.YOUTUBE).url;
-    console.log(this.media);
+    // console.log(this.media);
 
-    this.osmd.setup(this.media.mxml);
-    this.ws.setup(this.media.mp3);
-    console.log(this.youtube.urlParser(this.media.youtube));
+    // this.osmd.setup(this.media.mxml);
+    // this.ws.setup(this.media.mp3);
+    // console.log(this.youtube.urlParser(this.media.youtube));
 
   }
 
