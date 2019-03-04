@@ -10,12 +10,15 @@ import { MusicListComponent } from './music-list/music-list.component';
 import { MusicDetailComponent } from './music-list/music-detail.component';
 import { MusicRoutingModule } from './music-routing.module';
 import { ScoreComponent } from './score/score.component';
+import { APP_SERVICES } from './services';
+import { MediaCardComponent } from './score/media.card.component';
 
 @NgModule({
   declarations: [
     MusicListComponent,
     MusicDetailComponent,
     ScoreComponent,
+    MediaCardComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +29,6 @@ import { ScoreComponent } from './score/score.component';
     FlexLayoutModule,
     YoutubePlayerModule,
   ],
-  providers: []
+  // providers: [...APP_SERVICES],
 })
 export class MusicModule { }

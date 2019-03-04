@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WavesurferService, YoutubeService, OsmdService } from '../core/services/';
 import { Score, MediaType } from '../core/models';
 import { iScore } from '../core/mock';
 

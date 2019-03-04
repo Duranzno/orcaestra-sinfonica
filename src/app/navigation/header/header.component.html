@@ -20,7 +20,7 @@
         <a routerLink="/upload">Administrador</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
-        <a routerLink="/sheet">Partitura ELIMINAR</a>
+        <a routerLink="/music-list/score">Partitura ELIMINAR</a>
       </li>
       <li *ngIf="((user$|async)?.nombre!='')">
         <a routerLink="/music-list">Musica</a>

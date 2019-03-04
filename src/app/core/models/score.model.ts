@@ -41,19 +41,18 @@ export class Score implements IScore {
     return (arg.its !== undefined) && (arg.obra !== undefined) && (arg.almacenamiento !== undefined);
   }
 
-  getAutor() {
+  getAutor(): Persona {
     return this.gente.find(persona => persona.tipo === PersonaTipo.AUTOR);
   }
-  // getByOrigin(oType: OriginType): Media[] {
-  //   return this.media.filter(p =>
-  //     p.originArray.some(o => o.type === oType)
-  //   );
-  // }
+  getNotAutor(): Persona[] {
+    return this.gente.filter(persona => persona.tipo !== PersonaTipo.AUTOR);
+  }
   getByMediaOrigin(mType: MediaType, oType: OriginType): Origin[] {
     return this
       .media.find(m => m.type === mType)
       .originArray.filter(o => o.type === oType);
   }
+
   getByMedia(mType: MediaType): Media[] {
     return this.media.filter(m => m.type === mType);
   }

@@ -3,9 +3,9 @@
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
 
-  main{
-    padding: 0px 32px 20px 20px;
-  }
+  // main{
+  //   padding: 0px 32px 20px 20px;
+  // }
   .sidenav{
       background: mat-color($primary,400);    
       overflow: hidden;

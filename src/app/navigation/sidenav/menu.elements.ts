@@ -53,7 +53,7 @@ export const UserMenu: Menu[] = [
   },
   {
     'name': 'Partitura Generica',
-    'link': '/sheet',
+    'link': '/music-list/score',
     'icon': 'input',
     'chip': false,
     'open': false,
