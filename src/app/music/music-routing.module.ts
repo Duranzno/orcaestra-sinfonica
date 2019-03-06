@@ -5,7 +5,8 @@ import { ScoreComponent } from './score/score.component';
 
 const routes: Routes = [
   { path: '', component: MusicListComponent },
-  { path: 'score', component: ScoreComponent }
+  { path: 'score', component: ScoreComponent },
+  { path: 'test/:uid', component: ScoreComponent },
 ];
 
 @NgModule({

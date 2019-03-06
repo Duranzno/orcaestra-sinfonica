@@ -62,3 +62,11 @@ export class Media implements IMedia {
   }
   addOrigin(o: Origin) { this.originArray.push(o); }
 }
+export function CardMedia(media: Media[]): Media[] {
+  return media.filter(m => {
+    return m.type === MediaType.MIDI
+      || m.type === MediaType.MP3
+      || m.type === MediaType.YOUTUBE
+      || m.type === MediaType.PDF;
+  });
+}

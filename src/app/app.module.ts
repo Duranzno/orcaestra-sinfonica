@@ -15,7 +15,6 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav/sidenav.component';
 import { SidenavItemComponent } from './navigation/sidenav/sidenav.item.component';
 
-import { SheetComponent } from './sheet/sheet.component';
 
 import { environment } from '../environments/environment';
 import { AuthModule } from './auth/auth.module';
@@ -23,6 +22,7 @@ import { AdminModule } from './admin/admin.module';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MusicModule } from './music/music.module';
+import { PageNotFoundComponent } from './welcome/page-not-found/page-not-found.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -34,7 +34,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HeaderComponent,
     SidenavListComponent,
     SidenavItemComponent,
-    SheetComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     // Angular
@@ -45,13 +45,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MaterialFireModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     RouterModule,
     // Feature Modules
     AuthModule,
     AdminModule,
     MusicModule,
     // Libraries
+    AppRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     PerfectScrollbarModule,
   ],

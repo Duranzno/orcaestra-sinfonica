@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { IScore, Score, MediaType } from 'src/app/core/models';
 import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, tap, pluck } from 'rxjs/operators';
 import { YoutubeService } from '../services';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 class MediaBuffer {
   constructor(
@@ -20,32 +21,25 @@ class MediaBuffer {
   styles: []
 })
 export class ScoreComponent implements OnInit {
-  private scoreDoc: AngularFirestoreDocument<IScore>;
-  score$: Observable<IScore>;
-  score: Score;
-
-  media: MediaBuffer = new MediaBuffer();
+  score$: Observable<Score>; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
   mediaType = MediaType;
-  partituraId = 'partituras/ON58GOzM0zKIXeKDF9t9';
+  uid = 'ON58GOzM0zKIXeKDF9t9';
 
   constructor(
     private afs: AngularFirestore,
-    public youtube: YoutubeService) {
-  }
-  // update(score: IScore) {
-  //   this.scoreDoc.update(score);
-  // }
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
   ngOnInit() {
-    this.scoreDoc = this.afs.doc<IScore>(this.partituraId);
-    this.score$ = this.scoreDoc.valueChanges();
-    this.score$.subscribe(s => {
-      this.score = new Score(s);
-      this.media.youtube = this.score
-        .getByMedia(MediaType.YOUTUBE).pop()
-        .originArray.pop()
-        .url;
-      console.log(this.youtube.urlParser(this.media.youtube));
-      this.youtube.setup(this.youtube.urlParser(this.media.youtube));
-    });
+
+    this.score$ = this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) =>
+          this.afs.doc<IScore>(`partituras/${params.get('uid')}`)
+            .valueChanges()
+        ),
+        map(i => (new Score(i))
+        ),
+      );
   }
 }

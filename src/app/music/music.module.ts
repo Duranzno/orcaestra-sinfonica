@@ -10,8 +10,14 @@ import { MusicListComponent } from './music-list/music-list.component';
 import { MusicDetailComponent } from './music-list/music-detail.component';
 import { MusicRoutingModule } from './music-routing.module';
 import { ScoreComponent } from './score/score.component';
-import { APP_SERVICES } from './services';
-import { MediaCardComponent } from './score/media.card.component';
+
+import { MediaCardComponent } from './score/media-cards/media.card.component';
+import { YoutubeComponent } from './score/media-cards/youtube.component';
+import { Mp3Component } from './score/media-cards/mp3.component';
+import { MidiComponent } from './score/media-cards/midi.component';
+import { PdfComponent } from './score/media-cards/pdf.component';
+import { MxmlComponent } from './score/media-cards/mxml.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,12 +25,18 @@ import { MediaCardComponent } from './score/media.card.component';
     MusicDetailComponent,
     ScoreComponent,
     MediaCardComponent,
+    YoutubeComponent,
+    Mp3Component,
+    MidiComponent,
+    PdfComponent,
+    MxmlComponent,
   ],
   imports: [
     CommonModule,
     CoreModule,
     MusicRoutingModule,
     FormsModule,
+    HttpClientModule,
     MaterialFireModule,
     FlexLayoutModule,
     YoutubePlayerModule,
