@@ -22,6 +22,9 @@ import { PersonaTipo } from 'src/app/core/models';
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-icon-button>
+  <mat-icon>clear</mat-icon>
+</button>
 </div>
   `
 })

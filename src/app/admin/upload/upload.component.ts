@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: []
+  styleUrls: ['./upload.component.scss']
 })
 
-export class UploadComponent implements OnInit, OnDestroy {
+export class UploadComponent implements OnInit {
   personas: string[] = Object.values(PersonaTipo);
 
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
@@ -27,12 +27,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
   $loading: Observable<boolean>;
-  constructor(private _fb: FormBuilder, private store: Store<OrcaState>) {
+  constructor(
+    private _fb: FormBuilder,
+    private store: Store<OrcaState>) {
   }
 
   ngOnInit() {
     this.$loading = this.store.select(From.ui.getIsLoading);
-
+    this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val);
     this.firstFormGroup = this._fb.group({
       obra: [''],
       its: [''],
@@ -48,7 +50,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.initAlmacenamiento(),
       ]),
       instrumentos: this._fb.array([
-        this.initAlmacenamiento(),
+        this.initInstrumento(),
       ]),
     });
   }
@@ -69,9 +71,10 @@ export class UploadComponent implements OnInit, OnDestroy {
       nombre: [''],
     });
   }
-  get generos() { return this.secondFormGroup.get('generos') as FormArray; }
+  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
   addGenero() { this.generos.push(this.initGenero()); }
   removeGenero(i: number) { this.generos.removeAt(i); }
+
   selectedGenero(event: MatAutocompleteSelectedEvent): void {
     this.addGeneroEvent(event.option.viewValue);
     this.generoInput.nativeElement.value = '';
@@ -110,6 +113,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
   addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
   removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
+  initInstrumento() {
+    return this._fb.group({
+      nombre: [''],
+    });
+  }
+  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
+  addInstrumento() { this.instrumentos.push(this.initInstrumento()); }
+  removeInstrumento(i: number) { this.instrumentos.removeAt(i); }
 
   onSave() {
     // const score: IScore = this.secondFormGroup.value as IScore;
@@ -117,8 +128,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     //   type: MediaType.YOUTUBE,
     //   file: new File(['foo', 'bar'], this.secondFormGroup.get('youtube').value),
     // });
-    // console.log(this.firstFormGroup.value);
+    console.log(this.firstFormGroup.value);
     console.log(this.secondFormGroup.value);
+    this.newGenre(this.generosTodos, this.firstFormGroup.get('generos').value);
+
     // console.log(this.files);
     // this.store.dispatch(new From.music.SetPartitura(score));
     // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
@@ -126,10 +139,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     //   this.store.dispatch(new From.media.PostMedia({ file, score }));
     // });
   }
-  onSubmit() {
-    console.log('Hey listen');
-    this.store.dispatch(new From.ui.StartLoading());
-  }
-  ngOnDestroy() {
+  newGenre(orig: string[], modified: string[]) {
+    modified.filter(x => !orig.includes(x)).forEach(nuevoGenero => {
+      console.log(`nuevo genero se debe agregar ${nuevoGenero}`);
+      // this.store.dispatch(new From.media.PostCategory("genero",nuevoGenero));
+    });
   }
 }

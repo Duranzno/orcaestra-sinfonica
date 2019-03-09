@@ -25,7 +25,7 @@ const firebase = [
 export class FirebaseModule {
   constructor(@Optional() @SkipSelf() parentModule: FirebaseModule) {
     throwIfAlreadyLoaded(parentModule, 'FirebaseModule');
-    console.log('firebase module');
+
   }
 
 }

@@ -18,6 +18,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AuthRoutingModule {
-  constructor() { console.log('auth routing module'); }
+  constructor() { }
 
 }

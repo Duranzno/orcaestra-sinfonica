@@ -23,6 +23,6 @@ import { SharedModule } from '../shared';
   ]
 })
 export class AuthModule {
-  constructor() { console.log('authmodule'); }
+  constructor() { }
 
 }

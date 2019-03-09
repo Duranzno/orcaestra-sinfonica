@@ -22,12 +22,12 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'music-list',
     loadChildren: './music/music.module#MusicModule',
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'auth',
@@ -59,6 +59,6 @@ const routes: Routes = [
   providers: [AuthGuard]
 })
 export class AppRoutingModule {
-  constructor() { console.log('app routing module'); }
+  constructor() { }
 
 }

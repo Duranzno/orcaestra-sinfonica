@@ -1,12 +1,10 @@
-<!-- 
-<mat-horizontal-stepper linear="true" #stepper>
+<mat-horizontal-stepper linear="false" #stepper>
   <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
       <ng-template matStepLabel>Datos Basicos</ng-template>
       <mat-form-field>
         <input matInput placeholder="Obra" type="text" formControlName="obra">
       </mat-form-field>
-
       <mat-form-field>
         <input matInput placeholder="Its" formControlName="its">
       </mat-form-field>
@@ -18,14 +16,14 @@
       </mat-form-field>
       <mat-form-field>
         <mat-chip-list #chipList>
-          <mat-chip *ngFor="let g of generos.value;let i=index" [selectable]="true" [removable]="true"
-            (removed)="removeChip(g)">{{g}}
+          <mat-chip *ngFor="let g of generos?.value;let i=index" [selectable]="true" [removable]="true"
+            (removed)="removeChip(g)">
+            {{g}}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
-          <input matInput placeholder="Generos" [matAutocomplete]="auto" #generoInput
-            (matChipInputTokenEnd)="addChip($event)" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-            [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+          <input matInput placeholder="Generos" #generoInput (matChipInputTokenEnd)="addChip($event)"
+            [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="auto">
 
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenero($event)">
             <mat-option *ngFor="let g of generosTodos" [value]="g">{{g}}</mat-option>
@@ -39,137 +37,76 @@
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <div>
-        <ng-template matStepLabel>Datos Extra</ng-template>
-        <div formArrayName="gente">
-          <div *ngFor="let p of  gente.controls;let i=index">
-            <div>
-              <span>Involucrado {{i+1}}</span>
-              <span *ngIf="secondFormGroup.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
-            </div>
-            <div [formGroupName]="i">
-              <app-involucrados [form]="secondFormGroup.controls['gente'].controls[i]">
-              </app-involucrados>
-            </div>
-          </div>
-        </div>
-        <div formArrayName="almacenamiento">
-          <div *ngFor="let a of  almacenamiento.controls;let i=index">
-            <div>
-              <span>Registro {{i+1}}</span>
-              <span *ngIf="secondFormGroup.controls['almacenamiento'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
-            </div>
-            <div [formGroupName]="i">
-              <app-almacenamiento [almacenamientoForm]="secondFormGroup.controls['almacenamiento'].controls[i]">
-              </app-almacenamiento>
-            </div>
-          </div>
-        </div>
-        <div formArrayName="instrumentos">
-         <div *ngFor="let a of instrumentos.controls;let i=index">
-          <div>
-          <span>Instrumento {{i+1}}</span>
-          <span *ngIf="secondFormGroup.controls['instrumentos'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
-          </div>
-          <div [formGroupName]="i">
-            <app-instrumentos [form]="secondFormGroup.controls['instrumento'].controls[i]">
-            </app-instrumentos>
-          </div>
-          </div>  
-        </div> 
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-</mat-horizontal-stepper>
-<form [formGroup]='form' fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="onSubmit()"
-  novalidate>
-
-
-
- -->
-
-<mat-horizontal-stepper linear="false" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-      <ng-template matStepLabel>Datos Basicos</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Obra" type="text" formControlName="obra">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput placeholder="Its" formControlName="its">
-      </mat-form-field>
-      <mat-form-field>
-        <textarea matInput placeholder="Informacion Extra" formControlName="extrainfo"></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Enlace a Youtube" formControlName="youtube">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-chip-list #chipList>
-          <!-- <mat-chip *ngFor="let g of generos.value;let i=index" [selectable]="true" [removable]="true"
-            (removed)="removeChip(g)">{{g}}
-            <mat-icon matChipRemove>cancel</mat-icon>
-          </mat-chip> -->
-          <input matInput placeholder="Generos" #generoInput (matChipInputTokenEnd)="addChip($event)"
-            [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" [formControl]="chipInputCtrl"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
-
-          <!-- [matAutocomplete]="auto" <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenero($event)">
-            <mat-option *ngFor="let g of generosTodos" [value]="g">{{g}}</mat-option>
-          </mat-autocomplete> -->
-        </mat-chip-list>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Siguiente</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Datos Extra</ng-template>
-      <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-        <div formArrayName="gente">
-          <div *ngFor="let p of  gente.controls;let i=index">
-            <div>
-              <span>Involucrado {{i+1}}</span>
-              <span *ngIf="secondFormGroup.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
+      <form [formGroup]="secondFormGroup" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              Involucrados
+              <mat-panel-description>
+                Compositor,Autor,Transcriptor, entre otros.
+                <mat-icon>account_circle</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
+
+            <div formArrayName="gente">
+              <div *ngFor="let p of  gente.controls;let i=index">
+                <div>
+                  <span>Involucrado {{i+1}}</span>
+                  <span *ngIf="secondFormGroup.controls['gente'].controls.length >1" (click)="removePersona(i)"></span>
+                </div>
+                <div [formGroupName]="i">
+                  <app-involucrados [form]="secondFormGroup.controls['gente'].controls[i]">
+                  </app-involucrados>
+
+                </div>
+              </div>
+
+              <!-- <button class="app-fab" mat-mini-fab>
+                <mat-icon>add</mat-icon>
+              </button> -->
             </div>
-            <div [formGroupName]="i">
-              <app-involucrados [form]="secondFormGroup.controls['gente'].controls[i]">
-              </app-involucrados>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              Almacenamiento
+            </mat-expansion-panel-header>
+            <button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>
+            <div formArrayName="almacenamiento">
+              <div *ngFor="let a of  almacenamiento.controls;let i=index">
+                <div>
+                  <span>Registro {{i+1}}</span>
+                  <span *ngIf="secondFormGroup.controls['almacenamiento'].controls.length >1"
+                    (click)="removeAlmacenamiento(i)"></span>
+                </div>
+                <div [formGroupName]="i">
+                  <app-almacenamiento [almacenamientoForm]="secondFormGroup.controls['almacenamiento'].controls[i]">
+                  </app-almacenamiento>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div formArrayName="almacenamiento">
-          <div *ngFor="let a of  almacenamiento.controls;let i=index">
-            <div>
-              <span>Registro {{i+1}}</span>
-              <span *ngIf="secondFormGroup.controls['almacenamiento'].controls.length >1"
-                (click)="removeAlmacenamiento(i)"></span>
+          </mat-expansion-panel>
+          <!-- <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              Instrumentos
+            </mat-expansion-panel-header>
+            <div formArrayName="instrumentos">
+              <div *ngFor="let a of instrumentos.controls;let j=index">
+                <div>
+                  <span>Instrumento {{j+1}}</span>
+                  <span *ngIf="secondFormGroup.controls['instrumentos'].controls.length >1"
+                    (click)="removeAlmacenamiento(j)"></span>
+                </div>
+                <div [formGroupName]="j">
+                 <app-instrumentos [form]="secondFormGroup.controls['instrumento'].controls[j]">
+                  </app-instrumentos>
+                </div>
+              </div>
             </div>
-            <div [formGroupName]="i">
-              <app-almacenamiento [almacenamientoForm]="secondFormGroup.controls['almacenamiento'].controls[i]">
-              </app-almacenamiento>
-            </div>
-          </div>
-        </div>
-        <!-- <div formArrayName="instrumentos">
-          <div *ngFor="let a of instrumentos.controls;let i=index">
-            <div>
-              <span>Instrumento {{i+1}}</span>
-              <span *ngIf="secondFormGroup.controls['instrumentos'].controls.length >1" (click)="removeAlmacenamiento(i)"></span>
-            </div>
-            <div [formGroupName]="i">
-              <app-instrumentos [form]="secondFormGroup.controls['instrumento'].controls[i]">
-              </app-instrumentos>
-            </div>
-          </div>
-        </div> -->
-        <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
-        <button mat-raised-button color="accent" (click)="addAlmacenamiento()">Nuevo Almacenamiento</button>
+          </mat-expansion-panel> -->
+        </mat-accordion>
       </form>
       <div>
         <button mat-button matStepperPrevious>Anterior</button>

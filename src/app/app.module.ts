@@ -55,5 +55,5 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   entryComponents: []
 })
 export class AppModule {
-  constructor() { console.log('appmodule'); }
+  constructor() { }
 }

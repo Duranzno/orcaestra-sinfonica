@@ -1,0 +1,25 @@
+mat-accordion{
+  width:-webkit-fill-available;
+  
+}
+ .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+.app-fab {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+@media(min-width: 1024px) {
+   .app-fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}

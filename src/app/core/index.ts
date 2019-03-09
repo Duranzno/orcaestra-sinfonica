@@ -30,7 +30,6 @@ import { SharedModule } from '../shared';
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
-    console.log('core module');
   }
 }
 function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {

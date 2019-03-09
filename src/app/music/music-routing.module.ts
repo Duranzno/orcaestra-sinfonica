@@ -14,6 +14,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MusicRoutingModule {
-  constructor() { console.log('music routing module'); }
+  constructor() {  }
 
 }

@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private store: Store<OrcaState>) {
 
-    this.store.select(fromAuth.isAuth).subscribe(isAuth => this.isAuth = isAuth);
-    this.store.select(fromAuth.isAdmin).subscribe(isAdmin => this.isAdmin = isAdmin);
+    this.store.select(fromAuth.isAuth).subscribe(auth => this.isAuth = auth);
+    this.store.select(fromAuth.isAdmin).subscribe(admin => this.isAdmin = admin);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

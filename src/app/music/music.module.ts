@@ -35,6 +35,6 @@ import { SharedModule } from '../shared';
   // providers: [...APP_SERVICES],
 })
 export class MusicModule {
-  constructor() { console.log('music module'); }
+  constructor() { }
 
 }

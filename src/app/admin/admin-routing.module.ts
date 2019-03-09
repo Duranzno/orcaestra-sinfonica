@@ -16,6 +16,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule {
-  constructor() { console.log('admin routing module'); }
+  constructor() { }
 
 }
