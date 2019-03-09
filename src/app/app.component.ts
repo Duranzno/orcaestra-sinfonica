@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
         });
       }
     }
-    // this.authService.initAuthListener();
+    this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.toggleView();

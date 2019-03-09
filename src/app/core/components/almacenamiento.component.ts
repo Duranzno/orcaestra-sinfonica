@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { IStoredType } from '../models';
 
 @Component({
@@ -8,7 +8,19 @@ import { IStoredType } from '../models';
   styleUrls: []
 })
 export class AlmacenamientoComponent {
-  @Input()
-  public almacenamientoForm: FormGroup;
+  @Input() public almacenamientoForm: FormGroup;
+  @Input() public formGroup: FormGroup;
+  @Input() private _fb: FormBuilder;
   tipos: string[] = Object.values(IStoredType);
+
+  initAlmacenamiento() {
+    return this._fb.group({
+      cantidad: [''],
+      tipo: [''],
+    });
+  }
+  get almacenamiento() { return this.formGroup.get('almacenamiento') as FormArray; }
+  addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
+  removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
+
 }

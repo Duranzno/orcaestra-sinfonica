@@ -1,22 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { map, switchMap, filter, mergeMap, catchError, withLatestFrom, tap, finalize } from 'rxjs/operators';
-
-
-import { UploadFile, Score, User, MediaType } from '../models';
+import { Action, Store } from '@ngrx/store';
+import { from, Observable } from 'rxjs';
+import { finalize, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { MediaType, Score } from '../models';
 import { FirebaseService } from '../services/upload/firebase.service';
 import { OrcaState } from '../store';
+import * as fromAuth from '../store/auth';
 import * as fromMedia from '../store/media';
 import * as fromMusic from '../store/music';
-import * as fromAuth from '../store/auth';
 import * as fromUi from '../store/ui';
-import { last } from '@angular/router/src/utils/collection';
+
+
 type stuff = [fromMedia.ManageMediaArray, OrcaState];
 @Injectable()
 export class MediaEffects {
 
+  @Effect()
+  fetchCategory$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.FETCH_CATEGORY),
+      map((action: fromMedia.FetchCategory) => action.payload),
+      switchMap((type: string) => {
+        return this.fb.fetchCateg()
+          .pipe(
+            tap(result => { console.log(result); }),
+            map(result => {
+              return new fromMusic.SetCategories(result);
+            })
+          );
+      })
+    );
 
   @Effect()
   saveScore$: Observable<Action> = this.actions$

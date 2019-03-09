@@ -5,7 +5,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { PersonaTipo, UploadFile, Score, IScore, MediaType } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
@@ -14,36 +14,42 @@ import { Subscription } from 'rxjs';
 })
 
 export class UploadComponent implements OnInit, OnDestroy {
-  public form: FormGroup;
   personas: string[] = Object.values(PersonaTipo);
+
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   chipInputCtrl = new FormControl();
-  files: UploadFile[] = [];
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  isLoading = false;
 
-  private $loading: Subscription;
-  constructor(private _fb: FormBuilder, private store: Store<OrcaState>) { }
+  files: UploadFile[] = [];
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  isLoading$: Observable<boolean>;
+  constructor(private _fb: FormBuilder, private store: Store<OrcaState>) {
+  }
 
   ngOnInit() {
-    this.$loading = this.store
-      .select(From.ui.getIsLoading)
-      .subscribe(loading => this.isLoading = loading);
-    this.form = this._fb.group({
+    this.isLoading$ = this.store.select(From.ui.getIsLoading);
+
+    this.firstFormGroup = this._fb.group({
       obra: [''],
       its: [''],
+      extrainfo: [''],
+      youtube: [''],
+      generos: this._fb.array([])
+    });
+    this.secondFormGroup = this._fb.group({
       gente: this._fb.array([
         this.initPersona(),
-      ]),
-      generos: this._fb.array([
       ]),
       almacenamiento: this._fb.array([
         this.initAlmacenamiento(),
       ]),
-      extrainfo: [''],
-      youtube: [''],
+      instrumentos: this._fb.array([
+        this.initAlmacenamiento(),
+      ]),
     });
   }
   initPersona() {
@@ -54,7 +60,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     });
   }
   show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
-  get gente() { return this.form.get('gente') as FormArray; }
+  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
   addPersona() { this.gente.push(this.initPersona()); }
   removePersona(i: number) { this.gente.removeAt(i); }
 
@@ -63,7 +69,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       nombre: [''],
     });
   }
-  get generos() { return this.form.get('generos') as FormArray; }
+  get generos() { return this.secondFormGroup.get('generos') as FormArray; }
   addGenero() { this.generos.push(this.initGenero()); }
   removeGenero(i: number) { this.generos.removeAt(i); }
   selectedGenero(event: MatAutocompleteSelectedEvent): void {
@@ -101,27 +107,29 @@ export class UploadComponent implements OnInit, OnDestroy {
       tipo: [''],
     });
   }
-  get almacenamiento() { return this.form.get('almacenamiento') as FormArray; }
+  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
   addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
   removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
 
   onSave() {
-    const score: IScore = this.form.value as IScore;
-    this.files = this.files.concat({
-      type: MediaType.YOUTUBE,
-      file: new File(['foo', 'bar'], this.form.get('youtube').value),
-    });
-    console.log(this.files);
-    this.store.dispatch(new From.music.SetPartitura(score));
-    this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
+    // const score: IScore = this.secondFormGroup.value as IScore;
+    // this.files = this.files.concat({
+    //   type: MediaType.YOUTUBE,
+    //   file: new File(['foo', 'bar'], this.secondFormGroup.get('youtube').value),
+    // });
+    // console.log(this.firstFormGroup.value);
+    console.log(this.secondFormGroup.value);
+    // console.log(this.files);
+    // this.store.dispatch(new From.music.SetPartitura(score));
+    // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
     // this.files.forEach(file => {
     //   this.store.dispatch(new From.media.PostMedia({ file, score }));
     // });
   }
   onSubmit() {
     console.log('Hey listen');
+    this.store.dispatch(new From.ui.StartLoading());
   }
   ngOnDestroy() {
-    this.$loading.unsubscribe();
   }
 }

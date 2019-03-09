@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.fetchGrupos();
+    // this.authService.fetchGrupos();
     this.isLoading$ = this.store.select(From.ui.getIsLoading);
     this.grupos$ = this.store.select(From.music.getGrupos);
   }

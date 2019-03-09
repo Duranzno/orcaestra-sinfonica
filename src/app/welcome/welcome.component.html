@@ -13,4 +13,9 @@
       <p>Never stop! Dive into new challenges every day</p>
     </section>
   </div>
+  <button mat-button (click)="load()">Load</button>
+  <button mat-button (click)="unload()">Unload</button>
+  <button mat-button (click)="categ()">Categ</button>
+  <mat-spinner *ngIf="loading$|async" mode="indeterminate">
+  </mat-spinner>
 </div>

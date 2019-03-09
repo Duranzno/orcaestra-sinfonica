@@ -37,12 +37,7 @@ export class AuthService {
         }
       });
   }
-  fetchGrupos() {
-    this.afStore.collection('categories').valueChanges()
-      .subscribe(json => {
-        this.store.dispatch(new From.music.SetGrupos(json[0]['grupos']));
-      });
-  }
+
   registerUser(user: User, file?: UploadFile) {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password))

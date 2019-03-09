@@ -54,7 +54,12 @@ export class FirebaseService implements UploadInterface {
     );
   }
   updateScore(id: string) {
-
+  }
+  fetchCateg(): Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> {
+    return this.db.doc
+      <{ generos: string[], grupos: string[], instrumentos: string[] }>
+      ('categories/QuklVOu2wdKMm2YBtQm5/')
+      .valueChanges();
   }
   private fileParser(file: UploadFile, url: string): Media {
     return new Media({

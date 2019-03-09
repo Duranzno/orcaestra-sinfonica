@@ -27,6 +27,7 @@ import {
   MatPaginatorModule,
   MatSnackBarModule,
   MatSliderModule,
+  MatStepperModule,
   MatGridListModule,
   MatProgressBarModule,
   MatExpansionModule,
@@ -40,6 +41,7 @@ const material = [
   AngularFireStorageModule,
   // Material
   MatChipsModule,
+  MatStepperModule,
   MatProgressBarModule,
   MatAutocompleteModule,
   MatButtonModule,

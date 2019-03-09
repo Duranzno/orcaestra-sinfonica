@@ -4,8 +4,9 @@ import { IScore, Origin, MediaType, Score } from '../../models/';
 
 export interface State {
   partitura: IScore;
+  instrumentos: string[];
+  generos: string[];
   grupos: string[];
-  favoritos: IScore[];
 }
 const initialState: State = {
   partitura: {
@@ -13,17 +14,15 @@ const initialState: State = {
     obra: '',
     almacenamiento: [],
   },
+  generos: [],
+  instrumentos: [],
   grupos: [],
-  favoritos: [],
 };
 
 export function musicReducer(state = initialState, action: Actions) {
   switch (action.type) {
-    case ActionTypes.SET_GRUPOS: {
-      return {
-        ...state,
-        grupos: action.payload as string[],
-      };
+    case ActionTypes.SET_CATEGORIES: {
+      return setCategories(state, action.payload as { generos: string[], grupos: string[], instrumentos: string[] });
     }
     case ActionTypes.ADD_ORIGIN: {
       return addOrigin(state, action.payload as { origin: Origin, type: MediaType });
@@ -42,5 +41,13 @@ function addOrigin(state: State, payload: { origin: Origin, type: MediaType }): 
   const partitura = new Score(state.partitura);
   partitura.addMediaOrigin(payload.type, payload.origin);
   return { ...state, partitura };
+}
+function setCategories(state, payload: { generos: string[], grupos: string[], instrumentos: string[] }) {
+  return {
+    ...state,
+    generos: payload.generos,
+    instrumentos: payload.instrumentos,
+    grupos: payload.grupos,
+  };
 }
 

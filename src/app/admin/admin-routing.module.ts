@@ -6,7 +6,7 @@ import { UploadComponent } from './upload/upload.component';
 
 const routes: Routes = [
   { path: 'upload', component: UploadComponent },
-  { path: '', component: AdminComponent },
+  { path: 'admin', component: AdminComponent },
 ];
 
 @NgModule({
