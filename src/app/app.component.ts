@@ -4,6 +4,8 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services';
 import { SwUpdate } from '@angular/service-worker';
+import { OrcaState, From } from './core/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private authService: AuthService,
     private mediaObserver: MediaObserver,
     private swUpdate: SwUpdate,
+    private store: Store<OrcaState>
   ) { }
   ngOnInit() {
     if (window) {
@@ -36,6 +39,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
         });
       }
     }
+    this.store.dispatch(new From.media.FetchCategory());
     this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {

@@ -6,7 +6,6 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SettingsComponent } from './settings/settings.component';
-import { MaterialFireModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '../core';
@@ -18,11 +17,11 @@ import { LogoutComponent } from './logout.component';
     CommonModule,
     FormsModule,
     CoreModule,
-    MaterialFireModule,
     ReactiveFormsModule,
-    AngularFireAuthModule,
     AuthRoutingModule,
-    FlexLayoutModule,
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+  constructor() { console.log('authmodule'); }
+
+}

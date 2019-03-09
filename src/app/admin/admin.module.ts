@@ -3,7 +3,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MaterialFireModule } from '../material.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { UploadComponent } from './upload/upload.component';
 import { AdminComponent } from './admin.component';
@@ -15,15 +14,15 @@ import { CoreModule } from '../core';
     UploadComponent,
   ],
   imports: [
-    CommonModule,
     CoreModule,
     AdminRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    MaterialFireModule,
-    FlexLayoutModule
   ],
   providers: [
   ]
 })
-export class AdminModule { }
+export class AdminModule {
+  constructor() { console.log('admin module'); }
+
+}

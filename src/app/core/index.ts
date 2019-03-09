@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialFireModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropZoneDirective } from './directives/drop-zone.directive';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -21,6 +22,9 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
     AppEffectsModules
   ],
   exports: [CoreStoreModule,
+    MaterialFireModule,
+    CommonModule,
+    FlexLayoutModule,
     ...APP_CORE_COMPONENTS,
     ...APP_DIRECTIVES],
   providers: [...APP_SERVICES, ...APP_RESOLVERS],
@@ -30,7 +34,13 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
   ]
 })
 export class CoreModule {
-  // constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-  //   throwIfAlreadyLoaded(parentModule, 'CoreModule');
-  // }
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    console.log('core module');
+  }
+}
+function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
+  if (parentModule) {
+    throw new Error(`${moduleName} has already been loaded. Import Core modules in the AppModule only.`);
+  }
 }

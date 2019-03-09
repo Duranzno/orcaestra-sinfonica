@@ -4,7 +4,7 @@ import { MusicListComponent } from './music-list/music-list.component';
 import { ScoreComponent } from './score/score.component';
 
 const routes: Routes = [
-  { path: '', component: MusicListComponent },
+  { path: 'list', component: MusicListComponent },
   { path: 'score', component: ScoreComponent },
   { path: 'test/:uid', component: ScoreComponent },
 ];
@@ -13,4 +13,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MusicRoutingModule { }
+export class MusicRoutingModule {
+  constructor() { console.log('music routing module'); }
+
+}

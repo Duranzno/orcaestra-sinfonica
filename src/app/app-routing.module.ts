@@ -27,6 +27,11 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
+    path: 'auth',
+    loadChildren: './auth/auth.module#AuthModule',
+    // canActivate: [AuthGuard]
+  },
+  {
     path: '',
     redirectTo: '/welcome',
     pathMatch: 'full'
@@ -46,4 +51,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  constructor() { console.log('app routing module'); }
+
+}

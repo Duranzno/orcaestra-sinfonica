@@ -6,7 +6,6 @@ import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfi
 
 import { CoreModule } from './core';
 
-import { MaterialFireModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
@@ -40,16 +39,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // Angular
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    FlexLayoutModule,
     CoreModule,
-    MaterialFireModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     // Feature Modules
-    AuthModule,
-    AdminModule,
-    MusicModule,
+    // AuthModule,
+    // AdminModule,
+    // MusicModule,
     // Libraries
     AppRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
@@ -64,4 +61,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   bootstrap: [AppComponent],
   entryComponents: []
 })
-export class AppModule { }
+export class AppModule {
+  constructor() { console.log('appmodule'); }
+}

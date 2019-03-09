@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '../core';
 import { YoutubePlayerModule } from 'ngx-youtube-player';
-import { MaterialFireModule } from '../material.module';
 
 import { MusicListComponent } from './music-list/music-list.component';
 import { MusicDetailComponent } from './music-list/music-detail.component';
@@ -32,15 +31,16 @@ import { HttpClientModule } from '@angular/common/http';
     MxmlComponent,
   ],
   imports: [
-    CommonModule,
     CoreModule,
     MusicRoutingModule,
     FormsModule,
     HttpClientModule,
-    MaterialFireModule,
-    FlexLayoutModule,
+    ,
     YoutubePlayerModule,
   ],
   // providers: [...APP_SERVICES],
 })
-export class MusicModule { }
+export class MusicModule {
+  constructor() { console.log('music module'); }
+
+}

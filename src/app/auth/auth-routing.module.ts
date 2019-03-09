@@ -17,4 +17,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {
+  constructor(){console.log('auth routing module'); }
+
+ }
