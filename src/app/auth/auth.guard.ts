@@ -10,23 +10,31 @@ import { AuthService } from '../core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { OrcaState } from '../core/store';
 import { map } from 'rxjs/operators';
+import { isAdmin } from '../core/store/auth';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  isAuth: boolean;
+  isAuth: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private store: Store<OrcaState>) {
 
-    this.store.select(fromAuth.isAuth)
-      .subscribe(admin => this.isAuth = admin);
+    this.store.select(fromAuth.isAuth).subscribe(isAuth => this.isAuth = isAuth);
+    this.store.select(fromAuth.isAdmin).subscribe(isAdmin => this.isAdmin = isAdmin);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
     if (this.isAuth) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+  canActivateAuth(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.isAdmin) {
       return true;
     } else {
       this.router.navigate(['/login']);

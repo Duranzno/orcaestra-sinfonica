@@ -5,31 +5,25 @@ import { AppEffectsModules } from './effects';
 
 import { APP_SERVICES } from './services';
 import { APP_RESOLVERS } from './resolvers';
-import { APP_CORE_COMPONENTS, FileUploadComponent } from './components';
 import { APP_DIRECTIVES } from './directives';
-import { CommonModule } from '@angular/common';
-import { MaterialFireModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DropZoneDirective } from './directives/drop-zone.directive';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FirebaseModule } from './firebase.module';
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     CoreStoreModule,
     ReactiveFormsModule,
-    MaterialFireModule,
-    AppEffectsModules
+    AppEffectsModules,
+    FirebaseModule,
   ],
-  exports: [CoreStoreModule,
-    MaterialFireModule,
-    CommonModule,
-    FlexLayoutModule,
-    ...APP_CORE_COMPONENTS,
+  exports: [
+    CoreStoreModule,
+    ReactiveFormsModule,
     ...APP_DIRECTIVES],
   providers: [...APP_SERVICES, ...APP_RESOLVERS],
   declarations: [
-    ...APP_CORE_COMPONENTS,
     ...APP_DIRECTIVES,
   ]
 })

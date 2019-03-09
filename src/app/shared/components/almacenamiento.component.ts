@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { IStoredType } from '../models';
+import { IStoredType } from 'src/app/core/models';
 
 @Component({
   selector: 'app-almacenamiento',

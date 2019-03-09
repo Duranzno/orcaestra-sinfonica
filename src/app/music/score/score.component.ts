@@ -5,6 +5,8 @@ import { Observable, from, of } from 'rxjs';
 import { map, switchMap, tap, pluck } from 'rxjs/operators';
 import { YoutubeService } from '../services';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { OrcaState } from 'src/app/core/store';
 
 class MediaBuffer {
   constructor(
@@ -29,9 +31,12 @@ export class ScoreComponent implements OnInit {
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     private router: Router,
+    private store: Store<OrcaState>
   ) { }
   ngOnInit() {
-
+    this.store
+      .select<any>((state: any) => state.customerFeature) // no strings here
+      .subscribe((state) => console.log(state));
     this.score$ = this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) =>

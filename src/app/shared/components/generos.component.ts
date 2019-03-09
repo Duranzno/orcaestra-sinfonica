@@ -1,39 +1,39 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Component, Input, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray} from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 
 @Component({
-  selector: 'generos',
+  selector: 'app-generos',
   templateUrl: './generos.component.html',
   styleUrls: []
 })
-export class GenerosComponent implements OnInit{
-  @Input('form')public generosForm: FormGroup;
-  @Input('generos')generosTodos:string[];
+export class GenerosComponent implements OnInit {
+  @Input('form') public generosForm: FormGroup;
+  @Input('generos') generosTodos: string[];
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   generosFiltrados: Observable<string[]>;
   genCtrl = new FormControl();
-  
-  partituraNueva:{
-    generos:string[]
-  }={generos:[]}
-  
+
+  partituraNueva: {
+    generos: string[]
+  } = { generos: [] };
+
 
   constructor() {
     this.generosFiltrados = this.genCtrl.valueChanges.pipe(
       startWith(null),
       map((gen: string | null) => gen ? this._filter(gen) : this.generosTodos.slice()));
   }
-  ngOnInit(){
+  ngOnInit() {
     // (this.generosForm).push("Navidad")
-    console.log(this.generosForm)
+    console.log(this.generosForm);
 
   }
   remove(genero: string): void {
@@ -42,10 +42,10 @@ export class GenerosComponent implements OnInit{
       this.partituraNueva.generos.splice(index, 1);
     }
   }
-  private addGenero(value: string) {  
-    console.log(this.generosForm.value)
+  private addGenero(value: string) {
+    console.log(this.generosForm.value);
     const index = this.partituraNueva.generos.findIndex((e: string) => e.trim() === value.trim());
-    
+
     if (index === -1) {
       this.partituraNueva.generos.push(value.trim());
     }
@@ -65,7 +65,7 @@ export class GenerosComponent implements OnInit{
     this.generoInput.nativeElement.value = '';
     this.genCtrl.setValue(null);
   }
-  
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     // this.generos.filter(g => g.toLowerCase().indexOf(filterValue) === 0);

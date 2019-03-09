@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 })
 export class WelcomeComponent implements OnInit {
   wave: any;
-  loading$: Observable<boolean>;
+  $loading: Observable<boolean>;
   constructor(private store: Store<OrcaState>) {
   }
   ngOnInit(): void {
-    this.loading$ = this.store.select(From.ui.getIsLoading);
+    this.$loading = this.store.select(From.ui.getIsLoading);
   }
   load() {
     this.store.dispatch(new From.ui.StartLoading());

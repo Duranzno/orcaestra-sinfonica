@@ -46,10 +46,10 @@
       Es administrador?
     </mat-checkbox>
 
-    <button mat-raised-button color="primary" type="submit" *ngIf="!(isLoading$|async)" [disabled]="f.invalid">
+    <button mat-raised-button color="primary" type="submit" *ngIf="!($loading|async)" [disabled]="f.invalid">
       Enviar
     </button>
-    <mat-spinner *ngIf="isLoading$|async">
+    <mat-spinner *ngIf="$loading|async">
 
     </mat-spinner>
   </form>

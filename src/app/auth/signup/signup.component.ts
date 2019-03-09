@@ -17,7 +17,7 @@ import { MediaType, OriginType, UploadFile } from '../../core/models';
   styleUrls: []
 })
 export class SignupComponent implements OnInit {
-  isLoading$: Observable<boolean>;
+  $loading: Observable<boolean>;
   grupos$: Observable<string[]>;
   type = MediaType.AVATAR;
   data: User;
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     // this.authService.fetchGrupos();
-    this.isLoading$ = this.store.select(From.ui.getIsLoading);
+    this.$loading = this.store.select(From.ui.getIsLoading);
     this.grupos$ = this.store.select(From.music.getGrupos);
   }
   getAvatarFile(files: UploadFile[]) {
@@ -45,7 +45,6 @@ export class SignupComponent implements OnInit {
       isAdmin: (form.value.isAdmin === '') ? false : true,
     });
     this.authService.registerUser(user, this.files[0]);
-
   }
 
 }

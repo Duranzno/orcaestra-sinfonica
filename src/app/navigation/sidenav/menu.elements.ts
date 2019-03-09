@@ -30,7 +30,7 @@ export const AnonMenu: Menu[] = [
 export const AdminMenu: Menu[] = [
   {
     'name': 'Admin',
-    'link': '/upload',
+    'link': '/auth/admin',
     'icon': 'input',
     'isUser': true,
     'chip': false,

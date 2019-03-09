@@ -1,10 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { MediaType, UploadFile, MediaTypeGuesser } from '../../models';
+import { MediaType, UploadFile, MediaTypeGuesser } from 'src/app/core/models';
 import { of, Observable } from 'rxjs';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import * as fromMedia from '../../store/media';
 import { Store } from '@ngrx/store';
-import { OrcaState } from '../../store';
+import { From, OrcaState } from 'src/app/core/store';
+
 
 @Component({
   selector: 'app-file-upload',
@@ -29,7 +28,7 @@ export class FileUploadComponent implements OnInit {
       : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
   }
   ngOnInit() {
-    this.snapshot = this.store.select(fromMedia.getSnapshot);
+    this.snapshot = this.store.select(From.media.getSnapshot);
     this.sn.state = 'ERROR';
   }
   toggleHover(event: boolean) { this.isHovering = event; }

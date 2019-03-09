@@ -26,12 +26,12 @@ export class UploadComponent implements OnInit, OnDestroy {
   secondFormGroup: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  isLoading$: Observable<boolean>;
+  $loading: Observable<boolean>;
   constructor(private _fb: FormBuilder, private store: Store<OrcaState>) {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select(From.ui.getIsLoading);
+    this.$loading = this.store.select(From.ui.getIsLoading);
 
     this.firstFormGroup = this._fb.group({
       obra: [''],

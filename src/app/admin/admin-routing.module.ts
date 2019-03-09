@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
@@ -5,6 +6,7 @@ import { UploadComponent } from './upload/upload.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: 'admin' },
   { path: 'upload', component: UploadComponent },
   { path: 'admin', component: AdminComponent },
 ];
@@ -14,6 +16,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule {
-  constructor(){console.log('admin routing module'); }
+  constructor() { console.log('admin routing module'); }
 
- }
+}

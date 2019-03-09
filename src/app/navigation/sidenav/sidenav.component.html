@@ -1,9 +1,9 @@
-<div fxLayout="column">
-  <div *ngIf="!iconOnly" fxLayoutAlign="space-around center" [style.margin]="'10px 0px'">
-    <img width="100" [style.borderRadius]="'50%'" [src]="avatarSrc$|async">
+<div class="column" fxLayout="column">
+  <div class="complete" *ngIf="!iconOnly" fxLayoutAlign="space-around center">
+    <img [src]="avatarSrc$|async">
   </div>
-  <div *ngIf="iconOnly" style="height: 100px;" fxLayoutAlign="space-around center">
-    <img width="50" [style.borderRadius]="'50%'" [src]="avatarSrc$ |async">
+  <div class="iconOnly" *ngIf="iconOnly" fxLayoutAlign="space-around center">
+    <img [src]="avatarSrc$ |async">
   </div>
 
   <div *ngIf="(user$|async)?.nombre!=''">
@@ -25,6 +25,4 @@
     <p *ngIf="((user$|async)?.isAdmin)">admin</p>
     <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>
   </ng-template>
-  <!-- <pre>{{ $menus | async | json }}</pre> -->
-
 </div>

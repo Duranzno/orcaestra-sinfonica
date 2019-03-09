@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
 @import '../app/app.component.scss';
 @import '../app/navigation/sidenav/sidenav.item.component.scss';
-@import '../app/core/components/file-upload/file-upload.component.scss';
+@import '../app/shared/components/file-upload/file-upload.component.scss';
 $mat-light-theme-background: (
   status-bar: map_get($mat-grey, 300),
   app-bar:    map_get($mat-grey, 100),

@@ -4,12 +4,12 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 @Injectable()
 export class UIEffects {
   // @Effect()
-  // startLoading$: Observable<Action> = this.actions$.pipe(
+  // start$loading: Observable<Action> = this.actions$.pipe(
   //   ofType(fromUI.ActionTypes.START_LOADING)
   // );
 
   // @Effect()
-  // stopLoading$: Observable<Action> = this.actions$.pipe(
+  // stop$loading: Observable<Action> = this.actions$.pipe(
   //   ofType(fromUI.ActionTypes.STOP_LOADING)
   // );
 

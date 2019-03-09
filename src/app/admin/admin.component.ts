@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrcaState } from '../core/store';
-import { AuthService, FirebaseService } from '../core/services';
-import { Store } from '@ngrx/store';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -10,17 +7,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class AdminComponent implements OnInit {
   constructor(
-    private authService: AuthService,
-    private store: Store<OrcaState>,
-    private fb: FirebaseService,
-    private db: AngularFirestore) {
+    private router: Router) {
 
   }
   ngOnInit() {
-    this.fb.fetchCateg()
-      .subscribe(val => {
-        console.log(val);
-      });
-
+  }
+  toUpload() {
+    this.router.navigateByUrl('admin/upload');
   }
 }

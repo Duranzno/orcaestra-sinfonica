@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { WelcomeComponent } from '../welcome/welcome.component';
+import { LogoutComponent } from './logout.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: WelcomeComponent }
+  { path: 'logout', component: LogoutComponent }
 ];
 
 @NgModule({
@@ -18,6 +18,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AuthRoutingModule {
-  constructor(){console.log('auth routing module'); }
+  constructor() { console.log('auth routing module'); }
 
- }
+}

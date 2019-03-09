@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { AuthService } from '../../core/services';
 import { Store } from '@ngrx/store';
@@ -16,20 +16,21 @@ export class HeaderComponent implements OnInit {
   @Output() drawerToggle = new EventEmitter<void>();
   @Input() matDrawerShow;
 
-  user$: Observable<IUser>;
-  constructor(private authService: AuthService, private store: Store<OrcaState>) { }
+  $isAuth = of(false);
+  $isAdmin = of(false);
+  constructor(
+    private store: Store<OrcaState>
+  ) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(From.auth.getUser);
+    this.$isAdmin = this.store.select(From.auth.isAdmin);
+    this.$isAuth = this.store.select(From.auth.isAuth);
   }
   onToggleSidenav() {
     this.sidenavToggle.emit();
   }
   onToggleDrawer() {
     this.drawerToggle.emit();
-  }
-  onLogout() {
-    this.store.dispatch(new From.auth.SetUnauthenticated());
   }
 
 }

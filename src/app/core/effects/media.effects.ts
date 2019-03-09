@@ -24,7 +24,7 @@ export class MediaEffects {
       switchMap((type: string) => {
         return this.fb.fetchCateg()
           .pipe(
-            tap(result => { console.log(result); }),
+            // tap(result => { console.log(result); }),
             map(result => {
               return new fromMusic.SetCategories(result);
             })

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PersonaTipo } from '../models';
+import { PersonaTipo } from 'src/app/core/models';
 @Component({
   selector: 'app-involucrados',
   styleUrls: [],

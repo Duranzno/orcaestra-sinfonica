@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { AdminRoutingModule } from './admin-routing.module';
+
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { UploadComponent } from './upload/upload.component';
 import { AdminComponent } from './admin.component';
-import { CommonModule } from '@angular/common';
-import { CoreModule } from '../core';
+import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared';
 @NgModule({
   declarations: [
     AdminComponent,
     UploadComponent,
   ],
   imports: [
-    CoreModule,
+    SharedModule,
     AdminRoutingModule,
     ReactiveFormsModule,
     FormsModule,

@@ -11,7 +11,7 @@ import { mapMenuAdmin, mapMenuGenres } from './menu.mapper';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav.component.html',
-  styleUrls: []
+  styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavListComponent implements OnInit {
   @Input() iconOnly = false;

@@ -1,0 +1,29 @@
+@mixin sideImg() {
+  img {
+    display: block;
+    border-radius:50%;
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+  }
+}
+div.column{
+  div{
+    margin: 10px 0px;
+      width: -webkit-fill-available;
+      @include sideImg();
+  }
+  // {
+    
+  // margin-top: 1em;
+  //   margin: 10px 0px;
+  //   width: -webkit-fill-available;
+  //   @include sideImg()
+  // }
+  // .complete {
+  //   width: 50px;
+    
+  // margin-top: 1em;
+  //   @include sideImg()
+  // }
+}

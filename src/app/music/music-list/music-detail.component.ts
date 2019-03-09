@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { MediaType, OriginType, IScore, Score } from '../../core/models';
-import { MusicService } from '../../core/services/music.service';
 
 import { From, OrcaState } from '../../core/store';
 import { iScore } from 'src/app/core/mock';

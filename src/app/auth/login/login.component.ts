@@ -1,27 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-
+import { of } from 'rxjs';
 import { UIService, AuthService } from '../../core/services';
-import { IUser, User } from '../../core/models/user.model';
-import { OrcaState } from '../../core/store';
+import { OrcaState, From } from '../../core/store';
 import { Store } from '@ngrx/store';
-import * as fromAuth from '../../core/store/auth';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   form: FormGroup;
-  isLoading = false;
-  private $loading: Subscription;
-  constructor(private authService: AuthService, private store: Store<OrcaState>, private uiService: UIService) { }
+  $loading = of(false);
+  constructor(
+    private authService: AuthService,
+    private store: Store<OrcaState>,
+    private uiService: UIService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.$loading = this.uiService.loadingStateChanged.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    });
+    this.$loading = this.store.select(From.ui.getIsLoading);
     this.form = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]
@@ -33,9 +32,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     const email = this.form.value.email;
     const password = this.form.value.password;
     this.authService.login({ email, password });
-    // this.store.dispatch(new fromAuth.SetAuthenticated(user));
-  }
-  ngOnDestroy() {
-    this.$loading.unsubscribe();
   }
 }

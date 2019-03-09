@@ -49,6 +49,7 @@ export class AuthService {
         if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: finalUser as User })); }
         this.store.dispatch(new From.ui.StopLoading());
         this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
+        this.router.navigate(['/welcome']);
       });
   }
 
@@ -62,6 +63,7 @@ export class AuthService {
       .subscribe(finalUser => {
         this.store.dispatch(new From.ui.StopLoading());
         this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
+        this.router.navigate(['/welcome']);
       });
   }
   logout() {

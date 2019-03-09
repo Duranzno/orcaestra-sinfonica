@@ -10,23 +10,20 @@
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li *ngIf="!((user$|async)?.nombre!='')">
-        <a routerLink="/signup">Registrarse</a>
+      <li *ngIf="!($isAuth|async)">
+        <a routerLink="/auth/signup">Registrarse</a>
       </li>
-      <li *ngIf="!((user$|async)?.nombre!='')">
-        <a routerLink="/login">Iniciar Sesión</a>
+      <li *ngIf="!($isAuth|async)">
+        <a routerLink="/auth/login">Iniciar Sesión</a>
       </li>
-      <li *ngIf="((user$|async)?.nombre!='')&&(user$|async)?.isAdmin">
-        <a routerLink="/upload">Administrador</a>
+      <li *ngIf="($isAuth|async)&&($isAdmin|async)">
+        <a routerLink="/admin/admin">Administrador</a>
       </li>
-      <li *ngIf="((user$|async)?.nombre!='')">
-        <a routerLink="/music-list/score">Partitura ELIMINAR</a>
-      </li>
-      <li *ngIf="((user$|async)?.nombre!='')">
+      <li *ngIf="($isAuth|async)">
         <a routerLink="/music-list">Musica</a>
       </li>
-      <li *ngIf="((user$|async)?.nombre!='')">
-        <a style="cursor: pointer" (click)="onLogout()">Cerrar Sesión</a>
+      <li *ngIf="($isAuth|async)">
+        <a routerLink="/auth/logout">Logout</a>
       </li>
     </ul>
   </div>
