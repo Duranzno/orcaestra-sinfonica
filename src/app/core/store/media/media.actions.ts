@@ -37,7 +37,7 @@ export class FetchCategory implements Action {
   constructor(public payload?: any) { }
 }
 export class FetchScore implements Action {
-  readonly type = ActionTypes.FETCH_CATEGORY;
+  readonly type = ActionTypes.FETCH_SCORE;
   constructor(public payload: string) { }
 }
 

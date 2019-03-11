@@ -6,7 +6,7 @@ import { map, switchMap, tap, pluck } from 'rxjs/operators';
 import { YoutubeService } from '../services';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { OrcaState } from 'src/app/core/store';
+import { OrcaState, From } from 'src/app/core/store';
 
 class MediaBuffer {
   constructor(
@@ -23,9 +23,8 @@ class MediaBuffer {
   styles: []
 })
 export class ScoreComponent implements OnInit {
-  score$: Observable<Score>; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
+  score$: Observable<IScore>; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
   mediaType = MediaType;
-  uid = 'ON58GOzM0zKIXeKDF9t9';
 
   constructor(
     private afs: AngularFirestore,
@@ -34,17 +33,12 @@ export class ScoreComponent implements OnInit {
     private store: Store<OrcaState>
   ) { }
   ngOnInit() {
-    this.store
-      .select<any>((state: any) => state.customerFeature) // no strings here
-      .subscribe((state) => console.log(state));
-    this.score$ = this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) =>
-          this.afs.doc<IScore>(`partituras/${params.get('uid')}`)
-            .valueChanges()
-        ),
-        map(i => (new Score(i))
-        ),
-      );
+    this.route.paramMap.subscribe(
+      (params: ParamMap) => {
+        this.store.dispatch(
+          new From.media.FetchScore(<string>params.get('uid'))
+        );
+      });
+    this.score$ = this.store.select(From.music.getPartitura);
   }
 }
