@@ -70,16 +70,12 @@ export class Score implements IScore {
       case MediaType.MIDI:
       case MediaType.MXML:
       case MediaType.PDF:
-        // const autor = (data as Score).getAutor();
-        // if (autor) {
-        //   if (autor.apellido.length > 0) {
-        //     return `OSJIG/musica/${autor.apellido}/${autor.nombre}/`;
-        //   } else {
-        //     return `OSJIG/musica/${autor.nombre}/`;
-        //   }
-        // } else {
-        return `OSJIG/musica/${this.authorPath()}/${this.obra}/${uFile.file.name}`;
-      // }
+        const autor = this.getAutor();
+        if (autor) {
+          return `OSJIG/musica/${this.authorPath()}/${this.obra}/${uFile.file.name}`;
+        } else {
+          return `OSJIG/musica/${this.obra}/${uFile.file.name}`;
+        }
       // break;
       case MediaType.YOUTUBE:
         return MediaType.YOUTUBE;

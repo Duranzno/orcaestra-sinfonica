@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     this.store.dispatch(new From.media.FetchCategory());
-    this.authService.initAuthListener();
+    // this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.toggleView();

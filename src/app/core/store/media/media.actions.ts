@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, MediaType, UploadFile, Score, OriginType } from '../../models';
+import { User, MediaType, UploadFile, Score, OriginType, IScore } from '../../models';
 export class ActionTypes {
   static MANAGE_MEDIA_ARRAY = '[MEDIA] Received Media Array';
   static POST_MEDIA = '[MEDIA] Uploaded Score Media to Respective Cloud';
@@ -11,7 +11,7 @@ export class ActionTypes {
 }
 export class PostMedia implements Action {
   readonly type = ActionTypes.POST_MEDIA;
-  constructor(public payload: { file: UploadFile, score: Score }) { }
+  constructor(public payload: { file: UploadFile, score: IScore }) { }
 }
 export class PostAvatar implements Action {
   readonly type = ActionTypes.POST_AVATAR;
@@ -33,7 +33,7 @@ export class ManageMediaArray implements Action {
 
 export class FetchCategory implements Action {
   readonly type = ActionTypes.FETCH_CATEGORY;
-  constructor(public payload?:any) { }
+  constructor(public payload?: any) { }
 }
 
 export class ChangeCloud implements Action {

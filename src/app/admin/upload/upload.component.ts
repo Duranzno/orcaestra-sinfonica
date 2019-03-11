@@ -25,12 +25,18 @@ export class UploadComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
+  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
+  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
+  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
 
   $loading: Observable<boolean>;
+
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>) {
   }
+  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
 
   ngOnInit() {
     this.$loading = this.store.select(From.ui.getIsLoading);
@@ -54,6 +60,29 @@ export class UploadComponent implements OnInit {
       ]),
     });
   }
+  onSave() {
+    const score: IScore = this.secondFormGroup.value as IScore;
+    this.store.dispatch(new From.music.SetPartitura(score));
+    this.files = this.files.concat({
+      type: MediaType.YOUTUBE,
+      file: new File(['foo', 'bar'], this.firstFormGroup.get('youtube').value),
+    });
+    this.newGenre(this.generosTodos, this.firstFormGroup.get('generos').value);
+    this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
+
+  }
+
+  newGenre(orig: string[], modified: string[]) {
+    modified.filter(x => !orig.includes(x)).forEach(nuevoGenero => {
+      console.log(`nuevo genero se debe agregar ${nuevoGenero}`);
+      // this.store.dispatch(new From.media.PostCategory("genero",nuevoGenero));
+    });
+  }
+
+
+
+
+  // -------------------------------PERSONA
   initPersona() {
     return this._fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -61,17 +90,15 @@ export class UploadComponent implements OnInit {
       tipo: ['']
     });
   }
-  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
-  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
   addPersona() { this.gente.push(this.initPersona()); }
   removePersona(i: number) { this.gente.removeAt(i); }
 
+  // -------------------------------GENERO
   initGenero() {
     return this._fb.group({
       nombre: [''],
     });
   }
-  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
   addGenero() { this.generos.push(this.initGenero()); }
   removeGenero(i: number) { this.generos.removeAt(i); }
 
@@ -104,45 +131,23 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  // -------------------------------ALMACENAMIENTO
   initAlmacenamiento() {
     return this._fb.group({
       cantidad: [''],
       tipo: [''],
     });
   }
-  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
   addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
   removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
+  // -------------------------------INSTRUMENTO
   initInstrumento() {
     return this._fb.group({
       nombre: [''],
     });
   }
-  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
   addInstrumento() { this.instrumentos.push(this.initInstrumento()); }
   removeInstrumento(i: number) { this.instrumentos.removeAt(i); }
 
-  onSave() {
-    // const score: IScore = this.secondFormGroup.value as IScore;
-    // this.files = this.files.concat({
-    //   type: MediaType.YOUTUBE,
-    //   file: new File(['foo', 'bar'], this.secondFormGroup.get('youtube').value),
-    // });
-    console.log(this.firstFormGroup.value);
-    console.log(this.secondFormGroup.value);
-    this.newGenre(this.generosTodos, this.firstFormGroup.get('generos').value);
 
-    // console.log(this.files);
-    // this.store.dispatch(new From.music.SetPartitura(score));
-    // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
-    // this.files.forEach(file => {
-    //   this.store.dispatch(new From.media.PostMedia({ file, score }));
-    // });
-  }
-  newGenre(orig: string[], modified: string[]) {
-    modified.filter(x => !orig.includes(x)).forEach(nuevoGenero => {
-      console.log(`nuevo genero se debe agregar ${nuevoGenero}`);
-      // this.store.dispatch(new From.media.PostCategory("genero",nuevoGenero));
-    });
-  }
 }
