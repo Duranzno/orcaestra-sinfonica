@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -12,28 +12,14 @@ import { iScore } from 'src/app/core/mock';
   templateUrl: './music-detail.component.html',
   styleUrls: ['./music-detail.component.scss']
 })
-export class MusicDetailComponent implements OnInit {
-  mockData$: Observable<IScore>;
-  mockData: Score = new Score(iScore);
+export class MusicDetailComponent implements OnInit, OnDestroy {
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
-
-  constructor(
-    // private musicService: MusicService,
-    private store: Store<OrcaState>
-  ) { }
+  @Input() score: Score;
+  constructor() { }
 
   ngOnInit() {
-    this.mockData$ = this.store.select(From.music.getPartitura);
-    // this.store.select(fromMusic.getPartitura).subscribe(
-    //   (sheet: IScore) => { console.log(sheet); });
-    // this.media.photoUrl = this.mockData.media.getByTypeAndOrigin(MediaType.AVATAR, OriginType.ASSETS).url;
-    // this.media.avatar = this.mockData.media.getByTypeAndOrigin(MediaType.AVATAR, OriginType.ASSETS).url;
-    // this.media.sheet = this.mockData.media.getByTypeAndOrigin(MediaType.IMG, OriginType.ASSETS).url;
-
-    console.log(this.media);
-
   }
-  log(g) {
-    console.log(g);
+  ngOnDestroy() {
+
   }
 }

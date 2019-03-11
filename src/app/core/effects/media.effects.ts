@@ -17,6 +17,18 @@ type stuff = [fromMedia.ManageMediaArray, OrcaState];
 export class MediaEffects {
 
   @Effect()
+  fetchScore$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.FETCH_SCORE),
+      map((action: fromMedia.FetchScore) => action.payload),
+      switchMap((uid: string) => this.fb.fetchScore(uid)),
+      tap(result => { console.log(result); }),
+      map(result => {
+        return new fromMusic.SetPartitura(result);
+      })
+    );
+
+  @Effect()
   fetchCategory$: Observable<Action> = this.actions$
     .pipe(
       ofType(fromMedia.ActionTypes.FETCH_CATEGORY),

@@ -25,7 +25,7 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
-    path: 'music-list',
+    path: 'music',
     loadChildren: './music/music.module#MusicModule',
     // canActivate: [AuthGuard]
   },

@@ -24,7 +24,7 @@ export class WelcomeComponent implements OnInit {
     this.store.dispatch(new From.ui.StopLoading());
   }
   categ() {
-    this.store.dispatch(new From.media.FetchCategory());
+    this.store.dispatch(new From.media.FetchScore('K70tVHelRRpIiDoq6OPb'));
   }
 
 }

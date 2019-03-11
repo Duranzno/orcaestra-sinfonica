@@ -1,12 +1,12 @@
-<mat-tab-group>
+<mat-tab-group dynamicHeight>
   <mat-tab label="Biblioteca de la Orquesta">
-    <app-music-detail></app-music-detail>
-    <mat-divider></mat-divider>
-    <button mat-button>text</button>
-    <!-- <app-music-detail></app-music-detail> -->
-  </mat-tab>
-  <mat-tab label="Generos">
-  </mat-tab>
-  <mat-tab label="Suscripciones">
+    <ng-template matTabContent>
+      <div *ngFor="let score of scores" fxLayout="column" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
+        <app-music-detail [score]="score"></app-music-detail>
+        <mat-divider [inset]="true"></mat-divider>
+      </div>
+    </ng-template>
+    <ng-template matTabContent>
+    </ng-template>
   </mat-tab>
 </mat-tab-group>

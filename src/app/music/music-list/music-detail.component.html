@@ -1,15 +1,15 @@
 <mat-card class="example-card">
   <mat-card-header>
     <img mat-card-avatar [src]='media.avatar'>
-    <mat-card-title>{{mockData.obra}}</mat-card-title>
-    <mat-card-subtitle>{{mockData.gente[1].nombre}} {{mockData.gente[1].apellido}}</mat-card-subtitle>
+    <mat-card-title>{{score.obra}}</mat-card-title>
+    <mat-card-subtitle>{{score.getAutor().nombre}} {{score.getAutor()?.apellido}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src='/assets/9th/sheet.png' alt="Foto de {{mockData.obra}}">
+  <img mat-card-image src='/assets/9th/sheet.png' alt="Foto de {{score.obra}}">
   <mat-card-content>
-    <!-- 
+
     <mat-expansion-panel class="mat-elevation-z0">
       <mat-expansion-panel-header align="end">
-        <mat-chip-list *ngFor="let i of mockData.instrumentos" ariaOrientation="horizontal">
+        <mat-chip-list *ngFor="let i of score.instrumentos" ariaOrientation="horizontal">
           <mat-chip color="accent" selected>
             <mat-icon>music_note</mat-icon>
           </mat-chip>
@@ -18,22 +18,22 @@
         Expandir
       </mat-expansion-panel-header>
       <p>
-        {{mockData.extrainfo}}
+        {{score.extrainfo}}
       </p>
       <mat-divider [inset]="
       true">
       </mat-divider>
       <div style="padding-top:5px">
         <mat-chip-list #chipList>
-          <mat-chip *ngFor="let g of mockData.generos" color="primary" [selectable]="true" (click)="log(g)">{{g}}
+          <mat-chip *ngFor="let g of score.generos" color="primary" [selectable]="true">{{g}}
           </mat-chip>
         </mat-chip-list>
       </div>
-    </mat-expansion-panel> -->
+    </mat-expansion-panel>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-button>LEFT</button>
-    <button mat-button>RIGHT</button>
+    <button mat-button>Descargar</button>
+    <button mat-button>Seleccionar</button>
     <div fxFlex></div>
     <button mat-icon-button>
       <mat-icon>share</mat-icon>

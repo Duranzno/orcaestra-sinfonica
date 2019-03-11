@@ -17,7 +17,7 @@ export class FirebaseService implements UploadInterface {
 
   constructor(
     private storage: AngularFireStorage,
-    private db: AngularFirestore) { }
+    private db: AngularFirestore) { console.log('firebase service created'); }
 
   saveScore(score: IScore): Observable<IScore> {
     const data = Object.assign({}, score);
@@ -59,6 +59,10 @@ export class FirebaseService implements UploadInterface {
     return this.db.doc
       <{ generos: string[], grupos: string[], instrumentos: string[] }>
       ('categories/QuklVOu2wdKMm2YBtQm5/')
+      .valueChanges();
+  }
+  fetchScore(scoreUID: string): Observable<IScore> {
+    return this.db.doc<Score>(`partituras/${scoreUID}/`)
       .valueChanges();
   }
   private fileParser(file: UploadFile, url: string): Media {
