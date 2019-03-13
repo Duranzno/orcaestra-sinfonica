@@ -29,8 +29,17 @@ export const AnonMenu: Menu[] = [
 ];
 export const AdminMenu: Menu[] = [
   {
-    'name': 'Admin',
-    'link': '/auth/admin',
+    'name': 'Pagina de Administrador',
+    'link': '/admin',
+    'icon': 'input',
+    'isUser': true,
+    'chip': false,
+    'open': false,
+    'isAdmin': true,
+  },
+  {
+    'name': 'Agregar Partitura',
+    'link': '/auth/cargar',
     'icon': 'input',
     'isUser': true,
     'chip': false,
@@ -52,8 +61,8 @@ export const UserMenu: Menu[] = [
     'sub': [],
   },
   {
-    'name': 'Partitura Generica',
-    'link': '/music-list/score',
+    'name': 'Biblioteca Musical',
+    'link': '/musica/lista',
     'icon': 'input',
     'chip': false,
     'open': false,

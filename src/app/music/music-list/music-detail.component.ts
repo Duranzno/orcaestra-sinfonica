@@ -2,10 +2,9 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { MediaType, OriginType, IScore, Score } from '../../core/models';
+import { MediaType, OriginType, IScore, Score, IScoreId } from '../../core/models';
 
 import { From, OrcaState } from '../../core/store';
-import { iScore } from 'src/app/core/mock';
 
 @Component({
   selector: 'app-music-detail',
@@ -14,10 +13,13 @@ import { iScore } from 'src/app/core/mock';
 })
 export class MusicDetailComponent implements OnInit, OnDestroy {
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
-  @Input() score: Score;
+  score: Score;
+  @Input("score") iScore: IScoreId;
   constructor() { }
 
   ngOnInit() {
+    this.score = new Score(this.iScore);
+    console.log(this.score);
   }
   ngOnDestroy() {
 

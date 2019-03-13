@@ -7,9 +7,8 @@ import { tap } from 'rxjs/operators';
   selector: 'app-admin',
   template: `
   <h1>admin component</h1>
-  <button mat-raised-button (click)="toUpload()">
-  Cargar Partituras
-  </button>
+  <button mat-raised-button [routerLink]="[ '/admin/carga']">Cargar Partituras</button>
+  <button mat-raised-button [routerLink]="[ '/admin/partitura']">Administrar Partituras</button>
 `,
   styleUrls: []
 })
@@ -19,11 +18,5 @@ export class AdminComponent implements OnInit {
     private store: Store<OrcaState>) {
 
   }
-  ngOnInit() {
-    // this.store.;
-
-  }
-  toUpload() {
-    this.router.navigateByUrl('admin/upload');
-  }
+  ngOnInit() { }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { UserMenu, AnonMenu, Menu } from './menu.elements';
 import { AuthService } from '../../core/services/auth.service';
@@ -13,7 +13,7 @@ import { mapMenuAdmin, mapMenuGenres } from './menu.mapper';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavListComponent implements OnInit {
+export class SidenavListComponent implements OnInit, OnDestroy {
   @Input() iconOnly = false;
   @Output() closeSidenav = new EventEmitter<void>();
   @Input() public userSubs: Menu[] = [
@@ -36,7 +36,7 @@ export class SidenavListComponent implements OnInit {
       'isAdmin': false,
     },
   ];
-
+  private subscription = new Subscription();
   user$: Observable<IUser>;
   avatarSrc$: Observable<string>;
   public menus: Menu[];
@@ -54,13 +54,15 @@ export class SidenavListComponent implements OnInit {
         return mapMenuGenres(iUser, this.userSubs, adminMenu);
       })
     );
-    this.$menus.subscribe(m => this.menus = m);
+    this.subscription = this.$menus.subscribe(m => this.menus = m);
     this.avatarSrc$ = this.store.select(From.auth.getAvatar);
   }
   onClose() {
     this.closeSidenav.emit();
   }
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   onLogout() {
     this.onClose();
     this.store.dispatch(new From.auth.SetUnauthenticated());

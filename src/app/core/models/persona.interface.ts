@@ -5,7 +5,7 @@ export enum PersonaTipo {
   ORQUESTADOR = 'Orquestador',
   EDITOR = 'Editor',
   TRANSCRIPTOR = 'Transcriptor',
-  UPLOADER = 'Subidor',
+  UPLOADER = 'Persona que lo subió',
 }
 export interface Persona {
   nombre: string;

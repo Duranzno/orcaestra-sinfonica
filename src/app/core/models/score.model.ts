@@ -3,13 +3,15 @@ import { IStored } from './almacenamiento.interface';
 import { MediaType, Media, Origin, OriginType } from './media.model';
 import { UploadFile } from './upload.media.interface';
 
+export interface IScoreId extends IScore { id: string; }
+
 export interface IScore {
   // TODO OP/K/V/HOB  =>¿Que significan?
 
   // Obligatorios
   its: number;  // Numero  legado del sistema Anterior
   obra: string;  // Nombre de la Obra
-  almacenamiento: IStored[];  // Tipo Almacenamiento Fisico
+  almacenamiento?: IStored[];  // Tipo Almacenamiento Fisico
   media?: Media[];
   /// OPTIONALES
   generos?: string[];

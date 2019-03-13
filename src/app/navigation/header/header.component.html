@@ -11,19 +11,19 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
       <li *ngIf="!($isAuth|async)">
-        <a routerLink="/auth/signup">Registrarse</a>
+        <a routerLink="/signup">Registrarse</a>
       </li>
       <li *ngIf="!($isAuth|async)">
-        <a routerLink="/auth/login">Iniciar Sesión</a>
+        <a routerLink="/login">Iniciar Sesión</a>
       </li>
       <li *ngIf="($isAuth|async)&&($isAdmin|async)">
-        <a routerLink="/admin/admin">Administrador</a>
+        <a routerLink="/admin/main">Administrador</a>
       </li>
       <li *ngIf="($isAuth|async)">
-        <a routerLink="/music-list">Musica</a>
+        <a routerLink="/musica/lista">Musica</a>
       </li>
       <li *ngIf="($isAuth|async)">
-        <a routerLink="/auth/logout">Logout</a>
+        <a routerLink="/logout">Logout</a>
       </li>
     </ul>
   </div>

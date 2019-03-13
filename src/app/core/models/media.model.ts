@@ -5,7 +5,7 @@ export enum MediaType {
   MP3 = 'mp3',
   MIDI = 'midi',
   PDF = 'pdf',
-  MXML = 'musicxml',
+  MXML = 'mxml',
   IMG = 'jpg/png',
   AVATAR = 'avatar',
 }

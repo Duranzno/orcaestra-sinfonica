@@ -15,6 +15,6 @@ export class LogoutComponent implements OnInit {
   }
   logout() {
     this.store.dispatch(new From.auth.SetUnauthenticated());
-    this.router.navigateByUrl('welcome');
+    this.router.navigateByUrl('bienvenida');
   }
 }

@@ -1,9 +1,12 @@
 <mat-tab-group dynamicHeight>
   <mat-tab label="Biblioteca de la Orquesta">
     <ng-template matTabContent>
-      <div *ngFor="let score of scores" fxLayout="column" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-        <app-music-detail [score]="score"></app-music-detail>
-        <mat-divider [inset]="true"></mat-divider>
+      <div *ngIf="(scores$ |async) as scores">
+        <div *ngFor="let score of scores " fxLayout="column" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
+          <app-music-detail [score]="score"></app-music-detail>
+          <!-- {{ score | json }} -->
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
       </div>
     </ng-template>
     <ng-template matTabContent>

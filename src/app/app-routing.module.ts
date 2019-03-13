@@ -7,25 +7,25 @@ import { environment } from 'src/environments/environment';
 import { PageNotFoundComponent } from './welcome/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'login',
-  //   redirectTo: 'auth/login',
-  // },
-  // {
-  //   path: 'logout',
-  //   redirectTo: 'auth/logout',
-  // },
-  // {
-  //   path: 'signup',
-  //   redirectTo: 'auth/signup',
-  // },
+  {
+    path: 'login',
+    redirectTo: 'auth/login',
+  },
+  {
+    path: 'logout',
+    redirectTo: 'auth/logout',
+  },
+  {
+    path: 'signup',
+    redirectTo: 'auth/signup',
+  },
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
     // canActivate: [AuthGuard]
   },
   {
-    path: 'music',
+    path: 'musica',
     loadChildren: './music/music.module#MusicModule',
     // canActivate: [AuthGuard]
   },
@@ -35,12 +35,12 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
-    path: 'welcome',
+    path: 'bienvenida',
     component: WelcomeComponent
   },
   {
     path: '',
-    redirectTo: '/welcome',
+    redirectTo: '/bienvenida',
     pathMatch: 'full'
   },
   {

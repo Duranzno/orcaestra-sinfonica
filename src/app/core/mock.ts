@@ -1,4 +1,4 @@
-import { IMedia, OriginType, MediaType, IStoredType, Score, PersonaTipo, User, Media, IScore } from './models';
+import { IMedia, OriginType, MediaType, StoredType, Score, PersonaTipo, User, Media, IScore } from './models';
 
 const mediaArr: IMedia[] = [
   {
@@ -42,7 +42,7 @@ const media = mediaArr.map(m => new Media(m));
 export const iScore: IScore = {
   'almacenamiento': [
     {
-      'tipo': IStoredType.SCORE,
+      'tipo': StoredType.SCORE,
       'cantidad': 2
     }
   ],

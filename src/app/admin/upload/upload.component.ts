@@ -5,7 +5,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { PersonaTipo, UploadFile, Score, IScore, MediaType } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./upload.component.scss']
 })
 
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy {
   personas: string[] = Object.values(PersonaTipo);
 
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
@@ -37,10 +37,11 @@ export class UploadComponent implements OnInit {
     private store: Store<OrcaState>) {
   }
   show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
+  subscriptions: Subscription = new Subscription();
 
   ngOnInit() {
     this.$loading = this.store.select(From.ui.getIsLoading);
-    this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val);
+    this.subscriptions.add(this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val));
     this.firstFormGroup = this._fb.group({
       obra: [''],
       its: [''],
@@ -59,6 +60,9 @@ export class UploadComponent implements OnInit {
         this.initInstrumento(),
       ]),
     });
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   onSave() {
     const score: IScore = this.secondFormGroup.value as IScore;

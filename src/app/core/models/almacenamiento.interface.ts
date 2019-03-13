@@ -1,4 +1,4 @@
-export enum IStoredType {
+export enum StoredType {
   SCORE = 'Score',
   COPIA = 'Copia',
   PO = 'PO',
@@ -6,5 +6,5 @@ export enum IStoredType {
 }
 export interface IStored {
   cantidad: number;
-  tipo: IStoredType;
+  tipo: StoredType;
 }

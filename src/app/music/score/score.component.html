@@ -1,52 +1,49 @@
-<!-- <mat-tab-group color="accent" backgroundColor="primary" dynamicHeight>
-  <div *ngIf="score$ | async as score">
-    <mat-tab label="INFO">
-      <ng-template matTabContent>
-        <h1>{{score.obra}}</h1>
-        <h2>{{score.getAutor()?.nombre}} {{score.getAutor()?.apellido}}</h2>
-        <p>{{score.its}}</p>
+<mat-tab-group color="accent" backgroundColor="primary" dynamicHeight>
+  <mat-tab label="INFO">
+    <ng-template matTabContent>
+      <h1>{{score.obra}}</h1>
+      <h2>{{score.getAutor()?.nombre}} {{score.getAutor()?.apellido}}</h2>
+      <p>{{score.its}}</p>
 
-        <mat-chip-list *ngFor="let i of score?.instrumentos" ariaOrientation="horizontal">
-          <mat-chip color="accent" selected>
-            <mat-icon>music_note</mat-icon>
+      <mat-chip-list *ngFor="let i of score?.instrumentos" ariaOrientation="horizontal">
+        <mat-chip color="accent" selected>
+          <mat-icon>music_note</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+
+
+      <p> {{score.extrainfo}}</p>
+
+      <div *ngFor="let s of score?.almacenamiento">
+        <p>Hay {{s.cantidad}} de {{s.tipo}}</p>
+      </div>
+      <div> {{ score.getNotAutor() | json }}</div>
+      <div *ngFor="let p of score.getNotAutor()">
+        <p>{{p?.nombre}} {{p?.apellido}} {{p?.tipo}} </p>
+      </div>
+
+      <div style="padding-top:5px">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let g of score?.generos" color="primary" [selectable]="true">
+            {{g}}
           </mat-chip>
         </mat-chip-list>
+      </div>
 
-
-        <p> {{score.extrainfo}}</p>
-
-        <div *ngFor="let s of score?.almacenamiento">
-          <p>Hay {{s.cantidad}} de {{s.tipo}}</p>
-        </div>
-        <div> {{ score.getNotAutor() | json }}</div>
-        <div *ngFor="let p of score.getNotAutor()">
-          <p>{{p?.nombre}} {{p?.apellido}} {{p?.tipo}} </p>
-        </div>
-
-        <div style="padding-top:5px">
-          <mat-chip-list #chipList>
-            <mat-chip *ngFor="let g of score?.generos" color="primary" [selectable]="true">
-              {{g}}
-            </mat-chip>
-          </mat-chip-list>
-        </div>
-
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="MEDIA">
-      <ng-template matTabContent>
-        <div *ngFor="let m of score.media">
-          <app-media-card [media]="m"></app-media-card>
-        </div>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="PARTITURA">
-      <ng-template matTabContent>
-        <div *ngFor="let m of score.getByMedia(mediaType.MXML)">
-          <app-mxml [media]=m></app-mxml>
-        </div>
-      </ng-template>
-    </mat-tab>
-  </div>
-</mat-tab-group> -->
-<pre>{{ score$ | async | json }}</pre>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="MEDIA">
+    <ng-template matTabContent>
+      <div *ngFor="let m of score.media">
+        <app-media-card [media]="m"></app-media-card>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="PARTITURA">
+    <ng-template matTabContent>
+      <div *ngFor="let m of score.getByMedia(mediaType.MXML)">
+        <app-mxml [media]=m></app-mxml>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

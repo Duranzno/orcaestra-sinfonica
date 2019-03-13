@@ -13,7 +13,9 @@ if (!environment.production) {
 @NgModule({
   declarations: [],
   imports: [
-    StoreModule.forRoot(OrcaReducers),
+    StoreModule.forRoot(OrcaReducers,
+      // {metaReducers}
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       // logOnly: environment.production, // Restrict extension to log-only mode
@@ -24,7 +26,7 @@ if (!environment.production) {
   ],
   providers: [...OrcaActions],
 })
-export class CoreStoreModule { constructor() {} }
+export class CoreStoreModule { constructor() { } }
 export { OrcaState, OrcaActions, OrcaReducers } from './reducers';
 import * as media from './media';
 import * as auth from './auth';

@@ -4,6 +4,8 @@ import { OrcaState, From } from '../core/store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { FirebaseService } from '../core/services';
 
 @Component({
   selector: 'app-welcome',
@@ -12,8 +14,9 @@ import { Router } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
   wave: any;
+  scores;
   $loading: Observable<boolean>;
-  constructor(private store: Store<OrcaState>, private router: Router) {
+  constructor(private store: Store<OrcaState>, private router: Router, private fb: FirebaseService) {
   }
   ngOnInit(): void {
     this.$loading = this.store.select(From.ui.getIsLoading);
@@ -25,8 +28,7 @@ export class WelcomeComponent implements OnInit {
     this.store.dispatch(new From.ui.StopLoading());
   }
   categ() {
-    // this.store.dispatch(new From.media.FetchScore('K70tVHelRRpIiDoq6OPb'));
-    this.router.navigateByUrl('music/score/K70tVHelRRpIiDoq6OPb');
+    this.scores = this.fb.fetchScoreList();
   }
 
 }

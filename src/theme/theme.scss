@@ -25,7 +25,9 @@ $primary : $mat-indigo;
 $accent  : $mat-orange;
 $warn    : $mat-red;
 
-
+.contenedor{
+  margin: 1em;
+}
 
 $primary-app-primary: mat-palette($primary , 400);
 $primary-app-accent:  mat-palette($accent , 900);

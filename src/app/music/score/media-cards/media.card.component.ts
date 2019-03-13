@@ -20,7 +20,7 @@ export class MediaCardComponent implements OnInit {
   constructor(public youtube: YoutubeService) { }
 
   ngOnInit() {
-
+    console.log(this.media);
   }
 
 }

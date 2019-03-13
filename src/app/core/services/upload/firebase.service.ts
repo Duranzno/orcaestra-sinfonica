@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { MediaType, User, Score, UploadFile, OriginType, Media, Origin, IScore } from '../../models';
+import { MediaType, User, Score, UploadFile, OriginType, Media, Origin, IScore, IScoreId } from '../../models';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of, from } from 'rxjs';
 import { OrcaState, From } from '../../store';
 import { Store } from '@ngrx/store';
 import { last, map, mergeMap, switchMap, finalize, tap, reduce } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { UploadInterface } from './upload.interface';
 
 @Injectable()
@@ -19,6 +19,18 @@ export class FirebaseService implements UploadInterface {
     private storage: AngularFireStorage,
     private db: AngularFirestore) { console.log('firebase service created'); }
 
+  fetchScoreList(spec?: string): Observable<IScoreId[]> {
+    // if(!spec){
+    return this.db.collection<IScore>('partituras').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IScore;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+
+    // }
+  }
   saveScore(score: IScore): Observable<IScore> {
     const data = Object.assign({}, score);
     return from(this

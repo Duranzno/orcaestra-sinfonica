@@ -33,7 +33,7 @@
   </mat-card-content>
   <mat-card-actions align="end">
     <button mat-button>Descargar</button>
-    <button mat-button>Seleccionar</button>
+    <button mat-button [routerLink]="[ '/musica/partitura', iScore.id ]">Seleccionar</button>
     <div fxFlex></div>
     <button mat-icon-button>
       <mat-icon>share</mat-icon>

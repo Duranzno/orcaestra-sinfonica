@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { IScore, Score, MediaType } from 'src/app/core/models';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, Subscription } from 'rxjs';
 import { map, switchMap, tap, pluck } from 'rxjs/operators';
 import { YoutubeService } from '../services';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -22,8 +22,9 @@ class MediaBuffer {
   templateUrl: './score.component.html',
   styles: []
 })
-export class ScoreComponent implements OnInit {
-  score$: Observable<IScore>; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
+export class ScoreComponent implements OnInit, OnDestroy {
+  score$: Subscription; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
+  score;
   mediaType = MediaType;
 
   constructor(
@@ -39,6 +40,12 @@ export class ScoreComponent implements OnInit {
           new From.media.FetchScore(<string>params.get('uid'))
         );
       });
-    this.score$ = this.store.select(From.music.getPartitura);
+    this.score$ = this.store.select(From.music.getPartitura).subscribe(s => {
+      this.score = new Score(s);
+    });
+  }
+  ngOnDestroy(): void {
+    this.score$.unsubscribe();
   }
 }
+

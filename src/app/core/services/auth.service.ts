@@ -29,7 +29,7 @@ export class AuthService {
           this.fetchUserData(fUser.uid)
             .subscribe(user =>
               this.store.dispatch(new From.auth.SetAuthenticated(<User>user)));
-          this.router.navigate(['/welcome']);
+          this.router.navigate(['/bienvenida']);
         } else {
           // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
           this.store.dispatch(new From.auth.SetUnauthenticated());
@@ -49,7 +49,7 @@ export class AuthService {
         if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: finalUser as User })); }
         this.store.dispatch(new From.ui.StopLoading());
         this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/bienvenida']);
       });
   }
 
@@ -63,7 +63,7 @@ export class AuthService {
       .subscribe(finalUser => {
         this.store.dispatch(new From.ui.StopLoading());
         this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/bienvenida']);
       });
   }
   logout() {

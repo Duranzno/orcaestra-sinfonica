@@ -1,11 +1,13 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { DomSanitizer } from "@angular/platform-browser";
 
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services';
 import { SwUpdate } from '@angular/service-worker';
 import { OrcaState, From } from './core/store';
 import { Store } from '@ngrx/store';
+import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -22,21 +24,24 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   matDrawerOpened = false; // 0
   matDrawerShow: boolean = true; // 1
   sideNavMode: string = 'side';
+  subscriptions = new Subscription();
 
   constructor(
-    private authService: AuthService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
     private mediaObserver: MediaObserver,
     private swUpdate: SwUpdate,
     private store: Store<OrcaState>
   ) { }
   ngOnInit() {
+    this.addIcons();
     if (window) {
       if (this.swUpdate.isEnabled) {
-        this.swUpdate.available.subscribe(() => {
+        this.subscriptions.add(this.swUpdate.available.subscribe(() => {
           if (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) {
             window.location.reload();
           }
-        });
+        }));
       }
     }
     this.store.dispatch(new From.media.FetchCategory());
@@ -70,5 +75,39 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   }
   ngOnDestroy() {
     this.watcher$.unsubscribe();
+    this.subscriptions.unsubscribe();
+  }
+  addIcons() {
+    this.matIconRegistry.addSvgIcon(
+      `cuerdas`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "../assets/instruments/violin.svg"
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      `percusion`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "../assets/instruments/violin.svg"
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      `voz`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "../assets/instruments/violin.svg"
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      `viento`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "../assets/instruments/violin.svg"
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      `teclado`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "../assets/instruments/violin.svg"
+      )
+    );
+
   }
 }
