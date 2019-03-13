@@ -1,0 +1,14 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" d="m136.23047,0l-136.23047,136.24219l0,375.75781l390.01563,0l0,-512l-253.78516,0zm-8.78125,51.21094l-0.01172,76.23047l-76.22266,0.00781l76.23438,-76.23828zm232.56641,430.78906l-330.01563,0l0,-324.54687l127.4375,-0.01563l0.01563,-127.4375l202.5625,0l0,452zm0,0"/>
+  <text stroke="#000" transform="matrix(22.208431243896484,0,0,3.2416813373565674,-7546.88770544529,-934.0805922597647) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="21" id="svg_5" y="411.6375" x="342.5" stroke-width="0" fill="#000000"/>
+  <path id="svg_6" d="m52.5,331.6375" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000"/>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="92" id="svg_7" y="338.6375" x="61.5" fill-opacity="null" stroke-opacity="null" stroke-width="6" stroke="#000" fill="#000000">MXML</text>
+ </g>
+</svg>

@@ -3,6 +3,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import {
   MatChipsModule,
+  MatTooltipModule,
   MatButtonModule,
   MatIconModule,
   MatAutocompleteModule,
@@ -30,6 +31,7 @@ import {
 
 const material = [
   MatChipsModule,
+  MatTooltipModule,
   MatStepperModule,
   MatProgressBarModule,
   MatAutocompleteModule,

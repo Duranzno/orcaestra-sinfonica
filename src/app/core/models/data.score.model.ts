@@ -62,11 +62,12 @@ export class DataScore {
     //   numero:
     // }))
     return [
-      { icon: InstrType.VIENTO, numero: 3 },
+      { icon: InstrType.VIENTO_MADERA, numero: 3 },
+      { icon: InstrType.VIENTO_METAL, numero: 3 },
       { icon: InstrType.VOZ, numero: 3 },
       { icon: InstrType.TECLADO, numero: 3 },
       { icon: InstrType.PERCUSION, numero: 3 },
-      { icon: InstrType.CUERDAS, numero: 3 },
+      { icon: InstrType.CUERDA, numero: 3 },
     ]
   };
   genteParser(arr: Persona[]): IconArray[] {

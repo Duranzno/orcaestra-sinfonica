@@ -17,7 +17,9 @@ export class ScoreManagementComponent implements OnInit {
   dataSource: Observable<DataScore[]>;
   isLoadingResults: boolean = false;
   resultsLength = 0;
-  columns: string[] = ['its', 'obra', 'generos', "extraInfo", "almacenamiento", "media", "instrumentos", "gente", "id"];
+  // 'its', 'obra', 'generos', "extraInfo", "almacenamiento", "media", 
+
+  columns: string[] = ["generos", "almacenamiento", "media", "instrumentos", "gente", "id"];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

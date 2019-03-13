@@ -1,8 +1,9 @@
 export enum InstrType {
-  VIENTO = "viento",
+  VIENTO_METAL = "metal",
+  VIENTO_MADERA = "madera",
   VOZ = "voz",
   PERCUSION = "percusion",
-  CUERDAS = "cuerdas",
+  CUERDA = "cuerdas",
   TECLADO = "teclado",
 }
 export interface IInstr {
