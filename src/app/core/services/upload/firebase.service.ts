@@ -5,9 +5,11 @@ import { Observable, of, from } from 'rxjs';
 import { OrcaState, From } from '../../store';
 import { Store } from '@ngrx/store';
 import { last, map, mergeMap, switchMap, finalize, tap, reduce } from 'rxjs/operators';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/firestore';
 import { UploadInterface } from './upload.interface';
-
+import { firestore } from 'firebase';
+type Reference = firebase.firestore.CollectionReference | firebase.firestore.Query;
+interface Filter { path: string; val: string };
 @Injectable()
 export class FirebaseService implements UploadInterface {
   private task: AngularFireUploadTask;
@@ -17,20 +19,14 @@ export class FirebaseService implements UploadInterface {
 
   constructor(
     private storage: AngularFireStorage,
-    private db: AngularFirestore) { console.log('firebase service created'); }
-
-  fetchScoreList(spec?: string): Observable<IScoreId[]> {
-    // if(!spec){
-    return this.db.collection<IScore>('partituras').snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IScore;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-
-    // }
+    private db: AngularFirestore) { }
+  // private firebasePromiseParser():Observable<IScore|IScoreId|IScore[]|IScoreId[]|string|string[]>
+  // Score Functions
+  fetchScore(scoreUID: string): Observable<IScore> {
+    return this.db.doc<Score>(`partituras/${scoreUID}/`)
+      .valueChanges();
   }
+
   saveScore(score: IScore): Observable<IScore> {
     const data = Object.assign({}, score);
     return from(this
@@ -40,7 +36,60 @@ export class FirebaseService implements UploadInterface {
       // .catch(error => { console.error('Error adding document: ', error); })
     ).pipe(map(_ => score));
   }
+  updateScore(id: string, modScore: IScore): Observable<boolean> {
+    return from(this.db.doc(`partituras/${id}`)
+      .update({ ...modScore })
+      .then(() => true)
+      .catch(() => false)
+    )
+  }
 
+  // User Favorite Functions
+  saveFavorite(userId: string, scoreId: string): Observable<boolean> {
+    //VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
+    // this.db.collection<IScore>
+    return from(this.db.doc(`partituras/${scoreId}`)
+      .update({ suscriptores: firestore.FieldValue.arrayUnion(userId) })
+      .then(() => true)
+      .catch(() => false)
+    )
+  }
+  // Categ Functions
+  fetchCateg():Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> 
+  {
+    return this.db.doc
+      <{ generos: string[], grupos: string[], instrumentos: string[] }>
+      ('categories/QuklVOu2wdKMm2YBtQm5/')
+      .valueChanges();
+  }
+  updateCateg() {}
+  updateMedia(){}
+
+
+  // Filter Functions
+  private filter = (ref: Reference, f: Filter): Reference => ref.where(f.path, 'array-contains', f.val);
+  fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
+    return this.db.collection<IScore>('partituras', ref => {
+      if (filters && filters.length) {
+        return filters.reduce(this.filter, ref)
+      }
+      else {
+        return ref;
+      }
+    })
+  }
+  getScoreList(...filters: Filter[]): Observable<IScoreId[]> {
+    return this.fetchScoreList(...filters).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IScore;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
+
+  // File Functions
   upload(uFile: UploadFile, path: string): Observable<Origin> {
     if (uFile.type === MediaType.YOUTUBE) {
       return of({
@@ -65,26 +114,4 @@ export class FirebaseService implements UploadInterface {
       }),
     );
   }
-  updateScore(id: string) {
-  }
-  fetchCateg(): Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> {
-    return this.db.doc
-      <{ generos: string[], grupos: string[], instrumentos: string[] }>
-      ('categories/QuklVOu2wdKMm2YBtQm5/')
-      .valueChanges();
-  }
-  fetchScore(scoreUID: string): Observable<IScore> {
-    return this.db.doc<Score>(`partituras/${scoreUID}/`)
-      .valueChanges();
-  }
-  private fileParser(file: UploadFile, url: string): Media {
-    return new Media({
-      originArray: [{
-        url: url,
-        type: OriginType.FIREBASE,
-      }],
-      type: file.type
-    });
-  }
-
 }

@@ -28,7 +28,7 @@ export class WelcomeComponent implements OnInit {
     this.store.dispatch(new From.ui.StopLoading());
   }
   categ() {
-    this.scores = this.fb.fetchScoreList();
+    this.scores = this.fb.getScoreList({ path: "generos", val: "Clasico" });
   }
 
 }

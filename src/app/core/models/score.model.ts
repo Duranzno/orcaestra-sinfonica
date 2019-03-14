@@ -18,6 +18,7 @@ export interface IScore {
   instrumentos?: string[];  // Instrumentos Usados
   gente?: Persona[];
   extrainfo?: string;  // Información Extra
+  suscriptores?: string[];
 
 }
 export class Score implements IScore {

@@ -5,17 +5,17 @@ import { Persona, PersonaTipo } from './persona.interface';
 import { InstrType, IInstr } from './instr.interface';
 
 //Score class modified for better show
-export interface IconArray { icon: string, numero: number }
+export interface IconElement { icon: string, numero: number }
 export class DataScore {
 
   its: number;
   obra: string;
   generos: string;
   extraInfo?: string;
-  almacenamiento: IconArray[] = []
-  media: IconArray[] = []
-  instrumentos: IconArray[] = []
-  gente: IconArray[] = [];
+  almacenamiento: IconElement[] = []
+  media: IconElement[] = []
+  instrumentos: IconElement[] = []
+  gente: IconElement[] = [];
   id: string;
   generosParser(g: string[]): string {
     return g.reduce((prev, curr) => `${prev} ${curr}`, '')
@@ -32,31 +32,33 @@ export class DataScore {
     this.instrumentos = this.instrumentosParser(i.instrumentos);
     this.gente = this.genteParser(i.gente);
   }
-  almacenamientoParser(arr: IStored[]): IconArray[] {
-    // return arr.map((stored)=>({
-    //   icon:stored.tipo,
-    //   numero:stored.cantidad
-    // }));
-    return [
-      { icon: StoredType.COPIA, numero: 3 },
-      { icon: StoredType.PO, numero: 3 },
-      { icon: StoredType.SCORE, numero: 3 },
-    ]
+  almacenamientoParser(arr: IStored[]): IconElement[] {
+    return arr.map((stored) => (<IconElement>{
+      icon: stored.tipo,
+      numero: stored.cantidad
+    }));
+    // return [
+    //   { icon: StoredType.COPIA, numero: 3 },
+    //   { icon: StoredType.PO, numero: 3 },
+    //   { icon: StoredType.SCORE, numero: 3 },
+    // ]
   };
-  mediaParser(arr: Media[]): IconArray[] {
-    // return arr.map((m)=>({
-    //   icon:m.type,
-    //   numero:m.originArray.length
-    // })
-    return [
-      { icon: MediaType.MIDI, numero: 3 },
-      { icon: MediaType.MP3, numero: 3 },
-      { icon: MediaType.MXML, numero: 3 },
-      { icon: MediaType.YOUTUBE, numero: 3 },
-      { icon: MediaType.PDF, numero: 3 },
-    ]
+  mediaParser(arr: Media[]): IconElement[] {
+    return arr
+      .filter((({ type }) => (![MediaType.AVATAR, MediaType.IMG].includes(type))))
+      .map((m) => (<IconElement>{
+        icon: m.type,
+        numero: m.originArray.length,
+      }))
+    // return [
+    //   { icon: MediaType.MIDI, numero: 3 },
+    //   { icon: MediaType.MP3, numero: 3 },
+    //   { icon: MediaType.MXML, numero: 3 },
+    //   { icon: MediaType.YOUTUBE, numero: 3 },
+    //   { icon: MediaType.PDF, numero: 3 },
+    // ]
   };
-  instrumentosParser(arr: string[]): IconArray[] {
+  instrumentosParser(arr: string[]): IconElement[] {
     // return arr.map(instr=>({
     //   icon:instr.tipo
     //   numero:
@@ -70,7 +72,7 @@ export class DataScore {
       { icon: InstrType.CUERDA, numero: 3 },
     ]
   };
-  genteParser(arr: Persona[]): IconArray[] {
+  genteParser(arr: Persona[]): IconElement[] {
     // return arr.map(instr=>({
     //   icon:instr.tipo
     //   numero:

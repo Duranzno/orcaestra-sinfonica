@@ -14,7 +14,7 @@ export class MusicListComponent implements OnInit {
   constructor(
     private db: FirebaseService
   ) {
-    this.scores$ = this.db.fetchScoreList();
+    this.scores$ = this.db.getScoreList();
   }
   ngOnInit() {
   }
