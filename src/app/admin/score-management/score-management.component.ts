@@ -28,9 +28,9 @@ export class ScoreManagementComponent implements OnInit {
   resultsLength = 0;
   expandedElement: DataScore | null;
   EditedDScore: DataScore;
-  // 'its', 'obra', "extraInfo", "almacenamiento", "media", 
+  // 'its', 'obra', "extraInfo", "almacenamiento", "media",
 
-  columns: string[] = ['its', 'obra', "extraInfo", "generos", "media", "instrumentos", "gente", "almacenamiento", "id"];
+  columns: string[] = ['its', 'obra', 'extraInfo', 'generos', 'media', 'instrumentos', 'gente', 'almacenamiento', 'id'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -51,7 +51,7 @@ export class ScoreManagementComponent implements OnInit {
 
   ngOnInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    this.updateDataSource()
+    this.updateDataSource();
   }
   updateDataSource() {
     this.dataSource = merge(this.sort.sortChange, this.paginator.page)
@@ -66,7 +66,7 @@ export class ScoreManagementComponent implements OnInit {
           this.isLoadingResults = false;
           this.resultsLength = data.length;
           // return data;
-          return data.map(i => new DataScore(i))
+          return data.map(i => new DataScore(i));
         })
       );
   }

@@ -6,6 +6,7 @@
     "start": "ng serve --host 0.0.0.0 --disableHostCheck",
     "build": "ng build --prod",
     "test": "ng test",
+    "tslint": "tslint --project tsconfig.json",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "http": "node node_modules/http-server/bin/http-server dist/",

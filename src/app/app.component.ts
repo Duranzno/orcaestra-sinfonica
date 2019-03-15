@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services';
@@ -76,28 +76,28 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   addIcons() {
-    this.addSvg(InstrType.CUERDA, "midi")
-    this.addSvg(InstrType.PERCUSION, "drum")
-    this.addSvg(InstrType.TECLADO, "piano")
-    this.addSvg(InstrType.VIENTO_METAL, "trumpet")
-    this.addSvg(InstrType.VOZ, "microphone")
-    this.addSvg(InstrType.VIENTO_MADERA, "flute")
-    this.addSvg(MediaType.YOUTUBE, "youtube")
-    this.addSvg(MediaType.PDF, "music-file")
-    this.addSvg(MediaType.MXML, "music-file")
-    this.addSvg(MediaType.MP3, "cd")
-    this.addSvg(MediaType.MIDI, "music-file")
-    this.addSvg(StoredType.COPIA, "folder")
-    this.addSvg(StoredType.SCORE, "folder")
-    this.addSvg(StoredType.PO, "folder")
+    this.addSvg(InstrType.CUERDA, 'midi');
+    this.addSvg(InstrType.PERCUSION, 'drum');
+    this.addSvg(InstrType.TECLADO, 'piano');
+    this.addSvg(InstrType.VIENTO_METAL, 'trumpet');
+    this.addSvg(InstrType.VOZ, 'microphone');
+    this.addSvg(InstrType.VIENTO_MADERA, 'flute');
+    this.addSvg(MediaType.YOUTUBE, 'youtube');
+    this.addSvg(MediaType.PDF, 'music-file');
+    this.addSvg(MediaType.MXML, 'music-file');
+    this.addSvg(MediaType.MP3, 'cd');
+    this.addSvg(MediaType.MIDI, 'music-file');
+    this.addSvg(StoredType.COPIA, 'folder');
+    this.addSvg(StoredType.SCORE, 'folder');
+    this.addSvg(StoredType.PO, 'folder');
 
-    this.addSvg(PersonaTipo.ADAPTADOR, "persona")
-    this.addSvg(PersonaTipo.ARREGLISTA, "persona")
-    this.addSvg(PersonaTipo.AUTOR, "persona")
-    this.addSvg(PersonaTipo.EDITOR, "persona")
-    this.addSvg(PersonaTipo.ORQUESTADOR, "persona")
-    this.addSvg(PersonaTipo.TRANSCRIPTOR, "persona")
-    this.addSvg(PersonaTipo.UPLOADER, "persona")
+    this.addSvg(PersonaTipo.ADAPTADOR, 'persona');
+    this.addSvg(PersonaTipo.ARREGLISTA, 'persona');
+    this.addSvg(PersonaTipo.AUTOR, 'persona');
+    this.addSvg(PersonaTipo.EDITOR, 'persona');
+    this.addSvg(PersonaTipo.ORQUESTADOR, 'persona');
+    this.addSvg(PersonaTipo.TRANSCRIPTOR, 'persona');
+    this.addSvg(PersonaTipo.UPLOADER, 'persona');
 
   }
   ngOnDestroy() {
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     this.matIconRegistry.addSvgIcon(
       tipo,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "../assets/data-icons/" + nombre + ".svg"
+        '../assets/data-icons/' + nombre + '.svg'
       )
     );
   }

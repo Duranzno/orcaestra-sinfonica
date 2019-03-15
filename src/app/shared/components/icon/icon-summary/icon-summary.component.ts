@@ -5,9 +5,9 @@ import { DataScore, IconElement } from 'src/app/core/models/data.score.model';
   selector: 'app-icon-summary',
   template: `
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" >
-  <mat-icon 
+  <mat-icon
   matTooltip="Info about the action"
-  *ngFor="let i of array" 
+  *ngFor="let i of array"
   [svgIcon]="i.icon">
 </mat-icon>
   </div>
@@ -15,7 +15,7 @@ import { DataScore, IconElement } from 'src/app/core/models/data.score.model';
   styleUrls: ['./icon-summary.component.scss']
 })
 export class IconSummaryComponent implements OnInit {
-  @Input("dataScoreArray") array: IconElement[] = [];
+  @Input('dataScoreArray') array: IconElement[] = [];
   constructor() { }
 
   ngOnInit() {

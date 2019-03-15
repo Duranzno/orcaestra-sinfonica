@@ -1,25 +1,25 @@
-import { IScoreId } from "./score.model";
+import { IScoreId } from './score.model';
 import { IStored, StoredType } from './almacenamiento.interface';
 import { Media, MediaType } from './media.model';
 import { Persona, PersonaTipo } from './persona.interface';
 import { InstrType, IInstr } from './instr.interface';
 
-//Score class modified for better show
-export interface IconElement { icon: string, numero: number }
+// Score class modified for better show
+export interface IconElement { icon: string; numero: number; }
 export class DataScore {
 
   its: number;
   obra: string;
   generos: string;
   extraInfo?: string;
-  almacenamiento: IconElement[] = []
-  media: IconElement[] = []
-  instrumentos: IconElement[] = []
+  almacenamiento: IconElement[] = [];
+  media: IconElement[] = [];
+  instrumentos: IconElement[] = [];
   gente: IconElement[] = [];
   id: string;
   generosParser(g: string[]): string {
-    return g.reduce((prev, curr) => `${prev} ${curr}`, '')
-  };
+    return g.reduce((prev, curr) => `${prev} ${curr}`, '');
+  }
 
   constructor(i: IScoreId) {
     this.id = i.id;
@@ -42,14 +42,14 @@ export class DataScore {
     //   { icon: StoredType.PO, numero: 3 },
     //   { icon: StoredType.SCORE, numero: 3 },
     // ]
-  };
+  }
   mediaParser(arr: Media[]): IconElement[] {
     return arr
       .filter((({ type }) => (![MediaType.AVATAR, MediaType.IMG].includes(type))))
       .map((m) => (<IconElement>{
         icon: m.type,
         numero: m.originArray.length,
-      }))
+      }));
     // return [
     //   { icon: MediaType.MIDI, numero: 3 },
     //   { icon: MediaType.MP3, numero: 3 },
@@ -57,7 +57,7 @@ export class DataScore {
     //   { icon: MediaType.YOUTUBE, numero: 3 },
     //   { icon: MediaType.PDF, numero: 3 },
     // ]
-  };
+  }
   instrumentosParser(arr: string[]): IconElement[] {
     // return arr.map(instr=>({
     //   icon:instr.tipo
@@ -70,8 +70,8 @@ export class DataScore {
       { icon: InstrType.TECLADO, numero: 3 },
       { icon: InstrType.PERCUSION, numero: 3 },
       { icon: InstrType.CUERDA, numero: 3 },
-    ]
-  };
+    ];
+  }
   genteParser(arr: Persona[]): IconElement[] {
     // return arr.map(instr=>({
     //   icon:instr.tipo
@@ -85,8 +85,8 @@ export class DataScore {
       { icon: PersonaTipo.ORQUESTADOR, numero: 3 },
       { icon: PersonaTipo.TRANSCRIPTOR, numero: 3 },
       { icon: PersonaTipo.UPLOADER, numero: 3 },
-    ]
-  };
+    ];
+  }
 
 
 

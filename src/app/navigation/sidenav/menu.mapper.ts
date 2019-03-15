@@ -14,8 +14,7 @@ export function mapMenuGenres(user: IUser, subs: Menu[], menu: Menu[]) {
       m.sub = (findSub(m)) ? subs : [];
       return arr.concat(m);
     }, []);
-  }
-  else {
+  } else {
     return menu;
   }
 }

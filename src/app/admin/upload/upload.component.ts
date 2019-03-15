@@ -14,6 +14,15 @@ import { Observable, Subscription } from 'rxjs';
 })
 
 export class UploadComponent implements OnInit, OnDestroy {
+  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
+  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
+  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
+  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
+
+  constructor(
+    private _fb: FormBuilder,
+    private store: Store<OrcaState>) {
+  }
   personas: string[] = Object.values(PersonaTipo);
 
   generosTodos = ['Barroco', 'Clasico', 'Alma Llanera'];
@@ -25,19 +34,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
-  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
-  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
-  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
 
   $loading: Observable<boolean>;
-
-  constructor(
-    private _fb: FormBuilder,
-    private store: Store<OrcaState>) {
-  }
-  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
   subscriptions: Subscription = new Subscription();
+  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
 
   ngOnInit() {
     this.$loading = this.store.select(From.ui.getIsLoading);

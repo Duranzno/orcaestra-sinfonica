@@ -1,4 +1,4 @@
-export enum Grupos{
-	CLASICA="Clasica",
-	ALMALLANERA="Alma Llanera",
+export enum Grupos {
+	CLASICA= 'Clasica',
+	ALMALLANERA= 'Alma Llanera',
 }

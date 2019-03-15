@@ -14,7 +14,7 @@ import { From, OrcaState } from '../../core/store';
 export class MusicDetailComponent implements OnInit, OnDestroy {
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
   score: Score;
-  @Input("score") iScore: IScoreId;
+  @Input('score') iScore: IScoreId;
   constructor() { }
 
   ngOnInit() {

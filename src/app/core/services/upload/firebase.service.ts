@@ -9,7 +9,7 @@ import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/
 import { UploadInterface } from './upload.interface';
 import { firestore } from 'firebase';
 type Reference = firebase.firestore.CollectionReference | firebase.firestore.Query;
-interface Filter { path: string; val: string };
+interface Filter { path: string; val: string; }
 @Injectable()
 export class FirebaseService implements UploadInterface {
   private task: AngularFireUploadTask;
@@ -41,29 +41,28 @@ export class FirebaseService implements UploadInterface {
       .update({ ...modScore })
       .then(() => true)
       .catch(() => false)
-    )
+    );
   }
 
   // User Favorite Functions
   saveFavorite(userId: string, scoreId: string): Observable<boolean> {
-    //VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
+    // VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
     // this.db.collection<IScore>
     return from(this.db.doc(`partituras/${scoreId}`)
       .update({ suscriptores: firestore.FieldValue.arrayUnion(userId) })
       .then(() => true)
       .catch(() => false)
-    )
+    );
   }
   // Categ Functions
-  fetchCateg():Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> 
-  {
+  fetchCateg(): Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> {
     return this.db.doc
       <{ generos: string[], grupos: string[], instrumentos: string[] }>
       ('categories/QuklVOu2wdKMm2YBtQm5/')
       .valueChanges();
   }
   updateCateg() {}
-  updateMedia(){}
+  updateMedia() {}
 
 
   // Filter Functions
@@ -71,12 +70,11 @@ export class FirebaseService implements UploadInterface {
   fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
     return this.db.collection<IScore>('partituras', ref => {
       if (filters && filters.length) {
-        return filters.reduce(this.filter, ref)
-      }
-      else {
+        return filters.reduce(this.filter, ref);
+      } else {
         return ref;
       }
-    })
+    });
   }
   getScoreList(...filters: Filter[]): Observable<IScoreId[]> {
     return this.fetchScoreList(...filters).snapshotChanges().pipe(

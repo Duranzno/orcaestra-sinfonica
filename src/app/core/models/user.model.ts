@@ -8,21 +8,25 @@ export interface IUser {
   password: string;
   group?: string;
   isAdmin?: boolean;
+  id?: string;
 }
 export class User implements IUser {
   public email: string;
   public nombre: string = '';
   public apellido: string = '';
   public password: string;
+  public id?: string = '';
+
   public isAdmin: boolean = false;
   public group: string = 'Desconocido';
   public avatar: string = '/assets/user.jpg';
   constructor(i: IUser) {
-    this.email = this.email;
-    this.nombre = this.nombre;
-    this.apellido = this.apellido;
-    this.password = this.password;
-    this.isAdmin = this.isAdmin;
+    this.email = i.email;
+    this.nombre = i.nombre;
+    this.apellido = i.apellido;
+    this.password = i.password;
+    this.isAdmin = i.isAdmin;
+    this.id = i.id;
     this.group = (i.group === '') ? 'Desconocido' : this.group;
   }
 

@@ -43,8 +43,7 @@ export class FileUploadComponent implements OnInit {
     let files: UploadFile[] = [];
     if (this.isAvatar()) {
       files = [{ 'file': event[0], 'type': this.type }];
-    }
-    else {
+    } else {
       for (let i = 0; i < event.length; i++) {
         files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
       }
