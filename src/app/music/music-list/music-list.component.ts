@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IScore, Score, IScoreId } from 'src/app/core/models';
 import { iScore } from 'src/app/core/mock';
-import { FirebaseService } from 'src/app/core/services';
+import { ScoreService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,9 +12,9 @@ import { Observable } from 'rxjs';
 export class MusicListComponent implements OnInit {
   scores$: Observable<IScoreId[]>;
   constructor(
-    private db: FirebaseService
+    private fbScore: ScoreService,
   ) {
-    this.scores$ = this.db.getScoreList();
+    this.scores$ = this.fbScore.getScoreList();
   }
   ngOnInit() {
   }

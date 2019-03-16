@@ -12,7 +12,7 @@ import { InstrType } from './core/models/instr.interface';
 import { MediaType, StoredType, PersonaTipo } from './core/models';
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
 
   watcher$: Subscription;
   @Input() isVisible: boolean = true; // 1
-  visibility = 'shown';
+  visibility = 'shown'
 
   sideNavOpened: boolean = true; // 1
   matDrawerOpened = false; // 0

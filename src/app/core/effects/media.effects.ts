@@ -4,12 +4,14 @@ import { Action, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
 import { finalize, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { MediaType, Score } from '../models';
-import { FirebaseService } from '../services/upload/firebase.service';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
 import * as fromMedia from '../store/media';
 import * as fromMusic from '../store/music';
 import * as fromUi from '../store/ui';
+import { FirestorageService } from '../services/upload/firestorage.service';
+import { ScoreService } from '../services/firebase/score.service';
+import { CategoriesService } from '../services/firebase/categories.service';
 
 
 type stuff = [fromMedia.ManageMediaArray, OrcaState];
@@ -21,7 +23,7 @@ export class MediaEffects {
     .pipe(
       ofType(fromMedia.ActionTypes.FETCH_SCORE),
       map((action: fromMedia.FetchScore) => action.payload),
-      switchMap((uid: string) => this.fb.fetchScore(uid)),
+      switchMap((uid: string) => this.fbScore.fetchScore(uid)),
       tap(result => { console.log(result); }),
       map(result => {
         return new fromMusic.SetPartitura(result);
@@ -34,7 +36,7 @@ export class MediaEffects {
       ofType(fromMedia.ActionTypes.FETCH_CATEGORY),
       map((action: fromMedia.FetchCategory) => action.payload),
       switchMap((type: string) => {
-        return this.fb.fetchCateg()
+        return this.fbCateg.fetchCateg()
           .pipe(
             // tap(result => { console.log(result); }),
             map(result => {
@@ -51,7 +53,7 @@ export class MediaEffects {
       map((action: fromMedia.SaveScore) => action.payload),
       map(score => {
         console.log('gonna save score');
-        this.fb.saveScore(score);
+        this.fbScore.saveScore(score);
         this.store$.dispatch(new fromUi.StopLoading());
         return new fromMusic.SetPartitura(score);
       })
@@ -62,7 +64,7 @@ export class MediaEffects {
       ofType(fromMedia.ActionTypes.POST_AVATAR),
       map((action: fromMedia.PostAvatar) => action.payload),
       mergeMap(payload => {
-        return this.fb.upload(
+        return this.fbStorage.upload(
           payload.file,
           payload.user.setPath(payload.file.type)
         )
@@ -92,7 +94,7 @@ export class MediaEffects {
         return from(files).pipe(
           mergeMap((u, index) => {
             console.log(JSON.stringify(u), index);
-            return this.fb.upload(u, score.setPath(u.type, u))
+            return this.fbStorage.upload(u, score.setPath(u.type, u))
               .pipe(map(o => ({ origin: o, type: u.type })));
           }),
           tap(({ origin, type }) => {
@@ -115,7 +117,7 @@ export class MediaEffects {
       mergeMap(payload => {
         const type: MediaType = payload.file.type;
         const score = new Score(payload.score);
-        return this.fb.upload(
+        return this.fbStorage.upload(
           payload.file,
           score.setPath(type, payload.file)
         )
@@ -130,6 +132,8 @@ export class MediaEffects {
   constructor(
     private actions$: Actions,
     private store$: Store<OrcaState>,
-    private fb: FirebaseService,
+    private fbStorage: FirestorageService,
+    private fbScore: ScoreService,
+    private fbCateg: CategoriesService,
   ) { }
 }

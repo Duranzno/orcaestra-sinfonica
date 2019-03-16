@@ -3,7 +3,7 @@ import { IScoreId } from 'src/app/core/models';
 import { Subscription, Observable, merge } from 'rxjs';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
-import { FirebaseService } from 'src/app/core/services';
+import { ScoreService } from 'src/app/core/services';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { startWith, switchMap, map } from 'rxjs/operators';
 import { DataScore } from 'src/app/core/models/data.score.model';
@@ -35,8 +35,7 @@ export class ScoreManagementComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private store: Store<OrcaState>,
-    private fb: FirebaseService,
+    private fbScore: ScoreService,
     public dialog: MatDialog
   ) { }
   edit(uid): void {
@@ -59,7 +58,7 @@ export class ScoreManagementComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.fb.getScoreList();
+          return this.fbScore.getScoreList();
         }),
         map(data => {
           // Flip flag to show that loading has finished.
