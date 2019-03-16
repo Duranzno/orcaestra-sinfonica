@@ -15,6 +15,11 @@
         <input matInput placeholder="Enlace a Youtube" formControlName="youtube">
       </mat-form-field>
       <mat-form-field>
+        <mat-select placeholder="Grupo" formControlName="grupos" multiple>
+          <mat-option *ngFor="let g of gruposTodos" [value]="g">{{g}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
         <mat-chip-list #chipList>
           <mat-chip *ngFor="let g of generos?.value;let i=index" [selectable]="true" [removable]="true"
             (removed)="removeChip(g)">
@@ -43,10 +48,10 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               Involucrados
-              <mat-panel-description>
+              <!-- <mat-panel-description>
                 Compositor,Autor,Transcriptor, entre otros.
                 <mat-icon>account_circle</mat-icon>
-              </mat-panel-description>
+              </mat-panel-description> -->
             </mat-expansion-panel-header>
 
             <button mat-raised-button color="accent" (click)="addPersona()">Nuevo Involucrado</button>
@@ -60,7 +65,6 @@
                 <div [formGroupName]="i">
                   <app-involucrados [form]="secondFormGroup.controls['gente'].controls[i]">
                   </app-involucrados>
-
                 </div>
               </div>
 
@@ -106,6 +110,28 @@
               </div>
             </div>
           </mat-expansion-panel> -->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              Instrumentos
+            </mat-expansion-panel-header>
+            <mat-form-field>
+              <mat-chip-list #InstList>
+                <mat-chip *ngFor="let i of instrumentos?.value;let i=index" selectable="true" removable="true"
+                  (removed)="removeChipI(i)">
+                  {{i}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input matInput placeholder="Instrumentos" #instrumentoInput (matChipInputTokenEnd)="addChipI($event)"
+                  [matChipInputFor]="InstList" matChipInputAddOnBlur="true" [formControl]="chipInputCtrlI"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="autoI">
+
+                <mat-autocomplete #autoI="matAutocomplete" (optionSelected)="selectedInstrumento($event)">
+                  <mat-option *ngFor="let i of instrumentosTodos" [value]="i">{{i}}</mat-option>
+                </mat-autocomplete>
+              </mat-chip-list>
+            </mat-form-field>
+          </mat-expansion-panel>
+
         </mat-accordion>
       </form>
       <div>

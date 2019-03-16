@@ -7,8 +7,8 @@ import { FormGroup } from '@angular/forms';
   <div [formGroup]= "form">
   <mat-form-field>
     <mat-select placeholder ='Tipo de Almacenamiento' formControlName = "tipo" >
-      <mat-option * ngFor='let t of tipos ' [value] = "tipos[0]" >
-        {{t}}
+      <mat-option *ngFor='let t of tipos ' [value] = "tipos[0]" >
+    {{t}}
       </mat-option>
     </mat-select>
   </mat-form-field>

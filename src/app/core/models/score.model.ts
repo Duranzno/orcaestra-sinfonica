@@ -7,6 +7,7 @@ export enum CategoriaTipo {
   GRUPOS = "grupos",
   INSTRUMENTOS = "instrumentos",
 }
+export interface Categoria { tipo: CategoriaTipo; categoria: string }
 export interface IScoreId extends IScore { id: string; }
 
 export interface IScore {

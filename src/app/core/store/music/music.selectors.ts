@@ -8,4 +8,3 @@ export const getPartitura = createSelector(getMusic, (state: State) => state.par
 export const getGrupos = createSelector(getMusic, (state: State) => state.generos);
 export const getGeneros = createSelector(getMusic, (state: State) => state.generos);
 export const getInstrumentos = createSelector(getMusic, (state: State) => state.instrumentos);
-

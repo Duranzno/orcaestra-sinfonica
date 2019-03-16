@@ -5,14 +5,14 @@ import { PersonaTipo } from 'src/app/core/models';
   selector: 'app-involucrados',
   styleUrls: [],
   template: `
-  <div [formGroup]="form">  <!-- Nombre de la Persona Involucrada -->
+  <div [formGroup]="parentForm">  <!-- Nombre de la Persona Involucrada -->
   <mat-form-field>
-    <input matInput placeholder="Nombre" id="nombre" type="text" formControlName="nombre">
-    <mat-error *ngIf="form.controls['nombre'].valid">Se necesita el nombre.</mat-error>
+    <input matInput placeholder="Nombre" type="text" formControlName="nombre">
+    <mat-error *ngIf="parentForm.controls['nombre'].valid">Se necesita el nombre.</mat-error>
   </mat-form-field>
     <!-- Apellido de la Persona Involucrada  -->
   <mat-form-field>
-    <input matInput placeholder="Apellido" id="apellido" type="text" formControlName="apellido">
+    <input matInput placeholder="Apellido" type="text" formControlName="apellido">
   </mat-form-field>
   <!-- Tipo de Persona -->
   <mat-form-field>
@@ -29,6 +29,6 @@ import { PersonaTipo } from 'src/app/core/models';
   `
 })
 export class InvolucradosComponent {
-  @Input() public form: FormGroup;
+  @Input('form') public parentForm: FormGroup;
   personas: string[] = Object.values(PersonaTipo);
 }

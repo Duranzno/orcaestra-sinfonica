@@ -15,11 +15,27 @@ export class CategoriesService {
             .valueChanges();
     }
     updateCateg(categ: CategoriaTipo, nuevaCateg: string) {
-        return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
-            .update({ categ: firestore.FieldValue.arrayUnion(nuevaCateg) })
-            .then(() => true)
-            .catch(() => false)
-        );
+        switch (categ) {
+            case CategoriaTipo.GENERO:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ generos: firestore.FieldValue.arrayUnion(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+            case CategoriaTipo.GRUPOS:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ grupos: firestore.FieldValue.arrayUnion(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+            case CategoriaTipo.INSTRUMENTOS:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ instrumentos: firestore.FieldValue.arrayUnion(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+        }
+
     }
 
     // User Favorite Functions

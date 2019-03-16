@@ -3,7 +3,7 @@ import { IScore, Origin, MediaType, CategoriaTipo } from '../../models';
 export class ActionTypes {
   static SET_PARTITURA = '[MUSIC] Partitura Seleccionada';
   static ADD_ORIGIN = '[MUSIC] Se agrego Origen';
-  static SET_CATEGORIES = '[MUSIC] Saved category (Generos/Instruemntos)';
+  static SET_CATEGORIES = '[MUSIC] Saved categoria (Generos/Instruemntos)';
   static ADD_CATEGORY = '[MUSIC] Se guardo categoria a las existentes';
   // static SET_GRUPO = '[MUSIC] Saved Grupo';
 }

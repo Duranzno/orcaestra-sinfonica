@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, MediaType, UploadFile, Score, OriginType, IScore, CategoriaTipo } from '../../models';
+import { User, MediaType, UploadFile, Score, OriginType, IScore, CategoriaTipo, Categoria } from '../../models';
 export class ActionTypes {
   static MANAGE_MEDIA_ARRAY = '[MEDIA] Received Media Array';
   static POST_MEDIA = '[MEDIA] Uploaded Score Media to Respective Cloud';
@@ -24,7 +24,7 @@ export class SaveScore implements Action {
 }
 export class PostCateg implements Action {
   readonly type = ActionTypes.POST_CATEGORY;
-  constructor(public payload: { tipo: CategoriaTipo, categoria: string }) { }
+  constructor(public payload: Categoria) { }
 }
 
 export class ManageMediaArray implements Action {
