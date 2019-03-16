@@ -1,34 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
-import { IScore, IScoreId, Score } from '../../models';
+import { IScore, IScoreId, Score, CategoriaTipo } from '../../models';
 import { map } from 'rxjs/operators';
+
+
 type Reference = firebase.firestore.CollectionReference | firebase.firestore.Query;
-interface Filter { path: string; val: string; }
+interface Filter { path: CategoriaTipo; val: string; }
+
 @Injectable()
 export class ScoreService {
-    constructor(private db: AngularFirestore) { }
 
-    private filter = (ref: Reference, f: Filter): Reference => ref.where(f.path, 'array-contains', f.val);
-    fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
-        return this.db.collection<IScore>('partituras', ref => {
-            if (filters && filters.length) {
-                return filters.reduce(this.filter, ref);
-            } else {
-                return ref;
-            }
-        });
-    }
-    getScoreList(...filters: Filter[]): Observable<IScoreId[]> {
-        return this.fetchScoreList(...filters).snapshotChanges().pipe(
-            map(actions => actions.map(a => {
-                const data = a.payload.doc.data() as IScore;
-                const id = a.payload.doc.id;
-                return { id, ...data };
-            }))
-        );
-    }
-    // Score Functions
+    constructor(
+        private db: AngularFirestore
+    ) { }
+    // Individual Score
     fetchScore(scoreUID: string): Observable<IScore> {
         return this.db.doc<Score>(`partituras/${scoreUID}/`)
             .valueChanges();
@@ -50,4 +36,37 @@ export class ScoreService {
             .catch(() => false)
         );
     }
+
+    deleteScore(id: string): Observable<boolean> {
+        return from(this.db.doc(`partituras/${id}`)
+            .delete()
+            .then(() => true)
+            .catch(() => false)
+        );
+    }
+
+    //Score List
+
+    private filter = (ref: Reference, f: Filter): Reference => ref.where(f.path, 'array-contains', f.val);
+
+    fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
+        return this.db.collection<IScore>('partituras', ref => {
+            if (filters && filters.length) {
+                return filters.reduce(this.filter, ref);
+            } else {
+                return ref;
+            }
+        });
+    }
+    getScoreList(...filters: Filter[]): Observable<IScoreId[]> {
+        return this.fetchScoreList(...filters).snapshotChanges().pipe(
+            map(actions => actions.map(a => {
+                const data = a.payload.doc.data() as IScore;
+                const id = a.payload.doc.id;
+                return { id, ...data };
+            }))
+        );
+    }
+    // Score Functions
+
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { firestore } from 'firebase';
+import { CategoriaTipo } from '../../models';
 
 @Injectable()
 export class CategoriesService {
@@ -13,7 +14,14 @@ export class CategoriesService {
             ('categories/QuklVOu2wdKMm2YBtQm5/')
             .valueChanges();
     }
-    updateCateg() { }
+    updateCateg(categ: CategoriaTipo, nuevaCateg: string) {
+        return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+            .update({ categ: firestore.FieldValue.arrayUnion(nuevaCateg) })
+            .then(() => true)
+            .catch(() => false)
+        );
+    }
+
     // User Favorite Functions
     saveFavorite(userId: string, scoreId: string): Observable<boolean> {
         // VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
@@ -21,7 +29,16 @@ export class CategoriesService {
         return from(this.db.doc(`partituras/${scoreId}`)
             .update({ suscriptores: firestore.FieldValue.arrayUnion(userId) })
             .then(() => true)
-            .catch(() => false)
+            .catch((e) => false)
+        );
+    }
+    deleteFavorite(userId: string, scoreId: string): Observable<boolean> {
+        // VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
+        // this.db.collection<IScore>
+        return from(this.db.doc(`partituras/${scoreId}`)
+            .update({ suscriptores: firestore.FieldValue.arrayRemove(userId) })
+            .then(() => true)
+            .catch((e) => false)
         );
     }
 }

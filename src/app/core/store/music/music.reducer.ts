@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActionTypes, Actions } from './music.actions';
-import { IScore, Origin, MediaType, Score } from '../../models/';
+import { IScore, Origin, MediaType, Score, CategoriaTipo } from '../../models/';
 
 export interface State {
   partitura: IScore;
@@ -32,6 +32,8 @@ export function musicReducer(state = initialState, action: Actions) {
         ...state,
         partitura: action.payload as IScore,
       };
+    case ActionTypes.ADD_CATEGORY:
+      return addCateg(state, action.payload as { tipo: CategoriaTipo, categoria: string });
     default: {
       return state;
     }
@@ -50,4 +52,17 @@ function setCategories(state, payload: { generos: string[], grupos: string[], in
     grupos: payload.grupos,
   };
 }
+function addCateg(state: State, payload: { tipo: CategoriaTipo, categoria: string }) {
+  switch (payload.tipo) {
+    case CategoriaTipo.GENERO:
+      return { ...state, genero: [...state.generos, payload.categoria] }
+    case CategoriaTipo.GRUPOS:
+      return { ...state, grupos: [...state.grupos, payload.categoria] }
+    case CategoriaTipo.INSTRUMENTOS:
+      return { ...state, instrumentos: [...state.instrumentos, payload.categoria] }
+    default:
+      return state;
+  }
+}
+
 

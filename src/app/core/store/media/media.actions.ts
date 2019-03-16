@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
-import { User, MediaType, UploadFile, Score, OriginType, IScore } from '../../models';
+import { User, MediaType, UploadFile, Score, OriginType, IScore, CategoriaTipo } from '../../models';
 export class ActionTypes {
   static MANAGE_MEDIA_ARRAY = '[MEDIA] Received Media Array';
   static POST_MEDIA = '[MEDIA] Uploaded Score Media to Respective Cloud';
   static POST_AVATAR = '[MEDIA] Uploaded Avatar to Respective Cloud';
-  static SAVE_CATEGORY = '[MEDIA] Saved Category (genre/instrument) to Firestore';
+  static POST_CATEGORY = '[MEDIA] Saved Category (genre/instrument) to Firestore';
   static SAVE_SCORE = '[MEDIA] Saved Score to Firestore';
   static FETCH_CATEGORY = '[MEDIA]Fetch Category from Firestore';
   static FETCH_SCORE = '[MEDIA]Fetch Score from Firestore';
@@ -22,9 +22,9 @@ export class SaveScore implements Action {
   readonly type = ActionTypes.SAVE_SCORE;
   constructor(public payload: Score) { }
 }
-export class SaveCateg implements Action {
-  readonly type = ActionTypes.SAVE_CATEGORY;
-  constructor(public payload: { type: string, arr: string[] }) { }
+export class PostCateg implements Action {
+  readonly type = ActionTypes.POST_CATEGORY;
+  constructor(public payload: { tipo: CategoriaTipo, categoria: string }) { }
 }
 
 export class ManageMediaArray implements Action {
@@ -46,4 +46,4 @@ export class ChangeCloud implements Action {
   constructor(public payload: OriginType) { }
 }
 
-export type Actions = PostMedia | FetchScore | FetchCategory | PostAvatar | SaveCateg | SaveScore | ManageMediaArray | ChangeCloud;
+export type Actions = PostMedia | FetchScore | FetchCategory | PostAvatar | PostCateg | SaveScore | ManageMediaArray | ChangeCloud;

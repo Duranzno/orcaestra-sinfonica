@@ -35,7 +35,7 @@ export function mediaReducer(state = initialState, action: Actions): State {
         files: [action.payload['file']] as UploadFile[]
       };
     case ActionTypes.SAVE_SCORE:
-    case ActionTypes.SAVE_CATEGORY:
+    case ActionTypes.POST_CATEGORY:
     case ActionTypes.FETCH_CATEGORY:
     case ActionTypes.FETCH_SCORE:
       return { ...state };

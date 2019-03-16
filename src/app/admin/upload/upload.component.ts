@@ -2,7 +2,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { PersonaTipo, UploadFile, Score, IScore, MediaType } from '../../core/models';
+import { PersonaTipo, UploadFile, Score, IScore, MediaType, CategoriaTipo } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -79,7 +79,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   newGenre(orig: string[], modified: string[]) {
     modified.filter(x => !orig.includes(x)).forEach(nuevoGenero => {
       console.log(`nuevo genero se debe agregar ${nuevoGenero}`);
-      // this.store.dispatch(new From.media.PostCategory("genero",nuevoGenero));
+      this.store.dispatch(new From.media.PostCateg({ tipo: CategoriaTipo.GENERO, categoria: nuevoGenero }));
     });
   }
 

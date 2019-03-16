@@ -2,7 +2,11 @@ import { Persona, PersonaTipo } from './persona.interface';
 import { IStored } from './almacenamiento.interface';
 import { MediaType, Media, Origin, OriginType } from './media.model';
 import { UploadFile } from './upload.media.interface';
-
+export enum CategoriaTipo {
+  GENERO = "generos",
+  GRUPOS = "grupos",
+  INSTRUMENTOS = "instrumentos",
+}
 export interface IScoreId extends IScore { id: string; }
 
 export interface IScore {

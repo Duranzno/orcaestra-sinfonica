@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
-import { finalize, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { finalize, map, mergeMap, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
 import { MediaType, Score } from '../models';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
@@ -128,6 +128,20 @@ export class MediaEffects {
           );
       })
     );
+
+  @Effect()
+  postCateg$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.POST_CATEGORY),
+      map((action: fromMedia.PostCateg) => action.payload),
+      switchMap(p => this.fbCateg.updateCateg(p.tipo, p.categoria).pipe(map(sucess => ({ p, sucess })))),
+      map(({ p, sucess }) => (sucess)
+        ? new fromMusic.AddCategory(p)
+        : new fromUi.StopLoading()// new Error("No se pudo subir la nueva categoria")
+      ),
+      // (e => { console.error(e); return new fromUi.StopLoading() })
+    );
+
 
   constructor(
     private actions$: Actions,
