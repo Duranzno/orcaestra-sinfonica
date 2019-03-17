@@ -46,7 +46,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
 
   ngOnInit() {
-    
+
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.subscriptions.add(this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val));
     this.subscriptions.add(this.store.select(From.music.getInstrumentos).subscribe(val => this.instrumentosTodos = val));
@@ -79,17 +79,19 @@ export class UploadComponent implements OnInit, OnDestroy {
       type: MediaType.YOUTUBE,
       file: new File(['foo', 'bar'], this.firstFormGroup.get('youtube').value),
     });
-    this.newGenre(this.generosTodos, this.firstFormGroup.get('generos').value);
+    this.newCateg(this.generosTodos, this.firstFormGroup.get('generos').value, CategoriaTipo.GENERO);
+    this.newCateg(this.instrumentosTodos, this.secondFormGroup.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
     this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
-
   }
 
-  newGenre(orig: string[], modified: string[]) {
-    modified.filter(x => !orig.includes(x)).forEach(nuevoGenero => {
-      console.log(`nuevo genero se debe agregar ${nuevoGenero}`);
-      this.store.dispatch(new From.media.PostCateg({ tipo: CategoriaTipo.GENERO, categoria: nuevoGenero }));
+  newCateg(orig: string[], modified: string[], tipo: CategoriaTipo) {
+    modified.filter(x => !orig.includes(x)).forEach(categoria => {
+      console.log(`nuevo ${tipo} se debe agregar ${categoria}`);
+      this.store.dispatch(new From.media.PostCateg({ tipo, categoria }));
     });
   }
+
+
   createScore() {
     return <IScore>{
       its: this.firstFormGroup.get('its').value,
