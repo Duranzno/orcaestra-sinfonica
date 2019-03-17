@@ -63,7 +63,7 @@ export class MessagingService {
 
     // If token does not exist in firestore, update db
     if (!currentTokens[token]) {
-      const userRef = this.afs.collection('users').doc(user.uid)
+      const userRef = this.afs.collection('usuarios').doc("8uSyP89aa5a3w5AJ2jw8Xc2kvAG2")
       const tokens = { ...currentTokens, [token]: true }
       userRef.update({ fcmTokens: tokens })
     }
