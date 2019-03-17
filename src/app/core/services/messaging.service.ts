@@ -16,8 +16,9 @@ export class MessagingService {
 
   constructor(private afs: AngularFirestore) {
     if (firebase.messaging.isSupported) {
-      this.messaging = firebase.messaging();
       console.log("Las notificaciones PUSH estan soportadas")
+      this.messaging = firebase.messaging();
+      // messaging.usePublicVapidKey("BEP7U1FCzQbCdoSbHHauqljSbs01jqHia6RiaTVIU1RrpKaF-B9d4LwyuYfKyogophhPdCoej59ylOnO7UqEvrM");
     } else {
       console.log('Unable to Instantiate Firebase Messaing');
     }
