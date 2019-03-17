@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { IScore, Score, IScoreId } from 'src/app/core/models';
-import { iScore } from 'src/app/core/mock';
-import { ScoreService } from 'src/app/core/services';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { IScoreId } from 'src/app/core/models';
+
 
 @Component({
   selector: 'app-music-list',
-  templateUrl: './music-list.component.html',
-  styleUrls: ['./music-list.component.scss'],
+  template: `
+    <div *ngFor="let score of scores " fxLayout="column" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
+      <app-music-detail [score]="score"></app-music-detail>
+      <!-- {{ score | json }} -->
+      <mat-divider [inset]="true"></mat-divider>
+    </div>
+`,
+  styleUrls: ['./music-list.component.scss', './music-detail.component.scss'],
 })
 export class MusicListComponent implements OnInit {
-  scores$: Observable<IScoreId[]>;
+  @Input() scores: IScoreId[];
   constructor(
-    private fbScore: ScoreService,
+
   ) {
-    this.scores$ = this.fbScore.getScoreList();
+    console.log(this.scores)
   }
   ngOnInit() {
   }
-
 }

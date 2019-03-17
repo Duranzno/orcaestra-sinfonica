@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { IScore, IScoreId, Score, CategoriaTipo } from '../../models';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 
 type Reference = firebase.firestore.CollectionReference | firebase.firestore.Query;
-interface Filter { path: CategoriaTipo; val: string; }
+export interface Filter { path: CategoriaTipo; val: string; }
 
 @Injectable()
 export class ScoreService {
@@ -49,7 +49,7 @@ export class ScoreService {
 
     private filter = (ref: Reference, f: Filter): Reference => ref.where(f.path, 'array-contains', f.val);
 
-    fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
+    private fetchScoreList(...filters: Filter[]): AngularFirestoreCollection {
         return this.db.collection<IScore>('partituras', ref => {
             if (filters && filters.length) {
                 return filters.reduce(this.filter, ref);
@@ -67,6 +67,8 @@ export class ScoreService {
             }))
         );
     }
-    // Score Functions
+    getSimpleList() {
+        return this.db.collection('partituras').valueChanges();
+    }
 
 }

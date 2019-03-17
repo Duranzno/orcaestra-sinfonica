@@ -16,13 +16,15 @@ import { CardComponents } from './score/media-cards/';
 import { MaterialModule } from '../material.module';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared';
+import { MusicComponent } from './music.component';
 
 @NgModule({
   declarations: [
     MusicListComponent,
     MusicDetailComponent,
     ScoreComponent,
-    ...CardComponents
+    MusicComponent,
+    ...CardComponents,
   ],
   imports: [
     SharedModule,

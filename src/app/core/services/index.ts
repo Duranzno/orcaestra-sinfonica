@@ -4,6 +4,7 @@ import { FirestorageService } from './upload/firestorage.service';
 import { ScoreService } from './firebase/score.service';
 import { CategoriesService } from './firebase/categories.service';
 import { UserService } from './firebase/user.service';
+import { MessagingService } from './messaging.service';
 
 export const APP_SERVICES = [
   AuthService,
@@ -12,7 +13,10 @@ export const APP_SERVICES = [
   ScoreService,
   CategoriesService,
   UserService,
+  MessagingService
 ];
+
+export { MessagingService } from './messaging.service';
 export { AuthService } from './auth.service';
 export { UIService } from './ui.service';
 export { FirestorageService } from './upload/firestorage.service';

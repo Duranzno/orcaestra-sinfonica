@@ -1,9 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActionTypes, Actions } from './music.actions';
-import { IScore, Origin, MediaType, Score, CategoriaTipo } from '../../models/';
+import { IScore, Origin, MediaType, Score, CategoriaTipo, IScoreId } from '../../models/';
 
 export interface State {
   partitura: IScore;
+  favs: IScoreId[];
   instrumentos: string[];
   generos: string[];
   grupos: string[];
@@ -14,6 +15,7 @@ const initialState: State = {
     obra: '',
     almacenamiento: [],
   },
+  favs: [],
   generos: [],
   instrumentos: [],
   grupos: [],
@@ -27,6 +29,11 @@ export function musicReducer(state = initialState, action: Actions) {
     case ActionTypes.ADD_ORIGIN: {
       return addOrigin(state, action.payload as { origin: Origin, type: MediaType });
     }
+    case ActionTypes.SET_FAVS:
+      return {
+        ...state,
+        favs: action.payload as IScoreId[],
+      }
     case ActionTypes.SET_PARTITURA:
       return {
         ...state,

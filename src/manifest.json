@@ -11,6 +11,7 @@
   "description": "Gestion de Partituras para la Orquesta Sinfonica Juvenil e Infantil de Ciudad Guayana",
   "orientation": "portrait",
   "related_applications": [],
+  "gcm_sender_id": "103953800507",
   "prefer_related_applications": false,
   "icons": [
     {

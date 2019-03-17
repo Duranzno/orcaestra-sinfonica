@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <img mat-card-avatar [src]='media.avatar'>
-    <mat-card-title>{{score.obra}}</mat-card-title>
+    <mat-card-title>{{(score.obra!=="")?(score.obra):"Desconocida"}}</mat-card-title>
     <mat-card-subtitle>{{score.getAutor().nombre}} {{score.getAutor()?.apellido}}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src='/assets/9th/sheet.png' alt="Foto de {{score.obra}}">

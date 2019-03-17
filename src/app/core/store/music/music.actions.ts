@@ -1,10 +1,11 @@
 import { Action } from '@ngrx/store';
-import { IScore, Origin, MediaType, CategoriaTipo } from '../../models';
+import { IScore, Origin, MediaType, CategoriaTipo, IScoreId } from '../../models';
 export class ActionTypes {
   static SET_PARTITURA = '[MUSIC] Partitura Seleccionada';
   static ADD_ORIGIN = '[MUSIC] Se agrego Origen';
   static SET_CATEGORIES = '[MUSIC] Saved categoria (Generos/Instruemntos)';
   static ADD_CATEGORY = '[MUSIC] Se guardo categoria a las existentes';
+  static SET_FAVS = '[MUSIC] Se seleccionaron las partituras favoritas';
   // static SET_GRUPO = '[MUSIC] Saved Grupo';
 }
 export class SetPartitura implements Action {
@@ -15,6 +16,10 @@ export class SetCategories implements Action {
   readonly type = ActionTypes.SET_CATEGORIES;
   constructor(public payload: { generos: string[], grupos: string[], instrumentos: string[] }) { }
 }
+export class SetFavorites implements Action {
+  readonly type = ActionTypes.SET_FAVS;
+  constructor(public payload: IScoreId[]) { }
+}
 export class AddOrigin implements Action {
   readonly type = ActionTypes.ADD_ORIGIN;
   constructor(public payload: { origin: Origin, type: MediaType }) { }
@@ -24,4 +29,4 @@ export class AddCategory implements Action {
   constructor(public payload: { tipo: CategoriaTipo, categoria: string }) { }
 }
 
-export type Actions = SetPartitura | SetCategories | AddOrigin | AddCategory;
+export type Actions = SetPartitura | SetCategories | AddOrigin | AddCategory | SetFavorites;

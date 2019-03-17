@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CategoriaTipo } from '../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { take, filter } from 'rxjs/operators';
+import { MessagingService } from '../core/services/messaging.service';
 
 @Component({
   selector: 'app-welcome',
@@ -20,11 +22,21 @@ export class WelcomeComponent implements OnInit {
   $loading: Observable<boolean>;
   constructor(
     private _fb: FormBuilder,
-    private store: Store<OrcaState>) {
+    private store: Store<OrcaState>,
+    private msg: MessagingService) {
   }
   ngOnInit(): void {
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.form = this._fb.group({ generos: this._fb.array([]) })
+    this.store.select(From.auth.getUser)
+      .pipe(
+        filter(user => !!user), // filter null
+        take(1) // take first real user
+      ).subscribe(user => {
+        if (user) {
+          this.msg.init(user);
+        }
+      })
   }
   load() {
     this.store.dispatch(new From.ui.StartLoading());

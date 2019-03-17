@@ -10,3 +10,4 @@ export const isAuth = createSelector(getAuthState, (state: State) => {
 });
 export const getAvatar = createSelector(getAuthState, (state: State) => state.avatarSrc);
 
+

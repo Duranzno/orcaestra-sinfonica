@@ -3,7 +3,7 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
-import { AuthService } from './core/services';
+import { AuthService } from './core/services'; 
 import { SwUpdate } from '@angular/service-worker';
 import { OrcaState, From } from './core/store';
 import { Store } from '@ngrx/store';

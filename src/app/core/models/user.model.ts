@@ -1,5 +1,6 @@
 import { MediaType, Media } from './media.model';
 import { UploadFile } from './upload.media.interface';
+import { IScoreId } from './score.model';
 
 export interface IUser {
   email: string;
@@ -8,15 +9,18 @@ export interface IUser {
   password: string;
   group?: string;
   isAdmin?: boolean;
-  id?: string;
+  uid?: string;
+  favs?: string[];
+  fcmTokens?: { [token: string]: true };
+
 }
 export class User implements IUser {
   public email: string;
   public nombre: string = '';
   public apellido: string = '';
   public password: string;
-  public id?: string = '';
-
+  public uid?: string = '';
+  favs?: string[] = [];
   public isAdmin: boolean = false;
   public group: string = 'Desconocido';
   public avatar: string = '/assets/user.jpg';
@@ -26,7 +30,8 @@ export class User implements IUser {
     this.apellido = i.apellido;
     this.password = i.password;
     this.isAdmin = i.isAdmin;
-    this.id = i.id;
+    this.uid = i.uid;
+    this.favs = i.favs;
     this.group = (i.group === '') ? 'Desconocido' : this.group;
   }
 

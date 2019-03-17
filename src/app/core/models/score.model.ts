@@ -50,10 +50,12 @@ export class Score implements IScore {
   }
 
   getAutor(): Persona {
-    return this.gente.find(persona => persona.tipo === PersonaTipo.AUTOR);
+    const autor=this.gente.find(persona => persona.tipo === PersonaTipo.AUTOR);
+    return (autor)?autor:{nombre:"Desconocido",tipo:PersonaTipo.AUTOR};
   }
   getNotAutor(): Persona[] {
-    return this.gente.filter(persona => persona.tipo !== PersonaTipo.AUTOR);
+    const notAutor=this.gente.filter(persona => persona.tipo !== PersonaTipo.AUTOR);
+    return (notAutor)?notAutor:[];
   }
   getByMediaOrigin(mType: MediaType, oType: OriginType): Origin[] {
     return this
