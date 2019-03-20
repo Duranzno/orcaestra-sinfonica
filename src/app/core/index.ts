@@ -5,7 +5,6 @@ import { AppEffectsModules } from './effects';
 
 import { APP_SERVICES } from './services';
 import { APP_RESOLVERS } from './resolvers';
-import { APP_DIRECTIVES } from './directives';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FirebaseModule } from './firebase.module';
 import { SharedModule } from '../shared';
@@ -21,10 +20,9 @@ import { SharedModule } from '../shared';
   exports: [
     CoreStoreModule,
     ReactiveFormsModule,
-    ...APP_DIRECTIVES],
+  ],
   providers: [...APP_SERVICES, ...APP_RESOLVERS],
   declarations: [
-    ...APP_DIRECTIVES,
   ]
 })
 export class CoreModule {

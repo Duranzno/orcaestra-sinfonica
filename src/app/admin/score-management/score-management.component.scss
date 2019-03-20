@@ -1,59 +1,55 @@
-/* Structure */
-.container {
-  position: relative;
-  min-height: 200px;
-}
-.contenedor{
-  margin: 1em;
-}
-
-.table-container {
-  position: relative;
-  // max-height: 400px;
-  overflow: auto;
-}
-.detail-row {
-  height: 0;
-}
-
-.element-row:not(.expanded-row):hover {
-  background: #f5f5f5;
-}
-
-.element-row:not(.expanded-row):active {
-  background: #efefef;
-}
-.element-row td {
-  border-bottom-width: 0;
-}
-
-.element-detail {
-  overflow: hidden;
-  display: flex;
-}
-
-.mat-table{
-  width: 100%;
-}
-.loading-shade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 56px;
-  right: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Column Widths */
-.mat-column-number,
-.mat-column-state {
-  max-width: 64px;
+@mixin table($theme) {
+  .contenedor{
+    position: relative;
+    min-height: 200px;
+    margin: 1em;
+    .loading-shade{
+      bottom: 56px;
+    }
+    .table-container {
+      position: relative;
+      // max-height: 400px;
+      overflow: auto;
+    }
+    .detail-row {
+      height: 0;
+    }
+    
+    .element-row{
+      &:not(.expanded-row){
+        &:active {
+          background: #efefef;
+        }
+        &:hover {
+          background: #f5f5f5;
+        }
+      }
+      td {
+      border-bottom-width: 0;
+      }
+    }
+    .element-detail {
+      overflow: hidden;
+      display: flex;
+    }
+    
+    .mat-table{
+      width: 100%;
+    }
+    
+    
+    /* Column Widths */
+    .mat-column-number,
+    .mat-column-state {
+      max-width: 64px;
+    }
+    
+    .mat-column-created {
+      max-width: 124px;
+    }
+  }
 }
 
-.mat-column-created {
-  max-width: 124px;
-}
+
+
+

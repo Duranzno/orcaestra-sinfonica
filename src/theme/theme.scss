@@ -2,6 +2,7 @@
 @import '../app/app.component.scss';
 @import '../app/navigation/sidenav/sidenav.item.component.scss';
 @import '../app/shared/components/file-upload/file-upload.component.scss';
+@import '../app/admin/score-management/score-management.component.scss';
 $mat-light-theme-background: (
   status-bar: map_get($mat-grey, 300),
   app-bar:    map_get($mat-grey, 100),
@@ -50,6 +51,7 @@ app-sidenav-item{
 @include angular-material-theme($theme);
 @include main($theme);
 @include dropzone($theme);
+@include table($theme);
 html {
   height:100%;
 }
@@ -58,15 +60,29 @@ body{
   margin: 0px !important;
   height:100%;
 }
-.components-container-gt-xs {
-    padding: 20px;
-    // background-color: #fdfdfd;
+.contenedor{
+  max-height: -webkit-fill-available;
 }
-.components-container-xs {
-    padding: 5px !important;
-    // background-color: #fdfdfd;
+.contenedor-card{
+  width: 350px;
+  height: 400px;
+  display: block;
+  margin-left:auto;
+  margin-right:auto;  
 }
-.component-preview {
-    padding: 20px;
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+mat-form-field {
+  width: 300px;
+  max-width: 500px;
+}

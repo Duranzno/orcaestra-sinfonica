@@ -2,7 +2,8 @@
 export interface Menu {
   name: string;
   link: string;
-  icon: string;
+  icon?: string;
+  svgIcon?: string;
   isUser?: boolean;
   chip?: boolean;
   open?: boolean;
@@ -13,7 +14,7 @@ export const AnonMenu: Menu[] = [
   {
     'name': 'Iniciar Sesión',
     'link': '/login',
-    'icon': 'input',
+    'icon': 'exit_to_app',
     'chip': false,
     'open': false,
     'isAdmin': false,
@@ -21,7 +22,7 @@ export const AnonMenu: Menu[] = [
   {
     'name': 'Registrarse',
     'link': '/signup',
-    'icon': 'face',
+    'icon': 'person_add',
     'chip': false,
     'open': false,
     'isAdmin': false,
@@ -29,9 +30,9 @@ export const AnonMenu: Menu[] = [
 ];
 export const AdminMenu: Menu[] = [
   {
-    'name': 'Pagina de Administrador',
-    'link': '/admin',
-    'icon': 'input',
+    'name': 'Administrar Obras',
+    'link': '/admin/partitura',
+    'icon': 'build',
     'isUser': true,
     'chip': false,
     'open': false,
@@ -39,8 +40,8 @@ export const AdminMenu: Menu[] = [
   },
   {
     'name': 'Agregar Partitura',
-    'link': '/auth/cargar',
-    'icon': 'input',
+    'link': '/admin/carga',
+    'icon': 'note_add',
     'isUser': true,
     'chip': false,
     'open': false,
@@ -52,7 +53,7 @@ export const UserMenu: Menu[] = [
   {
     'name': 'Musica',
     'link': '',
-    'icon': 'face',
+    'svgIcon': 'musical-note',
     'isAdmin': false,
 
     'isUser': true,
@@ -61,17 +62,9 @@ export const UserMenu: Menu[] = [
     'sub': [],
   },
   {
-    'name': 'Biblioteca Musical',
-    'link': '/musica/lista',
-    'icon': 'input',
-    'chip': false,
-    'open': false,
-    'isAdmin': false,
-  },
-  {
     'name': 'Cerrar Sesion',
     'link': '/logout',
-    'icon': 'eject',
+    'icon': 'power_settings_new',
     'isUser': true,
     'chip': false,
     'isAdmin': false,

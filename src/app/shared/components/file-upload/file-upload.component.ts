@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { MediaType, UploadFile, MediaTypeGuesser } from 'src/app/core/models';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { From, OrcaState } from 'src/app/core/store';
 
@@ -10,58 +10,30 @@ import { From, OrcaState } from 'src/app/core/store';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent implements OnInit {
-  @Input('type')
-  type: MediaType;
-  @Output()
-  filesEvent = new EventEmitter<UploadFile[]>();
-  snapshot: Observable<any>; // TODO Must take snapshot out of the service through redux;
-  sn: { state: string } = { state: 'DEFAULT' };
+export class FileUploadComponent {
+  @Input() type: MediaType;
+  @Output() filesEvent = new EventEmitter<UploadFile[]>();
   isHovering: boolean;
+  files: UploadFile[] = [];
 
-  constructor(
-    private store: Store<OrcaState>
-  ) { }
+  constructor() { }
+
+  addFiles(event: FileList) {
+    if (this.isAvatar()) {
+      this.files = [{ 'file': event[0], 'type': this.type }];
+    } else {
+      for (let i = 0; i < event.length; i++) {
+        this.files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
+      }
+    }
+    // this.filesEvent.emit(this.files);
+  }
   accept(): string {
     return (this.isAvatar())
       ? '.jpg,.jpeg,.png,.gif'
       : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
   }
-  ngOnInit() {
-    this.snapshot = this.store.select(From.media.getSnapshot);
-    this.sn.state = 'ERROR';
-  }
   toggleHover(event: boolean) { this.isHovering = event; }
-
-  openInput() {
-    document.getElementById('file-input').click();
-    this.sn.state = 'PAUSED';
-    // this.store.dispatch(new fromMedia.UpdateMediaSnapshot({ downloadURL: '', state: 'PAUSED' }));
-  }
-
-  filesReady(event: FileList) {
-    let files: UploadFile[] = [];
-    if (this.isAvatar()) {
-      files = [{ 'file': event[0], 'type': this.type }];
-    } else {
-      for (let i = 0; i < event.length; i++) {
-        files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
-      }
-    }
-    this.filesEvent.emit(files);
-  }
-  isAvatar() {
-    return this.type && this.type === MediaType.AVATAR;
-  }
-  // isActive(snapshot: firebase.storage.UploadTaskSnapshot) {
-  //   if (typeof snapshot === 'undefined' || snapshot == null) { return false; }
-  //   return snapshot.state === 'running'
-  //     && snapshot.bytesTransferred < snapshot.totalBytes;
-  // }
-  // Gtate(snapshot: firebase.storage.UploadTaskSnapshot) {
-  //   if (typeof snapshot === 'undefined' || snapshot == null) { return 'notrunning'; }
-  //   else if (snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes) { return 'running'; }
-  //   else if (snapshot.state === 'success') { return 'success'; }
-  //   else { return 'notrunning'; }
-  // }
+  openInput() { document.getElementById('file-input').click(); }
+  isAvatar() { return this.type && this.type === MediaType.AVATAR; }
 }

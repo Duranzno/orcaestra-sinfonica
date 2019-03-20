@@ -52,12 +52,12 @@ function addOrigin(state: State, payload: { origin: Origin, type: MediaType }): 
   return { ...state, partitura };
 }
 function setCategories(state, payload: { generos: string[], grupos: string[], instrumentos: string[] }) {
-  return {
+  return (payload)?{
     ...state,
     generos: payload.generos,
     instrumentos: payload.instrumentos,
     grupos: payload.grupos,
-  };
+  }:state;
 }
 function addCateg(state: State, payload: { tipo: CategoriaTipo, categoria: string }) {
   switch (payload.tipo) {

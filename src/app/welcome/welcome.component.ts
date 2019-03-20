@@ -16,25 +16,23 @@ import { MessagingService } from '../core/services/messaging.service';
   styleUrls: []
 })
 export class WelcomeComponent implements OnInit {
-  array = ["1", "2", "2"]
   tipo = CategoriaTipo.GENERO;
-  form: FormGroup;
   $loading: Observable<boolean>;
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>,
-    private msg: MessagingService) {
+    // private msg: MessagingService
+  ) {
   }
   ngOnInit(): void {
     this.$loading = this.store.select(From.ui.getIsLoading);
-    this.form = this._fb.group({ generos: this._fb.array([]) })
     this.store.select(From.auth.getUser)
       .pipe(
         filter(user => !!user), // filter null
         take(1) // take first real user
       ).subscribe(user => {
         if (user) {
-          this.msg.init(user);
+          // this.msg.init(user);
         }
       })
   }
@@ -43,9 +41,6 @@ export class WelcomeComponent implements OnInit {
   }
   unload() {
     this.store.dispatch(new From.ui.StopLoading());
-  }
-  categ() {
-    // this.scores = this.fb.getScoreList({ path: 'generos', val: 'Clasico' });
   }
 
 }

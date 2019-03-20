@@ -19,7 +19,7 @@ import { MediaType, OriginType, UploadFile } from '../../core/models';
 export class SignupComponent implements OnInit {
   $loading: Observable<boolean>;
   grupos$: Observable<string[]>;
-  type = MediaType.AVATAR;
+  type = MediaType.MIDI;
   data: User;
   files: UploadFile[];
   constructor(

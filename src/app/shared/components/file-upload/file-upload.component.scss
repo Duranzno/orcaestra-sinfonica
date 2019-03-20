@@ -7,13 +7,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; 
-    height: 300px;
-    border: 2px dashed black;
+    height: auto;
+    border: 1px dashed black;
     border-radius: 5px;
     background: white;
     margin: 10px 0;
   
-    &.hovering {
+    &:hover {
         border: 2px solid black;
         color: #dadada !important;
     }
@@ -23,14 +23,7 @@
     
 
   }
-  .upload-preview{
-    max-width: -webkit-fill-available;
-    max-height: -webkit-fill-available;   
-  }
-  .upload-card{
-    max-width: 400px;
-  }
-  progress::-webkit-progress-value {
+   progress::-webkit-progress-value {
     transition: width 0.1s ease;
   }
 }

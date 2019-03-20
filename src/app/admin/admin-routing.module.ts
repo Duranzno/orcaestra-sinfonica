@@ -7,7 +7,7 @@ import { ScoreManagementComponent } from './score-management/score-management.co
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main' },
+  { path: '', redirectTo: 'partitura' },
   { path: 'carga', component: UploadComponent },
   { path: 'partitura', component: ScoreManagementComponent },
   { path: 'main', component: AdminComponent },

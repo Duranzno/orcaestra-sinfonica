@@ -1,56 +1,61 @@
-<section class="signup-form">
-  <app-file-upload [type]='type' (filesEvent)='getAvatarFile($event)'></app-file-upload>
-  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm"
-    style="flex-grow: 1;flex-basis: 0;" (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input ngModel matInput required #nombreInput="ngModel" type="text" placeholder="Nombre" name="nombre">
-      <mat-error *ngIf="nombreInput.hasError('required')">
-        Campo no deberia estar vacio.
-      </mat-error>
-    </mat-form-field>
+<!-- <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" style="margin:1em; position: relative;">
+  <mat-card fxFlex>
+    <div class="loading-shade" *ngIf="$loading|async">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-card-content>
+      <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm"
+        style="flex-grow: 1;flex-basis: 0;" (ngSubmit)="onSubmit(f)">
+        <mat-form-field>
+          <input ngModel matInput required #nombreInput="ngModel" type="text" placeholder="Nombre" name="nombre">
+          <mat-error *ngIf="nombreInput.hasError('required')">
+            Campo no deberia estar vacio.
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input ngModel matInput required #apellidoInput="ngModel" type="text" placeholder="Apellido" name="apellido">
-      <mat-error *ngIf="apellidoInput.hasError('required')">
-        Campo no deberia estar vacio.
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <input ngModel matInput required #apellidoInput="ngModel" type="text" placeholder="Apellido" name="apellido">
+          <mat-error *ngIf="apellidoInput.hasError('required')">
+            Campo no deberia estar vacio.
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput ngModel email required #emailInput="ngModel" type="email" placeholder="Correo Electronico"
-        name="email">
-      <mat-error *ngIf="emailInput.hasError('required')">
-        Campo no deberia estar vacio.
-      </mat-error>
-      <mat-error *ngIf="!emailInput.hasError('required')">
-        Correo invalido.
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput ngModel email required #emailInput="ngModel" type="email" placeholder="Correo Electronico"
+            name="email">
+          <mat-error *ngIf="emailInput.hasError('required')">
+            Campo no deberia estar vacio.
+          </mat-error>
+          <mat-error *ngIf="!emailInput.hasError('required')">
+            Correo invalido.
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field hintLabel="Deberia tener al menos 6 caracteres.">
-      <input matInput placeholder="Contrasena" required minlength="6" ngModel type="password" #pwInput="ngModel"
-        name="password">
-      <mat-hint align="end">{{ pwInput.value?.length }}/6</mat-hint>
-      <mat-error>Debe tener al menos 6 caracteres.</mat-error>
-    </mat-form-field>
+        <mat-form-field hintLabel="Deberia tener al menos 6 caracteres.">
+          <input matInput placeholder="Contrasena" required minlength="6" ngModel type="password" #pwInput="ngModel"
+            name="password">
+          <mat-hint align="end">{{ pwInput.value?.length }}/6</mat-hint>
+          <mat-error>Debe tener al menos 6 caracteres.</mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-select ngModel placeholder="Grupo" color="primary" name="grupo">
-        <mat-option *ngFor="let g of grupos$ | async" [value]="g">
-          {{g}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-select ngModel placeholder="Grupo" color="primary" name="grupo">
+            <mat-option *ngFor="let g of grupos$ | async" [value]="g">
+              {{g}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-checkbox ngModel name="isAdmin" color="primary">
-      Es administrador?
-    </mat-checkbox>
-
-    <button mat-raised-button color="primary" type="submit" *ngIf="!($loading|async)" [disabled]="f.invalid">
-      Enviar
-    </button>
-    <mat-spinner *ngIf="$loading|async">
-
-    </mat-spinner>
-  </form>
-</section>
+        <mat-checkbox ngModel name="isAdmin" color="primary">
+          Es administrador?
+        </mat-checkbox>
+      </form>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="end">
+      <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!($loading|async)" [disabled]="f.invalid">
+        Enviar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
+<app-file-upload [type]='type' (filesEvent)='getAvatarFile($event)'></app-file-upload>

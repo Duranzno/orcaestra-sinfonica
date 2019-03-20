@@ -1,61 +1,20 @@
-<mat-card class="upload-card">
-  <mat-card-header>
-    <mat-card-title>
-      <mat-icon>person</mat-icon> {{type|uppercase}}
-    </mat-card-title>
-  </mat-card-header>
-
-  <mat-card-content>
-
-    <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="filesReady($event)"
-      [class.hovering]="isHovering">
-      <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
-      <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
-      <input color="accent" id="file-input" class="file-input" type="file" [accept]="accept()" [multiple]="!isAvatar() "
-        (change)="filesReady($event.target.files)">
-    </div>
-
-    <div *ngIf="(snapshot | async)?.state == 'success'">sucess</div>
-    <!-- <div *ngIf="snapshot | async as snap">
-      <div *ngIf="downloadURL | async as url">
-        <img class="upload-preview" [src]="url"><br>
-      </div>
-    </div>
-    <div *ngIf="(snapshot | async)?.state == 'running'">
-      <mat-progress-spinner mode="determinate" color="accent" [value]="percentage | async">
-      </mat-progress-spinner>
-    </div> -->
-    <pre>{{ snapshot | async | json }}</pre>
-    <!-- <div [ngSwitch]="sn.state">
-      <div *ngSwitchCase="SUCCESS">
-        SUCCESS
-      </div>
-      <div *ngSwitchCase="CANCELLED">
-        CANCELED
-      </div>
-      <div *ngSwitchCase="ERROR">
-        ERROR
-      </div>
-      <div *ngSwitchCase="RUNNING">
-        RUNNING
-      </div>
-      <div *ngSwitchCase="PAUSED">
-        PAUSED
-      </div>
-      <div *ngSwitchDefault>
-        DEFAULT
-      </div>
-    </div> -->
-
-
-
-  </mat-card-content>
-  <mat-card-actions>
-    <!-- <button mat-raised-button (click)=" task.pause()" [disabled]="!isActive(snapshot | async)">Pausar</button>
-    <button mat-raised-button color="warn" (click)=" task.cancel()"
-      [disabled]="!isActive(snapshot | async)">Cancelar</button>
-    <button mat-raised-button color="accent" (click)=" task.resume()" 
-      [disabled]="!((snapshot | async)?.state === 'paused')">Continuar</button>-->
-    <button mat-raised-button (click)="openInput()">Subir {{type|uppercase}}</button>
-  </mat-card-actions>
-</mat-card>
+<div style="height: 500px;width: 500px;margin:1em;background-color:red" FxLayout="column" FxLayoutAlign="center center">
+  <div dropZone class="dropzone" (hovered)="toggleHover($event)" (dropped)="addFiles($event)"
+    [class.hovering]="isHovering">
+    <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
+    <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
+    <input id="file-input" type="file" [accept]="accept()" [multiple]="!isAvatar()"
+      (change)="addFiles($event.target.files)">
+  </div>
+  <div FxLayout="row">
+    <button mat-icon-button (click)="openInput()">
+      <mat-icon>cloud_upload</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openInput()">
+      <mat-icon>photo_camera</mat-icon>
+    </button>
+  </div>
+  <li *ngFor="let f of files">
+    <pre>{{f|json}}</pre>
+  </li>
+</div>

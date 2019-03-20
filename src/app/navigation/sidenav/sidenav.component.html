@@ -5,24 +5,25 @@
   <div class="iconOnly" *ngIf="iconOnly" fxLayoutAlign="space-around center">
     <img [src]="avatarSrc$ |async">
   </div>
+  <ng-container *ngIf="(user$|async)?.nombre; else anon">
 
-  <div *ngIf="(user$|async)?.nombre!=''">
-    <p>
-      <ng-container *ngIf="(user$|async)?.isAdmin; else user">
-        <mat-icon>verified_user</mat-icon>
-      </ng-container>
-      <ng-template #user>
-        <mat-icon>person</mat-icon>
-      </ng-template>{{(user$|async)?.nombre}} {{(user$|async)?.apellido}}
-    </p>
-  </div>
-
-  <ng-container *ngIf="!((user$|async)?.nombre!=''); else loggedUser">
-    <app-sidenav-item *ngFor="let menu of loggedOutMenu" [menu]="menu" [iconOnly]="iconOnly">
-    </app-sidenav-item>
-  </ng-container>
-  <ng-template #loggedUser>
-    <p *ngIf="((user$|async)?.isAdmin)">admin</p>
+    <mat-list *ngIf="(user$|async) as user">
+      <mat-list-item>
+        <mat-icon matListIcon iconsmall>{{(user.isAdmin)?'supervisor_account':'person'}}</mat-icon>
+        <h3 matLine>{{(user$|async)?.nombre}} {{(user$|async)?.apellido}}</h3>
+      </mat-list-item>
+    </mat-list>
     <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>
+  </ng-container>
+  <ng-template #anon>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon iconsmall>perm_identity</mat-icon>
+        <h3 matLine>Anonimo</h3>
+      </mat-list-item>
+    </mat-list>
+    <app-sidenav-item *ngFor="let menu of anonMenu" [menu]="menu" [iconOnly]="iconOnly"></app-sidenav-item>
   </ng-template>
+
+
 </div>

@@ -6,7 +6,7 @@
     <i class="material-icons app-toolbar-menu">menu </i>
   </button>
   <div>
-    <a routerLink="/">Orcaestra Sinfonica</a>
+    <a routerLink="/bienvenida">Orcaestra Sinfonica</a>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
@@ -23,7 +23,7 @@
         <a routerLink="/musica/lista">Musica</a>
       </li>
       <li *ngIf="($isAuth|async)">
-        <a routerLink="/logout">Logout</a>
+        <a routerLink="/logout">Cerrar Sesión</a>
       </li>
     </ul>
   </div>

@@ -5,7 +5,7 @@ import { UserMenu, AnonMenu, Menu } from './menu.elements';
 import { AuthService } from '../../core/services/auth.service';
 import { IUser, User } from '../../core/models/user.model';
 import { OrcaState, From } from '../../core/store';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { mapMenuAdmin, mapMenuGenres } from './menu.mapper';
 
 @Component({
@@ -41,7 +41,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   avatarSrc$: Observable<string>;
   public menus: Menu[];
   public $menus: Observable<Menu[]>;
-  public loggedOutMenu = AnonMenu;
+  public anonMenu = AnonMenu;
 
   constructor(private authService: AuthService, private store: Store<OrcaState>) { }
 
