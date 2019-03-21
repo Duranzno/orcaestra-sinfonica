@@ -5,7 +5,7 @@ import { MaterialModule } from '../material.module';
 import { APP_SHARED_COMPONENTS } from './components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_DIRECTIVES } from './directives';
+import { DropZoneDirective } from './directives/drop-zone.directive';
 const modules = [
   CommonModule,
   FlexLayoutModule,
@@ -13,7 +13,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...APP_SHARED_COMPONENTS, ...APP_DIRECTIVES],
+  declarations: [...APP_SHARED_COMPONENTS, DropZoneDirective],
   imports: [...modules, ReactiveFormsModule, HttpClientModule],
   exports: [...modules, ...APP_SHARED_COMPONENTS]
 })

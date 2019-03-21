@@ -18,7 +18,7 @@ import { MediaTipo, OrigenTipo, IUploadFile } from '../../core/models';
 })
 export class SignupComponent implements OnInit {
   $loading: Observable<boolean>;
-  grupos$: Observable<string[]>;
+  $grupos: Observable<string[]>;
   type = MediaTipo.AVATAR;
   files: IUploadFile[] = [];
   constructor(
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     // this.authService.fetchGrupos();
     this.$loading = this.store.select(From.ui.getIsLoading);
-    this.grupos$ = this.store.select(From.music.getGrupos);
+    this.$grupos = this.store.select(From.music.getGrupos);
   }
   getAvatarFile(files: IUploadFile[]) {
     this.files = files;

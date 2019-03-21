@@ -23,7 +23,7 @@ import { ScoreEditDialog } from 'src/app/shared/components';
   ],
 })
 export class ScoreManagementComponent implements OnInit {
-  dataSource: Observable<DataScore[]>;
+  $dataSource: Observable<DataScore[]>;
   isLoadingResults: boolean = false;
   resultsLength = 0;
   expandedElement: DataScore | null;
@@ -53,7 +53,7 @@ export class ScoreManagementComponent implements OnInit {
     this.updateDataSource();
   }
   updateDataSource() {
-    this.dataSource = merge(this.sort.sortChange, this.paginator.page)
+    this.$dataSource = merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {

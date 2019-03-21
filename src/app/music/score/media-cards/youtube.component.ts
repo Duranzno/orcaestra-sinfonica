@@ -24,7 +24,7 @@ import { YoutubeService } from 'src/app/music/services';
   </mat-card-actions>
 </mat-card>
   `,
-  styleUrls: ['./media.card.component.scss', './youtube.scss']
+  styleUrls: ['./media.card.component.scss']
 })
 export class YoutubeComponent implements OnInit {
   @Input('media') media: Media;

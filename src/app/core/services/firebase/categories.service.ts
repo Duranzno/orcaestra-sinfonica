@@ -38,7 +38,30 @@ export class CategoriesService {
         }
 
     }
-
+    deleteCateg(categ: CategoriaTipo, nuevaCateg: string): Observable<boolean> {
+        // VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO
+        // this.db.collection<IScore>
+        switch (categ) {
+            case CategoriaTipo.GENERO:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ generos: firebase.firestore.FieldValue.arrayRemove(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+            case CategoriaTipo.GRUPOS:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ grupos: firebase.firestore.FieldValue.arrayRemove(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+            case CategoriaTipo.INSTRUMENTOS:
+                return from(this.db.doc(`categories/QuklVOu2wdKMm2YBtQm5/`)
+                    .update({ instrumentos: firebase.firestore.FieldValue.arrayRemove(nuevaCateg) })
+                    .then(() => true)
+                    .catch(() => false)
+                );
+        }
+    }
     // User Favorite Functions
     saveFavorite(userId: string, scoreId: string): Observable<boolean> {
         // VOY A ACTUALIZAR Y AGREGAR A UN ARRAY DENTRO DE SCOREID EL USUARIO

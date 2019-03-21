@@ -55,7 +55,7 @@
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   Involucrados
-                </mat-expansion-panel-header>               
+                </mat-expansion-panel-header>
 
                 <div formArrayName="gente" *ngFor="let p of  gente.controls;let i=index">
                   <p class="mat-body">Involucrado {{i+1}}</p>
@@ -73,31 +73,7 @@
                   </button>
                 </div>
               </mat-expansion-panel>
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  Almacenamiento
-                </mat-expansion-panel-header>
-               
-                <div formArrayName="almacenamiento">
-                  <div *ngFor="let a of  almacenamiento.controls;let i=index">
-                    <div>
-                      <span>Registro {{i+1}}</span>
-                      <span *ngIf="form.controls['almacenamiento'].controls.length >1"
-                        (click)="removeAlmacenamiento(i)"></span>
-                    </div>
-                    <div [formGroupName]="i">
-                      <app-almacenamiento [almacenamientoForm]="form.controls['almacenamiento'].controls[i]" [n]="i"
-                        (deletable)='removeAlmacenamiento($event)'>
-                      </app-almacenamiento>
-                    </div>
-                  </div>
-                  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
-                    <button mat-mini-fab color="accent" (click)="addAlmacenamiento()">
-                      <mat-icon>add</mat-icon>
-                    </button>
-                  </div>
-                </div>
-              </mat-expansion-panel>
+
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   Instrumentos

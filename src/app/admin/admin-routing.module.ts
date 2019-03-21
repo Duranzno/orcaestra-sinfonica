@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload/upload.component';
 import { ScoreManagementComponent } from './score-management/score-management.component';
+import { CategoriesManagementComponent } from './categories-management/categories-management.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,8 @@ const routes: Routes = [
   { path: 'carga', component: UploadComponent },
   { path: 'partitura', component: ScoreManagementComponent },
   { path: 'main', component: AdminComponent },
+  { path: 'categorias', component: CategoriesManagementComponent },
+  { path: 'categorias/:tipo', component: CategoriesManagementComponent },
 ];
 
 @NgModule({
