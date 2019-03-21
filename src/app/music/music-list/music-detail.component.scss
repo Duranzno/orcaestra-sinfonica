@@ -1,8 +1,8 @@
-.example-card {
+@mixin musicDetail($theme){.example-card {
   max-width: 400px;
 }
 
 .example-header-image {
   background-image: url('/assets/9th/file.png');
   background-size: cover;
-}
+}}

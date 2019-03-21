@@ -1,3 +1,5 @@
-.media-card{
-  margin: 2em 
+@mixin mediaCard($theme){
+  .media-card{
+    margin: 2em 
+  }
 }

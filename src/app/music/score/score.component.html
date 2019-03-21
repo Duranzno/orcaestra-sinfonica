@@ -39,4 +39,11 @@
       </div>
     </ng-template>
   </mat-tab>
+  <mat-tab label="Documentos">
+    <ng-template matTabContent>
+      <div *ngFor="let m of documents">
+        <app-pdf [media]="m"></app-pdf>
+      </div>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

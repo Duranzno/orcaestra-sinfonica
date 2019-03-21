@@ -1,4 +1,5 @@
-.card-deck-container{
+@mixin musicList($theme){
+  .card-deck-container{
     display: flex;
     flex-flow: row wrap;
     -webkit-box-orient: horizontal;
@@ -36,4 +37,5 @@
 }
 app-music-detail{
   margin: 1em;
+}
 }

@@ -4,6 +4,9 @@
 @import '../app/shared/components/file-upload/file-upload.component.scss';
 @import '../app/shared/components/icon/icon-summary/icon-summary.component.scss';
 @import '../app/admin/score-management/score-management.component.scss';
+@import '../app/music/score/media-cards/media.card.component.scss';
+@import '../app/music/music-list/music-detail.component.scss';
+@import '../app/music/music-list/music-list.component.scss';
 $mat-light-theme-background: (
   status-bar: map_get($mat-grey, 300),
   app-bar:    map_get($mat-grey, 100),
@@ -48,7 +51,9 @@ app-sidenav-list{
 app-sidenav-item{
     @include sidenav-item($theme,20px)
 }
-
+@include mediaCard($theme);
+@include musicDetail($theme);
+@include musicList($theme);
 @include angular-material-theme($theme);
 @include main($theme);
 @include dropzone($theme);

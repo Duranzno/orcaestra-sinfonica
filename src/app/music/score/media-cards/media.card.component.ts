@@ -7,8 +7,6 @@ import { YoutubeService } from '../../services';
   template: `
   <span [ngSwitch]="media.type">
     <div *ngSwitchCase="types.MP3"><app-mp3 [media]="media"></app-mp3></div>
-    <!--<div *ngSwitchCase="types.MIDI"><app-midi [media]="media"></app-midi></div>-->
-    <div *ngSwitchCase="types.PDF"><app-pdf [media]="media"></app-pdf></div>
     <div *ngSwitchCase="types.YOUTUBE"><app-youtube [media]="media"></app-youtube></div>
 </span>`,
   styleUrls: ['./media.card.component.scss']
