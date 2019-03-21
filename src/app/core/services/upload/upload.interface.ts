@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { UploadFile, Score, User, MediaType, Origin, IScore } from '../../models';
+import { IUploadFile, Score, User, MediaTipo, Origen, IScore } from '../../models';
 
 export interface UploadInterface {
-  upload(file: UploadFile, path: string): Observable<Origin>;
+  upload(file: IUploadFile, path: string): Observable<Origen>;
 }

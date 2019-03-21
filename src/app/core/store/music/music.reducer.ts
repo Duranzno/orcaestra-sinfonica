@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActionTypes, Actions } from './music.actions';
-import { IScore, Origin, MediaType, Score, CategoriaTipo, IScoreId } from '../../models/';
+import { IScore, Origen, MediaTipo, Score, CategoriaTipo, IScoreId } from '../../models/';
 
 export interface State {
   partitura: IScore;
@@ -11,7 +11,6 @@ export interface State {
 }
 const initialState: State = {
   partitura: {
-    its: 0,
     obra: '',
     almacenamiento: [],
   },
@@ -27,7 +26,7 @@ export function musicReducer(state = initialState, action: Actions) {
       return setCategories(state, action.payload as { generos: string[], grupos: string[], instrumentos: string[] });
     }
     case ActionTypes.ADD_ORIGIN: {
-      return addOrigin(state, action.payload as { origin: Origin, type: MediaType });
+      return addOrigin(state, action.payload as { origin: Origen, type: MediaTipo });
     }
     case ActionTypes.SET_FAVS:
       return {
@@ -46,18 +45,18 @@ export function musicReducer(state = initialState, action: Actions) {
     }
   }
 }
-function addOrigin(state: State, payload: { origin: Origin, type: MediaType }): State {
+function addOrigin(state: State, payload: { origin: Origen, type: MediaTipo }): State {
   const partitura = new Score(state.partitura);
-  partitura.addMediaOrigin(payload.type, payload.origin);
+  partitura.addMediaOrigen(payload.type, payload.origin);
   return { ...state, partitura };
 }
 function setCategories(state, payload: { generos: string[], grupos: string[], instrumentos: string[] }) {
-  return (payload)?{
+  return (payload) ? {
     ...state,
     generos: payload.generos,
     instrumentos: payload.instrumentos,
     grupos: payload.grupos,
-  }:state;
+  } : state;
 }
 function addCateg(state: State, payload: { tipo: CategoriaTipo, categoria: string }) {
   switch (payload.tipo) {

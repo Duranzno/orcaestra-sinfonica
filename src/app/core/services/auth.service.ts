@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
-import { User, UploadFile, IUser } from '../models';
+import { User, IUploadFile, IUser } from '../models';
 
 import { OrcaState, From } from '../store';
 import { switchMap, catchError, map, last } from 'rxjs/operators';
@@ -38,15 +38,14 @@ export class AuthService {
       });
   }
 
-  registerUser(user: User, file?: UploadFile) {
+  registerUser(user: User, file?: IUploadFile) {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password))
       .pipe(
         switchMap(f => { console.log(f); return this.updateUserData(f.user.uid, user); }),
-        catchError(this.errorHandlerRx)
       )
       .subscribe(finalUser => {
-        if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: finalUser as User })); }
+        if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: new User(finalUser) })); }
         this.store.dispatch(new From.ui.StopLoading());
         this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
         this.router.navigate(['/bienvenida']);

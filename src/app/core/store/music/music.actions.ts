@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
-import { IScore, Origin, MediaType, CategoriaTipo, IScoreId } from '../../models';
+import { IScore, Origen, MediaTipo, CategoriaTipo, IScoreId } from '../../models';
+
 export class ActionTypes {
   static SET_PARTITURA = '[MUSIC] Partitura Seleccionada';
   static ADD_ORIGIN = '[MUSIC] Se agrego Origen';
@@ -22,7 +23,7 @@ export class SetFavorites implements Action {
 }
 export class AddOrigin implements Action {
   readonly type = ActionTypes.ADD_ORIGIN;
-  constructor(public payload: { origin: Origin, type: MediaType }) { }
+  constructor(public payload: { origin: Origen, type: MediaTipo }) { }
 }
 export class AddCategory implements Action {
   readonly type = ActionTypes.ADD_ORIGIN;

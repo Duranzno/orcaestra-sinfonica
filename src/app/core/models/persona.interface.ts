@@ -9,7 +9,7 @@ export enum PersonaTipo {
 }
 export interface Persona {
   nombre: string;
-  apellido?: string;
   tipo: PersonaTipo;
-  _id?: any;
+  apellido?: string;
+  uid?: string ;
 }

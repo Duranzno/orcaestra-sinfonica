@@ -1,6 +1,5 @@
-import { IUploadFile, UploadFile } from './upload.media.interface';
-
-export enum MediaType {
+import { IInstr } from './instr.interface';
+export enum MediaTipo {
   YOUTUBE = 'youtube',
   MP3 = 'mp3',
   MIDI = 'midi',
@@ -9,64 +8,67 @@ export enum MediaType {
   IMG = 'jpg/png',
   AVATAR = 'avatar',
 }
-export function MediaTypeGuesser(file: File): MediaType {
-  switch (file.name.toLowerCase().split('.').pop()) {
+export function MediaTipoGuesser(archivo: File): MediaTipo {
+  switch (archivo.name.toLowerCase().split('.').pop()) {
     case 'mp3':
-      return MediaType.MP3;
+      return MediaTipo.MP3;
     case 'jpg':
     case 'jpeg':
     case 'png':
     case 'gif':
-      return MediaType.IMG;
+      return MediaTipo.IMG;
 
     case 'pdf':
-      return MediaType.PDF;
+      return MediaTipo.PDF;
 
     case 'musicxml':
     case 'mxl':
     case 'xml':
-      return MediaType.MXML;
+      return MediaTipo.MXML;
 
     case 'mid':
     case 'midi':
-      return MediaType.MIDI;
+      return MediaTipo.MIDI;
 
     default:
-      return MediaType.YOUTUBE;
+      return MediaTipo.YOUTUBE;
   }
 }
 
-export enum OriginType {
+export enum OrigenTipo {
   FIREBASE = 'firestore',
   DROPBOX = 'dropbox',
   ASSETS = 'assets',
-  OTHER = 'other',
+  OTROS = 'other',
 }
-export interface Origin {
+export interface Origen {
   url: string;
-  type: OriginType;
+  tipo: OrigenTipo;
 }
 export interface IMedia {
-  originArray: Origin[];
-  type: MediaType;
+  origenArray: Origen[];
+  instr?: IInstr;
+  tipo: MediaTipo;
 }
 export class Media implements IMedia {
-  originArray: Origin[];
-  type: MediaType;
+  origenArray: Origen[];
+  instr?: IInstr;
+  tipo: MediaTipo;
   constructor(i: IMedia) {
-    this.originArray = i.originArray;
-    this.type = i.type;
+    this.origenArray = (i.origenArray) ? i.origenArray : [];
+    this.instr = (i.instr) ? i.instr : null;
+    this.tipo = (i.tipo) ? i.tipo : null;
   }
   isMedia(arg: any): arg is IMedia {
     return (arg.type !== undefined) && (arg.originArray !== undefined);
   }
-  addOrigin(o: Origin) { this.originArray.push(o); }
+  addOrigen(o: Origen) { this.origenArray.push(o); }
 }
 export function CardMedia(media: Media[]): Media[] {
   return media.filter(m => {
-    return m.type === MediaType.MIDI
-      || m.type === MediaType.MP3
-      || m.type === MediaType.YOUTUBE
-      || m.type === MediaType.PDF;
+    return m.tipo === MediaTipo.MIDI
+      || m.tipo === MediaTipo.MP3
+      || m.tipo === MediaTipo.YOUTUBE
+      || m.tipo === MediaTipo.PDF;
   });
 }

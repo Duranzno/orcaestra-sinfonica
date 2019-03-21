@@ -1,17 +1,15 @@
 import { ActionTypes, Actions } from './media.actions';
-import { User, MediaType, UploadFile, Score, OriginType } from '../../models';
+import { User, MediaTipo, IUploadFile, Score, OrigenTipo } from '../../models';
 import { createUploadTask } from '@angular/fire/storage';
 
 export interface State {
-  files: UploadFile[];
-  snapshot: {};
-  cloud: OriginType;
+  files: IUploadFile[];
+  cloud: OrigenTipo;
 }
 
 const initialState: State = {
   files: [],
-  snapshot: { downloadURL: '', state: 'ERROR' },
-  cloud: OriginType.FIREBASE,
+  cloud: OrigenTipo.FIREBASE,
 };
 
 export function mediaReducer(state = initialState, action: Actions): State {
@@ -23,7 +21,7 @@ export function mediaReducer(state = initialState, action: Actions): State {
     case ActionTypes.CHANGE_CLOUD:
       return {
         ...state,
-        cloud: action.payload as OriginType
+        cloud: action.payload as OrigenTipo
       };
     case ActionTypes.POST_AVATAR:
       return {
@@ -32,7 +30,7 @@ export function mediaReducer(state = initialState, action: Actions): State {
     case ActionTypes.MANAGE_MEDIA_ARRAY:
       return {
         ...state,
-        files: [action.payload['file']] as UploadFile[]
+        files: [action.payload['file']] as IUploadFile[]
       };
     case ActionTypes.SAVE_SCORE:
     case ActionTypes.POST_CATEGORY:

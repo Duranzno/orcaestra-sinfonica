@@ -33,7 +33,7 @@ export class YoutubeComponent implements OnInit {
   constructor(public youtube: YoutubeService) { }
 
   ngOnInit() {
-    this.vUrls = this.media.originArray.map(o => o.url);
+    this.vUrls = this.media.origenArray.map(o => o.url);
     this.vId = this.vUrls.pop();
     this.youtube.setup(this.vId);
   }

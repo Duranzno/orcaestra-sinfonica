@@ -1,6 +1,6 @@
 import { Score } from './score.model';
 import { iScore } from '../mock';
-import { MediaType, OriginType } from './media.model';
+import { MediaTipo, OrigenTipo } from './media.model';
 
 describe('Score', () => {
   let originalTimeout;
@@ -20,15 +20,15 @@ describe('Score', () => {
     });
     it('deberia crear y agregar un solo tipo de media', () => {
       expect(score.media.length).toBe(0);
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx' });
       expect(score.media.length).toBe(1);
     });
     it('deberia agregar a media existente', () => {
       expect(score.media.length).toBe(0);
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx' });
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx' });
       expect(score.media.length).toBe(1);
-      expect(score.media.pop().originArray.length).toBe(2);
+      expect(score.media.pop().origenArray.length).toBe(2);
     });
   });
   describe('getByMedia', () => {
@@ -43,32 +43,32 @@ describe('Score', () => {
     let score2 = new Score(iScore);
     beforeAll(function () {
       score2 = new Score(iScore);
-      score2.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx1' });
-      score2.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx2' });
-      score2.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx3' });
-      score2.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx4' });
-      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx5' });
-      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx6' });
-      score2.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx7' });
+      score2.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx1' });
+      score2.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx2' });
+      score2.addMediaOrigen(MediaTipo.PDF, { tipo: OrigenTipo.DROPBOX, url: 'dpx3' });
+      score2.addMediaOrigen(MediaTipo.PDF, { tipo: OrigenTipo.DROPBOX, url: 'dpx4' });
+      score2.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx5' });
+      score2.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx6' });
+      score2.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx7' });
     });
     it('deberia tener dos pdf', () => {
-      const arrMedia = score2.getByMedia(MediaType.PDF);
+      const arrMedia = score2.getByMedia(MediaTipo.PDF);
       expect(arrMedia.length).toBe(1);
-      expect(arrMedia.pop().originArray.length).toBe(2);
+      expect(arrMedia.pop().origenArray.length).toBe(2);
     });
     it('deberia tener 3 avatar', () => {
-      const arrMedia = score2.getByMedia(MediaType.AVATAR);
+      const arrMedia = score2.getByMedia(MediaTipo.AVATAR);
       expect(arrMedia.length).toBe(1);
-      expect(arrMedia.pop().originArray.length).toBe(3);
+      expect(arrMedia.pop().origenArray.length).toBe(3);
     });
     it('deber no tener mxml', () => {
-      const arrMedia = score2.getByMedia(MediaType.MXML);
+      const arrMedia = score2.getByMedia(MediaTipo.MXML);
       expect(arrMedia.length).toBe(0);
     });
     it('deberia tener 2 MP3', () => {
-      const arrMedia = score2.getByMedia(MediaType.MP3);
+      const arrMedia = score2.getByMedia(MediaTipo.MP3);
       expect(arrMedia.length).toBe(1);
-      expect(arrMedia.pop().originArray.length).toBe(2);
+      expect(arrMedia.pop().origenArray.length).toBe(2);
     });
     afterAll(_ => {
       score2.media = [];
@@ -77,22 +77,22 @@ describe('Score', () => {
   describe('getByMediaOrigin', () => {
     const score = new Score(iScore);
     beforeAll(function () {
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.DROPBOX, url: 'dpx1' });
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.FIREBASE, url: 'fb1' });
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.FIREBASE, url: 'fb2' });
-      score.addMediaOrigin(MediaType.MP3, { type: OriginType.ASSETS, url: 'assts' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.DROPBOX, url: 'dpx1' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.FIREBASE, url: 'fb1' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.FIREBASE, url: 'fb2' });
+      score.addMediaOrigen(MediaTipo.MP3, { tipo: OrigenTipo.ASSETS, url: 'assts' });
 
-      score.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx3' });
-      score.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx4' });
-      score.addMediaOrigin(MediaType.PDF, { type: OriginType.DROPBOX, url: 'dpx45' });
+      score.addMediaOrigen(MediaTipo.PDF, { tipo: OrigenTipo.DROPBOX, url: 'dpx3' });
+      score.addMediaOrigen(MediaTipo.PDF, { tipo: OrigenTipo.DROPBOX, url: 'dpx4' });
+      score.addMediaOrigen(MediaTipo.PDF, { tipo: OrigenTipo.DROPBOX, url: 'dpx45' });
 
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx5' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx5' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx6' });
-      score.addMediaOrigin(MediaType.AVATAR, { type: OriginType.DROPBOX, url: 'dpx7' });
+      score.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx5' });
+      score.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx5' });
+      score.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx6' });
+      score.addMediaOrigen(MediaTipo.AVATAR, { tipo: OrigenTipo.DROPBOX, url: 'dpx7' });
     });
     it('mp3 deberia tener dos elementos de firebase', () => {
-      const arrMp3Fb = score.getByMediaOrigin(MediaType.MP3, OriginType.FIREBASE);
+      const arrMp3Fb = score.getByMediaOrigen(MediaTipo.MP3, OrigenTipo.FIREBASE);
       expect(arrMp3Fb.length).toBe(2);
       // expect(arrMp3Dp.length).toBe(1);
       // expect(arrMp3Assets.length).toBe(1);

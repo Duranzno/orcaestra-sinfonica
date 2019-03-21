@@ -1,8 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { MediaType, UploadFile, MediaTypeGuesser } from 'src/app/core/models';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { From, OrcaState } from 'src/app/core/store';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MediaTipo, IUploadFile, MediaTipoGuesser, IElementoIcono, uMediaParser } from 'src/app/core/models';
 
 
 @Component({
@@ -11,29 +8,36 @@ import { From, OrcaState } from 'src/app/core/store';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  @Input() type: MediaType;
-  @Output() filesEvent = new EventEmitter<UploadFile[]>();
+  @Input() type: MediaTipo;
+  @Output() filesEvent = new EventEmitter<IUploadFile[]>();
   isHovering: boolean;
-  files: UploadFile[] = [];
-
-  constructor() { }
-
-  addFiles(event: FileList) {
-    if (this.isAvatar()) {
-      this.files = [{ 'file': event[0], 'type': this.type }];
-    } else {
-      for (let i = 0; i < event.length; i++) {
-        this.files.push({ 'file': event[i], 'type': MediaTypeGuesser(event[i]) });
-      }
-    }
-    // this.filesEvent.emit(this.files);
-  }
-  accept(): string {
-    return (this.isAvatar())
+  files: IUploadFile[] = [];
+  dsArray: IElementoIcono[] = [];
+  get accept(): string {
+    return (this.isAvatar)
       ? '.jpg,.jpeg,.png,.gif'
       : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
   }
+  get isAvatar() { return this.type && this.type === MediaTipo.AVATAR; }
+
+  constructor() {
+  }
+
+  addFiles(event: FileList) {
+    if (this.isAvatar) {
+      this.files = [{ 'archivo': event[0], 'tipo': this.type }];
+    } else {
+      for (let i = 0; i < event.length; i++) {
+        this.files.push({ 'archivo': event[i], 'tipo': MediaTipoGuesser(event[i]) });
+      }
+      this.dsArray = uMediaParser(this.files);
+    }
+    this.done()
+  }
+  done() {
+    this.filesEvent.emit(this.files);
+    alert(JSON.stringify(this.files));
+  }
   toggleHover(event: boolean) { this.isHovering = event; }
   openInput() { document.getElementById('file-input').click(); }
-  isAvatar() { return this.type && this.type === MediaType.AVATAR; }
 }

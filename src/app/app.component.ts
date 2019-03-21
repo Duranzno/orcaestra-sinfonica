@@ -8,8 +8,8 @@ import { SwUpdate } from '@angular/service-worker';
 import { OrcaState, From } from './core/store';
 import { Store } from '@ngrx/store';
 import { MatIconRegistry } from '@angular/material';
-import { InstrType } from './core/models/instr.interface';
-import { MediaType, StoredType, PersonaTipo } from './core/models';
+import { InstrTipo } from './core/models/instr.interface';
+import { MediaTipo, RegistroTipo, PersonaTipo } from './core/models';
 
 @Component({
   selector: "app-root",
@@ -79,20 +79,18 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     this.addSvg('musical-note', 'musical-note');
 
 
-    this.addSvg(InstrType.CUERDA, 'midi');
-    this.addSvg(InstrType.PERCUSION, 'drum');
-    this.addSvg(InstrType.TECLADO, 'piano');
-    this.addSvg(InstrType.VIENTO_METAL, 'trumpet');
-    this.addSvg(InstrType.VOZ, 'microphone');
-    this.addSvg(InstrType.VIENTO_MADERA, 'flute');
-    this.addSvg(MediaType.YOUTUBE, 'youtube');
-    this.addSvg(MediaType.PDF, 'music-file');
-    this.addSvg(MediaType.MXML, 'music-file');
-    this.addSvg(MediaType.MP3, 'cd');
-    this.addSvg(MediaType.MIDI, 'music-file');
-    this.addSvg(StoredType.COPIA, 'folder');
-    this.addSvg(StoredType.SCORE, 'folder');
-    this.addSvg(StoredType.PO, 'folder');
+    this.addSvg(InstrTipo.CUERDA, 'midi');
+    this.addSvg(InstrTipo.PERCUSION, 'drum');
+    this.addSvg(InstrTipo.TECLADO, 'piano');
+    this.addSvg(InstrTipo.VIENTO_METAL, 'trumpet');
+    this.addSvg(InstrTipo.VOZ, 'microphone');
+    this.addSvg(InstrTipo.VIENTO_MADERA, 'flute');
+    this.addSvg(MediaTipo.YOUTUBE, 'youtube');
+    this.addSvg(MediaTipo.PDF, 'music-file');
+    this.addSvg(MediaTipo.MXML, 'music-file');
+    this.addSvg(MediaTipo.MP3, 'cd');
+    this.addSvg(MediaTipo.MIDI, 'music-file');
+    this.addSvg(RegistroTipo.SCORE, 'folder');
 
     this.addSvg(PersonaTipo.ADAPTADOR, 'persona');
     this.addSvg(PersonaTipo.ARREGLISTA, 'persona');

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, MediaType, UploadFile, Score, OriginType, IScore, CategoriaTipo, Categoria } from '../../models';
+import { User, MediaTipo, IUploadFile, Score, OrigenTipo, IScore, CategoriaTipo, Categoria } from '../../models';
 export class ActionTypes {
   static MANAGE_MEDIA_ARRAY = '[MEDIA] Received Media Array';
   static POST_MEDIA = '[MEDIA] Uploaded Score Media to Respective Cloud';
@@ -12,11 +12,11 @@ export class ActionTypes {
 }
 export class PostMedia implements Action {
   readonly type = ActionTypes.POST_MEDIA;
-  constructor(public payload: { file: UploadFile, score: IScore }) { }
+  constructor(public payload: { file: IUploadFile, score: IScore }) { }
 }
 export class PostAvatar implements Action {
   readonly type = ActionTypes.POST_AVATAR;
-  constructor(public payload: { file: UploadFile, user: User }) { }
+  constructor(public payload: { file: IUploadFile, user: User }) { }
 }
 export class SaveScore implements Action {
   readonly type = ActionTypes.SAVE_SCORE;
@@ -29,7 +29,7 @@ export class PostCateg implements Action {
 
 export class ManageMediaArray implements Action {
   readonly type = ActionTypes.MANAGE_MEDIA_ARRAY;
-  constructor(public payload: { files: UploadFile[] }) { }
+  constructor(public payload: { files: IUploadFile[] }) { }
 }
 
 export class FetchCategory implements Action {
@@ -43,7 +43,7 @@ export class FetchScore implements Action {
 
 export class ChangeCloud implements Action {
   readonly type = ActionTypes.CHANGE_CLOUD;
-  constructor(public payload: OriginType) { }
+  constructor(public payload: OrigenTipo) { }
 }
 
 export type Actions = PostMedia | FetchScore | FetchCategory | PostAvatar | PostCateg | SaveScore | ManageMediaArray | ChangeCloud;

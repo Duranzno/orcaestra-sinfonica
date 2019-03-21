@@ -2,9 +2,11 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { PersonaTipo, UploadFile, Score, IScore, MediaType, CategoriaTipo } from '../../core/models';
+import { PersonaTipo, IUploadFile, Score, IScore, MediaTipo, CategoriaTipo } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
+import { MatStepper } from '@angular/material/stepper';
+
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -14,11 +16,11 @@ import { Observable, Subscription } from 'rxjs';
 })
 
 export class UploadComponent implements OnInit, OnDestroy {
-  get instrumentos() { return this.secondFormGroup.get('instrumentos') as FormArray; }
-  get almacenamiento() { return this.secondFormGroup.get('almacenamiento') as FormArray; }
-  get generos() { return this.firstFormGroup.get('generos') as FormArray; }
-  get gente() { return this.secondFormGroup.get('gente') as FormArray; }
-  get grupos() { return this.firstFormGroup.get('grupos') as FormArray; }
+  get instrumentos() { return this.form.get('instrumentos') as FormArray; }
+  get almacenamiento() { return this.form.get('almacenamiento') as FormArray; }
+  get generos() { return this.form.get('generos') as FormArray; }
+  get gente() { return this.form.get('gente') as FormArray; }
+  get grupos() { return this.form.get('grupos') as FormArray; }
   personas: string[] = Object.values(PersonaTipo);
   generosTodos: string[] = [];
   instrumentosTodos: string[] = [];
@@ -29,37 +31,41 @@ export class UploadComponent implements OnInit, OnDestroy {
   @ViewChild('instrumentoInput') instrumentoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('autoI') matAutocompleteI: MatAutocomplete;
+  @ViewChild('stepper') stepper: MatStepper;
   chipInputCtrl = new FormControl();
+  gruposInputCtrl = new FormControl();
   chipInputCtrlI = new FormControl();
 
-  files: UploadFile[] = [];
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  files: IUploadFile[] = [];
+  form: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-
   $loading: Observable<boolean>;
   subscriptions: Subscription = new Subscription();
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>) {
   }
-  show(files: UploadFile[]) { console.log('admin/upload', files); this.files = files; }
+  show(files: IUploadFile[]) { console.log('admin/upload', files); this.files = files; }
+  goBack(stepper: MatStepper) {
+    stepper.previous();
+  }
 
+  goForward(stepper: MatStepper) {
+    stepper.next();
+  }
   ngOnInit() {
 
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.subscriptions.add(this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val));
     this.subscriptions.add(this.store.select(From.music.getInstrumentos).subscribe(val => this.instrumentosTodos = val));
     this.subscriptions.add(this.store.select(From.music.getGrupos).subscribe(val => this.gruposTodos = val));
-    this.firstFormGroup = this._fb.group({
-      obra: [''],
+    this.form = this._fb.group({
+      obra: ['', Validators.required],
       its: [''],
       extrainfo: [''],
       youtube: [''],
       generos: this._fb.array([]),
-      grupos: this._fb.array([])
-    });
-    this.secondFormGroup = this._fb.group({
+      grupos: [''],
       gente: this._fb.array([
         this.initPersona(),
       ]),
@@ -72,16 +78,17 @@ export class UploadComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-  onSave() {
+  onSave(stepper?: MatStepper) {
+    stepper.next();
     const score: IScore = this.createScore()
     this.store.dispatch(new From.music.SetPartitura(score));
     this.files = this.files.concat({
-      type: MediaType.YOUTUBE,
-      file: new File(['foo', 'bar'], this.firstFormGroup.get('youtube').value),
+      tipo: MediaTipo.YOUTUBE,
+      archivo: new File(['foo', 'bar'], this.form.get('youtube').value),
     });
-    this.newCateg(this.generosTodos, this.firstFormGroup.get('generos').value, CategoriaTipo.GENERO);
-    this.newCateg(this.instrumentosTodos, this.secondFormGroup.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
-    this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
+    this.newCateg(this.generosTodos, this.form.get('generos').value, CategoriaTipo.GENERO);
+    this.newCateg(this.instrumentosTodos, this.form.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
+    // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
   }
 
   newCateg(orig: string[], modified: string[], tipo: CategoriaTipo) {
@@ -94,13 +101,13 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   createScore() {
     return <IScore>{
-      its: this.firstFormGroup.get('its').value,
-      obra: this.firstFormGroup.get('obra').value,
-      extrainfo: this.firstFormGroup.get('extrainfo').value,
-      generos: this.firstFormGroup.get('generos').value,
-      almacenamiento: this.secondFormGroup.get('almacenamiento').value,
-      gente: this.secondFormGroup.get('gente').value,
-      instrumentos: this.secondFormGroup.get('instrumentos').value,
+      its: this.form.get('its').value,
+      obra: this.form.get('obra').value,
+      extrainfo: this.form.get('extrainfo').value,
+      generos: this.form.get('generos').value,
+      almacenamiento: this.form.get('almacenamiento').value,
+      gente: this.form.get('gente').value,
+      instrumentos: this.form.get('instrumentos').value,
     }
   }
 

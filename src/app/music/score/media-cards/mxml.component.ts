@@ -40,7 +40,7 @@ export class MxmlComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log(this.media);
-    this.url = this.media.originArray.pop().url;
+    this.url = this.media.origenArray.pop().url;
     const container = document.getElementById('osmd');
     this.osmd = new OpenSheetMusicDisplay(container, { autoResize: true });
     this.sub$ = from(this.osmd.load(this.url))

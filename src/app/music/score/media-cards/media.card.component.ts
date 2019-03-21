@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Media, MediaType } from 'src/app/core/models';
+import { Media, MediaTipo } from 'src/app/core/models';
 import { YoutubeService } from '../../services';
 
 @Component({
@@ -15,7 +15,7 @@ import { YoutubeService } from '../../services';
 })
 export class MediaCardComponent implements OnInit {
   @Input('media') media: Media;
-  types = MediaType;
+  types = MediaTipo;
   videoId: string;
   constructor(public youtube: YoutubeService) { }
 

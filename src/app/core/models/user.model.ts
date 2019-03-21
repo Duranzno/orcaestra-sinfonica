@@ -1,5 +1,5 @@
-import { MediaType, Media } from './media.model';
-import { UploadFile } from './upload.media.interface';
+import { MediaTipo, Media } from './media.model';
+import { IUploadFile } from './upload.media.interface';
 import { IScoreId } from './score.model';
 
 export interface IUser {
@@ -12,45 +12,44 @@ export interface IUser {
   uid?: string;
   favs?: string[];
   fcmTokens?: { [token: string]: true };
-
 }
 export class User implements IUser {
-  public email: string;
-  public nombre: string = '';
-  public apellido: string = '';
-  public password: string;
-  public uid?: string = '';
-  favs?: string[] = [];
-  public isAdmin: boolean = false;
-  public group: string = 'Desconocido';
-  public avatar: string = '/assets/user.jpg';
+  email: string;
+  nombre: string;
+  apellido: string;
+  password: string;
+  uid?: string;
+  favs?: string[];
+  isAdmin: boolean;
+  group: string;
+  avatar: string = '/assets/user.jpg';
   constructor(i: IUser) {
-    this.email = i.email;
-    this.nombre = i.nombre;
-    this.apellido = i.apellido;
-    this.password = i.password;
-    this.isAdmin = i.isAdmin;
-    this.uid = i.uid;
-    this.favs = i.favs;
-    this.group = (i.group === '') ? 'Desconocido' : this.group;
+    this.email = (i.email) ? i.email : '';
+    this.nombre = (i.nombre) ? i.nombre : '';
+    this.apellido = (i.apellido) ? i.apellido : '';
+    this.password = (i.password) ? i.password : '';
+    this.isAdmin = (i.isAdmin) ? i.isAdmin : false;
+    this.uid = (i.uid) ? i.uid : '';
+    this.favs = (i.favs) ? i.favs : [];
+    this.group = (i.group === '') ? 'Desconocido' : i.group;
   }
 
 
   static isUser(arg: any): arg is User {
     return (arg.email !== undefined) && (arg.password !== undefined);
   }
-  setPath(type: MediaType): string {
-    switch (type) {
-      case MediaType.AVATAR:
+  setPath(tipo: MediaTipo): string {
+    switch (tipo) {
+      case MediaTipo.AVATAR:
         return `OSJIG/avatar/${this.email}`;
-      case MediaType.MP3:
-      case MediaType.IMG:
-      case MediaType.MIDI:
-      case MediaType.MXML:
-      case MediaType.PDF:
-      case MediaType.YOUTUBE:
+      case MediaTipo.MP3:
+      case MediaTipo.IMG:
+      case MediaTipo.MIDI:
+      case MediaTipo.MXML:
+      case MediaTipo.PDF:
+      case MediaTipo.YOUTUBE:
       default:
-        const err = `Media ${type} no se suben archivos`;
+        const err = `Media ${tipo} no se suben archivos`;
         console.log(err);
         return err;
     }

@@ -39,7 +39,7 @@ export class Mp3Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.url = this.media.originArray.pop().url;
+    this.url = this.media.origenArray.pop().url;
     this.wave = WaveSurfer.create({
       container: '#w',
       waveColor: 'violet',

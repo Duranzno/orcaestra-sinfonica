@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataScore, IconElement } from 'src/app/core/models/data.score.model';
+import { DataScore, IElementoIcono } from 'src/app/core/models/data.score.model';
 
 @Component({
   selector: 'app-icon-summary',
@@ -15,7 +15,7 @@ import { DataScore, IconElement } from 'src/app/core/models/data.score.model';
   styleUrls: ['./icon-summary.component.scss']
 })
 export class IconSummaryComponent implements OnInit {
-  @Input('dataScoreArray') array: IconElement[] = [];
+  @Input('dataScoreArray') array: IElementoIcono[] = [];
   constructor() { }
 
   ngOnInit() {

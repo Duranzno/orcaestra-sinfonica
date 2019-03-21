@@ -1,55 +1,54 @@
-import { IMedia, OriginType, MediaType, StoredType, Score, PersonaTipo, User, Media, IScore } from './models';
+import { IMedia, OrigenTipo, MediaTipo, RegistroTipo, Score, PersonaTipo, User, Media, IScore } from './models';
 
 const mediaArr: IMedia[] = [
   {
-    'originArray': [
-      { 'url': '/assets/9th/sheet.jpg', 'type': OriginType.ASSETS },
-      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'type': OriginType.FIREBASE },
-      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'type': OriginType.DROPBOX },
+    'origenArray': [
+      { 'url': '/assets/9th/sheet.jpg', 'tipo': OrigenTipo.ASSETS },
+      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'tipo': OrigenTipo.FIREBASE },
+      { 'url': 'http://www.firestore.com/9th/sheet.jpg', 'tipo': OrigenTipo.DROPBOX },
     ],
-    'type': MediaType.IMG
+    'tipo': MediaTipo.IMG
   },
   {
-    'originArray': [{ 'url': '/assets/9th/beethoven.jpg', 'type': OriginType.ASSETS }],
-    'type': MediaType.AVATAR
+    'origenArray': [{ 'url': '/assets/9th/beethoven.jpg', 'tipo': OrigenTipo.ASSETS }],
+    'tipo': MediaTipo.AVATAR
   },
   {
-    'originArray': [{ 'url': '/assets/9th/beethoven.pdf', 'type': OriginType.ASSETS }],
-    'type': MediaType.PDF
+    'origenArray': [{ 'url': '/assets/9th/beethoven.pdf', 'tipo': OrigenTipo.ASSETS }],
+    'tipo': MediaTipo.PDF
   },
   {
-    'originArray': [{ 'url': '/assets/9th/beethoven.mid', 'type': OriginType.ASSETS }],
-    'type': MediaType.MIDI
+    'origenArray': [{ 'url': '/assets/9th/beethoven.mid', 'tipo': OrigenTipo.ASSETS }],
+    'tipo': MediaTipo.MIDI
   },
   {
-    'originArray': [{ 'url': '/assets/9th/beethoven.mp3', 'type': OriginType.ASSETS }],
-    'type': MediaType.MP3
+    'origenArray': [{ 'url': '/assets/9th/beethoven.mp3', 'tipo': OrigenTipo.ASSETS }],
+    'tipo': MediaTipo.MP3
   },
   {
-    'originArray': [
-      { 'url': '/assets/9th/beethoven.mxml', 'type': OriginType.ASSETS },
+    'origenArray': [
+      { 'url': '/assets/9th/beethoven.mxml', 'tipo': OrigenTipo.ASSETS },
       // tslint:disable-next-line:max-line-length
-      { 'url': 'https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/develop/test/data/ActorPreludeSample.xml', 'type': OriginType.OTHER },
+      { 'url': 'https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/develop/test/data/ActorPreludeSample.xml', 'tipo': OrigenTipo.OTROS },
     ],
-    'type': MediaType.MXML
+    'tipo': MediaTipo.MXML
   },
   {
-    'originArray': [{ 'url': 'https://www.youtube.com/watch?v=-kcOpyM9cBg', 'type': OriginType.OTHER }],
-    'type': MediaType.YOUTUBE
+    'origenArray': [{ 'url': 'https://www.youtube.com/watch?v=-kcOpyM9cBg', 'tipo': OrigenTipo.OTROS }],
+    'tipo': MediaTipo.YOUTUBE
   }
 ];
 const media = mediaArr.map(m => new Media(m));
 export const iScore: IScore = {
   'almacenamiento': [
     {
-      'tipo': StoredType.SCORE,
+      'tipo': RegistroTipo.SCORE,
       'cantidad': 2
     }
   ],
   'generos': [
     'Barroco'
   ],
-  'its': 1,
   'gente': [
     {
       'nombre': 'Alejandro',

@@ -1,20 +1,21 @@
-<div style="height: 500px;width: 500px;margin:1em;background-color:red" FxLayout="column" FxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center">
   <div dropZone class="dropzone" (hovered)="toggleHover($event)" (dropped)="addFiles($event)"
     [class.hovering]="isHovering">
-    <h3 *ngIf="isAvatar()"> Imagen de Perfil</h3>
-    <h3 *ngIf="!isAvatar()"> Archivos Musicales</h3>
-    <input id="file-input" type="file" [accept]="accept()" [multiple]="!isAvatar()"
+    <p class="mat-body">Arrastra y suelta {{(isAvatar)?"tu imagen de perfil":"los archivos"}}
+      aqui <span class="mat-header">ó</span></p>
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <button mat-raised-button color="primary" (click)="openInput()">
+        <mat-icon>cloud_upload</mat-icon>
+        Seleccionalo
+      </button>
+      <button *ngIf="isAvatar" mat-raised-button color="primary" (click)="openInput()">
+        <mat-icon>photo_camera</mat-icon>
+        Tomar foto
+      </button>
+    </div>
+    <input id="file-input" type="file" [accept]="accept" [multiple]="!isAvatar"
       (change)="addFiles($event.target.files)">
+    <app-icon-summary *ngIf="!isAvatar" [dataScoreArray]="dsArray"></app-icon-summary>
   </div>
-  <div FxLayout="row">
-    <button mat-icon-button (click)="openInput()">
-      <mat-icon>cloud_upload</mat-icon>
-    </button>
-    <button mat-icon-button (click)="openInput()">
-      <mat-icon>photo_camera</mat-icon>
-    </button>
-  </div>
-  <li *ngFor="let f of files">
-    <pre>{{f|json}}</pre>
-  </li>
 </div>

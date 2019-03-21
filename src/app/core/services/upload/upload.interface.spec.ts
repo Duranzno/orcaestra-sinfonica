@@ -1,15 +1,15 @@
 import { timer, of, Observable, from } from 'rxjs';
 import { switchMap, last, map, mergeMap, } from 'rxjs/operators';
-import { OriginType, Origin, Score, UploadFile, MediaType } from '../../models';
+import { OrigenTipo, Origen, Score, IUploadFile, MediaTipo } from '../../models';
 import { UploadInterface } from './upload.interface';
 import { iScore } from '../../mock';
 
 describe('upload Interface', () => {
   describe('Abstract', () => {
-    let snapshot$: Observable<any>, downloadUrl$: Observable<string>, o: Origin;
+    let snapshot$: Observable<any>, downloadUrl$: Observable<string>, o: Origen;
     beforeEach(function () {
       snapshot$ = timer(1000);
-      o = { url: 'www.stuff.com', type: OriginType.FIREBASE };
+      o = { url: 'www.stuff.com', tipo: OrigenTipo.FIREBASE };
       downloadUrl$ = of(o.url);
     });
 
@@ -18,10 +18,10 @@ describe('upload Interface', () => {
         last(),
         switchMap(_ => downloadUrl$),
         map(url => {
-          return { url, type: OriginType.FIREBASE };
+          return { url, type: OrigenTipo.FIREBASE };
         })
       ).subscribe(result => {
-        expect(result.type).toBe(o.type);
+        expect(result.type).toBe(o.tipo);
         expect(result.url).toBe(o.url);
         done();
       });
@@ -29,12 +29,12 @@ describe('upload Interface', () => {
   });
 
   describe('Complete Workflow', () => {
-    let uService: UploadInterface, uFile: UploadFile, score: Score;
+    let uService: UploadInterface, uFile: IUploadFile, score: Score;
     beforeAll(function () {
-      uService = new MockUploadFile();
-      uFile = new UploadFile({
-        file: new File(['foo', 'bar'], 'foobar.txt'),
-        type: MediaType.MIDI
+      uService = new MockIUploadFile();
+      uFile = <IUploadFile>({
+        archivo: new File(['foo', 'bar'], 'foobar.txt'),
+        tipo: MediaTipo.MIDI
       });
       score = new Score(iScore);
     });
@@ -42,12 +42,12 @@ describe('upload Interface', () => {
       score.media = [];
     });
     it('from file to score', (done) => {
-      const path = score.setPath(MediaType.AVATAR, uFile);
+      const path = score.setPath(MediaTipo.AVATAR, uFile);
       uService.upload(uFile, path as string).subscribe(
         origin => {
-          score.addMediaOrigin(uFile.type, origin);
+          score.addMediaOrigen(uFile.tipo, origin);
 
-          const result = score.getByMediaOrigin(uFile.type, origin.type);
+          const result = score.getByMediaOrigen(uFile.tipo, origin.tipo);
           expect(result).toContain(origin);
           console.log(result);
           done();
@@ -57,7 +57,7 @@ describe('upload Interface', () => {
     });
     it('from file array to score', (done) => {
       const arr = from([uFile, uFile, uFile]);
-      const path = score.setPath(MediaType.AVATAR, uFile);
+      const path = score.setPath(MediaTipo.AVATAR, uFile);
       score.media = [];
       const oriArr$ = arr.pipe(
         mergeMap((u, index) => {
@@ -68,11 +68,11 @@ describe('upload Interface', () => {
       oriArr$.subscribe(val => { console.log(JSON.stringify(val)); });
       oriArr$.subscribe(
         o => {
-          score.addMediaOrigin(uFile.type, o);
+          score.addMediaOrigen(uFile.tipo, o);
         },
         () => { },
         () => {
-          const result = score.getByMediaOrigin(uFile.type, OriginType.ASSETS);
+          const result = score.getByMediaOrigen(uFile.tipo, OrigenTipo.ASSETS);
           expect(result.length).toBe(3);
           console.log(result);
           done();
@@ -81,9 +81,9 @@ describe('upload Interface', () => {
 
       uService.upload(uFile, path as string).subscribe(
         origin => {
-          score.addMediaOrigin(uFile.type, origin);
+          score.addMediaOrigen(uFile.tipo, origin);
 
-          const result = score.getByMediaOrigin(uFile.type, origin.type);
+          const result = score.getByMediaOrigen(uFile.tipo, origin.tipo);
           expect(result).toContain(origin);
           console.log(result);
           done();
@@ -93,10 +93,10 @@ describe('upload Interface', () => {
     });
   });
 });
-class MockUploadFile implements UploadInterface {
-  upload(file: UploadFile, path: string): Observable<Origin> {
+class MockIUploadFile implements UploadInterface {
+  upload(file: IUploadFile, path: string): Observable<Origen> {
     return of({
-      type: OriginType.ASSETS,
+      tipo: OrigenTipo.ASSETS,
       url: 'www.www'
     });
   }

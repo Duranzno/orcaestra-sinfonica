@@ -1,94 +1,95 @@
 import { IScoreId } from './score.model';
-import { IStored, StoredType } from './almacenamiento.interface';
-import { Media, MediaType } from './media.model';
+import { IRegistro, RegistroTipo } from './registro.interface';
+import { Media, IMedia, MediaTipo, Origen } from './media.model';
 import { Persona, PersonaTipo } from './persona.interface';
-import { InstrType, IInstr } from './instr.interface';
+import { InstrTipo, IInstr } from './instr.interface';
+import { IUploadFile } from './upload.media.interface';
 
 // Score class modified for better show
-export interface IconElement { icon: string; numero: number; }
+export interface IElementoIcono { icono: string; numero?: number; info?: string }
 export class DataScore {
 
-  its: number;
   obra: string;
   generos: string;
   extraInfo?: string;
-  almacenamiento: IconElement[] = [];
-  media: IconElement[] = [];
-  instrumentos: IconElement[] = [];
-  gente: IconElement[] = [];
+  registro: IElementoIcono[] = [];
+  media: IElementoIcono[] = [];
+  instr: IElementoIcono[] = [];
+  gente: IElementoIcono[] = [];
   id: string;
   generosParser(g: string[]): string {
     return g.reduce((prev, curr) => `${prev} ${curr}`, '');
   }
-
   constructor(i: IScoreId) {
     this.id = i.id;
     this.obra = i.obra;
-    this.its = i.its;
     this.extraInfo = i.extrainfo;
     this.generos = this.generosParser(i.generos);
-    this.almacenamiento = this.almacenamientoParser(i.almacenamiento);
-    this.media = this.mediaParser(i.media);
-    this.instrumentos = this.instrumentosParser(i.instrumentos);
-    this.gente = this.genteParser(i.gente);
+    this.registro = almacenamientoParser(i.almacenamiento);
+    this.media = mediaParser(i.media);
+    this.instr = instrumentosParser(i.instrumentos);
+    this.gente = genteParser(i.gente);
   }
-  almacenamientoParser(arr: IStored[]): IconElement[] {
-    return arr.map((stored) => (<IconElement>{
-      icon: stored.tipo,
-      numero: stored.cantidad
+}
+
+export function almacenamientoParser(arr: IRegistro[]): IElementoIcono[] {
+  return arr.map((stored) => (<IElementoIcono>{
+    icono: stored.tipo,
+    numero: stored.cantidad
+  }));
+}
+export function imgParser(arr: Media[]): IElementoIcono[] {
+  return arr
+    .filter((({ tipo }) => ([MediaTipo.AVATAR, MediaTipo.IMG].includes(tipo))))
+    .map((m) => (<IElementoIcono>{
+      icono: m.tipo,
+      numero: m.origenArray.length,
     }));
-    // return [
-    //   { icon: StoredType.COPIA, numero: 3 },
-    //   { icon: StoredType.PO, numero: 3 },
-    //   { icon: StoredType.SCORE, numero: 3 },
-    // ]
-  }
-  mediaParser(arr: Media[]): IconElement[] {
-    return arr
-      .filter((({ type }) => (![MediaType.AVATAR, MediaType.IMG].includes(type))))
-      .map((m) => (<IconElement>{
-        icon: m.type,
-        numero: m.originArray.length,
-      }));
-    // return [
-    //   { icon: MediaType.MIDI, numero: 3 },
-    //   { icon: MediaType.MP3, numero: 3 },
-    //   { icon: MediaType.MXML, numero: 3 },
-    //   { icon: MediaType.YOUTUBE, numero: 3 },
-    //   { icon: MediaType.PDF, numero: 3 },
-    // ]
-  }
-  instrumentosParser(arr: string[]): IconElement[] {
-    // return arr.map(instr=>({
-    //   icon:instr.tipo
-    //   numero:
-    // }))
-    return [
-      { icon: InstrType.VIENTO_MADERA, numero: 3 },
-      { icon: InstrType.VIENTO_METAL, numero: 3 },
-      { icon: InstrType.VOZ, numero: 3 },
-      { icon: InstrType.TECLADO, numero: 3 },
-      { icon: InstrType.PERCUSION, numero: 3 },
-      { icon: InstrType.CUERDA, numero: 3 },
-    ];
-  }
-  genteParser(arr: Persona[]): IconElement[] {
-    // return arr.map(instr=>({
-    //   icon:instr.tipo
-    //   numero:
-    // }))
-    return [
-      { icon: PersonaTipo.ADAPTADOR, numero: 3 },
-      { icon: PersonaTipo.ARREGLISTA, numero: 3 },
-      { icon: PersonaTipo.AUTOR, numero: 3 },
-      { icon: PersonaTipo.EDITOR, numero: 3 },
-      { icon: PersonaTipo.ORQUESTADOR, numero: 3 },
-      { icon: PersonaTipo.TRANSCRIPTOR, numero: 3 },
-      { icon: PersonaTipo.UPLOADER, numero: 3 },
-    ];
-  }
 
+}
+export function mediaParser(arr: IMedia[]): IElementoIcono[] {
+  return (arr)
+    .filter((({ tipo }) => (![MediaTipo.AVATAR, MediaTipo.IMG].includes(tipo))))
+    .map((m) => (<IElementoIcono>{
+      icono: m.tipo,
+      numero: (m.origenArray) ? m.origenArray.length : 0,
+    }));
+}
 
-
-
+export function uMediaParser(arr: IUploadFile[]): IElementoIcono[] {
+  return (arr)
+    .filter((({ tipo }) => (![MediaTipo.AVATAR, MediaTipo.IMG].includes(tipo))))
+    .map((m) => (<IElementoIcono>{
+      icono: m.tipo,
+      numero: 0,
+    }));
+}
+export function instrumentosParser(arr: string[]): IElementoIcono[] {
+  // return arr.map(instr=>({
+  //   icon:instr.tipo
+  //   numero:
+  // }))
+  return [
+    { icono: InstrTipo.VIENTO_MADERA, numero: 3 },
+    { icono: InstrTipo.VIENTO_METAL, numero: 3 },
+    { icono: InstrTipo.VOZ, numero: 3 },
+    { icono: InstrTipo.TECLADO, numero: 3 },
+    { icono: InstrTipo.PERCUSION, numero: 3 },
+    { icono: InstrTipo.CUERDA, numero: 3 },
+  ];
+}
+export function genteParser(arr: Persona[]): IElementoIcono[] {
+  // return arr.map(instr=>({
+  //   icon:instr.tipo
+  //   numero:
+  // }))
+  return [
+    { icono: PersonaTipo.ADAPTADOR, numero: 3 },
+    { icono: PersonaTipo.ARREGLISTA, numero: 3 },
+    { icono: PersonaTipo.AUTOR, numero: 3 },
+    { icono: PersonaTipo.EDITOR, numero: 3 },
+    { icono: PersonaTipo.ORQUESTADOR, numero: 3 },
+    { icono: PersonaTipo.TRANSCRIPTOR, numero: 3 },
+    { icono: PersonaTipo.UPLOADER, numero: 3 },
+  ];
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { MediaType, OriginType, IScore, Score, IScoreId } from '../../core/models';
+import { MediaTipo, OrigenTipo, IScore, Score, IScoreId } from '../../core/models';
 
 import { From, OrcaState } from '../../core/store';
 

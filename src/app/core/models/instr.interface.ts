@@ -1,4 +1,4 @@
-export enum InstrType {
+export enum InstrTipo {
   VIENTO_METAL = 'metal',
   VIENTO_MADERA = 'madera',
   VOZ = 'voz',
@@ -8,5 +8,5 @@ export enum InstrType {
 }
 export interface IInstr {
   nombre: string;
-  tipo: InstrType;
+  tipo: InstrTipo;
 }

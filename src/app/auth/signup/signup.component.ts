@@ -9,7 +9,7 @@ import { OrcaState } from '../../core/store';
 
 import { From } from '../../core/store';
 
-import { MediaType, OriginType, UploadFile } from '../../core/models';
+import { MediaTipo, OrigenTipo, IUploadFile } from '../../core/models';
 
 @Component({
   selector: 'app-signup',
@@ -19,9 +19,8 @@ import { MediaType, OriginType, UploadFile } from '../../core/models';
 export class SignupComponent implements OnInit {
   $loading: Observable<boolean>;
   grupos$: Observable<string[]>;
-  type = MediaType.MIDI;
-  data: User;
-  files: UploadFile[];
+  type = MediaTipo.AVATAR;
+  files: IUploadFile[] = [];
   constructor(
     private authService: AuthService,
     private store: Store<OrcaState>,
@@ -32,19 +31,13 @@ export class SignupComponent implements OnInit {
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.grupos$ = this.store.select(From.music.getGrupos);
   }
-  getAvatarFile(files: UploadFile[]) {
+  getAvatarFile(files: IUploadFile[]) {
     this.files = files;
   }
   onSubmit(form: NgForm) {
-    const user = new User({
-      email: form.value.email,
-      nombre: form.value.nombre,
-      apellido: form.value.apellido,
-      password: form.value.password,
-      group: form.value.grupo,
-      isAdmin: (form.value.isAdmin === '') ? false : true,
-    });
-    this.authService.registerUser(user, this.files[0]);
+    const iUser = form.value;
+    const user = new User(iUser);
+    this.authService.registerUser(user, (this.files.length >= 1) ? this.files.pop() : null);
   }
 
 }

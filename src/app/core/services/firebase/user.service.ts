@@ -3,5 +3,5 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 @Injectable()
 export class UserService {
-    constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) { }
 }

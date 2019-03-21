@@ -1,9 +1,11 @@
-<!-- <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" style="margin:1em; position: relative;">
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" style="margin:1em; position: relative;">
   <mat-card fxFlex>
     <div class="loading-shade" *ngIf="$loading|async">
       <mat-spinner></mat-spinner>
     </div>
     <mat-card-content>
+      <app-file-upload style="margin:1em;" [type]='type' (filesEvent)='getAvatarFile($event)'>
+      </app-file-upload>
       <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm"
         style="flex-grow: 1;flex-basis: 0;" (ngSubmit)="onSubmit(f)">
         <mat-form-field>
@@ -34,13 +36,13 @@
         <mat-form-field hintLabel="Deberia tener al menos 6 caracteres.">
           <input matInput placeholder="Contrasena" required minlength="6" ngModel type="password" #pwInput="ngModel"
             name="password">
-          <mat-hint align="end">{{ pwInput.value?.length }}/6</mat-hint>
+          <!-- <mat-hint align="end">{{ pwInput?.value?.length }}/6</mat-hint> -->
           <mat-error>Debe tener al menos 6 caracteres.</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field *ngIf="(grupos$ | async) as grupos">
           <mat-select ngModel placeholder="Grupo" color="primary" name="grupo">
-            <mat-option *ngFor="let g of grupos$ | async" [value]="g">
+            <mat-option *ngFor="let g of grupos" [value]="g">
               {{g}}
             </mat-option>
           </mat-select>
@@ -49,13 +51,13 @@
         <mat-checkbox ngModel name="isAdmin" color="primary">
           Es administrador?
         </mat-checkbox>
+
       </form>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutAlign="end">
-      <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="!($loading|async)" [disabled]="f.invalid">
+      <button mat-raised-button color="primary" (click)="onSubmit(f)" *ngIf="!($loading|async)" [disabled]="f.invalid">
         Enviar
       </button>
     </mat-card-actions>
   </mat-card>
-</div> -->
-<app-file-upload [type]='type' (filesEvent)='getAvatarFile($event)'></app-file-upload>
+</div>

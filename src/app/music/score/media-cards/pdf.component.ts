@@ -32,7 +32,7 @@ export class PdfComponent implements OnInit {
     window.location.href = this.downloadUrl;
   }
   ngOnInit() {
-    this.downloadUrl = this.media.originArray.pop().url;
+    this.downloadUrl = this.media.origenArray.pop().url;
   }
 
 }

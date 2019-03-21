@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
 import { finalize, map, mergeMap, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
-import { MediaType, Score } from '../models';
+import { MediaTipo, Score } from '../models';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
 import * as fromMedia from '../store/media';
@@ -66,7 +66,7 @@ export class MediaEffects {
       mergeMap(payload => {
         return this.fbStorage.upload(
           payload.file,
-          payload.user.setPath(payload.file.type)
+          payload.user.setPath(payload.file.tipo)
         )
           .pipe(
             map(origin => {
@@ -94,12 +94,12 @@ export class MediaEffects {
         return from(files).pipe(
           mergeMap((u, index) => {
             console.log(JSON.stringify(u), index);
-            return this.fbStorage.upload(u, score.setPath(u.type, u))
-              .pipe(map(o => ({ origin: o, type: u.type })));
+            return this.fbStorage.upload(u, score.setPath(u.tipo, u))
+              .pipe(map(o => ({ origin: o, type: u.tipo })));
           }),
           tap(({ origin, type }) => {
             console.log('tap');
-            score.addMediaOrigin(type, origin);
+            score.addMediaOrigen(type, origin);
           }),
           finalize(() => {
             console.log('finalize');
@@ -115,7 +115,7 @@ export class MediaEffects {
       ofType(fromMedia.ActionTypes.POST_MEDIA),
       map((action: fromMedia.PostMedia) => action.payload),
       mergeMap(payload => {
-        const type: MediaType = payload.file.type;
+        const type: MediaTipo = payload.file.tipo;
         const score = new Score(payload.score);
         return this.fbStorage.upload(
           payload.file,
@@ -123,7 +123,7 @@ export class MediaEffects {
         )
           .pipe(
             map(origin => {
-              return new fromMusic.AddOrigin({ origin: origin, type: payload.file.type });
+              return new fromMusic.AddOrigin({ origin: origin, type: payload.file.tipo });
             })
           );
       })

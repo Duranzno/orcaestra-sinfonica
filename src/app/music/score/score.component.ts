@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { IScore, Score, MediaType } from 'src/app/core/models';
+import { IScore, Score, MediaTipo } from 'src/app/core/models';
 import { Observable, from, of, Subscription } from 'rxjs';
 import { map, switchMap, tap, pluck } from 'rxjs/operators';
 import { YoutubeService } from '../services';
@@ -25,7 +25,7 @@ class MediaBuffer {
 export class ScoreComponent implements OnInit, OnDestroy {
   score$: Subscription; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
   score;
-  mediaType = MediaType;
+  mediaType = MediaTipo;
 
   constructor(
     private afs: AngularFirestore,
