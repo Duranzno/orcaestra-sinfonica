@@ -87,7 +87,6 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     this.addSvg(InstrTipo.VIENTO_MADERA, 'flute');
     this.addSvg(MediaTipo.YOUTUBE, 'youtube');
     this.addSvg(MediaTipo.PDF, 'music-file');
-    this.addSvg(MediaTipo.MXML, 'music-file');
     this.addSvg(MediaTipo.MP3, 'cd');
     this.addSvg(MediaTipo.MIDI, 'music-file');
     this.addSvg(RegistroTipo.SCORE, 'folder');

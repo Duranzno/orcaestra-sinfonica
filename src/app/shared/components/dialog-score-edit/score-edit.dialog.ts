@@ -16,7 +16,7 @@ import { DataScore } from 'src/app/core/models/data.score.model';
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>
   `,
-  styleUrls: ['./score-edit.dialog.scss']
+  styleUrls: []
 })
 export class ScoreEditDialog implements OnInit {
 

@@ -73,7 +73,6 @@ export class Score implements IScore {
       case MediaTipo.MP3:
       case MediaTipo.IMG:
       case MediaTipo.MIDI:
-      case MediaTipo.MXML:
       case MediaTipo.PDF:
         const autor = this.getAutor();
         if (autor) {

@@ -39,11 +39,4 @@
       </div>
     </ng-template>
   </mat-tab>
-  <mat-tab label="PARTITURA">
-    <ng-template matTabContent>
-      <div *ngFor="let m of score.getByMedia(mediaType.MXML)">
-        <app-mxml [media]=m></app-mxml>
-      </div>
-    </ng-template>
-  </mat-tab>
 </mat-tab-group>

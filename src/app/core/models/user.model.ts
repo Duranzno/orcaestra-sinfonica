@@ -45,7 +45,6 @@ export class User implements IUser {
       case MediaTipo.MP3:
       case MediaTipo.IMG:
       case MediaTipo.MIDI:
-      case MediaTipo.MXML:
       case MediaTipo.PDF:
       case MediaTipo.YOUTUBE:
       default:

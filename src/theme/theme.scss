@@ -2,6 +2,7 @@
 @import '../app/app.component.scss';
 @import '../app/navigation/sidenav/sidenav.item.component.scss';
 @import '../app/shared/components/file-upload/file-upload.component.scss';
+@import '../app/shared/components/icon/icon-summary/icon-summary.component.scss';
 @import '../app/admin/score-management/score-management.component.scss';
 $mat-light-theme-background: (
   status-bar: map_get($mat-grey, 300),
@@ -52,6 +53,7 @@ app-sidenav-item{
 @include main($theme);
 @include dropzone($theme);
 @include table($theme);
+@include iconSummary($theme);
 html {
   height:100%;
 }

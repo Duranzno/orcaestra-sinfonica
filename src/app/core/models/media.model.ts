@@ -4,7 +4,6 @@ export enum MediaTipo {
   MP3 = 'mp3',
   MIDI = 'midi',
   PDF = 'pdf',
-  MXML = 'mxml',
   IMG = 'jpg/png',
   AVATAR = 'avatar',
 }
@@ -20,12 +19,6 @@ export function MediaTipoGuesser(archivo: File): MediaTipo {
 
     case 'pdf':
       return MediaTipo.PDF;
-
-    case 'musicxml':
-    case 'mxl':
-    case 'xml':
-      return MediaTipo.MXML;
-
     case 'mid':
     case 'midi':
       return MediaTipo.MIDI;

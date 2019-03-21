@@ -61,10 +61,6 @@ describe('Score', () => {
       expect(arrMedia.length).toBe(1);
       expect(arrMedia.pop().origenArray.length).toBe(3);
     });
-    it('deber no tener mxml', () => {
-      const arrMedia = score2.getByMedia(MediaTipo.MXML);
-      expect(arrMedia.length).toBe(0);
-    });
     it('deberia tener 2 MP3', () => {
       const arrMedia = score2.getByMedia(MediaTipo.MP3);
       expect(arrMedia.length).toBe(1);

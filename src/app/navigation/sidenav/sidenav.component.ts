@@ -43,7 +43,9 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   public $menus: Observable<Menu[]>;
   public anonMenu = AnonMenu;
 
-  constructor(private authService: AuthService, private store: Store<OrcaState>) { }
+  constructor(
+    private store: Store<OrcaState>
+  ) { }
 
   ngOnInit() {
     this.user$ = this.store.select(From.auth.getUser);

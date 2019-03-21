@@ -26,14 +26,6 @@ const mediaArr: IMedia[] = [
     'tipo': MediaTipo.MP3
   },
   {
-    'origenArray': [
-      { 'url': '/assets/9th/beethoven.mxml', 'tipo': OrigenTipo.ASSETS },
-      // tslint:disable-next-line:max-line-length
-      { 'url': 'https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/develop/test/data/ActorPreludeSample.xml', 'tipo': OrigenTipo.OTROS },
-    ],
-    'tipo': MediaTipo.MXML
-  },
-  {
     'origenArray': [{ 'url': 'https://www.youtube.com/watch?v=-kcOpyM9cBg', 'tipo': OrigenTipo.OTROS }],
     'tipo': MediaTipo.YOUTUBE
   }
