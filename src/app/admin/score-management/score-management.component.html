@@ -1,89 +1,97 @@
-<div class="contenedor mat-elevation-z8">
-  <!-- fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px"    fxLayoutAlign="center center" -->
-  <div class="loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner></mat-spinner>
-  </div>
+<div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em">
 
-  <div class="table-container">
-    <table mat-table multiTemplateDataRows #table [dataSource]="$dataSource | async" class="mat-elevation-z8" matSort
-      matSortActive="created" matSortDisableClear matSortDirection="desc">
-      <ng-container matColumnDef="its">
-        <th mat-header-cell *matHeaderCellDef> ITS </th>
-        <td mat-cell *matCellDef="let row"> {{row.its}} </td>
-      </ng-container>
-      <ng-container matColumnDef="obra">
-        <th mat-header-cell *matHeaderCellDef> Obra </th>
-        <td mat-cell *matCellDef="let row"> {{row.obra}} </td>
-      </ng-container>
-      <ng-container matColumnDef="generos">
-        <th mat-header-cell *matHeaderCellDef> generos </th>
-        <td mat-cell *matCellDef="let row"> {{row.generos}} </td>
-      </ng-container>
-      <ng-container matColumnDef="extraInfo">
-        <th mat-header-cell *matHeaderCellDef> Información </th>
-        <td mat-cell *matCellDef="let row"> {{row.extraInfo}} </td>
-      </ng-container>
-      <ng-container matColumnDef="almacenamiento">
-        <th mat-header-cell *matHeaderCellDef> Tipos de Almacenamiento </th>
-        <td mat-cell *matCellDef="let row">
-          <app-icon-summary [dataScoreArray]="row.almacenamiento"></app-icon-summary>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="media">
-        <th mat-header-cell *matHeaderCellDef> Contenido Multimedia</th>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{tipo|titlecase }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="contenedor mat-elevation-z8">
+      <!-- fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px"    fxLayoutAlign="center center" -->
+      <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner></mat-spinner>
+      </div>
 
-        <td mat-cell *matCellDef="let row">
+      <div class="table-container">
+        <table mat-table multiTemplateDataRows #table [dataSource]="$dataSource | async" class="mat-elevation-z8"
+          matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+          <ng-container matColumnDef="its">
+            <th mat-header-cell *matHeaderCellDef> ITS </th>
+            <td mat-cell *matCellDef="let row"> {{row.its}} </td>
+          </ng-container>
+          <ng-container matColumnDef="obra">
+            <th mat-header-cell *matHeaderCellDef> Obra </th>
+            <td mat-cell *matCellDef="let row"> {{row.obra}} </td>
+          </ng-container>
+          <ng-container matColumnDef="generos">
+            <th mat-header-cell *matHeaderCellDef> generos </th>
+            <td mat-cell *matCellDef="let row"> {{row.generos}} </td>
+          </ng-container>
+          <ng-container matColumnDef="extraInfo">
+            <th mat-header-cell *matHeaderCellDef> Información </th>
+            <td mat-cell *matCellDef="let row"> {{row.extraInfo}} </td>
+          </ng-container>
+          <ng-container matColumnDef="almacenamiento">
+            <th mat-header-cell *matHeaderCellDef> Tipos de Almacenamiento </th>
+            <td mat-cell *matCellDef="let row">
+              <app-icon-summary [dataScoreArray]="row.almacenamiento"></app-icon-summary>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="media">
+            <th mat-header-cell *matHeaderCellDef> Contenido Multimedia</th>
 
-          <app-icon-summary [dataScoreArray]="row.media"></app-icon-summary>
+            <td mat-cell *matCellDef="let row">
 
-
-        </td>
-
-      </ng-container>
-      <ng-container matColumnDef="instrumentos">
-        <th mat-header-cell *matHeaderCellDef> Instrumentos </th>
-
-        <td mat-cell *matCellDef="let row">
-          <app-icon-summary [dataScoreArray]="row.instrumentos"></app-icon-summary>
-
-        </td>
-
-      </ng-container>
-      <ng-container matColumnDef="gente">
-        <th mat-header-cell *matHeaderCellDef> Artistas </th>
-        <td mat-cell *matCellDef="let row">
-          <app-icon-summary [dataScoreArray]="row.gente"></app-icon-summary>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> UID </th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="edit(row.id)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="expandedElement = expandedElement === row ? null : row">
-            <mat-icon> expand_more
-            </mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-      <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
-          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <pre class="element-description">{{ $dataSource |async| json }}</pre>
-          </div>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let score; columns: columns;" class="element-row"
-        [class.expanded-row]="expandedElement === score">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-    </table>
+              <app-icon-summary [dataScoreArray]="row.media"></app-icon-summary>
 
 
-  </div>
-  <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+            </td>
+
+          </ng-container>
+          <ng-container matColumnDef="instrumentos">
+            <th mat-header-cell *matHeaderCellDef> Instrumentos </th>
+
+            <td mat-cell *matCellDef="let row">
+              <app-icon-summary [dataScoreArray]="row.instrumentos"></app-icon-summary>
+
+            </td>
+
+          </ng-container>
+          <ng-container matColumnDef="gente">
+            <th mat-header-cell *matHeaderCellDef> Artistas </th>
+            <td mat-cell *matCellDef="let row">
+              <app-icon-summary [dataScoreArray]="row.gente"></app-icon-summary>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> UID </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button (click)="edit(row.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="expandedElement = expandedElement === row ? null : row">
+                <mat-icon> expand_more
+                </mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+              <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <pre class="element-description">{{ $dataSource |async| json }}</pre>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let score; columns: columns;" class="element-row"
+            [class.expanded-row]="expandedElement === score">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        </table>
+
+
+      </div>
+      <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+    </mat-card-content>
+  </mat-card>
 </div>

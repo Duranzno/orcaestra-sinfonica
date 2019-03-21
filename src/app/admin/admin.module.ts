@@ -5,7 +5,7 @@ import { UploadComponent } from './upload/upload.component';
 import { AdminComponent } from './admin.component';
 import { SharedModule } from '../shared';
 import { ScoreManagementComponent } from './score-management/score-management.component';
-import { CategoriesManagementComponent } from './categories-management/categories-management.component';
+import { CategoriesManagementComponent, DialogoCategoria } from './categories-management/categories-management.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 @NgModule({
   declarations: [
@@ -13,7 +13,9 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     UploadComponent,
     ScoreManagementComponent,
     CategoriesManagementComponent,
+    DialogoCategoria,
   ],
+  entryComponents: [DialogoCategoria],
   imports: [
     SharedModule,
     AdminRoutingModule,

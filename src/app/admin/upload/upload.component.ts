@@ -7,7 +7,7 @@ import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
 import { MatStepper } from '@angular/material/stepper';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
@@ -17,9 +17,9 @@ import { Observable, Subscription } from 'rxjs';
 
 export class UploadComponent implements OnInit, OnDestroy {
   get instrumentos() { return this.form.get('instrumentos') as FormArray; }
-  get almacenamiento() { return this.form.get('almacenamiento') as FormArray; }
   get generos() { return this.form.get('generos') as FormArray; }
   get gente() { return this.form.get('gente') as FormArray; }
+  get video() { return this.form.get('youtube') as FormArray; }
   get grupos() { return this.form.get('grupos') as FormArray; }
   personas: string[] = Object.values(PersonaTipo);
   generosTodos: string[] = [];
@@ -39,7 +39,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   files: IUploadFile[] = [];
   form: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  $loading: Observable<boolean>;
+  $loading: Observable<boolean> = of(false);
   subscriptions: Subscription = new Subscription();
   constructor(
     private _fb: FormBuilder,
@@ -61,16 +61,15 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.store.select(From.music.getGrupos).subscribe(val => this.gruposTodos = val));
     this.form = this._fb.group({
       obra: ['', Validators.required],
-      its: [''],
+      registro: [''],
       extrainfo: [''],
-      youtube: [''],
       generos: this._fb.array([]),
       grupos: [''],
       gente: this._fb.array([
         this.initPersona(),
       ]),
-      almacenamiento: this._fb.array([
-        this.initAlmacenamiento(),
+      youtube: this._fb.array([
+        this.initVideo(),
       ]),
       instrumentos: this._fb.array([]),
     });
@@ -80,14 +79,18 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
   onSave(stepper?: MatStepper) {
     stepper.next();
-    const score: IScore = this.createScore()
-    this.store.dispatch(new From.music.SetPartitura(score));
-    this.files = this.files.concat({
-      tipo: MediaTipo.YOUTUBE,
-      archivo: new File(['foo', 'bar'], this.form.get('youtube').value),
-    });
+    // const score: IScore = this.createScore()
+    // this.store.dispatch(new From.music.SetPartitura(score));
+    let yt: string[] = this.form.get('youtube').value.map(y => y.url);
+    this.files = this.files.concat(yt.map((url) =>
+      ({
+        tipo: MediaTipo.YOUTUBE,
+        archivo: new File(['foo', 'bar'], url),
+      })
+    ));
     this.newCateg(this.generosTodos, this.form.get('generos').value, CategoriaTipo.GENERO);
     this.newCateg(this.instrumentosTodos, this.form.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
+    console.log(score)
     // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
   }
 
@@ -183,14 +186,9 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   // -------------------------------ALMACENAMIENTO
-  initAlmacenamiento() {
-    return this._fb.group({
-      cantidad: [''],
-      tipo: [''],
-    });
-  }
-  addAlmacenamiento() { this.almacenamiento.push(this.initAlmacenamiento()); }
-  removeAlmacenamiento(i: number) { this.almacenamiento.removeAt(i); }
+  initVideo() { return this._fb.group({ url: [''] }); }
+  addVideo() { this.video.push(this.initVideo()); }
+  removeVideo(i: number) { this.video.removeAt(i); }
   // -------------------------------INSTRUMENTO
 
 

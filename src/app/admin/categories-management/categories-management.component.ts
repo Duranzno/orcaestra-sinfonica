@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CategoriesService } from 'src/app/core/services';
@@ -7,6 +7,7 @@ import { Observable, merge, of, from, Subscription } from 'rxjs';
 import { CategoriaTipo } from 'src/app/core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-categories-management',
@@ -29,12 +30,13 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
   loading = false;
   $loading: Observable<boolean> = of(false);
   resultsLength = 0;
-  displayedColumns = ['nombre', 'opciones'];
+  columns = ['nombre', 'opciones'];
   pageEvent: PageEvent;
   constructor(
     private fbCateg: CategoriesService,
     private store: Store<OrcaState>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,17 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
       this.fbCateg.deleteCateg(this.tipo, s)
         .subscribe(null, e => this.loading = true, () => this.loading = false))
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogoCategoria, {
+      width: '250px',
+      data: { nuevaCateg: '', tipo: this.tipo }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.add(result);
+    });
+  }
   add(newCateg: string) {
 
     this.$sub.add(
@@ -66,9 +78,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.$dataSource = merge(
-      this.sort.sortChange,
-      this.paginator.page)
+    this.$dataSource = merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -78,7 +88,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         map(data => {
           // Flip flag to show that loading has finished.
           this.loading = true;
-          console.log(data)
           // this.dataSource = new MatTableDataSource(data);
           // this.dataSource = new MatTableDataSource(data as string[])
           this.resultsLength = data.length;
@@ -97,5 +106,32 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() { this.$sub.unsubscribe(); }
+
+}
+@Component({
+  selector: 'app-dialogo-categoria',
+  template: `
+  <h1 mat-dialog-title>{{data.tipo}}</h1>
+  <div mat-dialog-content>
+    <p class="mat-body">¿Que va a agregar?</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.nuevaCateg">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Mejor no</button>
+    <button mat-button [mat-dialog-close]="data.nuevaCateg" cdkFocusInitial>Ok</button>
+  </div>
+`,
+})
+export class DialogoCategoria {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogoCategoria>,
+    @Inject(MAT_DIALOG_DATA) public data: { nuevaCateg: string, tipo: string }) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
