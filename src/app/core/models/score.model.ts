@@ -17,7 +17,8 @@ export interface IScore {
   almacenamiento?: string;  // Tipo Almacenamiento Fisico
   media?: Media[];
   generos?: string[];
-  instrumentos?: string[];  // Instrumentos Usados
+  grupos?: string[];
+
   gente?: Persona[];
   extrainfo?: string;  // Información Extra
   suscriptores?: string[];
@@ -27,16 +28,16 @@ export class Score implements IScore {
   almacenamiento: string;
   media: Media[] = [];
   generos?: string[] = [];
-  instrumentos?: string[] = [];
+  grupos?: string[];
   gente?: Persona[] = [];
   extrainfo?: string = '';
-  suscriptores?: string[];
+  suscriptores?: string[] = [];
   constructor(score: IScore) {
     this.obra = (score.obra) ? score.obra : '';
     this.almacenamiento = (score.almacenamiento) ? score.almacenamiento : '';
     this.media = (score.media) ? score.media : [];
     this.generos = (score.generos) ? score.generos : [];
-    this.instrumentos = (score.instrumentos) ? score.instrumentos : [];
+    this.grupos = (score.grupos) ? score.grupos : [];
     this.gente = (score.gente) ? score.gente : [];
     this.extrainfo = (score.extrainfo) ? score.extrainfo : '';
   }

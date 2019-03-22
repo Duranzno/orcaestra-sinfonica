@@ -48,7 +48,6 @@ export const iScore: IScore = {
       'apellido': 'Beethoven'
     }
   ],
-  'instrumentos': ['Violin', 'Piano'],
   'media': [],
   // tslint:disable-next-line:max-line-length
   'extrainfo': 'La Sinfonía n.º 9 en re menor, op. 125, conocida también como "Coral", es la última sinfonía completa del compositor alemán Ludwig van Beethoven. Es una de las obras más trascendentales, importantes y populares de la música y el arte. Su último movimiento es un final coral sorprendentemente inusual en su época que se ha convertido en símbolo de la libertad. Precisamente, una adaptación de la sinfonía, realizada por Herbert von Karajan es, desde 1972, el himno de la Unión Europea (UE).1​ En 2001, la partitura original de la sinfonía se inscribió en el Registro de la Memoria del Mundo de la UNESCO, donde forma parte, junto con otros sobresalientes monumentos, de la herencia espiritual de la humanidad',

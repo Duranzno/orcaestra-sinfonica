@@ -1,11 +1,11 @@
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { PersonaTipo, IUploadFile, Score, IScore, MediaTipo, CategoriaTipo } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
-import { MatStepper } from '@angular/material/stepper';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 
 import { Observable, Subscription, of } from 'rxjs';
 
@@ -26,11 +26,12 @@ export class UploadComponent implements OnInit, OnDestroy {
   instrumentosTodos: string[] = [];
   gruposTodos: string[] = [];
 
-
+  @Input()
+  selectedIndex: number
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('instrumentoInput') instrumentoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('#stepper') stepper: MatHorizontalStepper;
   chipInputCtrl = new FormControl();
   gruposInputCtrl = new FormControl();
   chipInputCtrlI = new FormControl();
@@ -51,19 +52,17 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.addMedia(files.pop())
     // (<FormArray>this.form.controls['media']).push(new FormControl(files))
   }
-  goBack(stepper: MatStepper) {
-    stepper.previous();
+  goBack() {
+    this.stepper.previous();
   }
-  canSave(stepper?: MatStepper) {
-    return (stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 2) : false;
+  canSave() {
+    return true;//(stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 2) : false;
   }
-  canPlay(stepper?: MatStepper) {
-    return (stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 1) : false;
-
+  canPlay() {
+    return true;//(stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 1) : false;
   }
-
-  goForward(stepper: MatStepper) {
-    stepper.next();
+  goForward() {
+    this.stepper.next();
   }
   ngOnInit() {
 
@@ -78,10 +77,9 @@ export class UploadComponent implements OnInit, OnDestroy {
       generos: this._fb.array([]),
       grupos: [''],
       gente: this._fb.array([
-        this.initPersona(),
+        this.initPersona(PersonaTipo.AUTOR),
       ]),
       youtube: this._fb.array([
-        this.initVideo(),
       ]),
       media: this._fb.array([]),
     });
@@ -89,23 +87,22 @@ export class UploadComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-  onSave(stepper?: MatStepper) {
-    // const score: IScore = this.createScore()
-    // this.store.dispatch(new From.music.SetPartitura(score));
+  onSave() {
+    const score: IScore = this.createScore()
     let yt: string[] = this.form.get('youtube').value.map(y => y.url);
-    this.files = this.files.concat(yt.map((url) =>
+    const files = this.media.value.concat(yt.map((url) =>
       ({
         tipo: MediaTipo.YOUTUBE,
         archivo: new File(['foo', 'bar'], url),
       })
     ));
-    this.newCateg(this.generosTodos, this.form.get('generos').value, CategoriaTipo.GENERO);
-    this.parseInstruments();
-    // console.log(score)
-    // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
-    stepper.next();
+    this.store.dispatch(new From.music.SetPartitura(score));
+    this.store.dispatch(new From.media.ManageMediaArray({ files }));
+    this.updateDatabase();
+    this.stepper.next();
   }
-  parseInstruments() {
+  updateDatabase() {
+    this.newCateg(this.generosTodos, this.generos.value, CategoriaTipo.GENERO);
     const instrArr = (<Array<{ instr: string[] }>>this.media.value)
       .reduce(
         (finalArray, media) => {
@@ -130,22 +127,24 @@ export class UploadComponent implements OnInit, OnDestroy {
 
 
   createScore() {
-    return <IScore>{
-      obra: this.form.get('obra').value,
-      extrainfo: this.form.get('extrainfo').value,
-      generos: this.form.get('generos').value,
-      almacenamiento: this.form.get('almacenamiento').value,
-      gente: this.form.get('gente').value,
-    }
+    const data=this.form.value;    
+    return new Score({
+     obra:data.obra,
+     almacenamiento:data.registro,
+     generos:data.generos,
+     grupos:data.grupos,
+     gente:data.gente,
+     extrainfo:data.extrainfo,     
+    })
   }
 
 
   // -------------------------------PERSONA
-  initPersona() {
+  initPersona(tipo?:MediaTipo) {
     return this._fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: [''],
-      tipo: ['']
+      tipo: [tipo]
     });
   }
   addPersona() { this.gente.push(this.initPersona()); }
@@ -190,7 +189,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this._fb.group({
       archivo: [u.archivo],
       tipo: [u.tipo],
-      instr: [(u.instr) ? u.instr : ["guitarra", "teclado"]],
+      instr: [(u.instr) ? u.instr : []],
     });
   }
   addMedia(u?: IUploadFile) { (<FormArray>this.form.controls['media']).push(this.initMedia(u)); }

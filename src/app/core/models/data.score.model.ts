@@ -14,7 +14,6 @@ export class DataScore {
   extraInfo?: string;
   registro: string;
   media: IElementoIcono[] = [];
-  instr: IElementoIcono[] = [];
   gente: IElementoIcono[] = [];
   id: string;
   generosParser(g: string[]): string {
@@ -27,7 +26,6 @@ export class DataScore {
     this.generos = this.generosParser(i.generos);
     this.registro = i.almacenamiento;
     this.media = mediaParser(i.media);
-    this.instr = instrumentosParser(i.instrumentos);
     this.gente = genteParser(i.gente);
   }
 }

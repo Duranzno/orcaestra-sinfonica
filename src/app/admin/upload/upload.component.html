@@ -5,7 +5,7 @@
     </div> -->
     <mat-card-content>
       <form [formGroup]="form">
-        <mat-horizontal-stepper linear="false" #stepper>
+        <mat-horizontal-stepper linear="false" id="stepper">
           <mat-step>
             <ng-template matStepLabel>Datos Basicos
             </ng-template>
@@ -140,19 +140,24 @@
     </mat-card-content>
     <mat-card-actions>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2em">
-        <button mat-raised-button (click)="goBack(stepper)" color="primary"
-          [disabled]="stepper&&stepper.selectedIndex === 0">Anterior</button>
-        <button mat-raised-button color="primary" (click)="stepper.reset()">Reiniciar</button>
-        <ng-container *ngIf="canSave(stepper); else nextStep">
-          <button mat-raised-button (click)="onSave(stepper)" color="primary">Guardar</button>
-        </ng-container>
-        <ng-template #nextStep>
-          <button mat-raised-button (click)="goForward(stepper)" color="primary">Siguiente</button>
-        </ng-template>
-        <ng-container *ngIf="canPlay(stepper)">
-          <button mat-raised-button color="primary">Ir a Obra</button>
-          <button mat-raised-button color="primary">Subir nueva Obra Musical</button>
-        </ng-container>
+        <button mat-raised-button color="primary" (click)="goBack()">
+          Anterior
+        </button>
+        <button mat-raised-button color="primary" (click)="stepper.reset()">
+          Reiniciar
+        </button>
+        <button mat-raised-button color="primary" (click)="onSave()" *ngIf="canSave()">
+          Guardar
+        </button>
+        <button mat-raised-button color="primary" (click)="goForward()" *ngIf="canSave()">
+          Siguiente
+        </button>
+        <button mat-raised-button color="primary" *ngIf="canPlay()">
+          Ir a Obra
+        </button>
+        <button mat-raised-button color="primary" *ngIf="canPlay()">
+          Subir nueva Obra Musical
+        </button>
       </div>
 
     </mat-card-actions>
