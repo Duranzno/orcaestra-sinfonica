@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
   <mat-tab-group dynamicHeight>
   <mat-tab label="Biblioteca de la Orquesta">
     <ng-template matTabContent>
-     <app-music-list [scores]="$Scores|async"></app-music-list>
+     <app-music-list [userId]="userId" [scores]="$Scores|async"></app-music-list>
     </ng-template>
   </mat-tab>
 
@@ -21,14 +21,14 @@ import { Store } from '@ngrx/store';
         fxLayoutAlign="center center">
           <button mat-button (click)="goToGeneros(g)">{{g}}</button>
      </div>
-     <app-music-list [scores]="$GeneroScores|async"></app-music-list>
+     <app-music-list [userId]="userId" [scores]="$GeneroScores|async"></app-music-list>
 
     </ng-template>
   </mat-tab>
 
   <mat-tab label="Favoritos">
     <ng-template matTabContent>
-    <app-music-list [scores]="$FavScores|async"></app-music-list>
+    <app-music-list [userId]="userId" [scores]="$FavScores|async"></app-music-list>
     </ng-template>
   </mat-tab>  
 </mat-tab-group>
@@ -41,6 +41,7 @@ export class MusicComponent implements OnInit {
   $FavScores: Observable<IScoreId[]> = from([]);
   $GeneroScores: Observable<IScoreId[]> = from([]);
   $Generos: Observable<string[]> = from([]);
+  userId: string;
   constructor(
     private fbScore: ScoreService,
     private store: Store<OrcaState>
@@ -48,6 +49,7 @@ export class MusicComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.store.select(From.auth.getId).subscribe(id => this.userId = id);
     this.$Scores = this.fbScore.getScoreList();
     this.$FavScores = this.store.select(From.music.getFavPartituras);
     this.$Generos = this.store.select(From.music.getGeneros);

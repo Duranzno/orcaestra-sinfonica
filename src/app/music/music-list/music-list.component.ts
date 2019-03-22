@@ -7,7 +7,7 @@ import { IScoreId } from 'src/app/core/models';
   template: `
     <div *ngFor="let score of scores" 
     fxLayout="column" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-      <app-music-detail [score]="score"></app-music-detail>
+      <app-music-detail [userId]="userId" [score]="score"></app-music-detail>
       <!-- {{ score | json }} -->
       <mat-divider [inset]="true"></mat-divider>
     </div>
@@ -16,6 +16,7 @@ import { IScoreId } from 'src/app/core/models';
 })
 export class MusicListComponent implements OnInit {
   @Input() scores: IScoreId[];
+  @Input() userId: string;
   constructor(
 
   ) {

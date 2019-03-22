@@ -74,7 +74,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.initVideo(),
       ]),
       media: this._fb.array([this.initMedia(),]),
-      instrumentos: this._fb.array([]),
     });
   }
   ngOnDestroy() {

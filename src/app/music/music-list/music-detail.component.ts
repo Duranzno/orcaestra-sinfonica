@@ -14,14 +14,29 @@ import { From, OrcaState } from '../../core/store';
 export class MusicDetailComponent implements OnInit, OnDestroy {
   media: { avatar: string; sheet: string; } = { avatar: '', sheet: '' };
   score: Score;
+  isFav: boolean = false;
   @Input('score') iScore: IScoreId;
-  constructor() { }
+  @Input() userId: string;
+  constructor(private store: Store<OrcaState>) { }
 
   ngOnInit() {
     this.score = new Score(this.iScore);
+    this.isFav = this.score.suscriptores.some(id => id === this.userId);
     console.log(this.score);
   }
   ngOnDestroy() {
 
   }
+  fav() {
+    if (this.isFav) {
+      this.store.dispatch(new From.media.SaveFav({ scoreId: this.iScore.id, userId: this.userId }));
+      this.isFav = true;
+    }
+    else {
+      // this.store.dispatch(new From.media.DeleteFav({scoreId:this.iScore.id,userId:this.userId}));
+      this.isFav = false;
+    }
+  }
+
+
 }

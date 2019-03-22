@@ -56,7 +56,10 @@ export class AuthService {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password))
       .pipe(
-        switchMap(f => this.fetchUserData(f.user.uid)),
+        switchMap(f => {
+          this.store.dispatch(new From.auth.SetId(f.user.uid));
+          return this.fetchUserData(f.user.uid)
+        }),
         catchError(this.errorHandlerRx)
       )
       .subscribe(finalUser => {
