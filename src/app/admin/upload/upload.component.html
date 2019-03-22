@@ -95,33 +95,42 @@
               </mat-accordion>
             </div>
           </mat-step>
+
           <mat-step fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
             <ng-template matStepLabel>Media</ng-template>
             <app-file-upload (filesEvent)="show($event)">
             </app-file-upload>
             <mat-list>
               <h3 mat-subheader>Partituras</h3>
-              <mat-list-item *ngFor="let p of media.controls;let i=index">
-                <p mat-line>Nombre Generico de Partitura</p>
-                <p mat-line>Iconos de Media</p>
-                <mat-chip-list #InstList>
-                  <mat-chip *ngFor="let i of instrumentosTodos;let i=index" selectable="true" removable="true"
-                    (removed)="removeChipI(i)">
-                    {{i}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                  </mat-chip>
-                  <input matInput placeholder="Instrumentos" #instrumentoInput (matChipInputTokenEnd)="addChipI($event)"
-                    [matChipInputFor]="InstList" matChipInputAddOnBlur="true" [formControl]="chipInputCtrlI"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="autoI">
+              <div formArrayName="media">
+                <mat-list-item *ngFor="let p of media.controls; let mediaIndex=index" [formGroupName]="mediaIndex">
+                  <h4 mat-subheader>Partitura:{{p.value.archivo.name}}</h4>
+                  <p mat-line>{{p.value.archivo.type}} y MediaTipo {{p.value.tipo}}</p>
+                  <p mat-line>instrumentos{{p.value.instr|json}}</p>
 
-                  <mat-autocomplete #autoI="matAutocomplete" (optionSelected)="selectedInstrumento($event)">
-                    <mat-option *ngFor="let i of instrumentosTodos" [value]="i">{{i}}</mat-option>
-                  </mat-autocomplete>
-                </mat-chip-list>
+                  <mat-chip-list #InstList>
+                    <mat-chip *ngFor="let instr of p.value.instr;let j=index" selectable="true" removable="true"
+                      (removed)="removeMediaInstr(instr,mediaIndex)">
+                      {{instr}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input matInput placeholder="Instrumentos" #instrumentoInput
+                      (matChipInputTokenEnd)="addMediaInstr($event,mediaIndex)" [matChipInputFor]="InstList"
+                      matChipInputAddOnBlur="true" [formControl]="chipInputCtrlI"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="autoI">
 
-              </mat-list-item>
+                    <mat-autocomplete #autoI="matAutocomplete" (optionSelected)="selectedMediaInstr($event,mediaIndex)">
+                      <mat-option *ngFor="let t of instrumentosTodos" [value]="t">{{t}}</mat-option>
+                    </mat-autocomplete>
+                  </mat-chip-list>
+                </mat-list-item>
+
+              </div>
+
+
             </mat-list>
           </mat-step>
+
           <mat-step fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
             <ng-template matStepLabel>Archivos</ng-template>
             <app-file-upload (filesEvent)="show($event )"></app-file-upload>
@@ -134,15 +143,13 @@
         <button mat-raised-button (click)="goBack(stepper)" color="primary"
           [disabled]="stepper&&stepper.selectedIndex === 0">Anterior</button>
         <button mat-raised-button color="primary" (click)="stepper.reset()">Reiniciar</button>
-        <ng-container
-          *ngIf="stepper&&stepper._steps && stepper.selectedIndex === (stepper._steps.length - 2); else elseTemplate">
+        <ng-container *ngIf="canSave(stepper); else nextStep">
           <button mat-raised-button (click)="onSave(stepper)" color="primary">Guardar</button>
         </ng-container>
-        <ng-template #elseTemplate>
+        <ng-template #nextStep>
           <button mat-raised-button (click)="goForward(stepper)" color="primary">Siguiente</button>
         </ng-template>
-        <ng-container *ngIf="stepper&&stepper._steps && stepper.selectedIndex === (stepper._steps.length - 1)">
-
+        <ng-container *ngIf="canPlay(stepper)">
           <button mat-raised-button color="primary">Ir a Obra</button>
           <button mat-raised-button color="primary">Subir nueva Obra Musical</button>
         </ng-container>

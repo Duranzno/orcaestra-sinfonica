@@ -36,7 +36,7 @@ export class FileUploadComponent {
   }
   done() {
     this.filesEvent.emit(this.files);
-    alert(JSON.stringify(this.files));
+    // alert(JSON.stringify(this.files));
   }
   toggleHover(event: boolean) { this.isHovering = event; }
   openInput() { document.getElementById('file-input').click(); }

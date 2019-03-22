@@ -1,7 +1,7 @@
 import { timer, of, Observable, from } from 'rxjs';
 import { switchMap, last, map, mergeMap, } from 'rxjs/operators';
 import { OrigenTipo, Origen, Score, IUploadFile, MediaTipo } from '../../models';
-import { UploadInterface } from './upload.interface';
+import { UploadServiceInterface } from './upload.interface';
 import { iScore } from '../../mock';
 
 describe('upload Interface', () => {
@@ -29,7 +29,7 @@ describe('upload Interface', () => {
   });
 
   describe('Complete Workflow', () => {
-    let uService: UploadInterface, uFile: IUploadFile, score: Score;
+    let uService: UploadServiceInterface, uFile: IUploadFile, score: Score;
     beforeAll(function () {
       uService = new MockIUploadFile();
       uFile = <IUploadFile>({
@@ -93,7 +93,7 @@ describe('upload Interface', () => {
     });
   });
 });
-class MockIUploadFile implements UploadInterface {
+class MockIUploadFile implements UploadServiceInterface {
   upload(file: IUploadFile, path: string): Observable<Origen> {
     return of({
       tipo: OrigenTipo.ASSETS,

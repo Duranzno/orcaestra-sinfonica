@@ -16,7 +16,6 @@ import { Observable, Subscription, of } from 'rxjs';
 })
 
 export class UploadComponent implements OnInit, OnDestroy {
-  get instrumentos() { return this.form.get('instrumentos') as FormArray; }
   get generos() { return this.form.get('generos') as FormArray; }
   get gente() { return this.form.get('gente') as FormArray; }
   get video() { return this.form.get('youtube') as FormArray; }
@@ -31,7 +30,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('instrumentoInput') instrumentoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  @ViewChild('autoI') matAutocompleteI: MatAutocomplete;
   @ViewChild('stepper') stepper: MatStepper;
   chipInputCtrl = new FormControl();
   gruposInputCtrl = new FormControl();
@@ -47,9 +45,21 @@ export class UploadComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private store: Store<OrcaState>) {
   }
-  show(files: IUploadFile[]) { console.log('admin/upload', files); this.files = files; }
+  show(files: IUploadFile[]) {
+    console.log('admin/upload', files);
+    console.log('admin/upload', this.form.value.media);
+    this.addMedia(files.pop())
+    // (<FormArray>this.form.controls['media']).push(new FormControl(files))
+  }
   goBack(stepper: MatStepper) {
     stepper.previous();
+  }
+  canSave(stepper?: MatStepper) {
+    return (stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 2) : false;
+  }
+  canPlay(stepper?: MatStepper) {
+    return (stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 1) : false;
+
   }
 
   goForward(stepper: MatStepper) {
@@ -73,14 +83,13 @@ export class UploadComponent implements OnInit, OnDestroy {
       youtube: this._fb.array([
         this.initVideo(),
       ]),
-      media: this._fb.array([this.initMedia(),]),
+      media: this._fb.array([]),
     });
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
   onSave(stepper?: MatStepper) {
-    stepper.next();
     // const score: IScore = this.createScore()
     // this.store.dispatch(new From.music.SetPartitura(score));
     let yt: string[] = this.form.get('youtube').value.map(y => y.url);
@@ -91,9 +100,25 @@ export class UploadComponent implements OnInit, OnDestroy {
       })
     ));
     this.newCateg(this.generosTodos, this.form.get('generos').value, CategoriaTipo.GENERO);
-    this.newCateg(this.instrumentosTodos, this.form.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
+    this.parseInstruments();
     // console.log(score)
     // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
+    stepper.next();
+  }
+  parseInstruments() {
+    const instrArr = (<Array<{ instr: string[] }>>this.media.value)
+      .reduce(
+        (finalArray, media) => {
+          return [
+            ...finalArray, ...media.instr.filter(i => !(finalArray.includes(i)))
+          ];
+        }
+        , []);
+    this.newCateg(
+      this.instrumentosTodos,
+      instrArr,
+      CategoriaTipo.INSTRUMENTOS
+    );
   }
 
   newCateg(orig: string[], modified: string[], tipo: CategoriaTipo) {
@@ -111,10 +136,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       generos: this.form.get('generos').value,
       almacenamiento: this.form.get('almacenamiento').value,
       gente: this.form.get('gente').value,
-      instrumentos: this.form.get('instrumentos').value,
     }
   }
-
 
 
   // -------------------------------PERSONA
@@ -158,50 +181,45 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.generos.value.splice(index, 1);
     }
   }
-  // -------------------------------Instrumentos
-
-  selectedInstrumento(event: MatAutocompleteSelectedEvent): void {
-    this.addInstrumentoEvent(event.option.viewValue);
-    this.instrumentoInput.nativeElement.value = '';
-    this.chipInputCtrlI.setValue(null);
-  }
-  private addInstrumentoEvent(value: string) {
-    const index = this.instrumentos.value.findIndex((e: string) => e.trim() === value.trim());
-
-    if (index === -1) {
-      this.instrumentos.value.push(value.trim());
-    }
-  }
-  addChipI(event: MatChipInputEvent): void {
-    // if (!this.matAutocomplete.isOpen) {
-    if ((event.value || '').trim()) { this.addInstrumentoEvent(event.value); }
-    if (event.input) { event.input.value = ''; }
-    this.chipInputCtrlI.setValue(null);
-    // }
-  }
-  removeChipI(genero: string): void {
-    const index = this.instrumentos.value.indexOf(genero);
-    if (index >= 0) {
-      this.instrumentos.value.splice(index, 1);
-    }
-  }
-
   // -------------------------------ALMACENAMIENTO
   initVideo() { return this._fb.group({ url: [''] }); }
   addVideo() { this.video.push(this.initVideo()); }
   removeVideo(i: number) { this.video.removeAt(i); }
   // -------------------------------MEDIA
-  initMedia() {
+  initMedia(u?: IUploadFile) {
     return this._fb.group({
-      archivo: [''],
-      tipo: [''],
-      instr: this._fb.array([]),
+      archivo: [u.archivo],
+      tipo: [u.tipo],
+      instr: [(u.instr) ? u.instr : ["guitarra", "teclado"]],
     });
   }
-  addMedia() { this.media.push(this.initMedia()); }
+  addMedia(u?: IUploadFile) { (<FormArray>this.form.controls['media']).push(this.initMedia(u)); }
   removeMedia(i: number) {
     this.media.removeAt(i);
   }
+  removeMediaInstr(instr: string, mediaIndex: number): void {
+    const arr = this.form.get(['media', mediaIndex, 'instr']).value;
+    const index = arr.indexOf(instr);
+    if (index >= 0) {
+      arr.splice(index, 1);
+    }
+  }
+  addMediaInstr(event: MatChipInputEvent, mediaIndex: number): void {
+    if ((event.value || '').trim()) { this.addInstrumentoEvent(event.value, mediaIndex); }
+    if (event.input) { event.input.value = ''; }
+    this.chipInputCtrlI.setValue(null);
+  }
+  selectedMediaInstr(event: MatAutocompleteSelectedEvent, i: number): void {
+    this.addInstrumentoEvent(event.option.viewValue, i);
+    // this.genCtrl.setValue(null);
+  }
+  private addInstrumentoEvent(instr: string, mediaIndex: number) {
+    const index = this.form.get(['media', mediaIndex, 'instr']).value
+      .findIndex((e: string) => e.trim() === instr.trim());
 
+    if (index === -1) {
+      this.form.get(['media', mediaIndex, 'instr']).value.push(instr.trim());
+    }
+  }
 
 }

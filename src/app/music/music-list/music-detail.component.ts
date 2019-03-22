@@ -16,7 +16,7 @@ export class MusicDetailComponent implements OnInit, OnDestroy {
   score: Score;
   isFav: boolean = false;
   @Input('score') iScore: IScoreId;
-  @Input() userId: string;
+  @Input('userId') userId: string;
   constructor(private store: Store<OrcaState>) { }
 
   ngOnInit() {
