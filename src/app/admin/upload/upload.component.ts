@@ -140,7 +140,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
 
   // -------------------------------PERSONA
-  initPersona(tipo?:MediaTipo) {
+  initPersona(tipo?:PersonaTipo) {
     return this._fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: [''],
