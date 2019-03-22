@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatListModule,
+  MatRadioModule,
   MatTabsModule,
   MatCardModule,
   MatSelectModule,
@@ -31,6 +32,7 @@ import {
 
 const material = [
   MatChipsModule,
+  MatRadioModule,
   MatTooltipModule,
   MatStepperModule,
   MatProgressBarModule,

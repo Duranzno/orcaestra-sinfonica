@@ -32,12 +32,6 @@ const mediaArr: IMedia[] = [
 ];
 const media = mediaArr.map(m => new Media(m));
 export const iScore: IScore = {
-  'almacenamiento': [
-    {
-      'tipo': RegistroTipo.SCORE,
-      'cantidad': 2
-    }
-  ],
   'generos': [
     'Barroco'
   ],

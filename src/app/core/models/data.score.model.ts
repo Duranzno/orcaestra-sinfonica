@@ -12,7 +12,7 @@ export class DataScore {
   obra: string;
   generos: string;
   extraInfo?: string;
-  registro: IElementoIcono[] = [];
+  registro: string;
   media: IElementoIcono[] = [];
   instr: IElementoIcono[] = [];
   gente: IElementoIcono[] = [];
@@ -25,19 +25,14 @@ export class DataScore {
     this.obra = i.obra;
     this.extraInfo = i.extrainfo;
     this.generos = this.generosParser(i.generos);
-    this.registro = almacenamientoParser(i.almacenamiento);
+    this.registro = i.almacenamiento;
     this.media = mediaParser(i.media);
     this.instr = instrumentosParser(i.instrumentos);
     this.gente = genteParser(i.gente);
   }
 }
 
-export function almacenamientoParser(arr: IRegistro[]): IElementoIcono[] {
-  return arr.map((stored) => (<IElementoIcono>{
-    icono: stored.tipo,
-    numero: stored.cantidad
-  }));
-}
+
 export function imgParser(arr: Media[]): IElementoIcono[] {
   return arr
     .filter((({ tipo }) => ([MediaTipo.AVATAR, MediaTipo.IMG].includes(tipo))))

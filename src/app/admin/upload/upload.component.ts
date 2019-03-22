@@ -21,6 +21,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   get gente() { return this.form.get('gente') as FormArray; }
   get video() { return this.form.get('youtube') as FormArray; }
   get grupos() { return this.form.get('grupos') as FormArray; }
+  get media() { return this.form.get('media') as FormArray; }
   personas: string[] = Object.values(PersonaTipo);
   generosTodos: string[] = [];
   instrumentosTodos: string[] = [];
@@ -37,6 +38,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   chipInputCtrlI = new FormControl();
 
   files: IUploadFile[] = [];
+  counter = 0;
   form: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   $loading: Observable<boolean> = of(false);
@@ -71,6 +73,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       youtube: this._fb.array([
         this.initVideo(),
       ]),
+      media: this._fb.array([this.initMedia(),]),
       instrumentos: this._fb.array([]),
     });
   }
@@ -90,7 +93,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     ));
     this.newCateg(this.generosTodos, this.form.get('generos').value, CategoriaTipo.GENERO);
     this.newCateg(this.instrumentosTodos, this.form.get('instrumentos').value, CategoriaTipo.INSTRUMENTOS);
-    console.log(score)
+    // console.log(score)
     // this.store.dispatch(new From.media.ManageMediaArray({ files: this.files }));
   }
 
@@ -104,7 +107,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   createScore() {
     return <IScore>{
-      its: this.form.get('its').value,
       obra: this.form.get('obra').value,
       extrainfo: this.form.get('extrainfo').value,
       generos: this.form.get('generos').value,
@@ -189,7 +191,18 @@ export class UploadComponent implements OnInit, OnDestroy {
   initVideo() { return this._fb.group({ url: [''] }); }
   addVideo() { this.video.push(this.initVideo()); }
   removeVideo(i: number) { this.video.removeAt(i); }
-  // -------------------------------INSTRUMENTO
+  // -------------------------------MEDIA
+  initMedia() {
+    return this._fb.group({
+      archivo: [''],
+      tipo: [''],
+      instr: this._fb.array([]),
+    });
+  }
+  addMedia() { this.media.push(this.initMedia()); }
+  removeMedia(i: number) {
+    this.media.removeAt(i);
+  }
 
 
 }

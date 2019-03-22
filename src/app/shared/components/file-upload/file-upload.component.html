@@ -14,8 +14,7 @@
         Tomar foto
       </button>
     </div>
-    <input id="file-input" type="file" [accept]="accept" [multiple]="!isAvatar"
-      (change)="addFiles($event.target.files)">
+    <input id="file-input" type="file" [accept]="accept" (change)="addFiles($event.target.files)">
     <app-icon-summary *ngIf="!isAvatar" [dataScoreArray]="dsArray"></app-icon-summary>
   </div>
 </div>

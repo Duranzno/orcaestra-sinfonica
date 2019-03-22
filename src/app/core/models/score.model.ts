@@ -14,7 +14,7 @@ export interface IScoreId extends IScore { id: string; }
 export interface IScore {
   // Obligatorios
   obra: string;  // Nombre de la Obra
-  almacenamiento?: IRegistro[];  // Tipo Almacenamiento Fisico
+  almacenamiento?: string;  // Tipo Almacenamiento Fisico
   media?: Media[];
   generos?: string[];
   instrumentos?: string[];  // Instrumentos Usados
@@ -24,7 +24,7 @@ export interface IScore {
 }
 export class Score implements IScore {
   obra: string = '';
-  almacenamiento: IRegistro[] = [];
+  almacenamiento: string;
   media: Media[] = [];
   generos?: string[] = [];
   instrumentos?: string[] = [];
@@ -32,7 +32,7 @@ export class Score implements IScore {
   extrainfo?: string = '';
   constructor(score: IScore) {
     this.obra = (score.obra) ? score.obra : '';
-    this.almacenamiento = (score.almacenamiento) ? score.almacenamiento : [];
+    this.almacenamiento = (score.almacenamiento) ? score.almacenamiento : '';
     this.media = (score.media) ? score.media : [];
     this.generos = (score.generos) ? score.generos : [];
     this.instrumentos = (score.instrumentos) ? score.instrumentos : [];

@@ -12,7 +12,6 @@ export interface State {
 const initialState: State = {
   partitura: {
     obra: '',
-    almacenamiento: [],
   },
   favs: [],
   generos: [],

@@ -6,9 +6,9 @@ import { DataScore, IElementoIcono } from 'src/app/core/models/data.score.model'
   template: `
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" >
   <mat-icon
-  matTooltip="Info about the action"
   *ngFor="let i of array"
-  [svgIcon]="i.icon">
+  [matTooltip]="(i.info)?i.info:'stuff'"
+  [svgIcon]="i.icono">
 </mat-icon>
   </div>
   `,
