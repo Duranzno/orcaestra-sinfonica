@@ -4,13 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --disableHostCheck",
-    "build": "ng build --prod && node node_modules/http-server/bin/http-server dist/",
+    "build": "ng build --prod && yarn run fcm",
     "test": "ng test",
     "tslint": "tslint --project tsconfig.json",
+    "fcm": "node node_modules/concat/bin/concat dist/ngsw-worker.js ./fcm.js -o dist/combined-worker.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "http": "node node_modules/http-server/bin/http-server dist/",
-    "pwa": "ng build --prod && firebase deploy"
+    "pwa": "yarn run build && yarn run http"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "@ngrx/effects": "^7.2.0",
     "@ngrx/store": "^7.2.0",
     "@ngrx/store-devtools": "^7.2.0",
+    "concat": "^1.0.3",
     "core-js": "^2.6.3",
     "firebase": "^5.8.2",
     "firebase-admin": "^7.1.0",

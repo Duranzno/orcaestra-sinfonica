@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/messaging';
 import { Subject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { SwUpdate } from '@angular/service-worker';
 
 
 @Injectable()
@@ -14,34 +15,40 @@ export class MessagingService {
   private permission: boolean = false;
   currentMessage = this.messageSource.asObservable() // message observable to show in Angular component
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private swUpdate: SwUpdate,
+    private afs: AngularFirestore) {
     if (firebase.messaging.isSupported) {
-      console.log("Las notificaciones PUSH estan soportadas")
+      console.log(`"Las notificaciones PUSH estan soportadas c:`)
       this.messaging = firebase.messaging();
       // messaging.usePublicVapidKey("BEP7U1FCzQbCdoSbHHauqljSbs01jqHia6RiaTVIU1RrpKaF-B9d4LwyuYfKyogophhPdCoej59ylOnO7UqEvrM");
     } else {
-      console.log('Unable to Instantiate Firebase Messaing');
+      console.log(`No soporta PUSH :c`);
     }
   }
   // get permission to send messages
-  getPermission(user) {
+  checkUpdate() {
+    if (window) {
+      if (this.swUpdate.isEnabled) {
+        (this.swUpdate.available.subscribe(() => {
+          if (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) {
+            window.location.reload();
+          }
+        }));
+      }
+    }
+  }
+  async getPermission(user) {
     try {
-      this.messaging.requestPermission()
-        .then(() => {
-          this.permission = true;
-          console.log('Notification permission granted.');
-          return this.messaging.getToken()
-        })
-        .then(token => {
-          console.log(token)
-          this.saveToken(user, token)
-        })
-        .catch((err) => {
-          console.log('Unable to get permission to notify.', err);
-        });
+      await this.messaging.requestPermission()
+      this.permission = true;
+      console.log(`Tengo Permiso de ${user}`);
+      const token = await this.messaging.getToken()
+      console.log(`El token del usuario es ${token}`)
+      // this.guardarToken(user, token)
     }
     catch (e) {
-      console.log('Unable to Request PUSH Permission', e);
+      console.log(`Imposible obtener permiso de ${user}`, e);
     }
   }
 
@@ -51,13 +58,13 @@ export class MessagingService {
       this.messaging.getToken()
         .then(refreshedToken => {
           console.log('Token refreshed.');
-          this.saveToken(user, refreshedToken)
+          this.guardarToken(user, refreshedToken)
         })
         .catch(err => console.log(err, 'Unable to retrieve new token'))
     });
   }
   // save the permission token in firestore
-  private saveToken(user, token): void {
+  private guardarToken(user, token): void {
 
     const currentTokens = user.fcmTokens || {}
 

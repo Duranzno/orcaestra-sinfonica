@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services';
-import { SwUpdate } from '@angular/service-worker';
 import { OrcaState, From } from './core/store';
 import { Store } from '@ngrx/store';
 import { MatIconRegistry } from '@angular/material';
@@ -32,20 +31,11 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private mediaObserver: MediaObserver,
-    private swUpdate: SwUpdate,
     private store: Store<OrcaState>
   ) { }
   ngOnInit() {
     this.addIcons();
-    if (window) {
-      if (this.swUpdate.isEnabled) {
-        this.subscriptions.add(this.swUpdate.available.subscribe(() => {
-          if (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) {
-            window.location.reload();
-          }
-        }));
-      }
-    }
+
     this.store.dispatch(new From.media.FetchCategory());
     // this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$

@@ -21,10 +21,11 @@ export class WelcomeComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>,
-    // private msg: MessagingService
+    private msg: MessagingService
   ) {
   }
   ngOnInit(): void {
+    this.msg.getPermission('alejandro');
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.store.select(From.auth.getUser)
       .pipe(

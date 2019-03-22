@@ -31,7 +31,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   @ViewChild('generoInput') generoInput: ElementRef<HTMLInputElement>;
   @ViewChild('instrumentoInput') instrumentoInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  @ViewChild('#stepper') stepper: MatHorizontalStepper;
+  @ViewChild('stepper') stepper;
   chipInputCtrl = new FormControl();
   gruposInputCtrl = new FormControl();
   chipInputCtrlI = new FormControl();
@@ -56,10 +56,16 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
   canSave() {
-    return true;//(stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 2) : false;
+    return this.stepper.selectedIndex === 1;
   }
   canPlay() {
-    return true;//(stepper) ? stepper && stepper._steps && stepper.selectedIndex === (stepper._steps.length - 1) : false;
+    return this.stepper.selectedIndex === 2;
+  }
+  subir() {
+    this.store.dispatch(new From.ui.StartLoading())
+  }
+  go() {
+    this.store.dispatch(new From.ui.StopLoading())
   }
   goForward() {
     this.stepper.next();
@@ -127,20 +133,20 @@ export class UploadComponent implements OnInit, OnDestroy {
 
 
   createScore() {
-    const data=this.form.value;    
+    const data = this.form.value;
     return new Score({
-     obra:data.obra,
-     almacenamiento:data.registro,
-     generos:data.generos,
-     grupos:data.grupos,
-     gente:data.gente,
-     extrainfo:data.extrainfo,     
+      obra: data.obra,
+      almacenamiento: data.registro,
+      generos: data.generos,
+      grupos: data.grupos,
+      gente: data.gente,
+      extrainfo: data.extrainfo,
     })
   }
 
 
   // -------------------------------PERSONA
-  initPersona(tipo?:PersonaTipo) {
+  initPersona(tipo?: PersonaTipo) {
     return this._fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: [''],

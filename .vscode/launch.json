@@ -17,7 +17,7 @@
         "type": "chrome",
         "request": "launch",
         "name": "Local",
-        "url": "http://localhost:8080",
+        "url": "http://localhost:8080/",
         "webRoot": "${workspaceFolder}"
       },
       {

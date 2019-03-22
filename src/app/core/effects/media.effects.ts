@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
-import { finalize, map, mergeMap, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
+import { finalize, map, mergeMap, switchMap, tap, withLatestFrom, catchError, last } from 'rxjs/operators';
 import { MediaTipo, Score } from '../models';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
@@ -140,15 +140,17 @@ export class MediaEffects {
       mergeMap(payload => {
         const type: MediaTipo = payload.file.tipo;
         const score = new Score(payload.score);
+        this.store$.dispatch(new fromUi.StartLoading())
         return this.fbStorage.upload(
           payload.file,
           score.setPath(type, payload.file)
-        )
-          .pipe(
-            map(origin => {
-              return new fromMusic.AddOrigin({ origin: origin, type: payload.file.tipo });
-            })
-          );
+        ).pipe(
+          map(origin => {
+            this.store$.dispatch(new fromMusic.AddOrigin({ origin: origin, type: payload.file.tipo }));
+          }),
+          last(),
+          map((v) => { console.log(v); return new fromUi.StopLoading(); })
+        );
       })
     );
 
