@@ -30,6 +30,7 @@ export class Score implements IScore {
   instrumentos?: string[] = [];
   gente?: Persona[] = [];
   extrainfo?: string = '';
+  suscriptores?: string[];
   constructor(score: IScore) {
     this.obra = (score.obra) ? score.obra : '';
     this.almacenamiento = (score.almacenamiento) ? score.almacenamiento : '';

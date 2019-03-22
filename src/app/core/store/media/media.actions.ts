@@ -6,6 +6,7 @@ export class ActionTypes {
   static POST_AVATAR = '[MEDIA] Uploaded Avatar to Respective Cloud';
   static POST_CATEGORY = '[MEDIA] Saved Category (genre/instrument) to Firestore';
   static SAVE_SCORE = '[MEDIA] Saved Score to Firestore';
+  static SAVE_FAV = '[MEDIA] Saved Suscriptor Id to Score ';
   static FETCH_CATEGORY = '[MEDIA]Fetch Category from Firestore';
   static FETCH_SCORE = '[MEDIA]Fetch Score from Firestore';
   static CHANGE_CLOUD = '[MEDIA] Changed Cloud Provider';
@@ -25,6 +26,10 @@ export class SaveScore implements Action {
 export class PostCateg implements Action {
   readonly type = ActionTypes.POST_CATEGORY;
   constructor(public payload: Categoria) { }
+}
+export class SaveFav implements Action {
+  readonly type = ActionTypes.SAVE_FAV;
+  constructor(public payload: { userId: string, scoreId: string }) { }
 }
 
 export class ManageMediaArray implements Action {
@@ -46,4 +51,4 @@ export class ChangeCloud implements Action {
   constructor(public payload: OrigenTipo) { }
 }
 
-export type Actions = PostMedia | FetchScore | FetchCategory | PostAvatar | PostCateg | SaveScore | ManageMediaArray | ChangeCloud;
+export type Actions = SaveFav | PostMedia | FetchScore | FetchCategory | PostAvatar | PostCateg | SaveScore | ManageMediaArray | ChangeCloud;

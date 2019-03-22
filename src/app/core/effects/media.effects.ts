@@ -19,6 +19,29 @@ type stuff = [fromMedia.ManageMediaArray, OrcaState];
 export class MediaEffects {
 
   @Effect()
+  saveFav$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.SAVE_FAV),
+      map((action: fromMedia.SaveFav) => action.payload),
+      switchMap(({ userId, scoreId }) =>
+        this.fbCateg.saveFavorite(userId, scoreId)
+          .pipe(map(sucess => ({ sucess, userId, scoreId })))
+      ),
+      map(({ sucess, userId, scoreId }) => new fromUi.StopLoading())
+    );
+  // @Effect()
+  // delFav$: Observable<Action> = this.actions$
+  //   .pipe(
+  //     ofType(fromMedia.ActionTypes.DELETE_FAV),
+  //     map((action: fromMedia.DeleteFav) => action.payload),
+  //     switchMap(({ userId, scoreId }) =>
+  //       this.fbCateg.deleteFavorite(userId, scoreId)
+  //         .pipe(map(sucess => ({ sucess, userId, scoreId })))
+  //     ),
+  //     map(({ sucess, userId, scoreId })=>new fromUi.StopLoading())
+  //   );
+
+  @Effect()
   fetchScore$: Observable<Action> = this.actions$
     .pipe(
       ofType(fromMedia.ActionTypes.FETCH_SCORE),

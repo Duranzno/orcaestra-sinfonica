@@ -19,7 +19,8 @@ Clonar el proyecto y obtener los requisitos necesarios.
 | V0.6                     | El administrador tendrá la opción de generar nuevas categorías asignables a las partituras y el usuario podrá acceder a partituras filtradas bajo estas categorías.               |
 | V0.7                     | Si el usuario así lo prefiere podrá ser alertado mediante notificaciones nativas al sistema (Push) de nuevas obras agregadas a la categoría de su elección.                       |
 | V0.8                     | Existirá la opción de descargar archivos multimedia para su acceso sin conexión (NO PDF) mediante Service Workers.                                                                |
-| V1.0                     | En esta última versión, el administrador podrá acceder a una tabla con todas las partituras existentes y modificarlas o eliminarlas a su antojo.                                  |
+| V0.9                     | El administrador podrá acceder a una tabla con todas las partituras existentes y modificarlas o eliminarlas a su antojo.                                                          |
+| V1.0                     | El administrador podra tomar incoporar imagenes que seran convertidas a un archivo pdf de las partituras                                                                          |
 
 ### Pre-requisitos 📋
 
