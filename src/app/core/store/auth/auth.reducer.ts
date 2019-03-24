@@ -5,10 +5,12 @@ export interface State {
   user: IUser;
   id: string
   avatarSrc: string;
+  organization: string;
 }
 
 const initialState: State = {
   id: '',
+  organization: 'OSJIG',
   user: new User({ 'email': '', 'password': '' }),
   avatarSrc: '/assets/user.jpg',
 };
@@ -34,6 +36,11 @@ export function authReducer(state = initialState, action: Actions): State {
       return {
         ...state,
         avatarSrc: action.payload as string,
+      };
+    case ActionTypes.SET_ORGANIZATION:
+      return {
+        ...state,
+        organization: action.payload as string,
       };
     default: {
       return state;

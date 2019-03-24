@@ -10,5 +10,6 @@ export const isAuth = createSelector(getAuthState, (state: State) => {
 });
 export const getAvatar = createSelector(getAuthState, (state: State) => state.avatarSrc);
 export const getId = createSelector(getAuthState, (state: State) => state.user.uid);
+export const getOrganization = createSelector(getAuthState, (state: State) => state.organization);
 
 
