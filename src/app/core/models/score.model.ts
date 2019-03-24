@@ -45,6 +45,7 @@ export class Score implements IScore {
     this.grupos = (score.grupos) ? score.grupos : [];
     this.gente = (score.gente) ? score.gente : [];
     this.extrainfo = (score.extrainfo) ? score.extrainfo : '';
+    this.suscriptores = (score.suscriptores) ? score.suscriptores : [];
   }
 
   static isMedia(arg: any): arg is Score {

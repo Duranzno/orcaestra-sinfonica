@@ -20,20 +20,21 @@ export class MusicDetailComponent implements OnInit, OnDestroy {
   constructor(private store: Store<OrcaState>) { }
 
   ngOnInit() {
+    this.userId = '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2'
     this.score = new Score(this.iScore);
     this.isFav = this.score.suscriptores.some(id => id === this.userId);
-    console.log(this.score);
+    // console.log(this.score);
   }
   ngOnDestroy() {
 
   }
   fav() {
-    if (this.isFav) {
-      this.store.dispatch(new From.media.SaveFav({ scoreId: this.iScore.id, userId: this.userId }));
+    if (!this.isFav) {
+      this.store.dispatch(new From.media.SaveFav({ scoreId: this.iScore.id, userId: '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2' }));
       this.isFav = true;
     }
     else {
-      // this.store.dispatch(new From.media.DeleteFav({scoreId:this.iScore.id,userId:this.userId}));
+      this.store.dispatch(new From.media.DeleteFav({ scoreId: this.iScore.id, userId: '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2' }));
       this.isFav = false;
     }
   }

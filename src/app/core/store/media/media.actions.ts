@@ -9,7 +9,9 @@ export class ActionTypes {
   static SAVE_FAV = '[MEDIA] Saved Suscriptor Id to Score ';
   static FETCH_CATEGORY = '[MEDIA]Fetch Category from Firestore';
   static FETCH_SCORE = '[MEDIA]Fetch Score from Firestore';
+  static FETCH_FAV = '[MEDIA]Fetch Favorite Scores from Firestore';
   static CHANGE_CLOUD = '[MEDIA] Changed Cloud Provider';
+  static DELETE_FAV = '[MEDIA] Delte Fav Score ';
 }
 export class PostMedia implements Action {
   readonly type = ActionTypes.POST_MEDIA;
@@ -31,6 +33,10 @@ export class SaveFav implements Action {
   readonly type = ActionTypes.SAVE_FAV;
   constructor(public payload: { userId: string, scoreId: string }) { }
 }
+export class DeleteFav implements Action {
+  readonly type = ActionTypes.DELETE_FAV;
+  constructor(public payload: { userId: string, scoreId: string }) { }
+}
 
 export class ManageMediaArray implements Action {
   readonly type = ActionTypes.MANAGE_MEDIA_ARRAY;
@@ -40,6 +46,10 @@ export class ManageMediaArray implements Action {
 export class FetchCategory implements Action {
   readonly type = ActionTypes.FETCH_CATEGORY;
   constructor(public payload?: any) { }
+}
+export class FetchFav implements Action {
+  readonly type = ActionTypes.FETCH_FAV;
+  constructor(public payload: { userId: string }) { }
 }
 export class FetchScore implements Action {
   readonly type = ActionTypes.FETCH_SCORE;
@@ -51,4 +61,14 @@ export class ChangeCloud implements Action {
   constructor(public payload: OrigenTipo) { }
 }
 
-export type Actions = SaveFav | PostMedia | FetchScore | FetchCategory | PostAvatar | PostCateg | SaveScore | ManageMediaArray | ChangeCloud;
+export type Actions = SaveFav
+  | PostMedia
+  | FetchScore
+  | FetchFav
+  | FetchCategory
+  | PostAvatar
+  | PostCateg
+  | SaveScore
+  | ManageMediaArray
+  | ChangeCloud
+  | DeleteFav;

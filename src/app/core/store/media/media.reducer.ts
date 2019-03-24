@@ -37,6 +37,8 @@ export function mediaReducer(state = initialState, action: Actions): State {
     case ActionTypes.POST_CATEGORY:
     case ActionTypes.FETCH_CATEGORY:
     case ActionTypes.FETCH_SCORE:
+    case ActionTypes.FETCH_FAV:
+    case ActionTypes.DELETE_FAV:
       return { ...state };
     default: {
       return state;

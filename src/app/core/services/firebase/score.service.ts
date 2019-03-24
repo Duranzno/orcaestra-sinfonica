@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 
 
 type Reference = firebase.firestore.CollectionReference | firebase.firestore.Query;
-export interface Filter { path: CategoriaTipo; val: string; }
+export interface Filter { path: CategoriaTipo|string; val: string; }
 
 @Injectable()
 export class ScoreService {
@@ -60,6 +60,16 @@ export class ScoreService {
     }
     getScoreList(...filters: Filter[]): Observable<IScoreId[]> {
         return this.fetchScoreList(...filters).snapshotChanges().pipe(
+            map(actions => actions.map(a => {
+                const data = a.payload.doc.data() as IScore;
+                const id = a.payload.doc.id;
+                return { id, ...data };
+            }))
+        );
+    }
+    getFavScores(userId: string): Observable<IScoreId[]> {
+        const filter = { path: 'suscriptores', val: userId }
+        return this.fetchScoreList(filter).snapshotChanges().pipe(
             map(actions => actions.map(a => {
                 const data = a.payload.doc.data() as IScore;
                 const id = a.payload.doc.id;

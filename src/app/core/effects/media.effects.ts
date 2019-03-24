@@ -27,7 +27,18 @@ export class MediaEffects {
         this.fbCateg.saveFavorite(userId, scoreId)
           .pipe(map(sucess => ({ sucess, userId, scoreId })))
       ),
-      map(({ sucess, userId, scoreId }) => new fromUi.StopLoading())
+      map(({ sucess, userId, scoreId }) => new fromMedia.FetchFav({ userId }))
+    );
+  @Effect()
+  deleteFav$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.DELETE_FAV),
+      map((action: fromMedia.SaveFav) => action.payload),
+      switchMap(({ userId, scoreId }) =>
+        this.fbCateg.deleteFavorite(userId, scoreId)
+          .pipe(map(sucess => ({ sucess, userId, scoreId })))
+      ),
+      map(({ sucess, userId, scoreId }) => new fromMedia.FetchFav({ userId }))
     );
   // @Effect()
   // delFav$: Observable<Action> = this.actions$
@@ -64,6 +75,20 @@ export class MediaEffects {
             // tap(result => { console.log(result); }),
             map(result => {
               return new fromMusic.SetCategories(result);
+            })
+          );
+      })
+    );
+  @Effect()
+  fetchFavorites$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(fromMedia.ActionTypes.FETCH_FAV),
+      map((action: fromMedia.FetchFav) => action.payload),
+      switchMap(({ userId }) => {
+        return this.fbScore.getFavScores(userId)
+          .pipe(
+            map(result => {
+              return new fromMusic.SetFavorites(result);
             })
           );
       })
