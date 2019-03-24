@@ -1,8 +1,8 @@
 <div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em">
   <mat-card>
-    <!-- <div class="loading-shade" *ngIf="$loading|async">
+    <div class="loading-shade" *ngIf="$loading|async">
       <mat-spinner></mat-spinner>
-    </div> -->
+    </div>
     <mat-card-content>
       <form [formGroup]="form">
         <mat-horizontal-stepper linear="false" id="stepper" #stepper>
@@ -154,10 +154,10 @@
             Siguiente
           </button>
         </div>
-        <button mat-raised-button color="primary" (click)="go()" *ngIf="canPlay()">
+        <button mat-raised-button color="primary" (click)="go()" *ngIf="canSave()">
           Ir a Obra
         </button>
-        <button mat-raised-button color="primary" (click)="subir()" *ngIf="canPlay()">
+        <button mat-raised-button color="primary" (click)="subir()" *ngIf="canSave()">
           Subir nueva Obra Musical
         </button>
       </div>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import WaveSurfer from 'wavesurfer.js';
 import { OrcaState, From } from '../core/store';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CategoriaTipo } from '../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { take, filter } from 'rxjs/operators';
+import { MessagingService, ScoreService, CategoriesService } from '../core/services';
 
 @Component({
   selector: 'app-welcome',
@@ -16,16 +17,18 @@ import { take, filter } from 'rxjs/operators';
 })
 export class WelcomeComponent implements OnInit {
   tipo = CategoriaTipo.GENERO;
+  $stuff;
   $loading: Observable<boolean>;
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>,
-    private msg: MessagingService
+    private fbScore: ScoreService,
+    private fbCateg: CategoriesService,
+    // private msg: MessagingService
   ) {
   }
   ngOnInit(): void {
-    this.msg.getPermission('alejandro');
-    this.msg.receiveMessages();
+
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.store.select(From.auth.getUser)
       .pipe(
@@ -33,12 +36,15 @@ export class WelcomeComponent implements OnInit {
         take(1) // take first real user
       ).subscribe(user => {
         if (user) {
-          // this.msg.init(user);
+          // this.msg.getPermission(user)
+          // this.msg.monitorRefresh(user)
+          // this.msg.receiveMessages()
         }
       })
   }
   load() {
-    this.store.dispatch(new From.ui.StartLoading());
+    // this.store.dispatch(new From.ui.StartLoading());
+    this.$stuff = this.fbCateg.unsubscribeCateg('mypropiaiderronea2', 'IMA', CategoriaTipo.GRUPOS)
   }
   unload() {
     this.store.dispatch(new From.ui.StopLoading());

@@ -8,6 +8,11 @@ export enum CategoriaTipo {
   GRUPOS = "grupos",
   INSTRUMENTOS = "instrumentos",
 }
+export namespace CategoriaTipo {
+  export function toSingular(tipo: CategoriaTipo): string {
+    return tipo.slice(0, tipo.length - 1)
+  }
+}
 export interface Categoria { tipo: CategoriaTipo; categoria: string }
 export interface IScoreId extends IScore { id: string; }
 

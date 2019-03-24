@@ -23,7 +23,7 @@ export function authReducer(state = initialState, action: Actions): State {
     case ActionTypes.SET_ID:
       return {
         ...state,
-        id: action.payload as string,
+        user: { ...state.user, uid: action.payload as string },
       };
     case ActionTypes.SET_UNAUTHENTICATED:
       return {

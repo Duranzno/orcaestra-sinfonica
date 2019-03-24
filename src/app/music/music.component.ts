@@ -4,10 +4,21 @@ import { IScoreId, CategoriaTipo } from '../core/models';
 import { ScoreService } from '../core/services';
 import { OrcaState, From } from '../core/store';
 import { Store } from '@ngrx/store';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-music',
   template: `
+  <mat-toolbar color="primary">
+  <mat-toolbar-row>
+  <mat-select (selectionChange)="goToGroup($event)">
+    <mat-option *ngFor="let g of $Grupos|async" [value]="g" (click)="goToGroup(g)">
+      {{g}}
+    </mat-option>
+  </mat-select>
+    <span>Second bar</span>
+  </mat-toolbar-row>
+  </mat-toolbar>
   <mat-tab-group dynamicHeight>
   <mat-tab label="Biblioteca de la Orquesta">
     <ng-template matTabContent>
@@ -17,11 +28,7 @@ import { Store } from '@ngrx/store';
 
   <mat-tab label="Generos">
     <ng-template matTabContent>
-      <div *ngFor="let g of $Generos|async" fxLayout="column" fxLayoutGap.gt-md="20px"
-        fxLayoutAlign="center center">
-          <button mat-button (click)="goToGeneros(g)">{{g}}</button>
-     </div>
-     <app-music-list [userId]="userId" [scores]="$GeneroScores|async"></app-music-list>
+     <app-music-list [userId]="userId" [scores]="$filteredScore|async"></app-music-list>
 
     </ng-template>
   </mat-tab>
@@ -39,8 +46,9 @@ export class MusicComponent implements OnInit {
 
   $Scores: Observable<IScoreId[]> = from([]);
   $FavScores: Observable<IScoreId[]> = from([]);
-  $GeneroScores: Observable<IScoreId[]> = from([]);
+  $filteredScore: Observable<IScoreId[]> = from([]);
   $Generos: Observable<string[]> = from([]);
+  $Grupos: Observable<string[]> = from([]);
   userId: string;
   constructor(
     private fbScore: ScoreService,
@@ -53,9 +61,16 @@ export class MusicComponent implements OnInit {
     this.$Scores = this.fbScore.getScoreList();
     this.$FavScores = this.store.select(From.music.getFavPartituras);
     this.$Generos = this.store.select(From.music.getGeneros);
+    this.$Grupos = this.store.select(From.music.getGrupos);
   }
-  goToGeneros(genero: string) {
-    // alert(genero);
-    this.$GeneroScores = this.fbScore.getScoreList({ path: CategoriaTipo.GENERO, val: genero })
+  goToGroup(genero) {
+    console.log(genero);
+    const filter = { path: CategoriaTipo.GRUPOS, val: genero.value }
+    this.$filteredScore = this.fbScore
+      .getScoreList(filter)
+      .pipe(
+        tap(v => console.log(`Los scores del genero son ${JSON.stringify(v)}`))
+      )
+
   }
 }

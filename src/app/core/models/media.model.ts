@@ -7,6 +7,8 @@ export enum MediaTipo {
   IMG = 'jpg/png',
   AVATAR = 'avatar',
 }
+
+
 export function MediaTipoGuesser(archivo: File): MediaTipo {
   switch (archivo.name.toLowerCase().split('.').pop()) {
     case 'mp3':

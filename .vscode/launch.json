@@ -9,7 +9,7 @@
         "type": "chrome",
         "request": "launch",
         "name": "RPI",
-        "url": "http://192.168.1.141:4200/admin/carga",
+        "url": "http://192.168.1.141:4200/",
         "webRoot": "${workspaceFolder}"
       },
       {

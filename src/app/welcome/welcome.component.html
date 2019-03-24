@@ -13,4 +13,8 @@
       <p>Never stop! Dive into new challenges every day</p>
     </section>
   </div>
+  <button mat-mini-fab (click)="load()">
+    <mat-icon>favorite</mat-icon>
+  </button>
 </div>
+<pre>{{ $stuff | async | json }}</pre>
