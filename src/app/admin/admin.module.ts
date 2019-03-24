@@ -7,6 +7,11 @@ import { SharedModule } from '../shared';
 import { ScoreManagementComponent } from './score-management/score-management.component';
 import { CategoriesManagementComponent, DialogoCategoria } from './categories-management/categories-management.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+
+import { MediaInputComponent } from './media-input/media-input.component';
+import { CameraComponent } from './media-input/camera.component';
+import { AudioComponent } from './media-input/audio.component';
+import { PdfService } from './media-input/pdf/pdf.service';
 @NgModule({
   declarations: [
     AdminComponent,
@@ -14,6 +19,9 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     ScoreManagementComponent,
     CategoriesManagementComponent,
     DialogoCategoria,
+    MediaInputComponent,
+    CameraComponent,
+    AudioComponent,
   ],
   entryComponents: [DialogoCategoria],
   imports: [
@@ -25,8 +33,7 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     MatPaginatorModule,
     MatSortModule,
   ],
-  providers: [
-  ]
+  providers: [PdfService]
 })
 export class AdminModule {
   constructor() { }

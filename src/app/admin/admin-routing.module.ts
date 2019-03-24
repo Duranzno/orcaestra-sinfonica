@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload/upload.component';
 import { ScoreManagementComponent } from './score-management/score-management.component';
 import { CategoriesManagementComponent } from './categories-management/categories-management.component';
+import { MediaInputComponent } from './media-input/media-input.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,8 @@ const routes: Routes = [
   { path: 'main', component: AdminComponent },
   { path: 'categorias', component: CategoriesManagementComponent },
   { path: 'categorias/:tipo', component: CategoriesManagementComponent },
+  { path: 'temp', component: MediaInputComponent },
+
 ];
 
 @NgModule({

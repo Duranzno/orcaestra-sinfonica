@@ -10,6 +10,7 @@ import { User, IUploadFile, IUser } from '../models';
 
 import { OrcaState, From } from '../store';
 import { switchMap, catchError, map, last } from 'rxjs/operators';
+import { UserService } from './firebase/user.service';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class AuthService {
   user: User;
   constructor(
     private afAuth: AngularFireAuth,
-    private afStore: AngularFirestore,
+    private fbUser: UserService,
     private snackbar: MatSnackBar,
     private store: Store<OrcaState>,
     private router: Router,
@@ -26,7 +27,7 @@ export class AuthService {
     this.afAuth.authState
       .subscribe(fUser => {
         if (fUser) {
-          this.fetchUserData(fUser.uid)
+          this.fbUser.fetchUserData(fUser.uid)
             .subscribe(user =>
               this.store.dispatch(new From.auth.SetAuthenticated(<User>user)));
           this.router.navigate(['/bienvenida']);
@@ -42,7 +43,7 @@ export class AuthService {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password))
       .pipe(
-        switchMap(f => { console.log(f); return this.updateUserData(f.user.uid, user); }),
+        switchMap(f => { console.log(f); return this.fbUser.updateUserData(f.user.uid, user); }),
       )
       .subscribe(finalUser => {
         if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: new User(finalUser) })); }
@@ -58,7 +59,7 @@ export class AuthService {
       .pipe(
         switchMap(f => {
           this.store.dispatch(new From.auth.SetId(f.user.uid));
-          return this.fetchUserData(f.user.uid)
+          return this.fbUser.fetchUserData(f.user.uid)
         }),
         catchError(this.errorHandlerRx)
       )
@@ -72,13 +73,7 @@ export class AuthService {
     this.afAuth.auth.signOut();
     this.store.dispatch(new From.auth.SetUnauthenticated);
   }
-  private updateUserData(uid: string, data: User): Observable<User> {
-    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
-    return from(userRef.set(data, { merge: true })).pipe(last(), switchMap(_ => of(data)));
-  }
-  private fetchUserData(uid: string) {
-    return from(this.afStore.doc(`usuarios/${uid}`).valueChanges());
-  }
+
   private errorHandler(error) {
     this.snackbar.open(error.message, null, { duration: 3000 });
     console.error(error.message);
