@@ -8,7 +8,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { CategoriaTipo } from '../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { take, filter } from 'rxjs/operators';
-import { MessagingService } from '../core/services/messaging.service';
 
 @Component({
   selector: 'app-welcome',
@@ -26,6 +25,7 @@ export class WelcomeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.msg.getPermission('alejandro');
+    this.msg.receiveMessages();
     this.$loading = this.store.select(From.ui.getIsLoading);
     this.store.select(From.auth.getUser)
       .pipe(
