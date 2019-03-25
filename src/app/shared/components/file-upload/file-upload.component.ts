@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MediaTipo, IUploadFile, MediaTipoGuesser, IElementoIcono, uMediaParser } from 'src/app/core/models';
+import { MediaTipo, IUploadFile, MediaTipoGuesser, IElementoIcono, uMediaParser } from '../../../core/models';
 
 
 @Component({

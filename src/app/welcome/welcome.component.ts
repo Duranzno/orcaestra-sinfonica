@@ -7,7 +7,7 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CategoriaTipo } from '../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { take, filter } from 'rxjs/operators';
+import { take, filter,tap } from 'rxjs/operators';
 import { MessagingService, ScoreService, CategoriesService } from '../core/services';
 
 @Component({
@@ -17,7 +17,7 @@ import { MessagingService, ScoreService, CategoriesService } from '../core/servi
 })
 export class WelcomeComponent implements OnInit {
   tipo = CategoriaTipo.GENERO;
-  $stuff;
+  $stuff:Observable<{}> = of({"enmptyaf":""});
   $loading: Observable<boolean>;
   constructor(
     private _fb: FormBuilder,
@@ -25,23 +25,24 @@ export class WelcomeComponent implements OnInit {
     private router: Router,
     private fbScore: ScoreService,
     private fbCateg: CategoriesService,
-    // private msg: MessagingService
+    private msg: MessagingService
   ) {
   }
   ngOnInit(): void {
-    this.router.navigate(['admin/temp']);
-    // this.$loading = this.store.select(From.ui.getIsLoading);
-    // this.store.select(From.auth.getUser)
-    //   .pipe(
-    //     filter(user => !!user), // filter null
-    //     take(1) // take first real user
-    //   ).subscribe(user => {
-    //     if (user) {
-    //       // this.msg.getPermission(user)
-    //       // this.msg.monitorRefresh(user)
-    //       // this.msg.receiveMessages()
-    //     }
-    //   })
+    this.$loading = this.store.select(From.ui.getIsLoading);
+    this.store.select(From.auth.getUser)
+      .pipe(
+        filter(user => !!user), // filter null
+        take(1) // take first real user
+      ).subscribe(user => {
+        if (user) {
+          this.msg.getPermission(user)
+          // this.msg.monitorRefresh(user)
+          // this.$stuff = this.msg.currentMessage.pipe(tap(v=>console.log(v)))
+          this.msg.receiveMessages();
+          
+        }
+      })
   }
   load() {
     // this.store.dispatch(new From.ui.StartLoading());

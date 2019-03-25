@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/distTest
 /tmp
 /out-tsc
 /.firebase

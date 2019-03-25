@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataScore, IElementoIcono } from 'src/app/core/models/data.score.model';
+import { DataScore, IElementoIcono } from '../../../../core/models';
 
 @Component({
   selector: 'app-icon-summary',

@@ -6,7 +6,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 
 const firebase = [

@@ -10,7 +10,7 @@ import { SwUpdate } from '@angular/service-worker';
 @Injectable()
 export class MessagingService {
 
-  private messaging;
+  private messaging = firebase.messaging();
   private messageSource = new Subject()
   currentMessage = this.messageSource.asObservable() // message observable to show in Angular component
 
@@ -18,13 +18,13 @@ export class MessagingService {
     private swUpdate: SwUpdate,
     private afs: AngularFirestore
   ) {
-    this.checkUpdate();
-    if (firebase.messaging.isSupported) {
-      console.log(`"Las notificaciones PUSH estan soportadas c:`)
-      this.messaging = firebase.messaging();
-    } else {
-      console.log(`No soporta PUSH :c`);
-    }
+    // this.checkUpdate();
+    // if (firebase.messaging.isSupported) {
+    //   console.log(`"Las notificaciones PUSH estan soportadas c:`)
+    //   this.messaging = firebase.messaging();
+    // } else {
+    //   console.log(`No soporta PUSH :c`);
+    // }
   }
 
   getPermission(user) {
@@ -38,7 +38,7 @@ export class MessagingService {
         this.saveToken(user, token)
       })
       .catch((err) => {
-        console.log('No se puede pedir permiso', err);
+        console.log('No se puede pedir permiso ', err);
       });
   }
 
@@ -47,7 +47,7 @@ export class MessagingService {
     this.messaging.onTokenRefresh(() => {
       this.messaging.getToken()
         .then(refreshedToken => {
-          console.log('Token refreshed.');
+          console.log('Token refrescado e.e.');
           this.saveToken(user, refreshedToken)
         })
         .catch(err => console.log(err, 'Unable to retrieve new token'))
@@ -57,17 +57,18 @@ export class MessagingService {
   private saveToken(user, token): void {
 
     const currentTokens = user.fcmTokens || {}
-    console.log(currentTokens, token)
+    console.log(`Tokens actuales ${JSON.stringify(currentTokens)} y nuevo token ${token} }`)
 
     // If token does not exist in firestore, update db
     if (!currentTokens[token]) {
-      const userRef = this.afs.collection('usuarios').doc(user.uid)
+      const userRef = this.afs.collection('usuarios').doc(/*user.uid:*/'EDNbvzCTMncoM2rCv5oqpDviNEH2')
       const tokens = { ...currentTokens, [token]: true }
       userRef.update({ fcmTokens: tokens })
     }
   }
   // used to show message when app is open
   receiveMessages() {
+    
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);
       this.messageSource.next(payload)

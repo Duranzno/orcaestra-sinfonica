@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  firebase: {
+  firebase : {
     apiKey: 'AIzaSyDm7icowS8Y-M4iJqaazUoA8VehMUK_Bsg',
     authDomain: 'orcaestra-sinfonica.firebaseapp.com',
     databaseURL: 'https://orcaestra-sinfonica.firebaseio.com',
@@ -8,5 +8,4 @@ export const environment = {
     storageBucket: 'orcaestra-sinfonica.appspot.com',
     messagingSenderId: '246048437876'
   },
-
 };

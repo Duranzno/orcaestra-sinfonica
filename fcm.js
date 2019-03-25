@@ -18,6 +18,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
   const options = {
     body: payload.data.status
   }
+  console.log(payload);
   return self.registration.showNotification(title, options)
 })
 // messaging.requestPermission().then(function () {

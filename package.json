@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "scripts": {
     "ng": "ng",
+    "shell": "ng run Orcaestra-Sinfonica:app-shell",
     "start": "ng serve --host 0.0.0.0 --disableHostCheck",
     "build": "ng build --prod && yarn run fcm",
     "test": "ng test",

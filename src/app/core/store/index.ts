@@ -5,10 +5,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppEffectsModules } from '../effects';
 const optionalImports = [];
 
-if (!environment.production) {
-  // Note that you must instrument after importing StoreModule
-  optionalImports.push(StoreDevtoolsModule.instrument({ maxAge: 25 }));
-}
 
 @NgModule({
   declarations: [],

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DataScore } from 'src/app/core/models/data.score.model';
+import { DataScore } from '../../../core/models';
 
 @Component({
   selector: 'app-dialog-score-edit',
