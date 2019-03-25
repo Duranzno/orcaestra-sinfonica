@@ -7,6 +7,7 @@
 @import '../app/music/score/media-cards/media.card.component.scss';
 @import '../app/music/music-list/music-detail.component.scss';
 @import '../app/music/music-list/music-list.component.scss';
+@import '../app/admin/media-input/camera.component.scss';
 @mixin fab($theme){
   .fab-container {
     position: fixed;
@@ -87,6 +88,7 @@ app-sidenav-item{
 @include table($theme);
 @include iconSummary($theme);
 @include fab($theme);
+@include camera($theme);
 .cardHolder{
   margin:1em;
   //  position: relative;
