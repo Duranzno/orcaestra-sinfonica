@@ -7,7 +7,7 @@ export interface IUser {
   nombre?: string;
   apellido?: string;
   password: string;
-  group?: string;
+  grupo?: string;
   isAdmin?: boolean;
   uid?: string;
   favs?: string[];
@@ -21,7 +21,7 @@ export class User implements IUser {
   uid?: string;
   favs?: string[];
   isAdmin: boolean;
-  group: string;
+  grupo: string;
   avatar: string = '/assets/user.jpg';
   constructor(i: IUser) {
     this.email = (i.email) ? i.email : '';
@@ -31,7 +31,7 @@ export class User implements IUser {
     this.isAdmin = (i.isAdmin) ? i.isAdmin : false;
     this.uid = (i.uid) ? i.uid : '';
     this.favs = (i.favs) ? i.favs : [];
-    this.group = (i.group === '') ? 'Desconocido' : i.group;
+    this.grupo = (i.grupo || i.grupo === '') ? 'Desconocido' : i.grupo;
   }
 
 

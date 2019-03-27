@@ -4,7 +4,7 @@
       <mat-spinner></mat-spinner>
     </div>
     <mat-card-content>
-      <app-file-upload style="margin:1em;" [type]='type' (filesEvent)='getAvatarFile($event)'>
+      <app-file-upload style="margin:1em;" [tipo]='tipo' (filesEvent)='getAvatarFile($event)'>
       </app-file-upload>
       <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm"
         style="flex-grow: 1;flex-basis: 0;" (ngSubmit)="onSubmit(f)">

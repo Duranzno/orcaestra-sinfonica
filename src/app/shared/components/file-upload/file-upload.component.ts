@@ -8,24 +8,33 @@ import { MediaTipo, IUploadFile, MediaTipoGuesser, IElementoIcono, uMediaParser 
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  @Input() type: MediaTipo;
+  @Input() tipo: MediaTipo;
   @Output() filesEvent = new EventEmitter<IUploadFile[]>();
   isHovering: boolean;
   files: IUploadFile[] = [];
   dsArray: IElementoIcono[] = [];
   get accept(): string {
-    return (this.isAvatar)
-      ? '.jpg,.jpeg,.png,.gif'
-      : '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
+    switch (this.tipo) {
+      case MediaTipo.AVATAR: return '.jpg,.jpeg,.png,.gif';
+      case MediaTipo.MP3: return "audio/*";
+      default: return '.mp3,.jpg,.jpeg,.png,.gif,.pdf,.musicxml, .mxl,.xml,.pdf, .mid,.midi';
+    }
   }
-  get isAvatar() { return this.type && this.type === MediaTipo.AVATAR; }
+  get capture(): string {
+    switch (this.tipo) {
+      case MediaTipo.AVATAR: return 'user';
+      case MediaTipo.MP3: return '';
+      default: return '';
+    }
+  }
+  get isAvatar() { return this.tipo && this.tipo === MediaTipo.AVATAR; }
 
   constructor() {
   }
 
   addFiles(event: FileList) {
     if (this.isAvatar) {
-      this.files = [{ 'archivo': event[0], 'tipo': this.type }];
+      this.files = [{ 'archivo': event[0], 'tipo': this.tipo }];
     } else {
       for (let i = 0; i < event.length; i++) {
         this.files.push({ 'archivo': event[i], 'tipo': MediaTipoGuesser(event[i]) });

@@ -17,6 +17,7 @@ export function uiReducer(state = initialState, action: Actions) {
       return {
         isLoading: false
       };
+    case ActionTypes.SHOW_SNACKBAR:
     default: {
       return state;
     }

@@ -8,7 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { CategoriaTipo } from '../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { take, filter, tap } from 'rxjs/operators';
-import { MessagingService } from '../core/services';
+import { MessagingService, UIService } from '../core/services';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -22,10 +22,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<OrcaState>,
     private router: Router,
-    private msg: MessagingService
+    private msg: MessagingService,
+    private ui: UIService
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new From.ui.ShowSnackbar({ message: "test", duration: 5, action: 'asdasd' }))
     this.$loading = this.store.select(From.ui.getIsLoading);
     if (environment.production) {
       this.$subs.add(this.store.select(From.auth.getUser)

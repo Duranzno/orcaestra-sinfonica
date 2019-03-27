@@ -11,6 +11,7 @@ import { User, IUploadFile, IUser } from '../models';
 import { OrcaState, From } from '../store';
 import { switchMap, catchError, map, last } from 'rxjs/operators';
 import { UserService } from './firebase/user.service';
+import { UIService } from './ui.service';
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private fbUser: UserService,
-    private snackbar: MatSnackBar,
+    private uiService: UIService,
     private store: Store<OrcaState>,
     private router: Router,
   ) { }
@@ -30,7 +31,7 @@ export class AuthService {
           this.fbUser.fetchUserData(fUser.uid)
             .subscribe(user =>
               this.store.dispatch(new From.auth.SetAuthenticated(<User>user)));
-          this.router.navigate(['/bienvenida']);
+          this.router.navigate(['/']);
         } else {
           // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
           this.store.dispatch(new From.auth.SetUnauthenticated());
@@ -43,14 +44,19 @@ export class AuthService {
     this.store.dispatch(new From.ui.StartLoading());
     from(this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password))
       .pipe(
-        switchMap(f => { console.log(f); return this.fbUser.updateUserData(f.user.uid, user); }),
-      )
-      .subscribe(finalUser => {
-        if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: new User(finalUser) })); }
-        this.store.dispatch(new From.ui.StopLoading());
-        this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
-        this.router.navigate(['/bienvenida']);
-      });
+        switchMap(f => {
+          console.log(f);
+          return this.fbUser.updateUserData(f.user.uid, user);
+        }))
+      .subscribe(
+        finalUser => {
+          if (file) { this.store.dispatch(new From.media.PostAvatar({ file, user: new User(finalUser as User) })); }
+          this.store.dispatch(new From.ui.StopLoading());
+          this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
+          this.router.navigate(['/']);
+        },
+        (error) => this.errorHandler(error)
+      );
   }
 
   login(user: IUser) {
@@ -60,29 +66,38 @@ export class AuthService {
         switchMap(f => {
           this.store.dispatch(new From.auth.SetId(f.user.uid));
           return this.fbUser.fetchUserData(f.user.uid)
-        }),
-        catchError(this.errorHandlerRx)
+        })
       )
-      .subscribe(finalUser => {
-        this.store.dispatch(new From.ui.StopLoading());
-        this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
-        this.router.navigate(['/bienvenida']);
-      });
+      .subscribe(
+        finalUser => {
+          this.store.dispatch(new From.ui.StopLoading());
+          this.store.dispatch(new From.auth.SetAuthenticated(finalUser as User));
+          this.router.navigate(['/']);
+        },
+        (error) => this.errorHandler(error)
+      );
   }
   logout() {
     this.afAuth.auth.signOut();
     this.store.dispatch(new From.auth.SetUnauthenticated);
   }
 
-  private errorHandler(error) {
-    this.snackbar.open(error.message, null, { duration: 3000 });
-    console.error(error.message);
-  }
-  private errorHandlerRx() {
-    return of(error => {
-      this.snackbar.open(error.message, null, { duration: 3000 });
-      console.error(error.message);
-    });
-  }
 
+  private errorHandler(error) {
+
+    this.store.dispatch(new From.ui.StopLoading())
+    this.uiService.showSnackbar(this.messageParser(error.code), 5)
+    console.error(this.messageParser(error.code), error);
+  }
+  private messageParser(code: string): string {
+    switch (code) {
+      case 'auth/app-deleted': return 'Aplicacion eliminada';
+      case 'auth/account-exists-with-different-credential ':
+      case "auth/email-already-in-use": return 'Ya existe un usuario con ese correo electronico';
+      case 'auth/network-request-failed': return 'Problemas con la Conexión a Internet';
+
+      default:
+        return code;
+    }
+  }
 }

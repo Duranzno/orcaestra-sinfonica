@@ -19,7 +19,7 @@ import { MediaTipo, OrigenTipo, IUploadFile } from '../../core/models';
 export class SignupComponent implements OnInit {
   $loading: Observable<boolean>;
   $grupos: Observable<string[]>;
-  type = MediaTipo.AVATAR;
+  tipo = MediaTipo.AVATAR;
   files: IUploadFile[] = [];
   constructor(
     private authService: AuthService,
@@ -37,6 +37,7 @@ export class SignupComponent implements OnInit {
   onSubmit(form: NgForm) {
     const iUser = form.value;
     const user = new User(iUser);
+
     this.authService.registerUser(user, (this.files.length >= 1) ? this.files.pop() : null);
   }
 
