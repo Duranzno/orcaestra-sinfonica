@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { MatIconRegistry } from '@angular/material';
 import { InstrTipo } from './core/models/instr.interface';
 import { MediaTipo, RegistroTipo, PersonaTipo } from './core/models';
-
+import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: "app-root",
   templateUrl: './app.component.html',
@@ -33,8 +33,11 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private mediaObserver: MediaObserver,
     private store: Store<OrcaState>,
     private msg: MessagingService,
+    db: AngularFirestore
 
-  ) { }
+  ) {
+    db.firestore.enablePersistence().then(() => console.log("Firestore es capaz de corre offline"))
+  }
   ngOnInit() {
     this.addIcons();
 

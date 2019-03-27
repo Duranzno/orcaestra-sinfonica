@@ -35,13 +35,8 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
-    path: 'bienvenida',
-    component: WelcomeComponent
-  },
-  {
     path: '',
-    redirectTo: '/bienvenida',
-    pathMatch: 'full'
+    component: WelcomeComponent
   },
   {
     path: '**',

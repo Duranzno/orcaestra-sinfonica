@@ -1,23 +1,30 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ElementRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
 @Component({
   selector: 'app-camera',
   template: `
-  <span style="color:red;" *ngIf="message">
-    {{message}}
-  </span>
-  <input #file type="file" accept='image/*' (change)="preview(file.files)"  capture="environment" />
-  <img [src]="imgURL" height="200" *ngIf="imgURL">
+    <div class="camera" (click)="click()">
+      <input 
+       #file id="camInput" type="file" accept='image/*' (change)="preview(file.files)"  capture="environment" />
+      <div class="container">
+      <img [src]="imgURL" height="200" class="image" *ngIf="imgURL"  style="width:100%">
+        <div class="middle">
+          <div class="text" >{{text}}</div>
+        </div>
+      </div>
+    </div>
   `,
   styleUrls: ['./camera.component.scss']
 })
 export class CameraComponent implements OnInit {
   public imagePath;
+  @ViewChild('file') someInput: ElementRef;
   imgURL: any;
   private eventsSubscription: any
   public message: string;
+  @Input('text') text: string;
   @Input('reset') reset: Observable<void>;
   @Output('img') img = new EventEmitter<string | ArrayBuffer>();
   constructor() { }
@@ -29,6 +36,7 @@ export class CameraComponent implements OnInit {
       this.imgURL = undefined;
     })
   }
+  click() { this.someInput.nativeElement.click(); }
 
   ngOnDestroy() {
     this.eventsSubscription.unsubscribe()

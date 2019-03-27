@@ -6,62 +6,86 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-media-input',
   template: `  
-  <div fxLayout="column" fxLayoutAlign="space-between stretch">  
+  <div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" s>
+  <mat-card fxFlex>
+  <mat-card-title> Creador de Partituras
+  </mat-card-title>
+  <mat-card-subtitle>
+  Seleccione los rectangulos para tomar una foto
+  </mat-card-subtitle>
+  <mat-card-content>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">  
     <mat-grid-list gutterSize="0px" cols="1" rowHeight="fit" style="height: 500px;width: 500px">
-      <mat-grid-tile  *ngFor="let tile of modTiles;let i=index" [style.background]="tile.color">
-        <pre>{{tile.text}}</pre>
-        <app-camera [reset]="resetSubject.asObservable()" (img)="addPartialImage($event,i)"></app-camera>
+      <mat-grid-tile  *ngFor="let tile of modGrid;let i=index" [style.background]="tile.color">
+        <app-camera style="width: 100%;height: 100%;" [title]="tile.text" [reset]="resetSubject.asObservable()" (img)="addPartialImage($event,i)"></app-camera>
       </mat-grid-tile>
     </mat-grid-list>
     <mat-slider min="1" max="4" step="1" value="1" vertical thumbLabel tickInterval="1" (input)="rowChange($event)" invert>
     </mat-slider>
   </div>
-  <button mat-button (click)="addPage()">Añadir Pagina</button>
-  <button mat-button (click)="savePdf()" [disabled]="loaded">Guardar PDF</button>
-
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="(nPages)?addPage():addImageGrid();">
+      {{(nPages)?'Añadir pagina '+(nPages+1):'Guardar primera pagina'}}</button>
+    <button mat-raised-button color="primary" (click)="resetPDF()">Reiniciar</button>
+    <div fxFlex></div>
+    <button mat-raised-button color="accent"   [disabled]="!nPages"
+      (click)="savePdf()">
+      Guardar PDF
+    </button>
+     </mat-card-actions>
+  </mat-card-content>
+  </mat-card>
+  </div>
   `,
 })
 export class MediaInputComponent implements OnInit {
-  tiles = [
-    { text: 'One', color: 'lightblue' },
-    { text: 'Two', color: 'lightgreen' },
-    { text: 'Threae', color: 'lightpink' },
-    { text: 'Four', color: '#DDBDF1' },
-  ];
-  imageArr: any;
-  loaded = false;
-  modTiles = [];
   private resetSubject: Subject<void> = new Subject<void>();
+  grid = [
+    { text: 'Uno', color: 'lightblue' },
+    { text: 'Dos', color: 'lightgreen' },
+    { text: 'Tres', color: 'lightpink' },
+    { text: 'Cuatro', color: '#DDBDF1' },
+  ];
+  imageArr: any[];
+  modGrid = [];
+  nPages: number = 0;
 
-  reset() {
-    this.resetSubject.next()
-  }
   constructor(
     private pdf: PdfService
-  ) { }
+  ) {
+  }
 
   addPartialImage(img: string | ArrayBuffer, index: number) {
     this.imageArr[index] = img;
-
   }
   savePdf() {
-    // if (this.imageArr.some(img => img === '')) { return console.log('Faltan imagenes') }
-    if (this.loaded) this.pdf.save("Titulo");
-    // this.pdf.save(...this.imageArr);
+    if (this.nPages) this.pdf.save("Titulo");
+  }
+  addImageGrid() {
+    if (this.imageArr.some(img => img === '')) {
+      return console.log('Faltan imagenes')
+    }
+    this.pdf.addImages(...this.imageArr)
+    this.nPages++;
+    this.resetPDF();
   }
   addPage() {
-    if (this.imageArr.some(img => img === '')) { return console.log('Faltan imagenes') }
-    this.loaded = true;
+    this.pdf.addPage();
+    this.addImageGrid();
   }
   ngOnInit() {
-    this.modTiles = this.tiles.slice(0, 1);
-    this.imageArr = this.modTiles.map(v => '');
+    this.modGrid = this.grid.slice(0, 1);
+    this.imageArr = this.modGrid.map(v => '');
   }
   rowChange({ value }: any) {
     console.log(`Deberian haber ${value} columnas`);
-    this.modTiles = this.tiles.slice(0, value);
-    this.imageArr = this.modTiles.map(v => '');
-    this.reset();
+    this.modGrid = this.grid.slice(0, value);
+    this.imageArr = this.modGrid.map(v => '');
+    this.resetPDF();
+  }
+
+  resetPDF() {
+    this.resetSubject.next()
   }
 
 }
