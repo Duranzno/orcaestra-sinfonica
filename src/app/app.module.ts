@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable, ReflectiveInjector } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
@@ -21,10 +21,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './welcome/page-not-found/page-not-found.component';
 import { SharedModule } from './shared';
 import { HttpModule } from '@angular/http';
-
+import { APP_CONFIG, APP_DI_CONFIG, SERVER_DI_CONFIG } from './app.config';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+@Injectable()
+export class AppShellResolver {
+  window = true;
+}
+
+const injector = ReflectiveInjector.resolveAndCreate([
+  AppShellResolver,  // Shorthand for { provide: Greeting, useClass: Greeting }
+]);
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +56,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppRoutingModule,
     // ServiceWorkerModule.register('/firebase-messaging-sw.js'),
     ServiceWorkerModule.register('/combined-worker.js',
-     { enabled: environment.production }
+      { enabled: environment.production }
     ),
     PerfectScrollbarModule,
   ],
@@ -57,6 +65,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
+    { provide: APP_CONFIG, useValue: APP_DI_CONFIG }
   ],
   bootstrap: [AppComponent],
   entryComponents: []

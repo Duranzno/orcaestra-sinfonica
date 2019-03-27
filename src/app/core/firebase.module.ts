@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
 
 
 const firebase = [
-  AngularFireAuthModule,
   AngularFirestoreModule,
+  AngularFireAuthModule,
   AngularFireFunctionsModule,
   AngularFireMessagingModule,
   AngularFireStorageModule,

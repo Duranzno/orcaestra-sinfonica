@@ -33,7 +33,10 @@ import { PdfService } from './media-input/pdf/pdf.service';
     MatPaginatorModule,
     MatSortModule,
   ],
-  providers: [PdfService]
+  providers: [
+    PdfService,
+    // { provide: Window, useValue: (window)?window:null }
+  ]
 })
 export class AdminModule {
   constructor() { }

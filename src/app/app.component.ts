@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, OnChanges, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
-import { AuthService } from './core/services';
+import { AuthService, MessagingService } from './core/services';
 import { OrcaState, From } from './core/store';
 import { Store } from '@ngrx/store';
 import { MatIconRegistry } from '@angular/material';
@@ -31,7 +31,9 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private mediaObserver: MediaObserver,
-    private store: Store<OrcaState>
+    private store: Store<OrcaState>,
+    private msg: MessagingService,
+
   ) { }
   ngOnInit() {
     this.addIcons();

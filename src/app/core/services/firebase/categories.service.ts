@@ -10,7 +10,9 @@ import { fromFbPromise } from './help';
 @Injectable()
 export class CategoriesService {
   private organization = "OSJIG";
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) { 
+    // this.db.enablePersistence();
+     }
   // Categ Functions
   fetchCateg(): Observable<{ generos: string[], grupos: string[], instrumentos: string[] }> {
     return this.db.doc

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PdfService } from './pdf/pdf.service';
 import { Subject } from 'rxjs';
 
+
 @Component({
   selector: 'app-media-input',
   template: `  
@@ -15,7 +16,8 @@ import { Subject } from 'rxjs';
     <mat-slider min="1" max="4" step="1" value="1" vertical thumbLabel tickInterval="1" (input)="rowChange($event)" invert>
     </mat-slider>
   </div>
-  <button mat-button (click)="savePdf()">Guardar PDF</button>
+  <button mat-button (click)="addPage()">Añadir Pagina</button>
+  <button mat-button (click)="savePdf()" [disabled]="loaded">Guardar PDF</button>
 
   `,
 })
@@ -27,6 +29,7 @@ export class MediaInputComponent implements OnInit {
     { text: 'Four', color: '#DDBDF1' },
   ];
   imageArr: any;
+  loaded = false;
   modTiles = [];
   private resetSubject: Subject<void> = new Subject<void>();
 
@@ -42,14 +45,17 @@ export class MediaInputComponent implements OnInit {
 
   }
   savePdf() {
+    // if (this.imageArr.some(img => img === '')) { return console.log('Faltan imagenes') }
+    if (this.loaded) this.pdf.save("Titulo");
+    // this.pdf.save(...this.imageArr);
+  }
+  addPage() {
     if (this.imageArr.some(img => img === '')) { return console.log('Faltan imagenes') }
-    this.pdf.save(...this.imageArr);
-
+    this.loaded = true;
   }
   ngOnInit() {
     this.modTiles = this.tiles.slice(0, 1);
     this.imageArr = this.modTiles.map(v => '');
-
   }
   rowChange({ value }: any) {
     console.log(`Deberian haber ${value} columnas`);

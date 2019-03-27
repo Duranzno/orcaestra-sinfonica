@@ -8,7 +8,7 @@
     "build": "ng build --prod && yarn run fcm",
     "test": "ng test",
     "tslint": "tslint --project tsconfig.json",
-    "fcm": "node node_modules/concat/bin/concat dist/ngsw-worker.js ./fcm.js -o dist/combined-worker.js",
+    "fcm": "node node_modules/concat/bin/concat ./fcm.js dist/ngsw-worker.js  -o dist/combined-worker.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "http": "node node_modules/http-server/bin/http-server dist/",

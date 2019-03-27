@@ -10,7 +10,7 @@ import { SwUpdate } from '@angular/service-worker';
 @Injectable()
 export class MessagingService {
 
-  private messaging = firebase.messaging();
+  private messaging;
   private messageSource = new Subject()
   currentMessage = this.messageSource.asObservable() // message observable to show in Angular component
 
@@ -18,13 +18,13 @@ export class MessagingService {
     private swUpdate: SwUpdate,
     private afs: AngularFirestore
   ) {
-    // this.checkUpdate();
-    // if (firebase.messaging.isSupported) {
-    //   console.log(`"Las notificaciones PUSH estan soportadas c:`)
-    //   this.messaging = firebase.messaging();
-    // } else {
-    //   console.log(`No soporta PUSH :c`);
-    // }
+    this.checkUpdate();
+    if (firebase.messaging.isSupported) {
+      console.log(`"Las notificaciones PUSH estan soportadas c:`)
+      // this.messaging = firebase.messaging();
+    } else {
+      console.log(`No soporta PUSH :c`);
+    }
   }
 
   getPermission(user) {
@@ -68,7 +68,7 @@ export class MessagingService {
   }
   // used to show message when app is open
   receiveMessages() {
-    
+
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);
       this.messageSource.next(payload)
@@ -78,7 +78,7 @@ export class MessagingService {
   checkUpdate() {
     if (window) {
       if (this.swUpdate.isEnabled) {
-        (this.swUpdate.available.subscribe(() => {
+        (this.swUpdate.available.subscribe((event) => {
           if (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) {
             window.location.reload();
           }

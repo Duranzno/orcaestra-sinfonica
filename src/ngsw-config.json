@@ -1,5 +1,6 @@
 {
   "index": "/index.html",
+  "appData":{},
   "assetGroups": [
     {
       "name": "app",
@@ -18,9 +19,22 @@
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
-      "resources": [
-        "/assets/**"
-      ]
+      "resources": {
+        "files":["/assets/**"],
+        "urls":[
+          "https://fonts.googleapis.com/**"
+        ]
+      }
+    },
+    {
+      "name": "media",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": {
+        "urls":[
+          "https://firebasestorage.googleapis.com/v0/b/orcaestra-sinfonica.appspot.com/o/**"
+        ]
+      }
     }
   ]
 }
