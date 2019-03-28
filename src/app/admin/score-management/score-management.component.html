@@ -32,7 +32,7 @@
           <ng-container matColumnDef="almacenamiento">
             <th mat-header-cell *matHeaderCellDef> Tipos de Almacenamiento </th>
             <td mat-cell *matCellDef="let row">
-              <app-icon-summary [dataScoreArray]="row.almacenamiento"></app-icon-summary>
+              <app-icon-arr-summary [dataScoreArray]="row.almacenamiento"></app-icon-arr-summary>
             </td>
           </ng-container>
           <ng-container matColumnDef="media">
@@ -40,7 +40,7 @@
 
             <td mat-cell *matCellDef="let row">
 
-              <app-icon-summary [dataScoreArray]="row.media"></app-icon-summary>
+              <app-icon-arr-summary [dataScoreArray]="row.media"></app-icon-arr-summary>
 
 
             </td>
@@ -50,7 +50,7 @@
             <th mat-header-cell *matHeaderCellDef> Instrumentos </th>
 
             <td mat-cell *matCellDef="let row">
-              <app-icon-summary [dataScoreArray]="row.instrumentos"></app-icon-summary>
+              <app-icon-arr-summary [dataScoreArray]="row.instrumentos"></app-icon-arr-summary>
 
             </td>
 
@@ -58,7 +58,7 @@
           <ng-container matColumnDef="gente">
             <th mat-header-cell *matHeaderCellDef> Artistas </th>
             <td mat-cell *matCellDef="let row">
-              <app-icon-summary [dataScoreArray]="row.gente"></app-icon-summary>
+              <app-icon-arr-summary [dataScoreArray]="row.gente"></app-icon-arr-summary>
             </td>
           </ng-container>
           <ng-container matColumnDef="id">

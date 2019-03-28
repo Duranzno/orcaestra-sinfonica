@@ -81,6 +81,10 @@
                         <p class="mat-body">Video {{i+1}}</p>
                         <input matInput placeholder="Direccion URL de YOUTUBE" type="text" formControlName="url">
                       </mat-form-field>
+                      <button mat-icon-button color="primary" (click)="removeVideo(i)"
+                        style="   vertical-align: text-bottom;">
+                        <mat-icon>close</mat-icon>
+                      </button>
                     </div>
 
                   </div>
@@ -101,28 +105,32 @@
             <app-file-upload (filesEvent)="show($event)">
             </app-file-upload>
             <mat-list>
-              <h3 mat-subheader>Partituras</h3>
+              <h3 class="mat-subheading">Partituras</h3>
               <div formArrayName="media">
                 <mat-list-item *ngFor="let p of media.controls; let mediaIndex=index" [formGroupName]="mediaIndex">
-                  <h4 mat-subheader>Partitura:{{p.value.archivo.name}}</h4>
-                  <p mat-line>{{p.value.archivo.type}} y MediaTipo {{p.value.tipo}}</p>
-                  <p mat-line>instrumentos{{p.value.instr|json}}</p>
+                  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem">
+                    <h3 mat-subheader>Nombre del archivo:{{p.value.archivo.name}}</h3>
+                    <!-- <p mat-line>{{p.value.archivo.type}} y MediaTipo {{p.value.tipo}}</p> -->
+                    <app-icon-summary [icono]="p.value.tipo" [info]="p.value.archivo.name"></app-icon-summary>
+                    <!-- <p mat-line>instrumentos{{p.value.instr|json}}</p> -->
+                    <div fxFlex></div>
+                    <mat-chip-list #InstList>
+                      <mat-chip *ngFor="let instr of p.value.instr;let j=index" selectable="true" removable="true"
+                        (removed)="removeMediaInstr(instr,mediaIndex)">
+                        {{instr}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                      </mat-chip>
+                      <input matInput placeholder="Instrumentos" #instrumentoInput
+                        (matChipInputTokenEnd)="addMediaInstr($event,mediaIndex)" [matChipInputFor]="InstList"
+                        matChipInputAddOnBlur="true" [formControl]="chipInputCtrlI"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="autoI">
 
-                  <mat-chip-list #InstList>
-                    <mat-chip *ngFor="let instr of p.value.instr;let j=index" selectable="true" removable="true"
-                      (removed)="removeMediaInstr(instr,mediaIndex)">
-                      {{instr}}
-                      <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input matInput placeholder="Instrumentos" #instrumentoInput
-                      (matChipInputTokenEnd)="addMediaInstr($event,mediaIndex)" [matChipInputFor]="InstList"
-                      matChipInputAddOnBlur="true" [formControl]="chipInputCtrlI"
-                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matAutocomplete]="autoI">
-
-                    <mat-autocomplete #autoI="matAutocomplete" (optionSelected)="selectedMediaInstr($event,mediaIndex)">
-                      <mat-option *ngFor="let t of instrumentosTodos" [value]="t">{{t}}</mat-option>
-                    </mat-autocomplete>
-                  </mat-chip-list>
+                      <mat-autocomplete #autoI="matAutocomplete"
+                        (optionSelected)="selectedMediaInstr($event,mediaIndex)">
+                        <mat-option *ngFor="let t of instrumentosTodos" [value]="t">{{t}}</mat-option>
+                      </mat-autocomplete>
+                    </mat-chip-list>
+                  </div>
                 </mat-list-item>
 
               </div>
@@ -139,26 +147,28 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2em">
-        <div *ngIf="!canPlay()">
-          <button mat-raised-button color="primary" (click)="goBack()">
-            Anterior
-          </button>
-          <button mat-raised-button color="primary" (click)="stepper.reset()">
-            Reiniciar
-          </button>
-          <button mat-raised-button color="primary" (click)="onSave()" *ngIf="canSave()">
-            Guardar
-          </button>
-          <button mat-raised-button color="primary" (click)="goForward()" *ngIf="!canSave()">
-            Siguiente
-          </button>
-        </div>
-        <button mat-raised-button color="primary" (click)="go()" *ngIf="canSave()">
-          Ir a Obra
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center center" fxLayoutGap="1rem"
+        fxLayoutGap.lt-md="0.5rem" *ngIf="!canPlay()">
+        <button mat-raised-button color="primary" (click)="goBack()">
+          Anterior
         </button>
-        <button mat-raised-button color="primary" (click)="subir()" *ngIf="canSave()">
+        <button mat-raised-button color="primary" (click)="stepper.reset()">
+          Reiniciar
+        </button>
+        <button mat-raised-button color="primary" (click)="onSave()" *ngIf="canSave()">
+          Guardar
+        </button>
+        <button mat-raised-button color="primary" (click)="goForward()" *ngIf="!canSave()">
+          Siguiente
+        </button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center" fxLayoutGap="1rem"
+        fxLayoutGap.lt-md="0.5rem" *ngIf="canPlay()">
+        <button mat-raised-button color="primary" (click)="subir()" *ngIf="canPlay()">
           Subir nueva Obra Musical
+        </button>
+        <button mat-raised-button color="accent" (click)="go()" *ngIf="canPlay()">
+          Ir a Obra
         </button>
       </div>
 

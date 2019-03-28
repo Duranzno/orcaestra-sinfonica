@@ -5,17 +5,17 @@ import { PersonaTipo } from 'src/app/core/models';
   selector: 'app-involucrados',
   styleUrls: [],
   template: `
-  <div [formGroup]="parentForm" fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
-    <mat-form-field>
+  <div [formGroup]="parentForm" fxLayout="row" fxLayout.lt-md="column"  fxLayoutAlign="center center"  fxLayoutGap="10px">
+    <mat-form-field style.lt-md="padding:1rem;">
       <input matInput placeholder="Nombre" type="text" formControlName="nombre">
       <mat-error *ngIf="parentForm.controls['nombre'].valid">Se necesita el nombre.</mat-error>
     </mat-form-field>
       <!-- Apellido de la Persona Involucrada  -->
-    <mat-form-field>
+    <mat-form-field style.lt-md="padding:1rem;">
       <input matInput placeholder="Apellido" type="text" formControlName="apellido">
     </mat-form-field>
     <!-- Tipo de Persona -->
-    <mat-form-field>
+    <mat-form-field style.lt-md="padding:1rem;">
       <mat-select placeholder="Tipo de Persona Involucrada" formControlName="tipo">
         <mat-option *ngFor="let p of personas" [value]="p">{{p}}</mat-option>
       </mat-select>

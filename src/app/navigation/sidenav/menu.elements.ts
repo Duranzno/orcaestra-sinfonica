@@ -62,6 +62,16 @@ export const UserMenu: Menu[] = [
     'sub': [],
   },
   {
+    'name': 'Creador de PDF',
+    'link': '/pdf',
+    'svgIcon': 'pdf',
+    'isAdmin': false,
+    'isUser': true,
+    'chip': false,
+    'open': false,
+    'sub': [],
+  },
+  {
     'name': 'Cerrar Sesion',
     'link': '/logout',
     'icon': 'power_settings_new',

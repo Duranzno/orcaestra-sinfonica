@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PdfService } from './pdf/pdf.service';
 import { Subject } from 'rxjs';
+import { PdfService, UIService } from 'src/app/core/services';
 
 
 @Component({
@@ -25,7 +25,7 @@ import { Subject } from 'rxjs';
   </div>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="(nPages)?addPage():addImageGrid();">
-      {{(nPages)?'Añadir pagina '+(nPages+1):'Guardar primera pagina'}}</button>
+      {{(nPages)?'Añadir pagina '+(nPages+1):'Agregar primera pagina'}}</button>
     <button mat-raised-button color="primary" (click)="resetPDF()">Reiniciar</button>
     <div fxFlex></div>
     <button mat-raised-button color="accent"   [disabled]="!nPages"
@@ -50,10 +50,7 @@ export class MediaInputComponent implements OnInit {
   modGrid = [];
   nPages: number = 0;
 
-  constructor(
-    private pdf: PdfService
-  ) {
-  }
+  constructor(private pdf: PdfService, private ui: UIService) { }
 
   addPartialImage(img: string | ArrayBuffer, index: number) {
     this.imageArr[index] = img;
@@ -63,6 +60,7 @@ export class MediaInputComponent implements OnInit {
   }
   addImageGrid() {
     if (this.imageArr.some(img => img === '')) {
+      this.ui.showSnackbar('Faltan Imagenes', 5)
       return console.log('Faltan imagenes')
     }
     this.pdf.addImages(...this.imageArr)

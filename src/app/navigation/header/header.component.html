@@ -9,22 +9,22 @@
     <a routerLink="/">Orcaestra Sinfonica</a>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li *ngIf="!($isAuth|async)">
-        <a routerLink="/signup">Registrarse</a>
-      </li>
-      <li *ngIf="!($isAuth|async)">
-        <a routerLink="/login">Iniciar Sesión</a>
-      </li>
-      <li *ngIf="($isAuth|async)&&($isAdmin|async)">
-        <a routerLink="/admin/main">Administrador</a>
-      </li>
-      <li *ngIf="($isAuth|async)">
-        <a routerLink="/musica/lista">Musica</a>
-      </li>
-      <li *ngIf="($isAuth|async)">
-        <a routerLink="/logout">Cerrar Sesión</a>
-      </li>
+    <ul fxLayout fxLayoutGap="1rem" class="navigation-items">
+      <ng-container *ngIf="($isAuth|async); else anon">
+        <li><a *ngIf="($isAdmin|async)" routerLink="/admin/partitura">
+            <mat-icon>build</mat-icon> Partituras
+          </a></li>
+        <li><a *ngIf="($isAdmin|async)" routerLink="/admin/categorias">
+            <mat-icon>build</mat-icon> Categorias
+          </a></li>
+        <li><a routerLink="/musica/lista">Musica</a></li>
+        <li><a routerLink="/pdf">Creador de PDF</a></li>
+        <li><a routerLink="/logout">Cerrar Sesión</a></li>
+      </ng-container>
+      <ng-template #anon>
+        <li><a routerLink="/signup">Registrarse</a></li>
+        <li><a routerLink="/login">Iniciar Sesión</a></li>
+      </ng-template>
     </ul>
   </div>
 </mat-toolbar>

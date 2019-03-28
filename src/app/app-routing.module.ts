@@ -5,6 +5,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthGuard } from './auth/auth.guard';
 import { environment } from 'src/environments/environment';
 import { PageNotFoundComponent } from './welcome/page-not-found/page-not-found.component';
+import { MediaInputComponent } from './shared/components/media-input/media-input.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     path: 'signup',
     redirectTo: 'auth/signup',
   },
+  { path: 'pdf', component: MediaInputComponent },
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',

@@ -7,7 +7,7 @@ export class UIService {
   loadingStateChanged = new Subject<boolean>();
   constructor(private snackbar: MatSnackBar) { }
 
-  showSnackbar(message: string, duration: number, action?: string) {
+  showSnackbar(message: string, duration: number = 5, action?: string) {
     this.snackbar.open(message, action, {
       duration: duration * 1000
     });

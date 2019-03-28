@@ -25,14 +25,6 @@ import { APP_CONFIG, APP_DI_CONFIG, SERVER_DI_CONFIG } from './app.config';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
-@Injectable()
-export class AppShellResolver {
-  window = true;
-}
-
-const injector = ReflectiveInjector.resolveAndCreate([
-  AppShellResolver,  // Shorthand for { provide: Greeting, useClass: Greeting }
-]);
 @NgModule({
   declarations: [
     AppComponent,
