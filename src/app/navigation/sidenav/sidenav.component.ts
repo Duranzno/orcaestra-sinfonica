@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { UserMenu, AnonMenu, Menu } from './menu.elements';
+import { UserMenu, AnonMenu, IMenu, Menu } from './menu.elements';
 import { AuthService } from '../../core/services/auth.service';
 import { IUser, User } from '../../core/models/user.model';
 import { OrcaState, From } from '../../core/store';
@@ -16,31 +16,23 @@ import { mapMenuAdmin, mapMenuGenres } from './menu.mapper';
 export class SidenavListComponent implements OnInit, OnDestroy {
   @Input() iconOnly = false;
   @Output() closeSidenav = new EventEmitter<void>();
-  @Input() public userSubs: Menu[] = [
+  @Input() public userSubs: IMenu[] = [
     {
-      'name': 'Navidad',
-      'link': '#',
+      'name': 'Favoritos',
+      'link': '/music',
       'icon': 'input',
       'isUser': true,
       'chip': false,
       'open': false,
       'isAdmin': false,
-    },
-    {
-      'name': 'LLaneras',
-      'link': '#',
-      'icon': 'input',
-      'isUser': true,
-      'chip': false,
-      'open': false,
-      'isAdmin': false,
-    },
+    }
   ];
   private subscription = new Subscription();
-  user$: Observable<IUser>;
-  avatarSrc$: Observable<string>;
-  public menus: Menu[];
-  public $menus: Observable<Menu[]>;
+  $user: Observable<IUser>;
+  $avatarSrc: Observable<string>;
+  $grupo: Observable<string>;
+  public menus: IMenu[];
+  public $menus: Observable<IMenu[]>;
   public anonMenu = AnonMenu;
 
   constructor(
@@ -48,16 +40,21 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.user$ = this.store.select(From.auth.getUser);
-    this.$menus = this.user$.pipe(
+    this.$user = this.store.select(From.auth.getUser);
+    this.$grupo = this.store.select(From.auth.getGroup);
+    this.$menus = this.$user.pipe(
       map(iUser => {
         const user = new User(iUser);
         const adminMenu = mapMenuAdmin(iUser);
         return mapMenuGenres(iUser, this.userSubs, adminMenu);
       })
     );
-    this.subscription = this.$menus.subscribe(m => this.menus = m);
-    this.avatarSrc$ = this.store.select(From.auth.getAvatar);
+    this.subscription.add(this.$menus.subscribe(m => this.menus = m));
+    this.subscription.add(this.$grupo.subscribe(g => this.userSubs.push(new Menu({
+      name: g,
+      link: `/music/lista/${g}`
+    }))));
+    this.$avatarSrc = this.store.select(From.auth.getAvatar);
   }
   onClose() {
     this.closeSidenav.emit();

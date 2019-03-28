@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Menu } from './menu.elements';
+import { IMenu } from './menu.elements';
 import { Store } from '@ngrx/store';
 import { OrcaState, From } from 'src/app/core/store';
 

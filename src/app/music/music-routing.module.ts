@@ -5,6 +5,7 @@ import { MusicComponent } from './music.component';
 
 const routes: Routes = [
   { path: 'lista', component: MusicComponent },
+  { path: 'lista/:genero', component: MusicComponent },
   { path: 'partitura', component: ScoreComponent },
   { path: 'partitura/:uid', component: ScoreComponent },
 ];

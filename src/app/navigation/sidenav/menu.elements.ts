@@ -1,5 +1,5 @@
 
-export interface Menu {
+export interface IMenu {
   name: string;
   link: string;
   icon?: string;
@@ -7,10 +7,33 @@ export interface Menu {
   isUser?: boolean;
   chip?: boolean;
   open?: boolean;
-  sub?: Menu[];
+  sub?: IMenu[];
   isAdmin?: boolean;
 }
-export const AnonMenu: Menu[] = [
+export class Menu implements IMenu {
+  name: string;
+  link: string;
+  icon?: string;
+  svgIcon?: string;
+  isUser?: boolean;
+  chip?: boolean;
+  open?: boolean;
+  sub?: IMenu[];
+  isAdmin?: boolean;
+  constructor(i: Menu) {
+    this.name = i.name;
+    this.link = i.link;
+    this.icon = (i.icon) ? i.icon : 'input';
+    this.svgIcon = (i.svgIcon) ? i.svgIcon : '';
+    this.isUser = (i.isUser) ? i.isUser : true;
+    this.chip = (i.chip) ? i.chip : false;
+    this.open = (i.open) ? i.open : false;
+    this.sub = (i.sub) ? i.sub : [];
+    this.isAdmin = (i.isAdmin) ? i.isAdmin : false;
+
+  }
+}
+export const AnonMenu: IMenu[] = [
   {
     'name': 'Iniciar Sesión',
     'link': '/login',
@@ -28,7 +51,7 @@ export const AnonMenu: Menu[] = [
     'isAdmin': false,
   }
 ];
-export const AdminMenu: Menu[] = [
+export const AdminMenu: IMenu[] = [
   {
     'name': 'Administrar Obras',
     'link': '/admin/partitura',
@@ -49,7 +72,7 @@ export const AdminMenu: Menu[] = [
   }
 ];
 
-export const UserMenu: Menu[] = [
+export const UserMenu: IMenu[] = [
   {
     'name': 'Musica',
     'link': '',

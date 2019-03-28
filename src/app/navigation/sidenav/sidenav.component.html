@@ -1,16 +1,16 @@
 <div class="column" fxLayout="column">
   <div class="complete" *ngIf="!iconOnly" fxLayoutAlign="space-around center">
-    <img [src]="avatarSrc$|async">
+    <img [src]="$avatarSrc|async">
   </div>
   <div class="iconOnly" *ngIf="iconOnly" fxLayoutAlign="space-around center">
-    <img [src]="avatarSrc$ |async">
+    <img [src]="$avatarSrc |async">
   </div>
-  <ng-container *ngIf="(user$|async)?.nombre; else anon">
+  <ng-container *ngIf="($user|async)?.nombre; else anon">
 
-    <mat-list *ngIf="(user$|async) as user">
+    <mat-list *ngIf="($user|async) as user">
       <mat-list-item>
         <mat-icon matListIcon iconsmall>{{(user.isAdmin)?'supervisor_account':'person'}}</mat-icon>
-        <h3 matLine>{{(user$|async)?.nombre}} {{(user$|async)?.apellido}}</h3>
+        <h3 matLine>{{($user|async)?.nombre}} {{($user|async)?.apellido}}</h3>
       </mat-list-item>
     </mat-list>
     <app-sidenav-item *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-sidenav-item>

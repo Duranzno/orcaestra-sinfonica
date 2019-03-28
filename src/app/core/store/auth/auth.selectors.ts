@@ -9,6 +9,7 @@ export const isAuth = createSelector(getAuthState, (state: State) => {
   return state.user.nombre !== '' && typeof state.user.nombre !== 'undefined';
 });
 export const getAvatar = createSelector(getAuthState, (state: State) => state.avatarSrc);
+export const getGroup = createSelector(getAuthState, (state: State) => state.user.grupo);
 export const getId = createSelector(getAuthState, (state: State) => state.user.uid);
 export const getOrganization = createSelector(getAuthState, (state: State) => state.organization);
 

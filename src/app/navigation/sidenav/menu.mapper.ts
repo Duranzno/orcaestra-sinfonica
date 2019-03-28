@@ -1,16 +1,16 @@
-import { Menu, AdminMenu, UserMenu } from './menu.elements';
+import { IMenu, AdminMenu, UserMenu } from './menu.elements';
 import { IUser } from 'src/app/core/models';
 
-const findSub = (m: Menu) => m.name === 'Musica';
-export function mapMenuAdmin(user: IUser): Menu[] {
+const findSub = (m: IMenu) => m.name === 'Musica';
+export function mapMenuAdmin(user: IUser): IMenu[] {
   return (user.isAdmin)
     ? AdminMenu.concat(UserMenu)
     : UserMenu;
 
 }
-export function mapMenuGenres(user: IUser, subs: Menu[], menu: Menu[]) {
+export function mapMenuGenres(user: IUser, subs: IMenu[], menu: IMenu[]) {
   if (user.nombre !== '') {
-    return menu.reduce((arr: Menu[], m: Menu): Menu[] => {
+    return menu.reduce((arr: IMenu[], m: IMenu): IMenu[] => {
       m.sub = (findSub(m)) ? subs : [];
       return arr.concat(m);
     }, []);
