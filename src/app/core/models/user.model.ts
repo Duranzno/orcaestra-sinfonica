@@ -31,7 +31,7 @@ export class User implements IUser {
     this.isAdmin = (i.isAdmin) ? i.isAdmin : false;
     this.uid = (i.uid) ? i.uid : '';
     this.favs = (i.favs) ? i.favs : [];
-    this.grupo = (i.grupo || i.grupo === '') ? 'Desconocido' : i.grupo;
+    this.grupo = (!i.grupo || i.grupo === '') ? 'Desconocido' : i.grupo;
   }
 
 

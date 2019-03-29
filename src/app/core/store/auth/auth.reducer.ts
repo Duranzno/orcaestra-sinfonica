@@ -11,7 +11,7 @@ export interface State {
 const initialState: State = {
   id: '',
   organization: 'OSJIG',
-  user: new User({ 'email': '', 'password': '' }),
+  user: new User({ 'email': '', 'password': '', 'grupo': 'IMA' }),
   avatarSrc: '/assets/user.jpg',
 };
 
@@ -26,6 +26,11 @@ export function authReducer(state = initialState, action: Actions): State {
       return {
         ...state,
         user: { ...state.user, uid: action.payload as string },
+      };
+    case ActionTypes.SET_GRUPO:
+      return {
+        ...state,
+        user: { ...state.user, grupo: action.payload as string },
       };
     case ActionTypes.SET_UNAUTHENTICATED:
       return {

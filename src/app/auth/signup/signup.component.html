@@ -3,6 +3,7 @@
     <div class="loading-shade" *ngIf="$loading|async">
       <mat-spinner></mat-spinner>
     </div>
+    <mat-card-title>Creacion de cuenta de {{(isAdmin)?'Administrador':'Usuario'}}</mat-card-title>
     <mat-card-content>
       <app-file-upload style="margin:1em;" [tipo]='tipo' (filesEvent)='getAvatarFile($event)'>
       </app-file-upload>
@@ -40,7 +41,7 @@
           <mat-error>Debe tener al menos 6 caracteres.</mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="($grupos | async) as grupos">
+        <mat-form-field *ngIf="!isAdmin&&($grupos | async) as grupos">
           <mat-select ngModel placeholder="Grupo" color="primary" name="grupo">
             <mat-option *ngFor="let g of grupos" [value]="g">
               {{g}}
@@ -48,9 +49,8 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-checkbox ngModel name="isAdmin" color="primary">
-          Es administrador?
-        </mat-checkbox>
+
+
 
       </form>
     </mat-card-content>

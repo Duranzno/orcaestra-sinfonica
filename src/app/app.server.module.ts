@@ -7,7 +7,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppShellComponent } from './app-shell/app-shell.component';
 import { SERVER_DI_CONFIG, APP_CONFIG } from './app.config';
 
-const routes: Routes = [{ path: 'app-shell-path', component: AppShellComponent }];
+const routes: Routes = [
+  // { path: 'app-shell-path', component: AppShellComponent }
+];
 declare const global;
 @Injectable()
 class AppShellResolver {

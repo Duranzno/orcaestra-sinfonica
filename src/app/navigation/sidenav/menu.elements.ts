@@ -104,3 +104,24 @@ export const UserMenu: IMenu[] = [
     'open': false,
   },
 ];
+export const MusicSubMenu: IMenu[] = [
+  {
+    'name': 'Favoritos',
+    'link': '/musica/lista/favoritos',
+    'icon': 'input',
+    'isUser': true,
+    'chip': false,
+    'open': false,
+    'isAdmin': false,
+  },
+  {
+    'name': 'Todos',
+    'link': '/musica/lista',
+    'icon': 'input',
+    'isUser': true,
+    'chip': false,
+    'open': false,
+    'isAdmin': false,
+  },
+
+];

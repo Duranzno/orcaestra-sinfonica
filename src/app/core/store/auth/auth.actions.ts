@@ -6,6 +6,7 @@ export class ActionTypes {
   static SET_ID = '[Auth] UID de Firestore seleccionado ';
   static SET_AVATAR = '[Auth] Avatar del usuario seleccionado';
   static SET_ORGANIZATION = '[Auth] Organización seleccionada';
+  static SET_GRUPO = '[Auth] Grupo actualizado';
 }
 export class SetAuthenticated implements Action {
   readonly type = ActionTypes.SET_AUTHENTICATED;
@@ -13,6 +14,10 @@ export class SetAuthenticated implements Action {
 }
 export class SetId implements Action {
   readonly type = ActionTypes.SET_ID;
+  constructor(public payload: string) { }
+}
+export class SetGrupo implements Action {
+  readonly type = ActionTypes.SET_GRUPO;
   constructor(public payload: string) { }
 }
 export class SetOrganization implements Action {
@@ -34,4 +39,5 @@ export type Actions = SetAuthenticated
   | SetUnauthenticated
   | SetAvatar
   | SetId
-  | SetOrganization;
+  | SetOrganization
+  | SetGrupo;

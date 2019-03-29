@@ -7,7 +7,6 @@ Apliación Web Progresiva (PWA) desarrollada en Angular utilizando NgRx y Fireba
 El proyecto utiliza el gestor de paquetse Yarn, se necesita tenerlo descargado de forma global en el sistema. 
 Clonar el proyecto y obtener los requisitos necesarios.
 
-
 ## Historias de Usuario
 | Versión de la aplicación | Funcionalidades en cada versión                                                                                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -28,16 +27,16 @@ Clonar el proyecto y obtener los requisitos necesarios.
 
 _Menciona las herramientas que utilizaste para crear tu proyecto_
 
-* [Angular](http://www.dropwizard.io/1.0.2/docs/) - Framework Web Usado
-* [Material Angular](http://www.dropwizard.io/1.0.2/docs/) - Componentes de Material Design
-* [NgRx](http://www.dropwizard.io/1.0.2/docs/) - Implementación de Redux usando Rx.
-* [Travis C.I](http://www.dropwizard.io/1.0.2/docs/) - Herramienta para CI/CD
-* [AngularFire](http://www.dropwizard.io/1.0.2/docs/) - Framework para el uso de funciones de Firebase 
-* [Sass](http://www.dropwizard.io/1.0.2/docs/) - Precompilador de CSS
-* [jsPDF](http://www.dropwizard.io/1.0.2/docs/) - Framework para el manejo de archivos PDF
-* [Wavesurfer](http://www.dropwizard.io/1.0.2/docs/) - Reproductor de audio
-* [Ngx-Youtube-Player](http://www.dropwizard.io/1.0.2/docs/) - Libreria para implementar videos de Youtube
-* [Yarn](http://www.dropwizard.io/1.0.2/docs/) - Manejador de paquetes
+* [Angular](http://angular.io) - Framework Web Usado
+* [Material Angular](http://material.angular.io/) - Componentes de Material Design
+* [NgRx](https://ngrx.io/) - Implementación de Redux usando Rx.
+* [Travis C.I](https://travis-ci.org/) - Herramienta para CI/CD
+* [AngularFire]https://github.com/angular/angularfire2) - Framework para el uso de funciones de Firebase 
+* [Sass](https://sass-lang.com/) - Precompilador de CSS
+* [jsPDF](https://parall.ax/products/jspdf) - Framework para el manejo de archivos PDF
+* [Wavesurfer](https://wavesurfer-js.org/) - Reproductor de audio
+* [Ngx-Youtube-Player](https://www.npmjs.com/package/ngx-youtube-player) - Libreria para implementar videos de Youtube
+* [Yarn](https://www.yarnpkg.com) - Manejador de paquetes
 
 
 

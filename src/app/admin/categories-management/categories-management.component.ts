@@ -27,8 +27,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<string[]>;
   $dataSource: Observable<string[]>;
   tipo: CategoriaTipo = CategoriaTipo.GRUPOS;
-  loading = false;
-  $loading: Observable<boolean> = of(false);
+  loading = true;
   resultsLength = 0;
   columns = ['nombre', 'opciones'];
   pageEvent: PageEvent;
@@ -82,12 +81,12 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.loading = false;
+          this.loading = true;
           return this.fetch();
         }),
         map(data => {
           // Flip flag to show that loading has finished.
-          this.loading = true;
+          this.loading = false;
           // this.dataSource = new MatTableDataSource(data);
           // this.dataSource = new MatTableDataSource(data as string[])
           this.resultsLength = data.length;
@@ -111,18 +110,18 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'app-dialogo-categoria',
   template: `
-  <h1 mat-dialog-title>{{data.tipo}}</h1>
+  <h1 mat-dialog-title>{{data.tipo|titlecase}}</h1>
   <div mat-dialog-content>
     <p class="mat-body">¿Que va a agregar?</p>
-    <mat-form-field>
+    <mat-form-field style="max-width:-webkit-fill-available">
       <input matInput [(ngModel)]="data.nuevaCateg">
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Mejor no</button>
-    <button mat-button [mat-dialog-close]="data.nuevaCateg" cdkFocusInitial>Ok</button>
+    <button mat-button [mat-dialog-close]="data.nuevaCateg" cdkFocusInitial>Agregar</button>
   </div>
-`,
+`
 })
 export class DialogoCategoria {
 

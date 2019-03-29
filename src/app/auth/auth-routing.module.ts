@@ -7,8 +7,9 @@ import { LogoutComponent } from './logout.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
+  { path: 'signup/:tipo', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent }
+  { path: 'logout', component: LogoutComponent },
 ];
 
 @NgModule({

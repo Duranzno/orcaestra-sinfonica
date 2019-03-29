@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Observable, from, of } from 'rxjs';
+import { from } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 
 import { User, IUploadFile, IUser } from '../models';
 
 import { OrcaState, From } from '../store';
-import { switchMap, catchError, map, last } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { UserService } from './firebase/user.service';
 import { UIService } from './ui.service';
 
@@ -92,6 +90,7 @@ export class AuthService {
   private messageParser(code: string): string {
     switch (code) {
       case 'auth/app-deleted': return 'Aplicacion eliminada';
+      case 'auth/user-not-found': return 'No existe el usuario';
       case 'auth/account-exists-with-different-credential ':
       case "auth/email-already-in-use": return 'Ya existe un usuario con ese correo electronico';
       case 'auth/network-request-failed': return 'Problemas con la Conexión a Internet';

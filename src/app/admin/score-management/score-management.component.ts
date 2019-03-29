@@ -24,7 +24,7 @@ import { ScoreEditDialog } from 'src/app/shared/components';
 })
 export class ScoreManagementComponent implements OnInit {
   $dataSource: Observable<DataScore[]>;
-  isLoadingResults: boolean = false;
+  loading: boolean = false;
   resultsLength = 0;
   expandedElement: DataScore | null;
   EditedDScore: DataScore;
@@ -57,12 +57,12 @@ export class ScoreManagementComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
+          this.loading = true;
           return this.fbScore.getScoreList();
         }),
         map(data => {
           // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
+          this.loading = false;
           this.resultsLength = data.length;
           // return data;
           return data.map(i => new DataScore(i));
