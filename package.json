@@ -11,8 +11,7 @@
     "fcm": "node node_modules/concat/bin/concat ./fcm.js dist/ngsw-worker.js  -o dist/combined-worker.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "http": "node node_modules/http-server/bin/http-server dist/",
-    "pwa": "ng build --prod && yarn run fcm && yarn run http"
+    "http": "node node_modules/http-server/bin/http-server dist/"
   },
   "private": true,
   "dependencies": {
