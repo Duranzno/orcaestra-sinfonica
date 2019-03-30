@@ -21,6 +21,14 @@
         "webRoot": "${workspaceFolder}"
       },
       {
+        "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
+        "type": "chrome",
+        "request": "launch",
+        "name": "Chrome PWA",
+        "url": "http://192.168.1.141:8080/",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
         "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
         "name": "ng test",
         "type": "chrome",
