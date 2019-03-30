@@ -8,16 +8,16 @@
         "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
         "type": "chrome",
         "request": "launch",
-        "name": "RPI",
+        "name": "Slimjet Serve RPI",
         "url": "http://192.168.1.141:4200/",
         "webRoot": "${workspaceFolder}"
       },
       {
-        // "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
-        "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
+        "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
+        // "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
         "type": "chrome",
         "request": "launch",
-        "name": "Local",
+        "name": "Local Serve",
         "url": "http://localhost:4200/",
         "webRoot": "${workspaceFolder}"
       },

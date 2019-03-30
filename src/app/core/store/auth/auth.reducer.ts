@@ -18,11 +18,12 @@ export function authReducer(state = initialState, action: Actions): State {
     case ActionTypes.SET_AUTHENTICATED:
       return {
         ...state,
-        user: { ...action.payload as IUser, password: 'secret' },
+        user: { ...action.payload as IUser, password: 'secret', uid: state.user.uid },
       };
     case ActionTypes.SET_ID:
       return {
         ...state,
+        // uid: action.payload as string,
         user: { ...state.user, uid: action.payload as string },
       };
     case ActionTypes.SET_GRUPO:
@@ -45,6 +46,8 @@ export function authReducer(state = initialState, action: Actions): State {
         ...state,
         organization: action.payload as string,
       };
+    case ActionTypes.UPLOAD_FCM:
+      return state;
     default: {
       return state;
     }

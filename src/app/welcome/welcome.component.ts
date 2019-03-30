@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrcaState, From } from '../core/store';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
+import { take, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome',
@@ -37,6 +38,18 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.$loading = this.store.select(From.ui.getIsLoading);
+    this.store.select(From.auth.getUser).subscribe(u=>console.log(u))
+    this.$subs.add(
+      this.store.select(From.auth.getUid)
+        .subscribe((id) => {
+          console.log(`El id del usuario es ${id}`);
+          // if (environment.production && this.msg.getToken())
+          if (id && id !== '')
+            this.store.dispatch(new From.auth.UploadFCM('enllUnrsGAI:APA91bGydRb7YCtU4WQBVDu-r0x1HY3imyB_9mpGkR7lb_k76p26_ZqeOBWS13XNifktjpKiIJeom10bGzBiZKmsEONJdhxq9WaiTV7_pNpNqhtO3se5exHysDLz6lRXcjnNuz1zWZTK'))
+          // this.msg.monitorRefresh()
+          // .then(fcmToken => this.store.dispatch(new From.auth.UploadFCM(fcmToken)))
+        })
+    )
   }
 
   ngOnDestroy(): void {

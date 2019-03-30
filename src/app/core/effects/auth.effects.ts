@@ -6,14 +6,14 @@ import { Observable, of } from 'rxjs';
 import * as fromAuth from '../store/auth';
 import * as fromUi from '../store/ui';
 
-import { map, catchError, tap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, catchError, tap, switchMap, withLatestFrom, filter } from 'rxjs/operators';
 import { User } from '../models';
 import { UserService } from '../services/firebase/user.service';
 import { OrcaState } from '../store';
 import { Store } from '@ngrx/store';
 import { MessagingService } from '../services/messaging.service';
-type stuff = [fromAuth.SetGrupo, OrcaState];
-type latestFromID = [fromAuth.SetGrupo, OrcaState];
+type latestFromGrupo = [fromAuth.SetGrupo, OrcaState];
+type latestFromFCM = [fromAuth.UploadFCM, OrcaState];
 
 @Injectable()
 export class AuthEffects {
@@ -33,13 +33,15 @@ export class AuthEffects {
   uploadFCM$ = this.actions$.pipe(
     ofType(fromAuth.ActionTypes.UPLOAD_FCM),
     withLatestFrom(this.store$),
-    map(([action, state]: latestFromID) => {
+    filter(([action, state]: latestFromFCM) => !!state.user.user.uid),
+    map(([action, state]: latestFromFCM) => {
       return {
         fcm: action.payload,
         uid: state.user.user.uid,
       };
     }),
-    map({ fcm, uid } => this.userService.saveFCMToken(uid, fcm))
+    map(({ fcm, uid }) => this.userService.saveFCMToken(uid, fcm)),
+    map((val)=>new fromUi.StopLoading())
   );
   // @Effect()
   // logAvatar$ = this.actions$.pipe(
@@ -54,7 +56,7 @@ export class AuthEffects {
   setGrupo$ = this.actions$.pipe(
     ofType(fromAuth.ActionTypes.SET_GRUPO),
     withLatestFrom(this.store$),
-    map(([action, state]: stuff) => {
+    map(([action, state]: latestFromGrupo) => {
       this.store$.dispatch(new fromUi.StartLoading());
       return {
         grupo: action.payload,

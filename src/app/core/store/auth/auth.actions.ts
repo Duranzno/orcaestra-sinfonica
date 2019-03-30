@@ -7,7 +7,7 @@ export class ActionTypes {
   static SET_AVATAR = '[Auth] Avatar del usuario seleccionado';
   static SET_ORGANIZATION = '[Auth] Organización seleccionada';
   static SET_GRUPO = '[Auth] Grupo actualizado';
-  static UPLOAD_FCM = '[Auth] Se va a guardar';
+  static UPLOAD_FCM = '[Auth] Se va a guardar FCM en el usuario';
 }
 export class SetAuthenticated implements Action {
   readonly type = ActionTypes.SET_AUTHENTICATED;
@@ -23,6 +23,10 @@ export class SetGrupo implements Action {
 }
 export class SetOrganization implements Action {
   readonly type = ActionTypes.SET_ORGANIZATION;
+  constructor(public payload: string) { }
+}
+export class UploadFCM implements Action {
+  readonly type = ActionTypes.UPLOAD_FCM;
   constructor(public payload: string) { }
 }
 
@@ -41,4 +45,5 @@ export type Actions = SetAuthenticated
   | SetAvatar
   | SetId
   | SetOrganization
-  | SetGrupo;
+  | SetGrupo
+  | UploadFCM;

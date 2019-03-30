@@ -55,24 +55,15 @@ export class MessagingService {
     return this.messaging.getToken();
   }
 
-  monitorRefresh(user?: IUser) {
-    this.messaging.onTokenRefresh(async () => {
-      try {
-        const refreshedToken = await this.messaging.getToken()
-        console.log('Token refrescado e.e.');
-        // this.saveToken(user, refreshedToken)
-      } catch (err) {
-        console.log(err, 'Unable to retrieve new token')
-      }
-
-    });
+  monitorRefresh(user?: IUser): Promise<string> {
+    return this.messaging.onTokenRefresh(async () => await this.messaging.getToken());
   }
 
 
   receiveMessages() {
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);
-      this.uiService.showSnackbar(payload.data["gcm.notification.text"]);
+      this.uiService.showSnackbar((payload) ? payload.data["gcm.notification.text"] : 'GUA');
       this.messageSource.next(payload)
     });
   }

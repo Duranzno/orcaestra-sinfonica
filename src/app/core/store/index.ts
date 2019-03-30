@@ -1,3 +1,8 @@
+import * as media from './media';
+import * as auth from './auth';
+import * as music from './music';
+import * as ui from './ui';
+import { environment } from 'src/environments/environment';
 import { NgModule } from '@angular/core';
 import { Store, StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { OrcaActions, OrcaState, OrcaReducers } from './reducers';
@@ -24,10 +29,5 @@ const optionalImports = [];
 })
 export class CoreStoreModule { constructor() { } }
 export { OrcaState, OrcaActions, OrcaReducers } from './reducers';
-import * as media from './media';
-import * as auth from './auth';
-import * as music from './music';
-import * as ui from './ui';
-import { environment } from 'src/environments/environment';
 export const From = { media, auth, music, ui };
 

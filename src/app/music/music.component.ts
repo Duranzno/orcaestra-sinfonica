@@ -76,7 +76,7 @@ export class MusicComponent implements OnInit, OnDestroy {
       }))
   }
   ngOnInit() {
-    this.$subs.add(this.store.select(From.auth.getId).subscribe(id => this.userId = id));
+    this.$subs.add(this.store.select(From.auth.getUid).subscribe(id => this.userId = id));
     this.$subs.add(this.store.select(From.auth.getGroup).subscribe(uGrupo => this.uGrupo = uGrupo));
     this.$Scores = this.fbScore.getScoreList();
     this.store.dispatch(new From.media.FetchFav({ userId: '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2' }))

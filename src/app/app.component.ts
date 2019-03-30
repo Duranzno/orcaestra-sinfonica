@@ -31,7 +31,6 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   matDrawerShow: boolean = true; // 1
   sideNavMode: string = 'side';
   subscriptions = new Subscription();
-
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.msg.init();
     this.addIcons();
-    // this.initPushService();
+    this.initPushService();
     this.store.dispatch(new From.media.FetchCategory());
     // this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
@@ -100,18 +99,9 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
 
   }
   initPushService() {
-    if (environment.production) {
-      this.$subs.add(
-        this.store.select(From.auth.getUser)
-          .pipe(filter(user => !!user && !!user.uid), take(1))
-          .subscribe((user) => {
-            if (environment.production && this.msg.getToken()) {
-              // this.msg.saveToken(user, this.msg.getToken())
-              this.msg.monitorRefresh(user)
-            }
-          })
-      )
-    }
+    // if (environment.production) {
+
+    // }
   }
   ngOnDestroy() {
     this.watcher$.unsubscribe();
