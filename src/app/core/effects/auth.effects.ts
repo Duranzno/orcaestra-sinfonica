@@ -41,7 +41,7 @@ export class AuthEffects {
       };
     }),
     switchMap(({ fcm, uid }) => this.userService.saveFCMToken(uid, fcm)),
-    map((val) => console.log(`UploadFCM ${val}`))
+    map((val) => new fromUi.StopLoading())
   );
   // @Effect()
   // logAvatar$ = this.actions$.pipe(
