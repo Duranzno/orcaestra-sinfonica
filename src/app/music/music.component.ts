@@ -21,7 +21,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
     </mat-select>
     </mat-form-field>
     <button mat-icon-button (click)="updateUserGroup()">
-      <mat-icon>{{(grupo===uGrupo)?favorite:favorite_border}}</mat-icon>
+      <mat-icon>{{(grupo===uGrupo)?'favorite':'favorite_border'}}</mat-icon>
     </button>
   </mat-toolbar-row>
   </mat-toolbar>

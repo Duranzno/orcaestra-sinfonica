@@ -5,14 +5,14 @@
     "ng": "ng",
     "shell": "ng run Orcaestra-Sinfonica:app-shell",
     "start": "ng serve --host 0.0.0.0 --disableHostCheck",
-    "build": "ng build --prod && yarn run fcm",
+    "build": "ng build --prod && yarn run http",
     "test": "ng test",
     "tslint": "tslint --project tsconfig.json",
     "fcm": "node node_modules/concat/bin/concat ./fcm.js dist/ngsw-worker.js  -o dist/combined-worker.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "http": "node node_modules/http-server/bin/http-server dist/",
-    "pwa": "yarn run build && yarn run http"
+    "pwa": "ng build --prod && yarn run fcm && yarn run http"
   },
   "private": true,
   "dependencies": {

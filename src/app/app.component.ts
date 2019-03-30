@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FirebaseApp, FirebaseMessaging } from '@angular/fire';
 
 import { Subscription } from 'rxjs';
 import { AuthService, MessagingService } from './core/services';
@@ -10,6 +11,10 @@ import { MatIconRegistry } from '@angular/material';
 import { InstrTipo } from './core/models/instr.interface';
 import { MediaTipo, RegistroTipo, PersonaTipo } from './core/models';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment.prod';
+import { filter, take } from 'rxjs/operators';
+import { SwPush } from '@angular/service-worker';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 @Component({
   selector: "app-root",
   templateUrl: './app.component.html',
@@ -20,7 +25,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   watcher$: Subscription;
   @Input() isVisible: boolean = true; // 1
   visibility = 'shown'
-
+  $subs = new Subscription();
   sideNavOpened: boolean = true; // 1
   matDrawerOpened = false; // 0
   matDrawerShow: boolean = true; // 1
@@ -33,14 +38,13 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private mediaObserver: MediaObserver,
     private store: Store<OrcaState>,
     private msg: MessagingService,
-    db: AngularFirestore
-
-  ) {
+    db: AngularFirestore) {
     // db.firestore.enablePersistence().then(() => console.log("Firestore es capaz de corre offline"))
   }
   ngOnInit() {
+    this.msg.init();
     this.addIcons();
-
+    // this.initPushService();
     this.store.dispatch(new From.media.FetchCategory());
     // this.authService.initAuthListener();
     this.watcher$ = this.mediaObserver.media$
@@ -94,6 +98,20 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     this.addSvg(PersonaTipo.TRANSCRIPTOR, 'persona');
     this.addSvg(PersonaTipo.UPLOADER, 'persona');
 
+  }
+  initPushService() {
+    if (environment.production) {
+      this.$subs.add(
+        this.store.select(From.auth.getUser)
+          .pipe(filter(user => !!user), take(1))
+          .subscribe((user) => {
+            if (environment.production && this.msg.getToken()) {
+              this.msg.saveToken(user, this.msg.getToken())
+              // this.msg.monitorRefresh(user)
+            }
+          })
+      )
+    }
   }
   ngOnDestroy() {
     this.watcher$.unsubscribe();

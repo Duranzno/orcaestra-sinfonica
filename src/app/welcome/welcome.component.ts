@@ -1,46 +1,42 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import WaveSurfer from 'wavesurfer.js';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrcaState, From } from '../core/store';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
-import { Router, RouterLink, ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { CategoriaTipo } from '../core/models';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { take, filter, tap } from 'rxjs/operators';
-import { MessagingService, UIService } from '../core/services';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
+  template: `
+  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
+  <div>
+    <section>
+      <h1>ACTIVITY</h1>
+      <p>Stay active and enjoy better health and more fun!</p>
+    </section>
+    <section>
+      <h1>COMMUNITY</h1>
+      <p>Get to know other people who share your passion!</p>
+    </section>
+    <section>
+      <h1>CHALLENGES</h1>
+      <p>Never stop! Dive into new challenges every day</p>
+    </section>
+  </div>
+  <button mat-raised-button [routerLink]="[ '/admin','temp' ]" routerLinkActive="active">
+    name text
+  </button>
+</div>
+  `,
   styleUrls: []
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   $subs = new Subscription()
   $loading: Observable<boolean>;
   constructor(
-    private store: Store<OrcaState>,
-    private router: Router,
-    private msg: MessagingService,
-    private ui: UIService
+    private store: Store<OrcaState>
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new From.ui.ShowSnackbar({ message: "test", duration: 5, action: 'asdasd' }))
     this.$loading = this.store.select(From.ui.getIsLoading);
-    if (environment.production) {
-      this.$subs.add(this.store.select(From.auth.getUser)
-        .pipe(
-          filter(user => !!user), // filter null
-          take(1) // take first real user
-        ).subscribe((user) => {
-          if (environment.production && this.msg.getToken()) {
-            this.msg.saveToken(user, this.msg.getToken())
-            this.msg.monitorRefresh(user)
-          }
-        }))
-    }
   }
 
   ngOnDestroy(): void {

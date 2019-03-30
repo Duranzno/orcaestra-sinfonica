@@ -14,12 +14,12 @@ export class MessagingService {
 
   private messaging;
   private messageSource = new Subject()
-  currentMessage = this.messageSource.asObservable() // message observable to show in Angular component
+  currentMessage = this.messageSource.asObservable()
 
   constructor(
     private swUpdate: SwUpdate,
-    private userService: UserService,
-  ) {
+    private userService: UserService) { }
+  init() {
     if (environment.production) {
       if (window && this.swUpdate.isEnabled) {
         this.swUpdate.available.subscribe((event) => {
@@ -31,8 +31,7 @@ export class MessagingService {
         this.messaging = firebase.messaging();
         this.getPermission();
         this.receiveMessages();
-      }
-      else {
+      } else {
         console.log(`No soporta PUSH :c`);
       }
     }
@@ -40,7 +39,6 @@ export class MessagingService {
       console.log(`Desactivadas las notificaciones PUSH y los service workers`);
     }
   }
-
   async getPermission(user?: IUser) {
     try {
       await this.messaging.requestPermission()
@@ -71,29 +69,23 @@ export class MessagingService {
   }
 
   saveToken(user, token): void {
-    if (!user) { return }
-    const currentTokens = user.fcmTokens || {}
-    console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. 
-    Nuevo token ${token} }`)
+    // if (!user||!user.uid) { return }
+    // const currentTokens = user.fcmTokens || {}
+    // console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. 
+    // Nuevo token ${token} }`)
 
-    // If token does not exist in firestore, update db
-    if (!currentTokens[token] && user) {
-      const userRef = this.userService.fetchUserRef(user.uid);
-      const tokens = { ...currentTokens, [token]: true }
-      userRef.update({ fcmTokens: tokens })
-    }
+    // // If token does not exist in firestore, update db
+    // if (!currentTokens[token] && user) {
+    //   const userRef = this.userService.fetchUserRef(user.uid);
+    //   const tokens = { ...currentTokens, [token]: true }
+    //   userRef.update({ fcmTokens: tokens })
+    // // }
   }
-  // used to show message when app is open
   receiveMessages() {
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);
       this.messageSource.next(payload)
     });
   }
-
-  checkUpdate() {
-
-  }
-
 
 }
