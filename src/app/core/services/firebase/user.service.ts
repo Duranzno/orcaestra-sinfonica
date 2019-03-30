@@ -40,15 +40,25 @@ export class UserService {
     return userRef.valueChanges()
       .pipe(
         map(
-          ({ fcmTokens: oldTokens }) =>
-            (oldTokens && !oldTokens[newToken]) ? { ...oldTokens, [newToken]: true } : { [newToken]: true }),
+          ({ fcmTokens: oldTokens }) => {
+            if (oldTokens && !oldTokens[newToken]) {
+              return { ...oldTokens, [newToken]: true }
+            } else {
+              return { [newToken]: true }
+            }
+          }),
         //If any tokens have been saved it will add the new one, else it will make a new property with just the new token
-        switchMap((tokens) => (tokens)
-          ? from(
-            userRef.update({ fcmTokens: tokens })
-              .then(() => true)
-              .catch(() => false))
-          : of(false)))
+        switchMap((tokens) => {
+          if (tokens) {
+            return from(
+              userRef.update({ fcmTokens: tokens })
+                .then(() => true)
+                .catch(() => false))
+          } else {
+            return of(false)
+          }
+        }
+        ))
     // const userRef = this.userService.fetchUserRef(data.uid);
     // const tokens = { ...currentTokens, [newToken]: true }
     // userRef.update({ fcmTokens: tokens }).then(_ => { console.log("actualizado") }).catch(err => console.error(`error`, err))

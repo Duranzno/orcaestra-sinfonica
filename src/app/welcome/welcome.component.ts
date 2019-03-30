@@ -38,7 +38,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.$loading = this.store.select(From.ui.getIsLoading);
-    this.store.select(From.auth.getUser).subscribe(u=>console.log(u))
     this.$subs.add(
       this.store.select(From.auth.getUid)
         .subscribe((id) => {
