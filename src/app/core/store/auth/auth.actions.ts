@@ -7,6 +7,7 @@ export class ActionTypes {
   static SET_AVATAR = '[Auth] Avatar del usuario seleccionado';
   static SET_ORGANIZATION = '[Auth] Organización seleccionada';
   static SET_GRUPO = '[Auth] Grupo actualizado';
+  static UPLOAD_FCM = '[Auth] Se va a guardar';
 }
 export class SetAuthenticated implements Action {
   readonly type = ActionTypes.SET_AUTHENTICATED;

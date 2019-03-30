@@ -11,7 +11,9 @@ import { User } from '../models';
 import { UserService } from '../services/firebase/user.service';
 import { OrcaState } from '../store';
 import { Store } from '@ngrx/store';
+import { MessagingService } from '../services/messaging.service';
 type stuff = [fromAuth.SetGrupo, OrcaState];
+type latestFromID = [fromAuth.SetGrupo, OrcaState];
 
 @Injectable()
 export class AuthEffects {
@@ -19,12 +21,25 @@ export class AuthEffects {
     private actions$: Actions,
     private store$: Store<OrcaState>,
     private userService: UserService,
+    private msg: MessagingService,
   ) { }
 
   @Effect()
   setAuth$ = this.actions$.pipe(
     ofType(fromAuth.ActionTypes.SET_AUTHENTICATED),
     map((action: any) => new fromAuth.SetAvatar(action.payload.avatar))
+  );
+  @Effect()
+  uploadFCM$ = this.actions$.pipe(
+    ofType(fromAuth.ActionTypes.UPLOAD_FCM),
+    withLatestFrom(this.store$),
+    map(([action, state]: latestFromID) => {
+      return {
+        fcm: action.payload,
+        uid: state.user.user.uid,
+      };
+    }),
+    map({ fcm, uid } => this.userService.saveFCMToken(uid, fcm))
   );
   // @Effect()
   // logAvatar$ = this.actions$.pipe(

@@ -19,7 +19,6 @@ export class MessagingService {
 
   constructor(
     private swUpdate: SwUpdate,
-    private userService: UserService,
     private uiService: UIService) { }
   init() {
     if (environment.production) {
