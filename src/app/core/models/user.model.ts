@@ -11,7 +11,7 @@ export interface IUser {
   isAdmin?: boolean;
   uid?: string;
   favs?: string[];
-  fcmTokens?: { [token: string]: true };
+  fcmTokens?: { [token: string]: boolean };
 }
 export class User implements IUser {
   email: string;
@@ -21,8 +21,10 @@ export class User implements IUser {
   uid?: string;
   favs?: string[];
   isAdmin: boolean;
+
   grupo: string;
   avatar: string = '/assets/user.jpg';
+  fcmTokens?: { [token: string]: boolean };
   constructor(i: IUser) {
     this.email = (i.email) ? i.email : '';
     this.nombre = (i.nombre) ? i.nombre : '';

@@ -13,11 +13,12 @@
         "webRoot": "${workspaceFolder}"
       },
       {
-        "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
+        // "runtimeExecutable": "C:\\Program Files\\Slimjet\\slimjet.exe",
+        "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
         "type": "chrome",
         "request": "launch",
         "name": "Local",
-        "url": "http://localhost:8080/",
+        "url": "http://localhost:4200/",
         "webRoot": "${workspaceFolder}"
       },
       {

@@ -84,7 +84,6 @@ export class AuthService {
   private errorHandler(error) {
 
     this.store.dispatch(new From.ui.StopLoading())
-    this.uiService.showSnackbar(this.messageParser(error.code), 5)
     console.error(this.messageParser(error.code), error);
   }
   private messageParser(code: string): string {

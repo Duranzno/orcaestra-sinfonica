@@ -61,7 +61,7 @@ export class MessagingService {
       try {
         const refreshedToken = await this.messaging.getToken()
         console.log('Token refrescado e.e.');
-        this.saveToken(user, refreshedToken)
+        // this.saveToken(user, refreshedToken)
       } catch (err) {
         console.log(err, 'Unable to retrieve new token')
       }
@@ -69,18 +69,7 @@ export class MessagingService {
     });
   }
 
-  saveToken(user, token): void {
-    if (!user || !user.uid) { return }
-    const currentTokens = user.fcmTokens || {}
-    console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. 
-    Nuevo token ${token} }`)
 
-    if (!currentTokens[token] && user) {
-      const userRef = this.userService.fetchUserRef(user.uid);
-      const tokens = { ...currentTokens, [token]: true }
-      userRef.update({ fcmTokens: tokens }).then(_ => { console.log("actualizado") }).catch(err => console.error(`error`, err))
-    }
-  }
   receiveMessages() {
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);

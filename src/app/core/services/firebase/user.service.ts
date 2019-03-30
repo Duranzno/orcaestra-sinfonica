@@ -33,4 +33,24 @@ export class UserService {
   fetchUserRef(uid: string) {
     return this.afStore.doc(`usuarios/${uid}`)
   }
+  saveFCMToken(uid: string, newToken: string): Observable<boolean> {
+    // const currentTokens = data.fcmTokens || {}
+    // console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. \n Nuevo token ${newToken} }`)
+    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
+    return userRef.valueChanges()
+      .pipe(
+        map(
+          ({ fcmTokens: oldTokens }) =>
+            (oldTokens && !oldTokens[newToken]) ? { ...oldTokens, [newToken]: true } : { [newToken]: true }),
+        //If any tokens have been saved it will add the new one, else it will make a new property with just the new token
+        switchMap((tokens) => (tokens)
+          ? from(
+            userRef.update({ fcmTokens: tokens })
+              .then(() => true)
+              .catch(() => false))
+          : of(false)))
+    // const userRef = this.userService.fetchUserRef(data.uid);
+    // const tokens = { ...currentTokens, [newToken]: true }
+    // userRef.update({ fcmTokens: tokens }).then(_ => { console.log("actualizado") }).catch(err => console.error(`error`, err))
+  }
 }
