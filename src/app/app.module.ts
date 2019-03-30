@@ -46,10 +46,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpModule,
     // Libraries
     AppRoutingModule,
-    ServiceWorkerModule.register('/firebase-messaging-sw.js',
-      // ServiceWorkerModule.register('/ngsw-worker.js',
-      // { enabled: environment.production }
-    ),
+    // ServiceWorkerModule.register('/firebase-messaging-sw.js',
+    // ServiceWorkerModule.register('/ngsw-worker.js',
+    // { enabled: environment.production }
+    // ),
     PerfectScrollbarModule,
   ],
   providers: [

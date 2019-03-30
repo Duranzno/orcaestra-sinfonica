@@ -17,29 +17,29 @@ export class MessagingService {
   currentMessage = this.messageSource.asObservable()
 
   constructor(
-    private swUpdate: SwUpdate,
+    // private swUpdate: SwUpdate,
     private userService: UserService) { }
   init() {
-    if (environment.production) {
-      if (window && this.swUpdate.isEnabled) {
-        this.swUpdate.available.subscribe((event) => {
-          (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) ? window.location.reload() : '';
-        })
-      }
-      if (firebase.messaging.isSupported) {
-        console.log(`"Las notificaciones PUSH estan soportadas c:`)
-        this.messaging = firebase.messaging();
-        this.getPermission();
+    // if (environment.production) {
+    //   if (window && this.swUpdate.isEnabled) {
+    //     this.swUpdate.available.subscribe((event) => {
+    //       (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) ? window.location.reload() : '';
+    //     })
+    //   }
+    if (firebase.messaging.isSupported) {
+      console.log(`"Las notificaciones PUSH estan soportadas c:`)
+      this.messaging = firebase.messaging();
+      this.getPermission().then(_ => {
         this.receiveMessages();
-      } else {
-        console.log(`No soporta PUSH :c`);
-      }
+        console.log("recibiendo mensajes")
+      });
+    } else {
+      console.log(`No soporta PUSH :c`);
     }
-    else {
-      console.log(`Desactivadas las notificaciones PUSH y los service workers`);
-    }
+    // }
+    // else {console.log(`Desactivadas las notificaciones PUSH y los service workers`);}
   }
-  async getPermission(user?: IUser) {
+  async getPermission(user?: IUser): Promise<void> {
     try {
       await this.messaging.requestPermission()
       console.log('Se tiene el permiso.');
@@ -49,7 +49,6 @@ export class MessagingService {
     } catch (err) {
       console.log('No se puede pedir permiso ', err);
     }
-
   }
   getToken() {
     return this.messaging.getToken();
