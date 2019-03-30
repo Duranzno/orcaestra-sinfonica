@@ -46,7 +46,7 @@ export class MessagingService {
       await this.messaging.requestPermission()
       console.log('Se tiene el permiso.');
       const token = await this.messaging.getToken()
-      console.logg('Token es', token)
+      console.log('Token es', token)
       // if (user) this.saveToken(user, token)
     } catch (err) {
       console.log('No se puede pedir permiso ', err);
@@ -70,17 +70,16 @@ export class MessagingService {
   }
 
   saveToken(user, token): void {
-    // if (!user||!user.uid) { return }
-    // const currentTokens = user.fcmTokens || {}
-    // console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. 
-    // Nuevo token ${token} }`)
+    if (!user || !user.uid) { return }
+    const currentTokens = user.fcmTokens || {}
+    console.log(`Tokens actuales ${JSON.stringify(currentTokens)}. 
+    Nuevo token ${token} }`)
 
-    // // If token does not exist in firestore, update db
-    // if (!currentTokens[token] && user) {
-    //   const userRef = this.userService.fetchUserRef(user.uid);
-    //   const tokens = { ...currentTokens, [token]: true }
-    //   userRef.update({ fcmTokens: tokens })
-    // // }
+    if (!currentTokens[token] && user) {
+      const userRef = this.userService.fetchUserRef(user.uid);
+      const tokens = { ...currentTokens, [token]: true }
+      userRef.update({ fcmTokens: tokens }).then(_ => { console.log("actualizado") }).catch(err => console.error(`error`, err))
+    }
   }
   receiveMessages() {
     this.messaging.onMessage(payload => {

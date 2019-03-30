@@ -103,11 +103,11 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     if (environment.production) {
       this.$subs.add(
         this.store.select(From.auth.getUser)
-          .pipe(filter(user => !!user), take(1))
+          .pipe(filter(user => !!user && !!user.uid), take(1))
           .subscribe((user) => {
             if (environment.production && this.msg.getToken()) {
               this.msg.saveToken(user, this.msg.getToken())
-              // this.msg.monitorRefresh(user)
+              this.msg.monitorRefresh(user)
             }
           })
       )

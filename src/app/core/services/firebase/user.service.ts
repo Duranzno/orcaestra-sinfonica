@@ -30,7 +30,7 @@ export class UserService {
   fetchUserData(uid: string) {
     return from(this.afStore.doc(`usuarios/${uid}`).valueChanges());
   }
-  // fetchUserRef(uid: string) {
-  //   return this.afStore.collection('usuarios').doc(uid);
-  // }
+  fetchUserRef(uid: string) {
+    return this.afStore.doc(`usuarios/${uid}`)
+  }
 }

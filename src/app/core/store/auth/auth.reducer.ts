@@ -3,13 +3,11 @@ import { User, IUser } from '../../models';
 
 export interface State {
   user: IUser;
-  id: string
   avatarSrc: string;
   organization: string;
 }
 
 const initialState: State = {
-  id: '',
   organization: 'OSJIG',
   user: new User({ 'email': '', 'password': '', 'grupo': 'IMA' }),
   avatarSrc: '/assets/user.jpg',

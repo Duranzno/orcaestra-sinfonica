@@ -43,7 +43,7 @@ export class AuthEffects {
       this.store$.dispatch(new fromUi.StartLoading());
       return {
         grupo: action.payload,
-        id: state.user.id,
+        id: state.user.user.uid,
       };
     }),
     switchMap(({ grupo, id }) => this.userService.updateData(id, { grupo })),
