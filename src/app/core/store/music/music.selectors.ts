@@ -9,3 +9,4 @@ export const getGrupos = createSelector(getMusic, (state: State) => state.grupos
 export const getGeneros = createSelector(getMusic, (state: State) => state.generos);
 export const getInstrumentos = createSelector(getMusic, (state: State) => state.instrumentos);
 export const getFavPartituras = createSelector(getMusic, (state: State) => state.favs);
+export const getId = createSelector(getMusic, (state: State) => state.partitura.id);

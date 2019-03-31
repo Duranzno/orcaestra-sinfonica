@@ -28,7 +28,7 @@ export interface IScore {
   extrainfo?: string;  // Información Extra
   suscriptores?: string[];
 }
-export class Score implements IScore {
+export class Score implements IScoreId {
   obra: string = '';
   almacenamiento: string;
   media: Media[] = [];
@@ -36,8 +36,9 @@ export class Score implements IScore {
   grupos?: string[];
   gente?: Persona[] = [];
   extrainfo?: string = '';
+  id: string = '';
   suscriptores?: string[] = [];
-  constructor(score: IScore) {
+  constructor(score: IScoreId) {
     this.obra = (score.obra) ? score.obra : '';
     this.almacenamiento = (score.almacenamiento) ? score.almacenamiento : '';
     this.media = (score.media) ? score.media : [];
@@ -45,6 +46,7 @@ export class Score implements IScore {
     this.grupos = (score.grupos) ? score.grupos : [];
     this.gente = (score.gente) ? score.gente : [];
     this.extrainfo = (score.extrainfo) ? score.extrainfo : '';
+    this.id = (score.id) ? score.id : '';
     this.suscriptores = (score.suscriptores) ? score.suscriptores : [];
   }
 
@@ -97,7 +99,7 @@ export class Score implements IScore {
         return err;
     }
   }
-  addMediaOrigen(type: MediaTipo, origin: Origen) {
+  addMediaOrigen(type: MediaTipo, origin: Origen, instr?: string[]) {
     const arr = this.media.filter(m => m.tipo === type);
     if (arr.length === 1) {
       // Ya existe ese tipo en la base de datos
@@ -106,7 +108,7 @@ export class Score implements IScore {
         .addOrigen(origin);
     } else if (arr.length === 0) {
       // No hay ninguno de ese tipo de media, se agrega uno nuevo
-      this.media.push(new Media({ origenArray: [origin], tipo: type }));
+      this.media.push(new Media({ origenArray: [origin], tipo: type, instr }));
     } else {// Error, no deberia haber mas de un tipo
       console.log('More than one with the same type');
     }

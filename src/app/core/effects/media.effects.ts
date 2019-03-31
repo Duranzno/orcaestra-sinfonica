@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
 import { finalize, map, mergeMap, switchMap, tap, withLatestFrom, catchError, last } from 'rxjs/operators';
-import { MediaTipo, Score } from '../models';
+import { MediaTipo, Score, Origen, IUploadFile, IScoreId } from '../models';
 import { OrcaState } from '../store';
 import * as fromAuth from '../store/auth';
 import * as fromMedia from '../store/media';
@@ -40,17 +40,6 @@ export class MediaEffects {
       ),
       map(({ sucess, userId, scoreId }) => new fromMedia.FetchFav({ userId }))
     );
-  // @Effect()
-  // delFav$: Observable<Action> = this.actions$
-  //   .pipe(
-  //     ofType(fromMedia.ActionTypes.DELETE_FAV),
-  //     map((action: fromMedia.DeleteFav) => action.payload),
-  //     switchMap(({ userId, scoreId }) =>
-  //       this.fbCateg.deleteFavorite(userId, scoreId)
-  //         .pipe(map(sucess => ({ sucess, userId, scoreId })))
-  //     ),
-  //     map(({ sucess, userId, scoreId })=>new fromUi.StopLoading())
-  //   );
 
   @Effect()
   fetchScore$: Observable<Action> = this.actions$
@@ -99,11 +88,13 @@ export class MediaEffects {
     .pipe(
       ofType(fromMedia.ActionTypes.SAVE_SCORE),
       map((action: fromMedia.SaveScore) => action.payload),
-      map(score => {
-        console.log('gonna save score');
-        this.fbScore.saveScore(score);
-        this.store$.dispatch(new fromUi.StopLoading());
-        return new fromMusic.SetPartitura(score);
+      switchMap((score) => {
+        this.store$.dispatch(new fromMusic.SetPartitura(score));
+        return this.fbScore.saveScore(score);
+      }),
+      map((id) => {
+        this.store$.dispatch(new fromMusic.SetId(id));
+        return new fromUi.StopLoading()
       })
     );
   @Effect()
@@ -140,14 +131,15 @@ export class MediaEffects {
       mergeMap(({ files, iscore }) => {
         const score = new Score(iscore);
         return from(files).pipe(
-          mergeMap((u, index) => {
+          mergeMap((u: IUploadFile, index) => {
             console.log(JSON.stringify(u), index);
+
             return this.fbStorage.upload(u, score.setPath(u.tipo, u))
-              .pipe(map(o => ({ origin: o, type: u.tipo })));
+              .pipe(map((o: Origen) => ({ origin: o, type: u.tipo, instr: u.instr })));
           }),
-          tap(({ origin, type }) => {
+          tap(({ origin, type, instr }) => {
             console.log('tap');
-            score.addMediaOrigen(type, origin);
+            score.addMediaOrigen(type, origin, instr);
           }),
           finalize(() => {
             console.log('finalize');

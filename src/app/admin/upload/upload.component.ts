@@ -2,12 +2,13 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { PersonaTipo, IUploadFile, Score, IScore, MediaTipo, CategoriaTipo } from '../../core/models';
+import { PersonaTipo, IUploadFile, Score, IScoreId, MediaTipo, CategoriaTipo } from '../../core/models';
 import { OrcaState, From } from 'src/app/core/store';
 import { Store } from '@ngrx/store';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 
 import { Observable, Subscription, of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload',
@@ -25,6 +26,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   generosTodos: string[] = [];
   instrumentosTodos: string[] = [];
   gruposTodos: string[] = [];
+  link = ''
 
   @Input()
   selectedIndex: number
@@ -41,7 +43,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   form: FormGroup;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   $loading: Observable<boolean> = of(false);
-  subscriptions: Subscription = new Subscription();
+  $subs: Subscription = new Subscription();
   constructor(
     private _fb: FormBuilder,
     private store: Store<OrcaState>) {
@@ -61,47 +63,51 @@ export class UploadComponent implements OnInit, OnDestroy {
   canPlay() {
     return this.stepper.selectedIndex === 2;
   }
-  subir() {
-    this.store.dispatch(new From.ui.StartLoading())
+  reset() {
+    this.stepper.reset();
+    this.files = [];
+    this.form.reset();
   }
-  go() {
-    this.store.dispatch(new From.ui.StopLoading())
-  }
+
   goForward() {
     this.stepper.next();
   }
   ngOnInit() {
-
+    this.$subs.add(this.store.select(From.music.getId)
+      .subscribe(link => this.link = (link) ? link : ''))
     this.$loading = this.store.select(From.ui.getIsLoading);
-    this.subscriptions.add(this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val));
-    this.subscriptions.add(this.store.select(From.music.getInstrumentos).subscribe(val => this.instrumentosTodos = val));
-    this.subscriptions.add(this.store.select(From.music.getGrupos).subscribe(val => this.gruposTodos = val));
+    this.$subs.add(this.store.select(From.music.getGeneros).subscribe(val => this.generosTodos = val));
+    this.$subs.add(this.store.select(From.music.getInstrumentos).subscribe(val => this.instrumentosTodos = val));
+    this.$subs.add(this.store.select(From.music.getGrupos).subscribe(val => this.gruposTodos = val));
     this.form = this._fb.group({
       obra: ['', Validators.required],
       registro: [''],
       extrainfo: [''],
       generos: this._fb.array([]),
       grupos: [''],
-      gente: this._fb.array([
-        this.initPersona(PersonaTipo.AUTOR),
-      ]),
+      gente: this._fb.array([]),
       youtube: this._fb.array([
       ]),
       media: this._fb.array([]),
     });
   }
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.$subs.unsubscribe();
   }
   onSave() {
-    const score: IScore = this.createScore()
-    let yt: string[] = this.form.get('youtube').value.map(y => y.url);
-    const files = this.media.value.concat(yt.map((url) =>
-      ({
-        tipo: MediaTipo.YOUTUBE,
-        archivo: new File(['foo', 'bar'], url),
-      })
-    ));
+    const score: IScoreId = this.createScore()
+    let yt: string[] = this.form.get('youtube').value
+      .map(y => y.url)
+      .filter(y => y !== "");
+    const files = (yt.length === 0)
+      ? this.media.value
+      : this.media.value.concat(yt.map((url) =>
+        ({
+          tipo: MediaTipo.YOUTUBE,
+          archivo: new File(['foo', 'bar'], url),
+        })
+      ))
+
     this.store.dispatch(new From.music.SetPartitura(score));
     this.store.dispatch(new From.media.ManageMediaArray({ files }));
     this.updateDatabase();
@@ -135,6 +141,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   createScore() {
     const data = this.form.value;
     return new Score({
+      id: '',
       obra: data.obra,
       almacenamiento: data.registro,
       generos: data.generos,
@@ -186,7 +193,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.generos.value.splice(index, 1);
     }
   }
-  // -------------------------------ALMACENAMIENTO
+  // -------------------------------VIDEO
   initVideo() { return this._fb.group({ url: [''] }); }
   addVideo() { this.video.push(this.initVideo()); }
   removeVideo(i: number) { this.video.removeAt(i); }

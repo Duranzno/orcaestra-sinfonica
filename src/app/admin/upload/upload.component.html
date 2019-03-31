@@ -13,8 +13,8 @@
               <p class="mat-body">Tipo de Partitura</p>
               <mat-radio-group formControlName="registro" fxLayout="row" fxLayoutGap="1rem"
                 fxLayoutAlign="center center">
-                <mat-radio-button value="1">Arreglo</mat-radio-button>
-                <mat-radio-button value="2">Partitura</mat-radio-button>
+                <mat-radio-button value="Arreglo">Arreglo</mat-radio-button>
+                <mat-radio-button value="Partitura">Partitura</mat-radio-button>
               </mat-radio-group>
               <mat-form-field>
                 <input matInput placeholder="Obra" type="text" formControlName="obra">
@@ -140,8 +140,8 @@
           </mat-step>
 
           <mat-step fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-            <ng-template matStepLabel>Archivos</ng-template>
-            <app-file-upload (filesEvent)="show($event )"></app-file-upload>
+            <ng-template matStepLabel>Listo</ng-template>
+
           </mat-step>
         </mat-horizontal-stepper>
       </form>
@@ -152,7 +152,7 @@
         <button mat-raised-button color="primary" (click)="goBack()">
           Anterior
         </button>
-        <button mat-raised-button color="primary" (click)="stepper.reset()">
+        <button mat-raised-button color="primary" (click)="reset()">
           Reiniciar
         </button>
         <button mat-raised-button color="primary" (click)="onSave()" *ngIf="canSave()">
@@ -164,10 +164,10 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center center" fxLayoutGap="1rem"
         fxLayoutGap.lt-md="0.5rem" *ngIf="canPlay()">
-        <button mat-raised-button color="primary" (click)="subir()" *ngIf="canPlay()">
+        <button mat-raised-button color="primary" (click)="reset()" *ngIf="canPlay()">
           Subir nueva Obra Musical
         </button>
-        <button mat-raised-button color="accent" (click)="go()" *ngIf="canPlay()">
+        <button mat-raised-button color="accent" *ngIf=" canPlay()" [routerLink]="[ '/musica', 'partitura',link ]">
           Ir a Obra
         </button>
       </div>

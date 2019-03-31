@@ -3,6 +3,7 @@ import { IScore, Origen, MediaTipo, CategoriaTipo, IScoreId } from '../../models
 
 export class ActionTypes {
   static SET_PARTITURA = '[MUSIC] Partitura Seleccionada';
+  static SET_ID = '[MUSIC] Actualizada Partitura con su Id';
   static ADD_ORIGIN = '[MUSIC] Se agrego Origen';
   static SET_CATEGORIES = '[MUSIC] Saved categoria (Generos/Instruemntos)';
   static ADD_CATEGORY = '[MUSIC] Se guardo categoria a las existentes';
@@ -11,7 +12,11 @@ export class ActionTypes {
 }
 export class SetPartitura implements Action {
   readonly type = ActionTypes.SET_PARTITURA;
-  constructor(public payload: IScore) { }
+  constructor(public payload: IScoreId) { }
+}
+export class SetId implements Action {
+  readonly type = ActionTypes.SET_ID;
+  constructor(public payload: string) { }
 }
 export class SetCategories implements Action {
   readonly type = ActionTypes.SET_CATEGORIES;
@@ -30,4 +35,4 @@ export class AddCategory implements Action {
   constructor(public payload: { tipo: CategoriaTipo, categoria: string }) { }
 }
 
-export type Actions = SetPartitura | SetCategories | AddOrigin | AddCategory | SetFavorites;
+export type Actions = SetPartitura | SetCategories | AddOrigin | AddCategory | SetFavorites | SetId;

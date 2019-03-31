@@ -42,16 +42,16 @@ export interface Origen {
 }
 export interface IMedia {
   origenArray: Origen[];
-  instr?: IInstr;
+  instr?: string[];
   tipo: MediaTipo;
 }
 export class Media implements IMedia {
   origenArray: Origen[];
-  instr?: IInstr;
+  instr?: string[];
   tipo: MediaTipo;
   constructor(i: IMedia) {
     this.origenArray = (i.origenArray) ? i.origenArray : [];
-    this.instr = (i.instr) ? i.instr : null;
+    this.instr = (i.instr) ? i.instr : [];
     this.tipo = (i.tipo) ? i.tipo : null;
   }
   isMedia(arg: any): arg is IMedia {
