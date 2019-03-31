@@ -17,7 +17,7 @@
         // "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
         "type": "chrome",
         "request": "launch",
-        "name": "Local Serve",
+        "name": "Slimjet Serve Local ",
         "url": "http://localhost:4200/",
         "webRoot": "${workspaceFolder}"
       },
@@ -25,8 +25,24 @@
         "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
         "type": "chrome",
         "request": "launch",
-        "name": "Chrome PWA",
+        "name": "Chrome Build Local ",
         "url": "http://localhost:8080/",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
+        "type": "chrome",
+        "request": "launch",
+        "name": "Chrome Serve RPI ",
+        "url": "http://192.168.1.141:4200/",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "runtimeExecutable": "C:\\Program Files\\Chromium\\Application\\chrome.exe",
+        "type": "chrome",
+        "request": "launch",
+        "name": "Chrome Serve Local ",
+        "url": "http://localhost:4200/",
         "webRoot": "${workspaceFolder}"
       },
       {

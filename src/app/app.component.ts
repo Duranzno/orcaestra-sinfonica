@@ -22,15 +22,13 @@ import { AngularFireMessaging } from '@angular/fire/messaging';
 })
 export class AppComponent implements OnInit, OnChanges, OnDestroy {
 
-  watcher$: Subscription;
   @Input() isVisible: boolean = true; // 1
   visibility = 'shown'
-  $subs = new Subscription();
   sideNavOpened: boolean = true; // 1
   matDrawerOpened = false; // 0
   matDrawerShow: boolean = true; // 1
   sideNavMode: string = 'side';
-  subscriptions = new Subscription();
+  $subs = new Subscription();
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -41,12 +39,11 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     // db.firestore.enablePersistence().then(() => console.log("Firestore es capaz de corre offline"))
   }
   ngOnInit() {
-    this.msg.init();
     this.addIcons();
     this.initPushService();
     this.store.dispatch(new From.media.FetchCategory());
     // this.authService.initAuthListener();
-    this.watcher$ = this.mediaObserver.media$
+    this.$subs = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.toggleView();
       });
@@ -54,7 +51,6 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     this.visibility = this.isVisible ? 'shown' : 'hidden';
   }
-
   toggleView() {
     if (this.mediaObserver.isActive('gt-md')) {
       this.sideNavMode = 'side';
@@ -99,13 +95,23 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
 
   }
   initPushService() {
-    // if (environment.production) {
+    this.$subs.add(
+      this.store.select(From.auth.getUid)
+        .subscribe((id) => {
+          console.log((!id) ? `No ha iniciado sesión` : `El id del usuario es ${id}`);
+          // if (environment.production && this.msg.getToken())
+          if (id && id !== '') {
+            this.msg.init()
+              .then((token) => {
+                console.log(`Going to dispatch ${id} fromAuth.UploadFCM(${token})`)
+                this.store.dispatch(new From.auth.UploadFCM(token))
+              });
 
-    // }
+          }
+        }))
   }
   ngOnDestroy() {
-    this.watcher$.unsubscribe();
-    this.subscriptions.unsubscribe();
+    this.$subs.unsubscribe();
   }
   private addSvg(tipo: string, nombre: string) {
     this.matIconRegistry.addSvgIcon(

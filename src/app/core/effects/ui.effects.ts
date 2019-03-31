@@ -16,7 +16,7 @@ export class UIEffects {
   snackbar = this.actions$.pipe(
     ofType(fromUI.ActionTypes.STOP_LOADING),
     map((action: fromUI.ShowSnackbar) => action.payload),
-    map(({ message, duration, action }) => this.ui.showSnackbar)
+    map(({ message, duration, action }) => this.ui.showSnackbar(message, duration, action))
   );
 
   constructor(

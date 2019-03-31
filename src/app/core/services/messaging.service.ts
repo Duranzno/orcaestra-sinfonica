@@ -20,36 +20,34 @@ export class MessagingService {
   constructor(
     private swUpdate: SwUpdate,
     private uiService: UIService) { }
-  init() {
-    if (environment.production) {
-      if (window && this.swUpdate.isEnabled) {
-        this.swUpdate.available.subscribe((event) => {
-          (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) ? window.location.reload() : '';
-        })
-      }
-      if (firebase.messaging.isSupported) {
-        console.log(`"Las notificaciones PUSH estan soportadas c:`)
-        this.messaging = firebase.messaging();
-        this.getPermission().then(_ => {
-          this.receiveMessages();
-          console.log("A la espera de recibir mensajes")
-        });
-      } else {
-        console.log(`No soporta PUSH :c`);
-      }
+  async init(): Promise<string> {
+    // if (environment.production) {
+    // if (window && this.swUpdate.isEnabled) {
+    //   this.swUpdate.available.subscribe((event) => {
+    //     (confirm('Nueva version de Orcaestra Sinfonica Disponible.¿Quiere descargarla?')) ? window.location.reload() : '';
+    //   })
+    // }
+    if (firebase.messaging.isSupported) {
+      console.log(`"Las notificaciones PUSH estan soportadas c:`)
+      this.messaging = firebase.messaging();
+      try {
+        await this.messaging.requestPermission()
+        console.log('Se tiene el permiso.');
+        const token = await this.messaging.getToken()
+        console.log('Token es', token)
+        return token;
+      } catch (err) {
+        console.log('No se puede pedir permiso ', err);
+        console.log("A la espera de recibir mensajes")
+      };
+      // } else {
+      // console.log(`No soporta PUSH :c`);
+      // }
     }
-    else { console.log(`Desactivadas las notificaciones PUSH y los service workers`); }
+    // else { console.log(`Desactivadas las notificaciones PUSH y los service workers`); }
   }
   async getPermission(user?: IUser): Promise<void> {
-    try {
-      await this.messaging.requestPermission()
-      console.log('Se tiene el permiso.');
-      const token = await this.messaging.getToken()
-      console.log('Token es', token)
-      // if (user) this.saveToken(user, token)
-    } catch (err) {
-      console.log('No se puede pedir permiso ', err);
-    }
+
   }
   getToken() {
     return this.messaging.getToken();
@@ -64,6 +62,7 @@ export class MessagingService {
     this.messaging.onMessage(payload => {
       console.log('Message received. ', payload);
       this.uiService.showSnackbar((payload) ? payload.data["gcm.notification.text"] : 'GUA');
+      console.log((payload) ? payload.data["gcm.notification.text"] : 'GUA');
       this.messageSource.next(payload)
     });
   }
