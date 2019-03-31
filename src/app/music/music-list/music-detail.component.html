@@ -1,41 +1,25 @@
 <mat-card class="example-card">
   <mat-card-header>
-    <img mat-card-avatar [src]='media.avatar'>
-    <mat-card-title>{{(score.obra!=="")?(score.obra):"Desconocida"}}</mat-card-title>
-    <mat-card-subtitle>{{score.getAutor().nombre}} {{score.getAutor()?.apellido}}</mat-card-subtitle>
+    <mat-card-title>{{(score.obra!=="")?(score.obra):"Nombre Desconocido"}}</mat-card-title>
+    <mat-card-subtitle>{{people()}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src='/assets/9th/sheet.png' alt="Foto de {{score.obra}}">
   <mat-card-content>
-
-    <mat-expansion-panel class="mat-elevation-z0">
-      <mat-expansion-panel-header align="end">
-        <!-- <mat-chip-list *ngFor="let i of score.instrumentos" ariaOrientation="horizontal">
-          <mat-chip color="accent" selected>
-            <mat-icon>music_note</mat-icon>
-          </mat-chip>
-        </mat-chip-list> -->
-        <div fxFlex></div>
-        Expandir
-      </mat-expansion-panel-header>
-      <p>
-        {{score.extrainfo}}
-      </p>
-      <mat-divider [inset]="
-      true">
-      </mat-divider>
-      <div style="padding-top:5px">
-        <mat-chip-list #chipList>
-          <mat-chip *ngFor="let g of score.generos" color="primary" [selectable]="true">{{g}}
-          </mat-chip>
-        </mat-chip-list>
-      </div>
-    </mat-expansion-panel>
+    <p>
+      {{score.extrainfo}}
+    </p>
+    <mat-divider [inset]="true">
+    </mat-divider>
+    <div style="padding-top:5px">
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let g of score.generos" color="primary" [selectable]="true">{{g}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-button>Descargar</button>
     <button mat-button [routerLink]="[ '/musica/partitura', iScore.id ]">Seleccionar</button>
     <div fxFlex></div>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="share()">
       <mat-icon>share</mat-icon>
     </button>
     <button mat-icon-button (click)="fav()">

@@ -42,6 +42,7 @@
     "hammerjs": "^2.0.8",
     "jspdf": "^1.5.3",
     "merge-images": "^1.1.0",
+    "ng-navigator-share": "^1.0.0",
     "ngx-perfect-scrollbar": "^7.2.0",
     "ngx-youtube-player": "^6.0.0",
     "npm": "^6.8.0",

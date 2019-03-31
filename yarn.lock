@@ -7313,6 +7313,13 @@ next-tick@1:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-navigator-share@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ng-navigator-share/-/ng-navigator-share-1.0.0.tgz#2a0693c4b37e43fa0a0f046ff3069fe2e8d2ba1a"
+  integrity sha512-cGRzux66MzC7c+87/bJvcuAAxmlgA7REMFwPSqLzHh5drUXOHzbSPYOB0Sgqa6Bdjz6uutKY1zw6j4YMabVfpQ==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-perfect-scrollbar@^7.2.0:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/ngx-perfect-scrollbar/-/ngx-perfect-scrollbar-7.2.1.tgz#72cbbba6bc75b4836fa0300760d2d69ed41d241c"

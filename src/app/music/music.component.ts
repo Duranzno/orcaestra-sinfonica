@@ -69,9 +69,11 @@ export class MusicComponent implements OnInit, OnDestroy {
         const param = _param.get('genero');
         if (param == "favoritos") {
           this.selectedTab = 2;
-        } else {
+        } else if (!!param && param !== "") {
           this.goToGroup({ value: param });
           this.selectedTab = 1;
+        } else {
+          this.selectedTab = 0;
         }
       }))
   }
