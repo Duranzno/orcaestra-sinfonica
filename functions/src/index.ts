@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 import * as  admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
+
 // NotificacionesGrupos() will listen to any score uploaded and  check its musical groups if any of them have suscribers(users)=>groupParser
 // then it will use the ids of those suscribers to send them notification through the users fcmToken =>userNotificator
 export const NotificacionesGrupos = functions.firestore
@@ -22,45 +23,39 @@ export const NotificacionesGrupos = functions.firestore
   });
 async function groupMapper(grupo: string, titulo: string, obraId: string): Promise<any> {
   try {
-    const snapshot = await db.collection(`subscripciones`).doc(grupo).get(),
-      g: any = await snapshot.data();
-    if (typeof g === undefined) {
-      return new Error(`El grupo no existe en la db`);
-    }
-
-    console.log(`El dentro de subscripciones\\${JSON.stringify(grupo)} es ${JSON.stringify(g)}`);
-
-    if (typeof g.subscripciones === undefined) {
-      console.log(`El grupo no tiene subscripciones`);
-      return `El grupo no tiene subscripciones`;
-    }
-    console.log(`Las subscripciones de ${JSON.stringify(grupo)} son ${JSON.stringify(g.suscriptores)}`);
-    (g.suscriptores as string[]).forEach(userId => { console.log('userId'); });
-    return userNotificator('8uSyP89aa5a3w5AJ2jw8Xc2kvAG2', titulo, obraId, grupo);
+    const snap = await db.collection(`usuarios`).where('grupo', '==', grupo).get();
+    snap.forEach(doc => {
+      const u = doc.data();
+      console.log(`El grupo ${u.grupo} tiene a ${u.nombre} con ${JSON.stringify(u.fcmTokens)}`);
+      const payload = payloadGenerator(grupo, titulo, obraId);
+      const tokens = u.fcmTokens ? Object.keys(u.fcmTokens) : [];
+      if (!tokens.length) { throw new Error(`Usuario no tiene tokens!`); }
+      return admin.messaging().sendToDevice(tokens, payload);
+    });
   } catch (e) {
     console.error(`Error en db/subscripciones ${JSON.stringify(e)}`);
     return (`Error en db/subscripciones ${JSON.stringify(e)}`);
   }
 }
-async function userNotificator(userId: string, titulo: string, obraId: string, grupo: string): Promise<any> {
-  try {
-    const snap = await db.collection(`usuarios`).doc(userId).get();
-    const u: any = await snap.data();
-    console.log(`[LOG] Usuario `, u);
+// async function userNotificator(userId: string, titulo: string, obraId: string, grupo: string): Promise<any> {
+//   try {
+//     const snap = await db.collection(`usuarios`).doc(userId).get();
+//     const u: any = await snap.data();
+//     console.log(`[LOG] Usuario `, u);
 
-    const payload = payloadGenerator(grupo, titulo, obraId);
-    console.log('[LOG] Payload', payload);
+//     const payload = payloadGenerator(grupo, titulo, obraId);
+//     console.log('[LOG] Payload', payload);
 
-    const tokens = u.fcmTokens ? Object.keys(u.fcmTokens) : [];
-    if (!tokens.length) { throw new Error(`Usuario no tiene tokens!`); }
+//     const tokens = u.fcmTokens ? Object.keys(u.fcmTokens) : [];
+//     if (!tokens.length) { throw new Error(`Usuario no tiene tokens!`); }
 
-    // return payload;
-    return admin.messaging().sendToDevice(tokens, payload);
+//     // return payload;
+//     return admin.messaging().sendToDevice(tokens, payload);
 
-  } catch (error) {
-    console.log('[ERROR]', error);
-  }
-}
+//   } catch (error) {
+//     console.log('[ERROR]', error);
+//   }
+// }
 function payloadGenerator(grupo: string, titulo: string, obraId: string) {
   return ({
     notification: {
