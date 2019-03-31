@@ -23,11 +23,11 @@ class MediaBuffer {
   styles: []
 })
 export class ScoreComponent implements OnInit, OnDestroy {
-  $score: Subscription; // : Score = new Score({ obra: '', its: -1, almacenamiento: [] });;
+  $subs = new Subscription();
   score: Score;
   documentos: Media[] = [];
   mediaType = MediaTipo;
-
+  $loading = of(false);
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
@@ -35,19 +35,20 @@ export class ScoreComponent implements OnInit, OnDestroy {
     private store: Store<OrcaState>
   ) { }
   ngOnInit() {
+    this.store.select(From.ui.getIsLoading);
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         this.store.dispatch(
           new From.media.FetchScore(<string>params.get('uid'))
         );
       });
-    this.$score = this.store.select(From.music.getPartitura).subscribe(s => {
+    this.$subs.add(this.store.select(From.music.getPartitura).subscribe(s => {
       this.score = new Score(s);
       this.documentos = this.score.getByMedia(MediaTipo.PDF);
-    });
+    }));
   }
   ngOnDestroy(): void {
-    this.$score.unsubscribe();
+    this.$subs.unsubscribe();
   }
 }
 
