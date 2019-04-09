@@ -5,9 +5,9 @@
     </div>
     <mat-card-title>Creacion de cuenta de {{(isAdmin)?'Administrador':'Usuario'}}</mat-card-title>
     <mat-card-content>
-      <app-file-upload style="margin:1em;" [tipo]='tipo' (filesEvent)='getAvatarFile($event)'>
+      <app-file-upload ngStyle.gt-xs="margin:1em;" [tipo]='tipo' (filesEvent)='getAvatarFile($event)'>
       </app-file-upload>
-      <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm"
+      <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" #f="ngForm"
         style="flex-grow: 1;flex-basis: 0;" (ngSubmit)="onSubmit(f)">
         <mat-form-field>
           <input ngModel matInput required #nombreInput="ngModel" type="text" placeholder="Nombre" name="nombre">

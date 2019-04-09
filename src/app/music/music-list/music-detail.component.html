@@ -1,4 +1,4 @@
-<mat-card class="example-card">
+<mat-card style.gt-md="height: 12rem;width: 12rem;">
   <mat-card-header>
     <mat-card-title>{{(score.obra!=="")?(score.obra):"Nombre Desconocido"}}</mat-card-title>
     <mat-card-subtitle>{{people()}}</mat-card-subtitle>
@@ -9,7 +9,7 @@
     </p>
     <mat-divider [inset]="true">
     </mat-divider>
-    <div style="padding-top:5px">
+    <div>
       <mat-chip-list #chipList>
         <mat-chip *ngFor="let g of score.generos" color="primary" [selectable]="true">{{g}}
         </mat-chip>
@@ -19,7 +19,7 @@
   <mat-card-actions align="end">
     <button mat-button [routerLink]="[ '/musica/partitura', iScore.id ]">Seleccionar</button>
     <div fxFlex></div>
-    <button mat-icon-button (click)="share()">
+    <button mat-icon-button *ngIf="shareable()" (click)="shareApi()">
       <mat-icon>share</mat-icon>
     </button>
     <button mat-icon-button (click)="fav()">

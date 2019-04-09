@@ -1,20 +1,23 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <div dropZone class="dropzone" (hovered)="toggleHover($event)" (dropped)="addFiles($event)"
     [class.hovering]="isHovering">
-    <p class="mat-body">Arrastra y suelta {{(isAvatar)?"tu imagen de perfil":"los archivos"}}
-      aqui <br>ó<br></p>
+    <p class="mat-body">
+      Aqui puedes soltar {{(isAvatar)?"tu imagen de perfil":"los archivos"}}
+    </p>
 
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
       <button mat-raised-button color="primary" (click)="openInput()">
-        <mat-icon>cloud_upload</mat-icon>
-        Seleccionalo
+        <mat-icon>{{(isAvatar)?"photo_camera":cloud_upload}}
+        </mat-icon>
+        {{(isAvatar)?"Tomar una Foto":"Cargar Archivos"}}
       </button>
-      <button *ngIf="isAvatar" mat-raised-button color="primary" (click)="openInput()">
-        <mat-icon>photo_camera</mat-icon>
-        Tomar foto
+      <button mat-raised-button *ngIf="canUseHardware" color="primary" (click)="captureAudio">
+        Grabar Audio
       </button>
     </div>
-    <input id="file-input" type="file" [accept]="accept" (change)="addFiles($event.target.files)" capture>
+    <input id="captureAudio" type="file" accept="audio/*" capture title="asd"
+      (change)="addFiles($event.target.files)" />
+    <input id="file-input" type="file" [accept]="accept" (change)="addFiles($event.target.files)" capture />
     <!-- <app-icon-arr-summary *ngIf="!isAvatar" [dataScoreArray]="dsArray"></app-icon-arr-summary> -->
   </div>
 </div>

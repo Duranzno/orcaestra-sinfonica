@@ -16,7 +16,11 @@ mat-accordion{
   bottom: 1rem;
   right: 1rem;
 }
-
+@media(max-width:600px) {
+.mat-horizontal-stepper-header{
+  padding: 0 0 0 0 !important;
+    }
+}
 @media(min-width: 1024px) {
    .app-fab {
     bottom: 1.5rem;

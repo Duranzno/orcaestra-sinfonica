@@ -17,7 +17,7 @@ import { PdfService, UIService } from 'src/app/core/services';
   <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">  
     <mat-grid-list gutterSize="0px" cols="1" rowHeight="fit" style="height: 500px;width: 500px">
       <mat-grid-tile  *ngFor="let tile of modGrid;let i=index" [style.background]="tile.color">
-        <app-camera style="width: 100%;height: 100%;" [title]="tile.text" [reset]="resetSubject.asObservable()" (img)="addPartialImage($event,i)"></app-camera>
+        <app-camera style="width: 100%;height: 100%;" [cid]="tile.id" [title]="tile.text" [reset]="resetSubject.asObservable()" (img)="addPartialImage($event,i)"></app-camera>
       </mat-grid-tile>
     </mat-grid-list>
     <mat-slider min="1" max="4" step="1" value="1" vertical thumbLabel tickInterval="1" (input)="rowChange($event)" invert>
@@ -26,7 +26,7 @@ import { PdfService, UIService } from 'src/app/core/services';
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="(nPages)?addPage():addImageGrid();">
       {{(nPages)?'Añadir pagina '+(nPages+1):'Agregar primera pagina'}}</button>
-    <button mat-raised-button color="primary" (click)="resetPDF()">Reiniciar</button>
+    <button mat-raised-button color="primary" (click)="fullReset()">Reiniciar</button>
     <div fxFlex></div>
     <button mat-raised-button color="accent"   [disabled]="!nPages"
       (click)="savePdf()">
@@ -41,10 +41,10 @@ import { PdfService, UIService } from 'src/app/core/services';
 export class MediaInputComponent implements OnInit {
   private resetSubject: Subject<void> = new Subject<void>();
   grid = [
-    { text: 'Uno', color: 'lightblue' },
-    { text: 'Dos', color: 'lightgreen' },
-    { text: 'Tres', color: 'lightpink' },
-    { text: 'Cuatro', color: '#DDBDF1' },
+    { text: 'Uno', color: 'lightblue', id: "1" },
+    { text: 'Dos', color: 'lightgreen', id: "2" },
+    { text: 'Tres', color: 'lightpink', id: "3" },
+    { text: 'Cuatro', color: '#DDBDF1', id: "4" },
   ];
   imageArr: any[];
   modGrid = [];
@@ -81,9 +81,14 @@ export class MediaInputComponent implements OnInit {
     this.imageArr = this.modGrid.map(v => '');
     this.resetPDF();
   }
-
+  fullReset() {
+    this.nPages = 0;
+    this.pdf.reset();
+    this.resetPDF();
+  }
   resetPDF() {
     this.resetSubject.next()
+
   }
 
 }

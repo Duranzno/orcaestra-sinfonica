@@ -27,12 +27,21 @@ export class FileUploadComponent {
       default: return '';
     }
   }
+  preview(files) { console.log(JSON.stringify(files)) }
   get isAvatar() { return this.tipo && this.tipo === MediaTipo.AVATAR; }
-
+  get canUseHardware(): boolean {
+    const respuesta = (document.createElement("input") as any).capture !== undefined;
+    // console.log(respuesta ? 'Se puede usar hardware' : 'No se puede usar hardware');
+    return respuesta;
+  }
+  captureAudio() {
+    document.getElementById("captureAudio").click();
+  }
   constructor() {
   }
 
   addFiles(event: FileList) {
+    console.log(event);
     if (this.isAvatar) {
       this.files = [{ 'archivo': event[0], 'tipo': this.tipo }];
     } else {

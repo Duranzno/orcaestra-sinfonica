@@ -38,7 +38,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: WelcomeComponent
+    // component: WelcomeComponent
+    redirectTo: 'musica/lista',
+    pathMatch: "full"
   },
   {
     path: '**',

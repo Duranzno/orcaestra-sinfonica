@@ -15,15 +15,21 @@
     padding: 1em;
     width: -webkit-fill-available;
  
-
+    button{
+      width: 10rem;
+    }
     .hovering {
         border: 2px solid black;
         color: #dadada !important;
       }
-      input{
+    input{
       visibility: hidden;
     }
-    p{font-size:1vw;}
+    p{
+      font-size:1rem;
+      align-content: center;
+      text-align: center;
+    }
     
     
   }

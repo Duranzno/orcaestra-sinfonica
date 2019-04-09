@@ -10,7 +10,6 @@
 
       <div>
         <h2>{{score.getAutor()?.nombre}} {{score.getAutor()?.apellido}}</h2>
-        <p>{{score.its}}</p>
 
 
         <p> {{score.extrainfo}}</p>
@@ -39,7 +38,7 @@
     <app-media-card [media]="m"></app-media-card>
   </div>
 
-  <div *ngFor="let m of documents">
+  <div *ngFor="let m of documentos">
     <app-pdf [media]="m"></app-pdf>
   </div>
 </div>

@@ -1,8 +1,10 @@
-@mixin musicDetail($theme){.example-card {
-  max-width: 400px;
+@mixin musicDetail($theme){
+  app-music-detail{
+    mat-card {
+      // height:5vh;
+    }
+    mat-chip-list{
+      padding-top:5px;
+    }
+  }
 }
-
-.example-header-image {
-  background-image: url('/assets/9th/file.png');
-  background-size: cover;
-}}

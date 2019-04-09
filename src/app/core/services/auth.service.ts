@@ -23,15 +23,15 @@ export class AuthService {
     private router: Router,
   ) { }
   initAuthListener() {
+    this.afAuth.auth.setPersistence('local');
     this.afAuth.authState
       .subscribe(fUser => {
         if (fUser) {
           this.fbUser.fetchUserData(fUser.uid)
             .subscribe(user =>
               this.store.dispatch(new From.auth.SetAuthenticated(<User>user)));
-          this.router.navigate(['/']);
+          this.router.navigate(['/musica/lista']);
         } else {
-          // this.trainingService.cancelSubscriptions();//TODO KILL SUBSCRIPTIONS
           this.store.dispatch(new From.auth.SetUnauthenticated());
           this.router.navigate(['/signup']);
         }

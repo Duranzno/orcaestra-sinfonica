@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   template: `
     <div class="camera" (click)="click()">
       <input 
-       #file id="camInput" type="file" accept='image/*' (change)="preview(file.files)"  capture="environment" />
+       #file [id]="cid" type="file" accept='image/*' (change)="preview(file.files)"  capture="environment" />
       <div class="container">
       <img [src]="imgURL" height="200" class="image" *ngIf="imgURL"  style="width:100%">
         <div class="middle">
@@ -24,6 +24,7 @@ export class CameraComponent implements OnInit {
   imgURL: any;
   private eventsSubscription: any
   public message: string;
+  @Input('cid') cid: string;
   @Input('text') text: string;
   @Input('reset') reset: Observable<void>;
   @Output('img') img = new EventEmitter<string | ArrayBuffer>();

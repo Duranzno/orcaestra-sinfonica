@@ -1,18 +1,18 @@
-<div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" s>
+<div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" s>
   <mat-card fxFlex>
     <div class="loading-shade" *ngIf="$loading|async">
       <mat-spinner></mat-spinner>
     </div>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center"
-        fxLayoutGap="10px">
+        fxLayoutGap="1rem">
 
-        <mat-form-field>
+        <mat-form-field ngStyle.xs="width:15rem;">
           <input type="email" matInput placeholder="Su correo electrónico" formControlName="email">
           <mat-hint>Por favor introduzca un correo electrónico correcto.</mat-hint>
           <mat-error>Correo electrónico invalido.</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field ngStyle.xs="width:15rem;">
           <input type="password" matInput placeholder="Su contraseña" formControlName="password">
           <mat-hint>Por favor introduzca su contraseña.</mat-hint>
           <mat-error>Contraseña invalida.</mat-error>

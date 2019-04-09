@@ -1,0 +1,59 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <mat-form-field>
+      <mat-label>Seleccione Grupo Musical</mat-label>
+      <mat-select (selectionChange)="goToGroup($event)">
+        <mat-option *ngFor="let g of $Grupos|async" [value]="g" (click)="goToGroup(g)">
+          {{g}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button (click)="updateUserGroup()">
+      <mat-icon>{{(selectedGrupo===uGrupo)?'favorite':'favorite_border'}}</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-tab-group dynamicHeight [selectedIndex]="selectedTab" (selectedTabChange)="tabChanged($event)">
+
+  <mat-tab label="Biblioteca de la Orquesta">
+    <ng-template matTabContent>
+      <ng-container *ngIf="$Scores|async as scores; else elseTemplate">
+        <app-music-list [userId]="userId" [scores]="scores"></app-music-list>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="loading-shade" *ngIf="$loading|async">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="Grupos">
+    <ng-template matTabContent>
+      <ng-container *ngIf="$filteredScore|async as scores;else elseTemplate">
+        <pre *ngIf="scores.length==0">No hay partituras para este grupo</pre>
+        <app-music-list [userId]="userId" [scores]="scores"></app-music-list>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="loading-shade" *ngIf="$loading|async">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="Favoritos">
+    <ng-template matTabContent>
+      <ng-container *ngIf="$FavScores|async as scores;else elseTemplate">
+        <pre *ngIf="scores.length==0">No hay partituras para este grupo</pre>
+
+        <app-music-list [userId]="userId" [scores]="scores"></app-music-list>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="loading-shade" *ngIf="$loading|async">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

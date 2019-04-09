@@ -6,7 +6,6 @@ import { MediaTipo, OrigenTipo, IScore, Score, IScoreId } from '../../core/model
 import { NgNavigatorShareService } from 'ng-navigator-share';
 
 import { From, OrcaState } from '../../core/store';
-import { Router } from 'functions/node_modules/@types/express';
 
 @Component({
   selector: 'app-music-detail',
@@ -20,8 +19,7 @@ export class MusicDetailComponent implements OnInit, OnDestroy {
   @Input('score') iScore: IScoreId;
   @Input('userId') userId: string;
   constructor(private store: Store<OrcaState>,
-    private ngNavigatorShareService: NgNavigatorShareService,
-    private router: Router) { }
+    private ngNavigatorShareService: NgNavigatorShareService) { }
 
   ngOnInit() {
     this.score = new Score(this.iScore);
@@ -37,7 +35,11 @@ export class MusicDetailComponent implements OnInit, OnDestroy {
     else if (others.length > 0) { return `${others[0].tipo}: ${others[0].nombre} ${(others[0].apellido) ? others[0].apellido : ''}` }
     else { return `Artistas Desconocidos` }
   }
+
+  shareable() { return (navigator && 'share' in navigator) }
   async shareApi() {
+    // this.ngNavigatorShareService.
+
     try {
       const sharedResponse = await this.ngNavigatorShareService.share({
         title: `Revisa ${this.score.obra} en Orcaestra Sinfonica`,
