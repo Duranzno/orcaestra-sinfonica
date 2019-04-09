@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'musica',
@@ -34,13 +34,12 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: './auth/auth.module#AuthModule',
-    // canActivate: [AuthGuard]
   },
   {
     path: '',
-    // component: WelcomeComponent
-    redirectTo: 'musica/lista',
-    pathMatch: "full"
+    component: WelcomeComponent
+    // redirectTo: 'musica/lista',
+    // pathMatch: "full"
   },
   {
     path: '**',

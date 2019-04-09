@@ -52,11 +52,11 @@ export class MusicDetailComponent implements OnInit, OnDestroy {
   }
   fav() {
     if (!this.isFav) {
-      this.store.dispatch(new From.media.SaveFav({ scoreId: this.iScore.id, userId: '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2' }));
+      this.store.dispatch(new From.media.SaveFav({ scoreId: this.iScore.id, userId: this.userId }));
       this.isFav = true;
     }
     else {
-      this.store.dispatch(new From.media.DeleteFav({ scoreId: this.iScore.id, userId: '8uSyP89aa5a3w5AJ2jw8Xc2kvAG2' }));
+      this.store.dispatch(new From.media.DeleteFav({ scoreId: this.iScore.id, userId: this.userId }));
       this.isFav = false;
     }
   }

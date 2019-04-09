@@ -1,4 +1,4 @@
-<div class="cardHolder" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em">
+<div class="cardHolder score" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em">
   <div class="loading-shade" *ngIf="$loading|async">
     <mat-spinner></mat-spinner>
   </div>
@@ -6,7 +6,7 @@
     <mat-card-header>
       <mat-card-title>{{score.obra}}</mat-card-title>
     </mat-card-header>
-    <mat-card-content class="contenedor">
+    <mat-card-content class="contenedor" style="min-height: fit-content">
 
       <div>
         <h2>{{score.getAutor()?.nombre}} {{score.getAutor()?.apellido}}</h2>
@@ -16,9 +16,9 @@
         <p> {{score.almacenamiento}}</p>
 
         <div *ngIf="!!score.getNotAutor">
-          <div> {{ score.getNotAutor() | json }}</div>
+          <div> {{ score.getNotAutor() }}</div>
           <div *ngFor="let p of score.getNotAutor()">
-            <p>{{p?.nombre}} {{p?.apellido}} {{p?.tipo}} </p>
+            <p *ngIf="p">{{p?.nombre}} {{p?.apellido}} {{p?.tipo}} </p>
           </div>
         </div>
 
@@ -29,7 +29,6 @@
             </mat-chip>
           </mat-chip-list>
         </div>
-        <pre>{{ score | json }}</pre>
       </div>
     </mat-card-content>
   </mat-card>

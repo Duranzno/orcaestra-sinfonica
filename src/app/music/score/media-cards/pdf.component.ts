@@ -9,7 +9,7 @@ import { Media } from 'src/app/core/models';
         <mat-card-title>Archivo PDF</mat-card-title>
       </mat-card-header>
       <mat-card-actions>
-      <a [href]="downloadUrl"  target="_blank" download #anchor>a</a>
+      <a [href]="downloadUrl" style="visibility: hidden;"  target="_blank" download #anchor>a</a>
       <button mat-icon-button (click)="anchor.click()"></button>
       <div flex></div>
       <button mat-button (click)="otherDw()">

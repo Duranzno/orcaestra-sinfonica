@@ -45,19 +45,21 @@ export class MusicComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.$loading = this.store.select(From.ui.getIsLoading);
-    this.$subs.add(this.store.select(From.auth.getUid).subscribe(id => {
-      if (!!id) {
-        this.userId = id;
-        this.store.dispatch(new From.media.FetchFav({ userId: this.userId }));
+    this.$subs.add(
+      this.store.select(From.auth.getUid).subscribe(id => {
+        if (!!id) {
+          this.userId = id;
+          this.store.dispatch(new From.media.FetchFav({ userId: this.userId }));
+        }
       }
-    }
-    ));
-    this.$subs.add(this.store.select(From.auth.getGroup).subscribe(uGrupo => {
-      this.uGrupo = uGrupo;
-      this.selectedGrupo = uGrupo;
-    }));
-    // this.$Scores = this.fbScore.getScoreList()
-    // .pipe(tap(s => console.log(`todosScores`, s)));
+      ));
+    this.$subs.add(
+      this.store.select(From.auth.getGroup).subscribe(uGrupo => {
+        this.uGrupo = uGrupo;
+        this.selectedGrupo = uGrupo;
+      }));
+    this.$Scores = this.fbScore.getScoreList()
+      .pipe(tap(s => console.log(`todosScores`, s)));
     this.$FavScores = this.store.select(From.music.getFavPartituras)
       .pipe(tap(s => console.log(`favScore`, s)));
     // this.$Generos = this.store.select(From.music.getGeneros)

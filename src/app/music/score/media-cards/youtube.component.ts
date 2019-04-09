@@ -10,7 +10,7 @@ import { YoutubeService } from 'src/app/music/services';
     <mat-card-title>Video de Youtube</mat-card-title>
   </mat-card-header>
   <mat-card-content fxLayout="row">
-    <youtube-player fxFill [videoId]="this.youtube.id" height="300" width="600" (ready)="this.youtube.savePlayer($event)"
+    <youtube-player fxFill [videoId]="this.youtube.id" height="100%" width="100%" (ready)="this.youtube.savePlayer($event)"
       (change)="this.youtube.onStateChange($event)">
     </youtube-player>
   </mat-card-content>

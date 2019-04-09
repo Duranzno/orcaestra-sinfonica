@@ -64,7 +64,7 @@ export class ScoreService {
             map(actions => actions.map(a => {
                 const data = a.payload.doc.data() as IScoreId;
                 const id = a.payload.doc.id;
-                return { id, ...data };
+                return { ...data, id };
             }))
         );
     }
@@ -74,7 +74,7 @@ export class ScoreService {
             map(actions => actions.map(a => {
                 const data = a.payload.doc.data() as IScoreId;
                 const id = a.payload.doc.id;
-                return { id, ...data };
+                return { ...data, id };
             }))
         );
     }

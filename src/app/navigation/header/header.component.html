@@ -11,12 +11,12 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="1rem" class="navigation-items">
       <ng-container *ngIf="($isAuth|async); else anon">
-        <li><a *ngIf="($isAdmin|async)" routerLink="/admin/partitura">
+        <!-- <li><a *ngIf="($isAdmin|async)" routerLink="/admin/partitura">
             <mat-icon>build</mat-icon> Partituras
           </a></li>
         <li><a *ngIf="($isAdmin|async)" routerLink="/admin/categorias">
             <mat-icon>build</mat-icon> Categorias
-          </a></li>
+          </a></li> -->
         <li><a routerLink="/musica/lista">Musica</a></li>
         <li><a routerLink="/pdf">Creador de PDF</a></li>
         <li><a routerLink="/logout">Cerrar Sesión</a></li>

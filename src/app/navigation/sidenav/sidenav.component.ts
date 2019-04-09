@@ -43,7 +43,8 @@ export class SidenavListComponent implements OnInit, OnDestroy {
     this.subscription.add(this.$grupo.subscribe(g =>
       this.userSubs = MusicSubMenu.concat([new Menu({
         name: g,
-        link: `/musica/lista/${g}`
+        link: `/musica/lista/${g}`,
+        icon: 'audiotrack'
       })])));
     this.$avatarSrc = this.store.select(From.auth.getAvatar);
   }

@@ -62,6 +62,15 @@ export const AdminMenu: IMenu[] = [
     'isAdmin': true,
   },
   {
+    'name': 'Administrar Categorias',
+    'link': '/admin/categorias',
+    'icon': 'bookmarks',
+    'isUser': true,
+    'chip': false,
+    'open': false,
+    'isAdmin': true,
+  },
+  {
     'name': 'Agregar Partitura',
     'link': '/admin/carga',
     'icon': 'note_add',
@@ -108,7 +117,7 @@ export const MusicSubMenu: IMenu[] = [
   {
     'name': 'Favoritos',
     'link': '/musica/lista/favoritos',
-    'icon': 'input',
+    'icon': 'favorite',
     'isUser': true,
     'chip': false,
     'open': false,
@@ -117,7 +126,7 @@ export const MusicSubMenu: IMenu[] = [
   {
     'name': 'Todos',
     'link': '/musica/lista',
-    'icon': 'input',
+    'icon': 'waves',
     'isUser': true,
     'chip': false,
     'open': false,
