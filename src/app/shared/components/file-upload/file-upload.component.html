@@ -7,7 +7,7 @@
 
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
       <button mat-raised-button color="primary" (click)="openInput()">
-        <mat-icon>{{(isAvatar)?"photo_camera":cloud_upload}}
+        <mat-icon>{{(isAvatar)?"photo_camera":"cloud_upload"}}
         </mat-icon>
         {{(isAvatar)?"Tomar una Foto":"Cargar Archivos"}}
       </button>

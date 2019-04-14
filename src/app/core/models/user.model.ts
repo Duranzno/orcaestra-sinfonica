@@ -1,4 +1,4 @@
-kimport { MediaTipo, Media } from './media.model';
+import { MediaTipo, Media } from './media.model';
 import { IUploadFile } from './upload.media.interface';
 import { IScoreId } from './score.model';
 
