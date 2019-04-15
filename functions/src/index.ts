@@ -59,8 +59,8 @@ async function groupMapper(grupo: string, titulo: string, obraId: string): Promi
 function payloadGenerator(grupo: string, titulo: string, obraId: string) {
   return ({
     notification: {
-      title: `Nueva Partitura del grupo ${(JSON.stringify(grupo))}!`,
-      body: `${JSON.stringify(titulo)} esta disponible en el grupo ${JSON.stringify(grupo)}`,
+      title: `Nueva Partitura del grupo ${(grupo)}!`,
+      body: `${titulo} esta disponible en el grupo ${grupo}`,
       icon: `https://goo.gl/Fz9nrQ` + obraId
     }
   });

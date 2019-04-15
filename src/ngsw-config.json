@@ -17,8 +17,8 @@
     },
     {
       "name": "assets",
-      "installMode": "lazy",
-      "updateMode": "prefetch",
+      "installMode": "prefetch",
+      "updateMode": "lazy",
       "resources": {
         "files":["/assets/**"],
         "urls":[
@@ -29,7 +29,6 @@
     {
       "name": "media",
       "installMode": "lazy",
-      "updateMode": "lazy",
       "resources": {
         "urls":[
           "https://firebasestorage.googleapis.com/v0/b/orcaestra-sinfonica.appspot.com/o/**"
