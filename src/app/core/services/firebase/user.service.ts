@@ -9,10 +9,10 @@ export class UserService {
   organization = "OSJIG"
   constructor(private afStore: AngularFirestore) {
   }
-  updateUserData(uid: string, data: User): Observable<User> {
-    let b = Object.assign({}, data)
+  updateUserData(uid: string, data: IUser): Observable<User> {
+    let b = Object.assign({}, { ...data, uid })
     const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`usuarios/${uid}`);
-    return <Observable<User>>from(userRef.set(Object.assign({}, data), { merge: true }))
+    return <Observable<User>>from(userRef.set(new User(b), { merge: true }))
       .pipe(
         last(),
         switchMap(_ => of(data))

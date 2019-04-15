@@ -9,7 +9,7 @@ export interface State {
 
 const initialState: State = {
   organization: 'OSJIG',
-  user: new User({ 'email': '', 'password': '', 'grupo': 'IMA' }),
+  user: new User({ 'email': '', 'password': '', 'grupo': '' }),
   avatarSrc: '/assets/user.jpg',
 };
 

@@ -23,7 +23,7 @@ export class AuthService {
     private router: Router,
   ) { }
   initAuthListener() {
-    this.afAuth.auth.setPersistence('local');
+    this.afAuth.auth.setPersistence('local')
     this.afAuth.authState
       .subscribe(fUser => {
         if (fUser) {

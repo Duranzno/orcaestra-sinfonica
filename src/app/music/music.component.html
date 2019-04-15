@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <mat-form-field>
       <mat-label>Seleccione Grupo Musical</mat-label>
-      <mat-select (selectionChange)="goToGroup($event)">
+      <mat-select (selectionChange)="goToGroup($event)" [(value)]="selectedGrupo">
         <mat-option *ngFor="let g of $Grupos|async" [value]="g" (click)="goToGroup(g)">
           {{g}}
         </mat-option>

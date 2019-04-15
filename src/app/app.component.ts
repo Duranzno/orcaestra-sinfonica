@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private domSanitizer: DomSanitizer,
     private mediaObserver: MediaObserver,
     private store: Store<OrcaState>,
+    private authService: AuthService,
     private msg: MessagingService,
     db: AngularFirestore) {
     // db.firestore.enablePersistence().then(() => console.log("Firestore es capaz de corre offline"))
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     this.addIcons();
     this.initPushService();
     this.store.dispatch(new From.media.FetchCategory());
-    // this.authService.initAuthListener();
+    this.authService.initAuthListener();
     this.$subs = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.toggleView();

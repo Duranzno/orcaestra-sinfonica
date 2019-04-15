@@ -54,34 +54,21 @@ export class MusicComponent implements OnInit, OnDestroy {
       }
       ));
     this.$subs.add(
-      this.store.select(From.auth.getGroup).subscribe(uGrupo => {
-        this.uGrupo = uGrupo;
-        this.selectedGrupo = uGrupo;
+      this.store.select(From.auth.getUser).subscribe(u => {
+        if (!!u.password) {
+          this.uGrupo = u.grupo;
+          this.selectedGrupo = u.grupo;
+          this.goToGroup()
+        }
       }));
     this.$Scores = this.fbScore.getScoreList()
-      .pipe(tap(s => console.log(`todosScores`, s)));
     this.$FavScores = this.store.select(From.music.getFavPartituras)
-      .pipe(tap(s => console.log(`favScore`, s)));
     // this.$Generos = this.store.select(From.music.getGeneros)
-    // .pipe(tap(s => console.log(`generos`,s)));
     this.$Grupos = this.store.select(From.music.getGrupos)
-      .pipe(tap(s => console.log(`grupos`, s)));
-  }
-  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
-    console.log('tabChangeEvent => ', tabChangeEvent);
-    console.log('index => ', tabChangeEvent.index);
-    switch (tabChangeEvent.index) {
-      case 0://Biblioteca
-        break;
-      case 1://Grupos
-        break;
-      case 2://Favoritos
-        break;
-    }
   }
 
-  goToGroup(grupo) {
-    this.selectedGrupo = (typeof grupo === "string") ? grupo : grupo.value
+  goToGroup(grupo?: any) {
+    this.selectedGrupo = (grupo && typeof grupo === "string") ? grupo : grupo.value
     const filter = {
       path: CategoriaTipo.GRUPOS,
       val: this.selectedGrupo
@@ -91,7 +78,17 @@ export class MusicComponent implements OnInit, OnDestroy {
       .pipe(tap(v => console.log(`Los scores del genero son ${JSON.stringify(v)}`)))
   }
   updateUserGroup() {
-    if (this.uGrupo) this.store.dispatch(new From.auth.SetGrupo(this.uGrupo));
+    if (!!this.uGrupo && !!this.selectedGrupo) this.store.dispatch(new From.auth.SetGrupo(this.selectedGrupo));
+  }
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    switch (tabChangeEvent.index) {
+      case 0://Biblioteca
+        break;
+      case 1://Grupos
+        break;
+      case 2://Favoritos
+        break;
+    }
   }
   ngOnDestroy() { this.$subs.unsubscribe() }
 }
