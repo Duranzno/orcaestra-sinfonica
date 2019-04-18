@@ -68,7 +68,7 @@ export class MusicComponent implements OnInit, OnDestroy {
   }
 
   goToGroup(grupo?: any) {
-    this.selectedGrupo = (grupo && typeof grupo === "string") ? grupo : grupo.value
+    if (grupo) { this.selectedGrupo = (typeof grupo === "string") ? grupo : grupo.value }
     const filter = {
       path: CategoriaTipo.GRUPOS,
       val: this.selectedGrupo
