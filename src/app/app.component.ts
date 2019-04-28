@@ -37,7 +37,9 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     private authService: AuthService,
     private msg: MessagingService,
     db: AngularFirestore) {
-    // db.firestore.enablePersistence().then(() => console.log("Firestore es capaz de corre offline"))
+    db.firestore.enablePersistence()
+    .then(() => console.log("Firestore es capaz de corre offline"))
+    .catch(()=>console.log("Firestore tuvo errores para guardar una cache"))
   }
   ngOnInit() {
 
