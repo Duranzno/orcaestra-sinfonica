@@ -2,6 +2,8 @@
 
 Apliación Web Progresiva (PWA) desarrollada en Angular utilizando NgRx y Firebase para el almacenamiento, distribución y uso del material didactico originado a partir de las Partituras de la Orquesta Sinfonica Juvenil e Infantil de Ciudad Guayana para sus alumnos.
 
+[Demo en Firebase Hosting](https://orcaestra-sinfonica.firebaseapp.com)
+
 ## Comenzando 🚀
 
 El proyecto utiliza el gestor de paquetse Yarn, se necesita tenerlo descargado de forma global en el sistema. 
@@ -31,7 +33,7 @@ _Menciona las herramientas que utilizaste para crear tu proyecto_
 * [Material Angular](http://material.angular.io/) - Componentes de Material Design
 * [NgRx](https://ngrx.io/) - Implementación de Redux usando Rx.
 * [Travis C.I](https://travis-ci.org/) - Herramienta para CI/CD
-* [AngularFire]https://github.com/angular/angularfire2) - Framework para el uso de funciones de Firebase 
+* [AngularFire] https://github.com/angular/angularfire2) - Framework para el uso de funciones de Firebase 
 * [Sass](https://sass-lang.com/) - Precompilador de CSS
 * [jsPDF](https://parall.ax/products/jspdf) - Framework para el manejo de archivos PDF
 * [Wavesurfer](https://wavesurfer-js.org/) - Reproductor de audio
@@ -42,6 +44,6 @@ _Menciona las herramientas que utilizaste para crear tu proyecto_
 
 ## Autores ✒️
 
-* **ALejandro Duran** - *Trabajo Inicial* - [duranzno](https://github.com/duranzno)
+* **Alejandro Duran** - *Trabajo Inicial* - [duranzno](https://github.com/duranzno)
 
 
